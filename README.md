@@ -1,7 +1,5 @@
 # seven-plus-eduction-system
 
-# 7PlusEducationSystem
-
 ## 后台管理系统
 
 ### 1.产品设计协作平台
