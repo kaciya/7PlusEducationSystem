@@ -8,8 +8,8 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 
+// 使用Composition API
 import VueCompositionAPI from '@vue/composition-api'
-
 Vue.use(VueCompositionAPI)
 
 
