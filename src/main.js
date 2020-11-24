@@ -1,23 +1,14 @@
-import Vue from "vue";
+import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./routers";
 import store from "./store";
-// 重置样式
-import "../public/css/reset.css";
 
-// 使用ElementUI
-import ElementUI from "element-ui";
-import "element-ui/lib/theme-chalk/index.css";
-Vue.use(ElementUI);
+// 使用Ant Design Vue
+import Antd from "ant-design-vue";
+import "ant-design-vue/dist/antd.css";
 
-// 使用Composition API
-import VueCompositionAPI from "@vue/composition-api";
-Vue.use(VueCompositionAPI);
-
-Vue.config.productionTip = false;
-
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount("#app");
+createApp(App)
+  .use(store)
+  .use(router)
+  .use(Antd)
+  .mount("#app");

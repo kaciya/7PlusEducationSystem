@@ -1,3 +1,27 @@
+# seven-plus-eduction-system
+
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
 # seven-plus-eduction-system(柒加后台管理系统)
 
 ## 1.产品设计协作平台
