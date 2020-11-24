@@ -2,34 +2,34 @@
 
 ### 如何fork库？
 
-![](images/fork.png)
+![fork流程图](images/fork.png)
 
 1. 第一步，我们打开我们要fork的库
    
-- ![](images/storeroom.png)
+- ![我们要fork的库](images/storeroom.png)
   
 2. 打开库之后右上角有一个fork按钮
    
-- ![](images/fork_storeroom.png)
+- ![点击右上角的fork](images/fork_storeroom.png)
   
 3. 点击fork之后，会弹出一个弹框
    
-- ![](images/fork_storeroom_modal.png)
+- ![把库fork到我们自己的库](images/fork_storeroom_modal.png)
   
 4. 现在在我们的github中已经有了这样的一个分支库，现在我们就可以把这个分支库clone到自己的本地 (其实就是clone到自己的电脑上)
 
    `注意：这里clone的库一定是我们fork下来的库，不可以直接clone我们要fork的库，不然我们fork库就失去了意义`
 
-   - ![](images/github_clone.png)
+   - ![把我们fork的库克隆到本地](images/github_clone.png)
 
-   - ![](images/Git_Bash_Here.png)
+   - ![打开git命令窗口](images/Git_Bash_Here.png)
 
-   - ![](images/Git_clone_mingling.png)
+   - ![写入我们要克隆的地址](images/Git_clone_mingling.png)
 
 5. clone完成后，我们的桌面上就会有一个和github中fork下来的库的名字一样的文件夹
 
    - 现在我们第一步的fork和clone都已经完成了，我们现在就可以先添加一个新的txt文档先试试水，新建一个文件之后，我们把这个文件提交到我们的github库中，打开命令行，第一步：`git add .`, 第二步：`git commit -m '这里写我们提交的内容是做什么的'` 第三步：`git push`  三步代码结束之后，我们就可以在github中看到我们新增的txt文件了
-   - ![](images/git_push_file.png)
+   - ![提交一个文件试试](images/git_push_file.png)
    - 注意！`我们Pullrequests只是试试水而已，我们真正提交代码的时候 Pull requests 之前还要做一些事情，我们接着往下看`
 
 ### 如何创建本地分支
