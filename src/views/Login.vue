@@ -42,7 +42,7 @@ export default {
     // 登录表单数据对象
     let loginForm = reactive({
       username: "",
-      password: "",
+      password: ""
     });
 
     // 登录表单校验规则
@@ -52,17 +52,17 @@ export default {
         {
           required: true,
           message: "请输入账号/手机号",
-          trigger: "blur",
-        },
+          trigger: "blur"
+        }
       ],
       // 密码校验规则
-      password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+      password: [{ required: true, message: "请输入密码", trigger: "blur" }]
     };
 
     // 用户登录 （点击登录触发）
     function userLogin() {
       // 校验
-      this.$refs.ruleForm.validate((valid) => {
+      this.$refs.ruleForm.validate(valid => {
         // 校验通过
         if (valid) {
           console.log(1);
@@ -75,9 +75,9 @@ export default {
     return {
       loginForm,
       userLogin,
-      loginFormRules,
+      loginFormRules
     };
-  },
+  }
 };
 </script>
 

@@ -6,14 +6,13 @@ import store from "./store";
 import "../public/css/reset.css";
 
 // 使用ElementUI
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+import ElementUI from "element-ui";
+import "element-ui/lib/theme-chalk/index.css";
 Vue.use(ElementUI);
 
 // 使用Composition API
-import VueCompositionAPI from '@vue/composition-api'
-Vue.use(VueCompositionAPI)
-
+import VueCompositionAPI from "@vue/composition-api";
+Vue.use(VueCompositionAPI);
 
 Vue.config.productionTip = false;
 
