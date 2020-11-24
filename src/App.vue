@@ -1,12 +1,25 @@
 <template>
-  <div>
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <a-config-provider :locale="locale">
+    <div>
+      <div id="nav">
+        <router-link to="/">Home</router-link> |
+        <router-link to="/about">About</router-link>
+      </div>
+      <router-view />
     </div>
-    <router-view />
-  </div>
+  </a-config-provider>
 </template>
+
+<script>
+import zhCN from "ant-design-vue/es/locale/zh_CN";
+export default {
+  data() {
+    return {
+      locale: zhCN
+    };
+  }
+};
+</script>
 
 <style lang="scss">
 #app {
