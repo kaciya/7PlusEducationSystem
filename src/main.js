@@ -2,6 +2,8 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./routers";
 import store from "./store";
+// 重置样式
+import "../public/css/reset.css";
 
 // 使用ElementUI
 import ElementUI from 'element-ui';
