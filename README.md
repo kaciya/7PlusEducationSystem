@@ -1,8 +1,30 @@
 # seven-plus-eduction-system
 
-## 后台管理系统
+## Project setup
+```
+npm install
+```
 
-### 1.产品设计协作平台
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
+# seven-plus-eduction-system(柒加后台管理系统)
+
+## 1.产品设计协作平台
 
 1.1.蓝湖官网地址
 
@@ -23,7 +45,7 @@ https://lanhuapp.com/
 https://lanhu.kf5.com/hc/kb/article/1173434/
 ```
 
-### 2.后台管理系统接口
+## 2.后台管理系统接口
 
 2.1 接口地址
 
@@ -33,7 +55,7 @@ https://lanhu.kf5.com/hc/kb/article/1173434/
 密码: admin123
 ```
 
-### 3.项目技术--vue
+## 3.项目技术--vue
 
 3.1.vue2.0文档
 
@@ -53,7 +75,7 @@ https://www.npmjs.com/package/@vue/composition-api
 https://vuex.vuejs.org/zh/guide/
 ```
 
-### 4.echarts数据可视化工具
+## 4.echarts数据可视化工具
 
 ```bash
 两可插件库可以相互参考
@@ -62,19 +84,19 @@ https://echarts.apache.org/zh/index.html
 https://v-charts.js.org/#/
 ```
 
-### 5.Element UI文档
+## 5.Element UI文档
 
 ```http
 https://element.eleme.cn/2.14/#/zh-CN/component/layout
 ```
 
-### 6.项目规范
+## 6.项目规范
 
 ```bash
 参考项目规范.md文件
 ```
 
-### 注意
+## 注意
 
 ```bash
 项目出现任何问题在gitgub提lssues  (lssues使用方法参考项目规范.md文件)
