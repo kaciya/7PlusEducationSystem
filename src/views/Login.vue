@@ -20,7 +20,8 @@
                 <a-input
                   placeholder="请输入登录账号"
                   size="large"
-                  v-model="loginData.username"
+                  :value="loginData.username"
+                  @input="v => (loginData.username = v.target.value)"
                 >
                   <template #prefix>
                     <UserOutlined style="color: rgba(0, 0, 0, 0.25)" />
@@ -38,7 +39,8 @@
                   type="password"
                   placeholder="请输入登录密码"
                   size="large"
-                  v-model="loginData.password"
+                  :value="loginData.password"
+                  @input="v => (loginData.password = v.target.value)"
                   @keyup.enter="loginFormSubmit"
                 >
                   <template #prefix>
