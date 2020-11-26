@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import Login from "../views/Login.vue";
+import Login from "@/views/Login";
 
 const routes = [
   // 默认重定向到登录页
@@ -17,7 +17,7 @@ const routes = [
   {
     path: "/home",
     name: "Home",
-    component: () => import("../views/Home")
+    component: () => import("@/views/Home")
   }
 ];
 

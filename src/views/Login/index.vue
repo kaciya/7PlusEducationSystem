@@ -41,7 +41,7 @@
                   size="large"
                   :value="loginData.password"
                   @input="v => (loginData.password = v.target.value)"
-                  @keyup.enter="loginFormSubmit"
+                  @keyup.enter="loginSubmit"
                 >
                   <template #prefix>
                     <LockOutlined style="color: rgba(0, 0, 0, 0.25)" />
@@ -56,7 +56,7 @@
                   type="primary"
                   block
                   size="large"
-                  @click="loginFormSubmit"
+                  @click="loginSubmit"
                 >
                   确定
                 </a-button>
@@ -74,78 +74,16 @@
 <script>
 // 引入icon图标
 import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
-// 引入提示方法
-import { message } from "ant-design-vue";
-// 导入登录方法
-import { httpPost } from "../utils/http";
-// 导入登录接口
-import auth from "../api/authAPI";
-import { reactive, ref } from "vue";
-// 导入router
-import { useRouter } from "vue-router";
-// 导入共享库
-import { useStore } from "vuex";
-
+// 导入表单校验方法
+import { userLoginRules } from "./userLoginRules";
+// 导入表单登录方法
+import { useLoginSubmit } from "./useLoginSubmit";
 export default {
   setup() {
-    // 使用router
-    let router = useRouter();
-    // 使用共享库
-    let store = useStore();
-
-    //#region 登录校验
-    // 登录表单
-    let loginForm = ref(null);
-
-    // 登录表单数据
-    let loginData = reactive({
-      username: "",
-      password: ""
-    });
-
-    // 登录表单数据校验规则
-    let loginRules = reactive({
-      // 用户名
-      username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
-      // 密码
-      password: [{ required: true, message: "请输入密码", trigger: "blur" }]
-    });
-    //#endregion
-
-    //#region 点击登录功能
-    function loginFormSubmit() {
-      // 校验登录表单的数据
-      loginForm.value
-        .validate()
-        .then(() => {
-          // 准备参数
-          let params = {
-            username: loginData.username,
-            password: loginData.password
-          };
-          // 发起登录请求
-          httpPost(auth.UserLogin, params).then(res => {
-            if (res.success) {
-              // 保存token
-              window.sessionStorage.setItem("token", res.data.token);
-              // 提示用户登录成功
-              message.success("登录成功");
-              // 将permissions信息存入共享库
-              store.commit("SET_PERMISSIONS", res.data.permissions);
-              // 跳转主页
-              router.push("/home");
-            } else {
-              // 提示用户登录失败
-              message.error(res.message);
-            }
-          });
-        })
-        .catch(error => {
-          console.log("error", error);
-        });
-    }
-    //#endregion
-
+    // 表单提交
+    let { loginData, loginSubmit, loginForm } = useLoginSubmit();
+    // 表单校验
+    let { loginRules } = userLoginRules();
     // 返回
     return {
       // 登录表单
@@ -155,7 +93,7 @@ export default {
       // 登录表单数据校验规则
       loginRules,
       // 点击登录方法
-      loginFormSubmit
+      loginSubmit
     };
   },
   components: {
