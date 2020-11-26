@@ -24,7 +24,6 @@ export const useLoginSubmit = () => {
   let loginForm = ref(null);
 
   let loginSubmit = () => {
-    console.log(1111);
     // 校验登录表单的数据
     loginForm.value
       .validate()
