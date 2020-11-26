@@ -54,11 +54,14 @@
               <a-form-item :wrapperCol="{ span: 20, offset: 2 }">
                 <a-row type="flex" justify="space-between">
                   <a-col :span="5">
+                    <!-- 确定登录按钮 start -->
                     <a-button type="primary" size="large" @click="loginSubmit">
                       登录
                     </a-button>
+                    <!-- 确定登录按钮 end -->
                   </a-col>
                   <a-col :span="5">
+                    <!-- 删除密码按钮 start -->
                     <a-tooltip placement="topLeft">
                       <template #title>
                         <span>点击删除已输入密码</span>
@@ -71,10 +74,10 @@
                         删除
                       </a-button>
                     </a-tooltip>
+                    <!-- 删除密码按钮 end -->
                   </a-col>
                 </a-row>
               </a-form-item>
-              <!-- 确定登录按钮 end -->
             </a-form>
             <!-- 登录表单 end  -->
           </div>
