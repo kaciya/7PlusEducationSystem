@@ -52,14 +52,27 @@
 
               <!-- 确定登录按钮 start -->
               <a-form-item :wrapperCol="{ span: 20, offset: 2 }">
-                <a-button
-                  type="primary"
-                  block
-                  size="large"
-                  @click="loginSubmit"
-                >
-                  确定
-                </a-button>
+                <a-row type="flex" justify="space-between">
+                  <a-col :span="5">
+                    <a-button type="primary" size="large" @click="loginSubmit">
+                      登录
+                    </a-button>
+                  </a-col>
+                  <a-col :span="5">
+                    <a-tooltip placement="topLeft">
+                      <template #title>
+                        <span>点击删除已输入密码</span>
+                      </template>
+                      <a-button
+                        type="default"
+                        size="large"
+                        @click="clearPassword"
+                      >
+                        删除
+                      </a-button>
+                    </a-tooltip>
+                  </a-col>
+                </a-row>
               </a-form-item>
               <!-- 确定登录按钮 end -->
             </a-form>
@@ -81,7 +94,7 @@ import { useLoginSubmit } from "./useLoginSubmit";
 export default {
   setup() {
     // 表单提交
-    let { loginData, loginSubmit, loginForm } = useLoginSubmit();
+    let { loginData, loginSubmit, loginForm, clearPassword } = useLoginSubmit();
     // 表单校验
     let { loginRules } = userLoginRules();
     // 返回
@@ -93,7 +106,9 @@ export default {
       // 登录表单数据校验规则
       loginRules,
       // 点击登录方法
-      loginSubmit
+      loginSubmit,
+      // 点击删除密码
+      clearPassword
     };
   },
   components: {
@@ -106,7 +121,9 @@ export default {
 <style lang="scss" scoped>
 #app > .ant-layout {
   height: 100%;
-  background-color: burlywood;
+  background-image: url("../../assets/images/login/bg.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .login {
@@ -117,5 +134,12 @@ export default {
 
 .login-title {
   text-align: center;
+  h3 {
+    font-size: 30px;
+    font-weight: 700;
+  }
+  p {
+    font-size: 24px;
+  }
 }
 </style>

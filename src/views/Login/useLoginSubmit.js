@@ -23,6 +23,7 @@ export const useLoginSubmit = () => {
   // 声明loginForm
   let loginForm = ref(null);
 
+  // 提交表单
   let loginSubmit = () => {
     // 校验登录表单的数据
     loginForm.value
@@ -55,10 +56,16 @@ export const useLoginSubmit = () => {
       });
   };
 
+  // 清除表单密码
+  let clearPassword = () => {
+    loginData.password = "";
+  };
+
   return {
     loginData,
     loginSubmit,
-    loginForm
+    loginForm,
+    clearPassword
   };
 };
 //#endregion
