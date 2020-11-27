@@ -36,5 +36,5 @@
   `1. 由于我们不能在setup函数中使用data和methods，所以vue为了避免我们错误的使用，直接将setup函数中的this修改成了undefine。`
 
   `2.setup函数只能是同步的不能是异步的。`
-
-![Composition API介绍](images/composition API_effect.png)
+  
+  ![Composition API介绍](images/composition API_effect.png)

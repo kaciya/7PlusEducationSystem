@@ -59,7 +59,7 @@ export default router;
 
 3.1 布局模板（Login/index.vue）
 
-```vue
+```html
   <a-layout>
     <a-layout-content>
       <a-row>
@@ -74,7 +74,7 @@ export default router;
 
 3.2 布局样式
 
-```sass
+```scss
 <style lang="scss" scoped>
     #app > .ant-layout {
       height: 100%;
@@ -87,7 +87,7 @@ export default router;
 
 4.1 登录标题模板
 
-```vue
+```html
 <div class="login-title">
   <h3>柒加教育业务管理系统</h3>
   <p>Management System</p>
@@ -96,7 +96,7 @@ export default router;
 
 4.2 登录标题样式
 
-```sass
+```scss
 <style lang="scss" scoped>
 #app > .ant-layout {
   height: 100%;
@@ -119,7 +119,7 @@ export default router;
 
 5.1 表单模板
 
-```vue
+```html
 <a-form :rules="loginRules" ref="loginForm" :model="loginData">
 
 </a-form>
@@ -127,7 +127,7 @@ export default router;
 
 5.2 用户名输入框模板（表单验证功能分离到了userLoginRules.js）
 
-```vue
+```html
 <a-form-item
 :wrapperCol="{ span: 20, offset: 2 }"
 name="username"
@@ -170,7 +170,7 @@ export default {
 
 5.3 密码输入框模板 （表单验证功能分离到了userLoginRules.js）
 
-```vue
+```html
 <a-form-item
 	:wrapperCol="{ span: 20, offset: 2 }"
 	name="password"
@@ -213,7 +213,7 @@ export default {
 
 5.4 确认登录按钮模板 （登录功能被分离到了 Login/useLoginSubmit.js）
 
-```vue
+```html
 <a-form-item :wrapperCol="{ span: 20, offset: 2 }">
   <a-button
     type="primary"
