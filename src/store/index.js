@@ -3,11 +3,6 @@ import { createStore } from "vuex";
 import AuthStore from "./authStore";
 
 export default createStore({
-  state() {
-    return {};
-  },
-  mutations: {},
-  actions: {},
   modules: {
     // 登录共享库
     AuthStore
