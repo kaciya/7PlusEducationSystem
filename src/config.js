@@ -3,7 +3,7 @@
 // 只要是导出的配置对象就可以
 export const baseHost = {
   API1: {
-    // 开发的基准地址
+    // "/api" 在config中配置 相当于 http://pte.admin.api.banyuge.com/admin
     dev_host: "/api",
     // 线上的基准地址
     pro_host: "http://www.wanlum.me.8888:api/private/v1/"
