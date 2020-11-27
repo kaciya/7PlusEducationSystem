@@ -1,6 +1,6 @@
-### 登录页组件（Login/index.vue）
+# 登录页组件（Login/index.vue）
 
-#### 1. 定义登录接口文件authAPI.js
+### 1. 定义登录接口文件authAPI.js
 
 ```js
 // 鉴权服务接口配置
@@ -10,7 +10,7 @@ export default {
 };
 ```
 
-#### 2. 定义路由文件（包括路由守卫功能）
+### 2. 定义路由文件（包括路由守卫功能）
 
 ```js
 import { createRouter, createWebHashHistory } from "vue-router";
@@ -55,7 +55,7 @@ router.beforeEach((to, from, next) => {
 export default router;
 ```
 
-#### 3. 登录页整体布局
+### 3. 登录页整体布局
 
 3.1 布局模板（Login/index.vue）
 
@@ -83,7 +83,7 @@ export default router;
 </style>
 ```
 
-#### 4.登录标题（写在整体布局中）
+### 4.登录标题（写在整体布局中）
 
 4.1 登录标题模板
 
@@ -115,7 +115,7 @@ export default router;
 </style>
 ```
 
-#### 5. 登录表单（写在整体布局中）
+### 5. 登录表单（写在整体布局中）
 
 5.1 表单模板
 
@@ -226,7 +226,7 @@ export default {
 </a-form-item>
 ```
 
-#### 6. 表单验证功能 (表单验证功能被分离到 Login/userLoginRules.js)
+### 6. 表单验证功能 (表单验证功能被分离到 Login/userLoginRules.js)
 
 ```js
 //#region 登录校验
@@ -247,7 +247,7 @@ export const userLoginRules = () => {
 //#endregion
 ```
 
-#### 7. 登录功能 (登录功能被分离到 Login/useLoginSubmit.js)
+### 7. 登录功能 (登录功能被分离到 Login/useLoginSubmit.js)
 
 ```js
 //#region 点击登录功能
@@ -317,7 +317,7 @@ export const useLoginSubmit = () => {
 //#endregion
 ```
 
-#### 8. 登录功能、表单验证在 Login/index.vue页面中引入并使用
+### 8. 登录功能、表单验证在 Login/index.vue页面中引入并使用
 
 ```js
 <script>
