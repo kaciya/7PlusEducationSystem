@@ -74,7 +74,7 @@ export default createStore({
 
 ##### 4.获取useName
 
-```vue
+```html
 <template>
  <div id="app">
   <h1>{{useName}}</h1>
@@ -165,7 +165,7 @@ methods: {
 
 2.在vue组件中获取
 
-```vue
+```html
 <template>
  <div id="app">
   <h1>{{useName}}</h1>
@@ -246,7 +246,7 @@ export default {
 当所有的actions, mutations, getters 都被限定到模块的命名空间下，我们dispatch actions, commit mutations 都需要用到命名空间。如 dispacth("changeName"),  就要变成 dispatch("loginStore/changeName"); getters.localJobTitle 就要变成 getters["loginStore/localJobTitle"]
 ```
 
-```js
+```html
 <template>
  <div id="app">
   <img src="./assets/logo.png">
@@ -293,7 +293,6 @@ export default {
 ```
 
 ```js
-<script>
 import {mapActions, mapState,mapGetters} from "vuex";
 export default {
  computed: {
@@ -310,7 +309,6 @@ export default {
   ...mapActions('loginStroe', ['alertName'])
  }
 }
-</script>
 ```
 
 ### 参考连接
