@@ -1,6 +1,6 @@
-### 登录页组件（Login/index.vue）
+# 登录页组件（Login/index.vue）
 
-#### 1. 定义登录接口文件authAPI.js
+### 1. 定义登录接口文件authAPI.js
 
 ```js
 // 鉴权服务接口配置
@@ -10,7 +10,7 @@ export default {
 };
 ```
 
-#### 2. 定义路由文件（包括路由守卫功能）
+### 2. 定义路由文件（包括路由守卫功能）
 
 ```js
 import { createRouter, createWebHashHistory } from "vue-router";
@@ -55,11 +55,11 @@ router.beforeEach((to, from, next) => {
 export default router;
 ```
 
-#### 3. 登录页整体布局
+### 3. 登录页整体布局
 
 3.1 布局模板（Login/index.vue）
 
-```html
+```vue
   <a-layout>
     <a-layout-content>
       <a-row>
@@ -74,7 +74,7 @@ export default router;
 
 3.2 布局样式
 
-```scss
+```sass
 <style lang="scss" scoped>
     #app > .ant-layout {
       height: 100%;
@@ -83,11 +83,11 @@ export default router;
 </style>
 ```
 
-#### 4.登录标题（写在整体布局中）
+### 4.登录标题（写在整体布局中）
 
 4.1 登录标题模板
 
-```html
+```vue
 <div class="login-title">
   <h3>柒加教育业务管理系统</h3>
   <p>Management System</p>
@@ -96,7 +96,7 @@ export default router;
 
 4.2 登录标题样式
 
-```scss
+```sass
 <style lang="scss" scoped>
 #app > .ant-layout {
   height: 100%;
@@ -115,11 +115,11 @@ export default router;
 </style>
 ```
 
-#### 5. 登录表单（写在整体布局中）
+### 5. 登录表单（写在整体布局中）
 
 5.1 表单模板
 
-```html
+```vue
 <a-form :rules="loginRules" ref="loginForm" :model="loginData">
 
 </a-form>
@@ -127,7 +127,7 @@ export default router;
 
 5.2 用户名输入框模板（表单验证功能分离到了userLoginRules.js）
 
-```html
+```vue
 <a-form-item
 :wrapperCol="{ span: 20, offset: 2 }"
 name="username"
@@ -170,7 +170,7 @@ export default {
 
 5.3 密码输入框模板 （表单验证功能分离到了userLoginRules.js）
 
-```html
+```vue
 <a-form-item
 	:wrapperCol="{ span: 20, offset: 2 }"
 	name="password"
@@ -213,7 +213,7 @@ export default {
 
 5.4 确认登录按钮模板 （登录功能被分离到了 Login/useLoginSubmit.js）
 
-```html
+```vue
 <a-form-item :wrapperCol="{ span: 20, offset: 2 }">
   <a-button
     type="primary"
@@ -226,7 +226,7 @@ export default {
 </a-form-item>
 ```
 
-#### 6. 表单验证功能 (表单验证功能被分离到 Login/userLoginRules.js)
+### 6. 表单验证功能 (表单验证功能被分离到 Login/userLoginRules.js)
 
 ```js
 //#region 登录校验
@@ -247,7 +247,7 @@ export const userLoginRules = () => {
 //#endregion
 ```
 
-#### 7. 登录功能 (登录功能被分离到 Login/useLoginSubmit.js)
+### 7. 登录功能 (登录功能被分离到 Login/useLoginSubmit.js)
 
 ```js
 //#region 点击登录功能
@@ -317,7 +317,7 @@ export const useLoginSubmit = () => {
 //#endregion
 ```
 
-#### 8. 登录功能、表单验证在 Login/index.vue页面中引入并使用
+### 8. 登录功能、表单验证在 Login/index.vue页面中引入并使用
 
 ```js
 <script>
