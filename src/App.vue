@@ -6,10 +6,12 @@
 
 <script>
 import zhCN from "ant-design-vue/es/locale/zh_CN";
+import { reactive } from "vue";
 export default {
-  data() {
+  setup() {
+    let locale = reactive(zhCN);
     return {
-      locale: zhCN
+      locale
     };
   }
 };
