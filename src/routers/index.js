@@ -17,7 +17,14 @@ const routes = [
   {
     path: "/home",
     name: "Home",
-    component: () => import("@/views/Home")
+    component: () => import("@/views/Home"),
+    children: [
+      // 题库标签页
+      {
+        path: "/question/label",
+        component: () => import("@/views/QuestionLabel")
+      }
+    ]
   }
 ];
 
