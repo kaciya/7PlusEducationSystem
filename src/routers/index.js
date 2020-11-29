@@ -18,7 +18,19 @@ const routes = [
     path: "/home",
     name: "Home",
     component: () => import("@/views/Home"),
+    // 主体
     children: [
+      // 默认重定向首页主体
+      {
+        path: "/home",
+        redirect: "/home/main"
+      },
+      // 首页主体
+      {
+        path: "/home/main",
+        name: "HomeMain",
+        component: () => import("@/views/HomeMain")
+      },
       // 题库标签页
       {
         path: "/question/label",
