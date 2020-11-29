@@ -17,8 +17,6 @@
 </template>
 
 <script>
-// 引入响应api
-import { ref } from "vue";
 // 导入侧边栏组件
 import SideBar from "@/components/SideBar";
 // 导入顶部栏组件
@@ -27,9 +25,9 @@ import Header from "@/components/Header";
 export default {
   components: {
     SideBar, //侧边栏
-    Header, //顶部栏
+    Header //顶部栏
   },
-  setup() {},
+  setup() {}
 };
 </script>
 

@@ -2,7 +2,7 @@
   <a-layout-sider
     id="side-bar"
     theme="light"
-    v-model:collapsed="collapsed"
+    :collapsed="collapsed"
     :trigger="null"
     collapsible
   >
@@ -49,8 +49,6 @@
 </template>
 
 <script>
-// 引入响应api
-import { ref } from "vue";
 // 导入侧边栏方法
 import { useGetSideBar } from "../SideBar/useGetSideBar";
 // 导入共享collapsed方法
@@ -61,7 +59,7 @@ export default {
   // 导入组件
   components: {
     HomeOutlined,
-    UserOutlined,
+    UserOutlined
   },
   // setup响应api入口
   setup() {
@@ -77,9 +75,9 @@ export default {
       // 侧边栏keys
       sideBarKeys,
       // 侧边栏伸缩状态
-      collapsed,
+      collapsed
     };
-  },
+  }
 };
 </script>
 

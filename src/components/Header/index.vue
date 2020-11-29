@@ -23,8 +23,6 @@
 </template>
 
 <script>
-// 引入响应api
-import { ref } from "vue";
 // 导入共享collapsed方法
 import { useSetCollapsed } from "./useSetCollapsed";
 // 导入退出登录功能
@@ -33,29 +31,29 @@ import { useLogout } from "./useLogout";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  UserOutlined,
+  UserOutlined
 } from "@ant-design/icons-vue";
 export default {
   // 导入组件
   components: {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
-    UserOutlined,
+    UserOutlined
   },
   // setup响应api入口
   setup() {
     // 侧边栏状态
     let { collapsed, setCollapsed } = useSetCollapsed();
     // 退出登录
-    let { handleLogout, spinning } = useLogout();
+    let { handleLogout } = useLogout();
 
     // 返回
     return {
       collapsed, //侧边栏状态
       setCollapsed, //操作侧边栏状态
-      handleLogout, //退出登录
+      handleLogout //退出登录
     };
-  },
+  }
 };
 </script>
 
