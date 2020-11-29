@@ -30,6 +30,11 @@ const routes = [
         path: "/home/main",
         name: "HomeMain",
         component: () => import("@/views/HomeMain")
+      },
+      // 题库标签页
+      {
+        path: "/question/label",
+        component: () => import("@/views/QuestionLabel")
       }
     ]
   }
