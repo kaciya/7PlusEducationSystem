@@ -8,17 +8,17 @@ import { message } from "ant-design-vue";
 
 export function useUpdateLabel() {
   // 添加标签模态框是否显示
-  let updateLabelVisible = ref(false);
+  const updateLabelVisible = ref(false);
 
   // 添加标签表单
-  let updateLabelForm = reactive({
+  const updateLabelForm = reactive({
     name: "",
     id: "",
     oldName: ""
   });
 
   // 打开添加标签模态框
-  let showUpdateLabel = (id, name) => {
+  const showUpdateLabel = (id, name) => {
     updateLabelVisible.value = true;
     // 记录要修改的id和旧标签名
     updateLabelForm.id = id;
@@ -26,7 +26,7 @@ export function useUpdateLabel() {
   }
 
   // 添加标签表单校验规则
-  let updateLabelRules = reactive({
+  const updateLabelRules = reactive({
     name: [
       { required: true, message: "请输入标签名", trigger: "blur" },
       { max: 5, message: '标签不能超过5个字', trigger: 'blur' }
@@ -34,10 +34,10 @@ export function useUpdateLabel() {
   });
 
   // 表单
-  let updateForm = ref(null);
+  const updateForm = ref(null);
 
   // 修改标签方法
-  let updateLabel = (callback) => {
+  const updateLabel = (callback) => {
     // 校验
     updateForm.value.validate().then(() => {
       // 发起修改请求
@@ -65,7 +65,7 @@ export function useUpdateLabel() {
   }
 
   // 取消添加标签
-  let cancelUpdateLabel = () => {
+  const cancelUpdateLabel = () => {
     updateForm.value.resetFields();
   }
 

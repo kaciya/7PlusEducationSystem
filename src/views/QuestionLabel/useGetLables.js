@@ -9,10 +9,10 @@ import questionLabel from "@/api/questionLabelAPI";
 
 export function useGetLabels() {
   // 声明 标签列表数据
-  let labelList = ref([]);
+  const labelList = ref([]);
 
   // 获取所有标签
-  let getLabels = () => {
+  const getLabels = () => {
     httpGet(questionLabel.GetLabels).then(res => {
       if (res.success == true) {
         labelList.value = res.data;
