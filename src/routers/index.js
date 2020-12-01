@@ -35,6 +35,19 @@ const routes = [
       //#region 权限管理
       //权限组
       {
+        path: "/question/label",
+        component: () => import("@/views/QuestionLabel")
+      },
+      //#region 运营管理
+      {
+        // 参数管理
+        path: "/operation/param",
+        component: () => import("@/views/Operation/Parameter")
+      },
+      {
+        // 师咨信息
+        path: "/operation/teacher",
+        component: () => import("@/views/Operation/TeacherInfo")
         path: "/sys/role",
         name: "SysRole",
         component: () => import("@/views/Sys/SysRole")

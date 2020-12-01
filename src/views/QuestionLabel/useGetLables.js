@@ -6,7 +6,6 @@ import { httpGet } from "@/utils/http.js";
 // 引入接口配置
 import questionLabel from "@/api/questionLabelAPI";
 
-
 export function useGetLabels() {
   // 声明 标签列表数据
   const labelList = ref([]);
