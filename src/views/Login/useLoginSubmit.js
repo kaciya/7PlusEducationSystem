@@ -12,25 +12,25 @@ import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 export const useLoginSubmit = () => {
   // 使用router
-  let router = useRouter();
+  const router = useRouter();
   // 使用共享库
-  let store = useStore();
+  const store = useStore();
   // 登录表单数据
-  let loginData = reactive({
+  const loginData = reactive({
     username: "",
     password: ""
   });
   // 声明loginForm
-  let loginForm = ref(null);
+  const loginForm = ref(null);
 
   // 提交表单
-  let loginSubmit = () => {
+  const loginSubmit = () => {
     // 校验登录表单的数据
     loginForm.value
       .validate()
       .then(() => {
         // 准备参数
-        let params = {
+        const params = {
           username: loginData.username,
           password: loginData.password
         };
@@ -49,6 +49,8 @@ export const useLoginSubmit = () => {
             // 提示用户登录失败
             message.error(res.message);
           }
+        }).catch((err) => {
+          console.log(err);
         });
       })
       .catch(error => {
@@ -57,7 +59,7 @@ export const useLoginSubmit = () => {
   };
 
   // 清除表单密码
-  let clearPassword = () => {
+  const clearPassword = () => {
     loginData.password = "";
   };
 

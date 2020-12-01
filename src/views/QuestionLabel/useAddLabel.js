@@ -10,20 +10,20 @@ import { message } from "ant-design-vue";
 // 导出
 export function useAddLabel() {
   // 添加标签模态框是否显示
-  let addLabelVisible = ref(false);
+  const addLabelVisible = ref(false);
 
   // 打开添加标签模态框
-  let showAddLabel = () => {
+  const showAddLabel = () => {
     addLabelVisible.value = true;
   }
 
   // 添加标签表单
-  let addLabelForm = reactive({
+  const addLabelForm = reactive({
     name: ''
   });
 
   // 添加标签表单校验规则
-  let addLabelRules = reactive({
+  const addLabelRules = reactive({
     name: [
       { required: true, message: "请输入标签名", trigger: "blur" },
       { max: 5, message: '标签不能超过5个字', trigger: 'blur' }
@@ -31,10 +31,10 @@ export function useAddLabel() {
   })
 
   // 表单
-  let addForm = ref(null);
+  const addForm = ref(null);
 
   // 添加标签
-  let addLabel = (callback) => {
+  const addLabel = (callback) => {
     addForm.value.validate().then(() => {
       // 发起添加请求
       httpPost(questionLabel.AddLabel, {
@@ -57,7 +57,7 @@ export function useAddLabel() {
   }
 
   // 取消添加标签
-  let cancelAddLabel = () => {
+  const cancelAddLabel = () => {
     addForm.value.resetFields();
   }
 

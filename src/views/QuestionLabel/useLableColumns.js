@@ -4,7 +4,7 @@ import { reactive } from "vue";
 // 导出
 export function useLabelColumns() {
   // 标签管理列配置
-  let labelColumns = reactive([
+  const labelColumns = reactive([
     {
       title: "标签名称",
       dataIndex: "name"

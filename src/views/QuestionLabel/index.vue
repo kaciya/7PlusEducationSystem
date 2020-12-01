@@ -1,104 +1,119 @@
 <template>
-  <div>
-    <!-- 页头 start -->
-    <!-- backIcon为false，不渲染返回按钮 -->
-    <a-page-header
-      style="border: 1px solid rgb(235, 237, 240)"
-      title="标签列表"
-      :backIcon="false"
+  <a-layout-content>
+    <!-- 面包屑 start -->
+    <Crumbs :crumbName="[{ name: '题库管理' }, { name: '标签管理' }]" />
+    <!-- 面包屑 end -->
+    <!-- 主体Main start -->
+    <div
+      :style="{
+        padding: '20px',
+        background: '#fff',
+        minHeight: '93%',
+      }"
     >
-      <template #extra>
-        <!-- 添加标签按钮 -->
-        <a-button type="primary" @click="showAddLabel">添加标签</a-button>
-      </template>
-    </a-page-header>
-    <!-- 页头 end -->
-
-    <!-- 添加标签 模态框 start -->
-    <a-modal
-      v-model:visible="addLabelVisible"
-      title="添加标签"
-      ok-text="确认"
-      cancel-text="取消"
-      @ok="addLabel(getLabels)"
-      @cancel="cancelAddLabel"
-    >
-      <!-- 添加标签 表单 start -->
-      <a-form :model="addLabelForm" :rules="addLabelRules" ref="addForm">
-        <a-form-item label="标签名称" name="name">
-          <!-- 标签名输入框 -->
-          <a-input v-model:value="addLabelForm.name"> </a-input>
-        </a-form-item>
-      </a-form>
-      <!-- 添加标签 表单 end -->
-    </a-modal>
-    <!-- 添加标签 模态框 end -->
-
-    <!-- 标签管理表单 start -->
-    <a-table
-      bordered
-      :columns="labelColumns"
-      :dataSource="labelList"
-      rowKey="id"
-      :pagination="false"
-    >
-      <!-- 操作列 start -->
-      <template #operation="{ record }">
-        <div v-if="record.id <= 3 && record.id >= 1">不可操作</div>
-        <div v-else>
-          <!-- 修改按钮 -->
-          <a-button
-            type="primary"
-            style="margin-right: 10px"
-            @click="showUpdateLabel(record.id, record.name)"
-          >
-            <EditOutlined /> 修改
-          </a-button>
-          <!-- 删除按钮 -->
-          <a-popconfirm
-            title="您确定要删除这个标签吗？"
-            ok-text="确定"
-            cancel-text="取消"
-            @confirm="delLabel(record.id, getLabels)"
-          >
-            <a-button type="danger"> <DeleteOutlined />删除 </a-button>
-          </a-popconfirm>
-        </div>
-      </template>
-      <!-- 操作列 end -->
-    </a-table>
-    <!-- 标签管理表单 end -->
-
-    <!-- 修改标签模态框 start -->
-    <a-modal
-      v-model:visible="updateLabelVisible"
-      title="修改标签"
-      ok-text="确认"
-      cancel-text="取消"
-      @ok="updateLabel(getLabels)"
-      @cancel="cancelUpdateLabel"
-    >
-      <!-- 修改标签 表单 start -->
-      <a-form
-        :model="updateLabelForm"
-        :rules="updateLabelRules"
-        ref="updateForm"
+      <!-- 页头 start -->
+      <!-- backIcon为false，不渲染返回按钮 -->
+      <a-page-header
+        style="border: 1px solid rgb(235, 237, 240)"
+        title="标签列表"
+        :backIcon="false"
       >
-        <a-form-item label="旧的标签名称" style="padding-left: 11px">
-          <span>{{ updateLabelForm.oldName }}</span>
-        </a-form-item>
-        <a-form-item label="新的标签名称" name="name">
-          <!-- 标签名输入框 -->
-          <a-input v-model:value="updateLabelForm.name"> </a-input>
-        </a-form-item>
-      </a-form>
-      <!-- 修改标签 表单 end -->
-    </a-modal>
-    <!-- 修改标签模态框 end -->
-  </div>
+        <template #extra>
+          <!-- 添加标签按钮 -->
+          <a-button type="primary" @click="showAddLabel">添加标签</a-button>
+        </template>
+      </a-page-header>
+      <!-- 页头 end -->
+
+      <!-- 添加标签 模态框 start -->
+      <a-modal
+        v-model:visible="addLabelVisible"
+        title="添加标签"
+        ok-text="确认"
+        cancel-text="取消"
+        @ok="addLabel(getLabels)"
+        @cancel="cancelAddLabel"
+      >
+        <!-- 添加标签 表单 start -->
+        <a-form :model="addLabelForm" :rules="addLabelRules" ref="addForm">
+          <a-form-item label="标签名称" name="name">
+            <!-- 标签名输入框 -->
+            <a-input v-model:value="addLabelForm.name"> </a-input>
+          </a-form-item>
+        </a-form>
+        <!-- 添加标签 表单 end -->
+      </a-modal>
+      <!-- 添加标签 模态框 end -->
+
+      <!-- 标签管理表单 start -->
+      <a-table
+        bordered
+        :columns="labelColumns"
+        :dataSource="labelList"
+        rowKey="id"
+        :pagination="false"
+      >
+        <!-- 操作列 start -->
+        <template #operation="{ record }">
+          <div v-if="record.id <= 3 && record.id >= 1">不可操作</div>
+          <div v-else>
+            <!-- 修改按钮 -->
+            <a-button
+              type="primary"
+              style="margin-right: 10px"
+              @click="showUpdateLabel(record.id, record.name)"
+            >
+              <EditOutlined /> 修改
+            </a-button>
+            <!-- 删除按钮 -->
+            <a-popconfirm
+              title="您确定要删除这个标签吗？"
+              ok-text="确定"
+              cancel-text="取消"
+              @confirm="delLabel(record.id, getLabels)"
+            >
+              <a-button type="danger"> <DeleteOutlined />删除 </a-button>
+            </a-popconfirm>
+          </div>
+        </template>
+        <!-- 操作列 end -->
+      </a-table>
+      <!-- 标签管理表单 end -->
+
+      <!-- 修改标签模态框 start -->
+      <a-modal
+        v-model:visible="updateLabelVisible"
+        title="修改标签"
+        ok-text="确认"
+        cancel-text="取消"
+        @ok="updateLabel(getLabels)"
+        @cancel="cancelUpdateLabel"
+      >
+        <!-- 修改标签 表单 start -->
+        <a-form
+          :model="updateLabelForm"
+          :rules="updateLabelRules"
+          ref="updateForm"
+        >
+          <a-form-item label="旧的标签名称" style="padding-left: 11px">
+            <span>{{ updateLabelForm.oldName }}</span>
+          </a-form-item>
+          <a-form-item label="新的标签名称" name="name">
+            <!-- 标签名输入框 -->
+            <a-input v-model:value="updateLabelForm.name"> </a-input>
+          </a-form-item>
+        </a-form>
+        <!-- 修改标签 表单 end -->
+      </a-modal>
+      <!-- 修改标签模态框 end -->
+    </div>
+    <!-- 主体Main end -->
+  </a-layout-content>
 </template>
 
 <script>
+// 引入面包屑组件
+import Crumbs from "@/components/Crumbs";
 // 引入icon图标
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons-vue";
 // 引入 钩子函数
@@ -117,13 +132,13 @@ import { useUpdateLabel } from "./useUpdateLabel";
 export default {
   setup() {
     // 标签管理表单列配置
-    let { labelColumns } = useLabelColumns();
+    const { labelColumns } = useLabelColumns();
 
     // 获取所有标签方法
-    let { getLabels, labelList } = useGetLabels();
+    const { getLabels, labelList } = useGetLabels();
 
     // 添加标签功能
-    let {
+    const {
       addLabelVisible,
       showAddLabel,
       addLabel,
@@ -134,10 +149,10 @@ export default {
     } = useAddLabel();
 
     // 删除标签功能
-    let { delLabel } = useDelLabel();
+    const { delLabel } = useDelLabel();
 
     // 修改标签功能
-    let {
+    const {
       updateLabelVisible,
       showUpdateLabel,
       updateLabelForm,
@@ -204,6 +219,7 @@ export default {
   components: {
     EditOutlined,
     DeleteOutlined,
+    Crumbs,
   },
 };
 </script>

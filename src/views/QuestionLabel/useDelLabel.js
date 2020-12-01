@@ -12,7 +12,7 @@ export function useDelLabel() {
    * @param {*} id 要删除的id
    * @param {*} callback 回调函数
    */
-  let delLabel = (id, callback) => {
+  const delLabel = (id, callback) => {
     // 发起删除请求
     httpDelete(questionLabel.DelLabel + "/" + id).then((res) => {
       if (res.success == true) {
