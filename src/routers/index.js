@@ -31,19 +31,34 @@ const routes = [
         path: "/home",
         redirect: "/home/main",
       },
-      // 首页主体
+      //#region 首页主体
       {
         path: "/home/main",
         name: "HomeMain",
         component: () => import("@/views/HomeMain")
       },
-
-      //#region 权限管理
-      //权限组
+      //#endregion
+      //#region 题库管理
+      // 标签管理
       {
         path: "/question/label",
         component: () => import("@/views/QuestionLabel")
       },
+      //#endregion
+      //#region 用户提交
+      //反馈列表
+      {
+        path: "/sub/feedback",
+        name: "SubFeedback",
+        component: () => import("@/views/Sub/SubFeedback")
+      },
+      //联系记录
+      {
+        path: "/sub/contact",
+        name: "SubContact",
+        component: () => import("@/views/Sub/SubContact")
+      },
+      //#endregion
       //#region 运营管理
       {
         // 参数管理
@@ -55,6 +70,9 @@ const routes = [
         path: "/operation/teacher",
         component: () => import("@/views/Operation/TeacherInfo")
       },
+      //#endregion 
+      //#region 权限管理
+      //权限组
       {
         path: "/sys/role",
         name: "SysRole",
@@ -74,20 +92,6 @@ const routes = [
       },
       //#endregion
 
-      //#region 用户提交
-      //反馈列表
-      {
-        path: "/sub/feedback",
-        name: "SubFeedback",
-        component: () => import("@/views/Sub/SubFeedback")
-      },
-      //联系记录
-      {
-        path: "/sub/contact",
-        name: "SubContact",
-        component: () => import("@/views/Sub/SubContact")
-      }
-      //#endregion
     ]
   },
   // The 404 page must be placed at the end

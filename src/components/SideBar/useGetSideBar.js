@@ -56,7 +56,7 @@ export const useGetSideBar = () => {
         {
           id: 131,
           authName: "标签管理",
-          path: "home"
+          path: "question/label"
         },
         {
           id: 132,
