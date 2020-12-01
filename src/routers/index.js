@@ -30,6 +30,12 @@ const routes = [
         path: "/home/main",
         name: "HomeMain",
         component: () => import("@/views/HomeMain")
+      },
+      // 用户列表
+      {
+        path: "/userList",
+        name: "UserList",
+        component: () => import("@/views/UserList")
       }
     ]
   }
