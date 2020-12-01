@@ -48,6 +48,8 @@ const routes = [
         // 师咨信息
         path: "/operation/teacher",
         component: () => import("@/views/Operation/TeacherInfo")
+      },
+      {
         path: "/sys/role",
         name: "SysRole",
         component: () => import("@/views/Sys/SysRole")
@@ -82,22 +84,7 @@ const routes = [
       //#endregion
     ]
   }
-        component: () => import("@/views/HomeMain"),
-      },
-      // 用户列表
-      {
-        path: "/userList",
-        name: "UserList",
-        component: () => import("@/views/UserList"),
-      },
-      // 题库标签页
-      {
-        path: "/question/label",
-        component: () => import("@/views/QuestionLabel"),
-      },
-    ],
-  },
-];
+]
 
 const router = createRouter({
   history: createWebHashHistory(),
