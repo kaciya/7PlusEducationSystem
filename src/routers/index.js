@@ -38,12 +38,24 @@ const routes = [
         component: () => import("@/views/HomeMain")
       },
       //#endregion
+      //#region 用户管理
+      // 用户列表
+      {
+        path: "/user/user-list",
+        component: () => import('@/views/UserList')
+      },
+
+      //#endregion
+      //#region 词库管理
+      //#endregion
       //#region 题库管理
       // 标签管理
       {
         path: "/question/label",
         component: () => import("@/views/QuestionLabel")
       },
+      //#endregion
+      //#region 柒加圈
       //#endregion
       //#region 用户提交
       //反馈列表
@@ -57,6 +69,13 @@ const routes = [
         path: "/sub/contact",
         name: "SubContact",
         component: () => import("@/views/Sub/SubContact")
+      },
+      //#endregion
+      //#region 平台管理
+      // 公告
+      {
+        path: "/platform/notice",
+        component: () => import('@/views/PlatFormManage')
       },
       //#endregion
       //#region 运营管理
@@ -91,7 +110,6 @@ const routes = [
         component: () => import("@/views/Sys/SysLog")
       },
       //#endregion
-
     ]
   },
   // The 404 page must be placed at the end
