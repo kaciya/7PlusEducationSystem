@@ -2,7 +2,7 @@
   <a-layout-sider
     id="side-bar"
     theme="light"
-    :collapsed="collapsed"
+    v-model:collapsed="collapsed"
     :trigger="null"
     collapsible
   >
@@ -83,8 +83,15 @@ export default {
 
 <style lang="scss" scoped>
 #side-bar {
-  border-right: 1px solid transparent;
+  overflow-x: hidden;
   overflow-y: auto;
+  transition: all 0.1s;
+
+  .ant-menu-inline,
+  .ant-menu-vertical,
+  .ant-menu-vertical-left {
+    border-right: 0;
+  }
 
   /*滚动条样式*/
   &::-webkit-scrollbar {
@@ -129,6 +136,22 @@ export default {
   }
 
   // menu
+  .ant-menu {
+    transition: background 0.3s, width 0.1s cubic-bezier(0.2, 0, 0, 1) 0s;
+  }
+
+  .ant-menu-item .anticon,
+  .ant-menu-submenu-title .anticon {
+    transition: font-size 0.15s cubic-bezier(0.215, 0.61, 0.355, 1),
+      margin 0.2s cubic-bezier(0.25, 0.8, 0.5, 1);
+  }
+
+  .ant-menu-item .anticon + span,
+  .ant-menu-submenu-title .anticon + span {
+    transition: opacity 0.2s cubic-bezier(0.25, 0.8, 0.5, 1),
+      width 0.2s cubic-bezier(0.25, 0.8, 0.5, 1);
+  }
+
   .menu-pri {
     color: #888;
     background-color: rgba(0, 0, 0, 0.025);

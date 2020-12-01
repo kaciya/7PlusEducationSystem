@@ -13,6 +13,12 @@ const routes = [
     name: "Login",
     component: Login
   },
+  // 404
+  {
+    path: "/404",
+    component: () => import("@/views/404"),
+    hidden: true
+  },
   // 主页
   {
     path: "/home",
@@ -37,7 +43,9 @@ const routes = [
         component: () => import("@/views/QuestionLabel")
       }
     ]
-  }
+  },
+  // The 404 page must be placed at the end
+  { path: "/:catchAll(.*)", redirect: "/404", hidden: true }
 ];
 
 const router = createRouter({

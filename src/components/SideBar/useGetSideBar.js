@@ -1,16 +1,18 @@
 //#region 获取侧边栏功能
 // 导入响应api
 import { reactive } from "vue";
+// 导入vue-router
+// import { useRouter } from "vue-router";
 
 // 定义功能函数
 export const useGetSideBar = () => {
   // 声明sideBarList
-  let sideBarList = reactive([]);
+  const sideBarList = reactive([]);
   // 声明侧边栏key(id)列表
-  let sideBarKeys = reactive([]);
+  const sideBarKeys = reactive([]);
 
   // 模拟data
-  let sideBarListData = [
+  const sideBarListData = [
     {
       id: 100,
       authName: "首页",

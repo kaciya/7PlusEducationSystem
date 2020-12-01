@@ -35,23 +35,25 @@ export const useLoginSubmit = () => {
           password: loginData.password
         };
         // 发起登录请求
-        httpPost(auth.UserLogin, params).then(res => {
-          if (res.success) {
-            // 保存token
-            window.sessionStorage.setItem("token", res.data.token);
-            // 提示用户登录成功
-            message.success("登录成功");
-            // 将permissions信息存入共享库
-            store.commit("SET_PERMISSIONS", res.data.permissions);
-            // 跳转主页
-            router.push("/home");
-          } else {
-            // 提示用户登录失败
-            message.error(res.message);
-          }
-        }).catch((err) => {
-          console.log(err);
-        });
+        httpPost(auth.UserLogin, params)
+          .then(res => {
+            if (res.success) {
+              // 保存token
+              window.sessionStorage.setItem("token", res.data.token);
+              // 提示用户登录成功
+              message.success("登录成功");
+              // 将permissions信息存入共享库
+              store.commit("SET_PERMISSIONS", res.data.permissions);
+              // 跳转主页
+              router.push("/home");
+            } else {
+              // 提示用户登录失败
+              message.error(res.message);
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
       })
       .catch(error => {
         console.log("error", error);
