@@ -93,17 +93,16 @@ export const useGetSideBar = () => {
     {
       id: 150,
       authName: "用户提交",
-      path: "ckgl",
       children: [
         {
           id: 151,
           authName: "反馈列表",
-          path: "home"
+          path: "sub/feedback"
         },
         {
           id: 152,
           authName: "联系记录",
-          path: "home"
+          path: "sub/contact"
         }
       ]
     },
@@ -175,22 +174,21 @@ export const useGetSideBar = () => {
     {
       id: 180,
       authName: "权限管理",
-      path: "ckgl",
       children: [
         {
           id: 181,
           authName: "权限组",
-          path: "home"
+          path: "sys/role"
         },
         {
           id: 182,
           authName: "账号管理",
-          path: "home"
+          path: "sys/user"
         },
         {
           id: 183,
           authName: "操作日志",
-          path: "home"
+          path: "sys/log"
         }
       ]
     }
