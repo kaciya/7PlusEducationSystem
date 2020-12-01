@@ -122,17 +122,17 @@ export const useGetSideBar = () => {
     {
       id: 170,
       authName: "运营管理",
-      path: "ckgl",
+      path: "operation",
       children: [
         {
           id: 171,
           authName: "参数管理(综合)",
-          path: "home"
+          path: "operation/param"
         },
         {
           id: 172,
           authName: "师资管理(官网)",
-          path: "home"
+          path: "operation/teacher"
         },
         {
           id: 173,

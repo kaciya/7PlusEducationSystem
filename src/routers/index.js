@@ -35,7 +35,19 @@ const routes = [
       {
         path: "/question/label",
         component: () => import("@/views/QuestionLabel")
+      },
+      //#region 运营管理
+      {
+        // 参数管理
+        path: "/operation/param",
+        component: () => import("@/views/Operation/Parameter")
+      },
+      {
+        // 师咨信息
+        path: "/operation/teacher",
+        component: () => import("@/views/Operation/TeacherInfo")
       }
+      //#endregion
     ]
   }
 ];
