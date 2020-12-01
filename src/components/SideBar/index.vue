@@ -67,7 +67,6 @@ export default {
     let { sideBarList, sideBarKeys } = useGetSideBar();
     // 侧边栏伸缩状态
     let { collapsed } = useSetCollapsed();
-
     // 返回
     return {
       // 侧边栏列表
