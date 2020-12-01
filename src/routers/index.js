@@ -5,13 +5,13 @@ const routes = [
   // 默认重定向到登录页
   {
     path: "/",
-    redirect: "/login"
+    redirect: "/login",
   },
   // 登录页
   {
     path: "/login",
     name: "Login",
-    component: Login
+    component: Login,
   },
   // 主页
   {
@@ -23,26 +23,32 @@ const routes = [
       // 默认重定向首页主体
       {
         path: "/home",
-        redirect: "/home/main"
+        redirect: "/home/main",
       },
       // 首页主体
       {
         path: "/home/main",
         name: "HomeMain",
-        component: () => import("@/views/HomeMain")
+        component: () => import("@/views/HomeMain"),
+      },
+      // 用户列表
+      {
+        path: "/userList",
+        name: "UserList",
+        component: () => import("@/views/UserList"),
       },
       // 题库标签页
       {
         path: "/question/label",
-        component: () => import("@/views/QuestionLabel")
-      }
-    ]
-  }
+        component: () => import("@/views/QuestionLabel"),
+      },
+    ],
+  },
 ];
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
+  routes,
 });
 
 // 添加路由前置守卫
