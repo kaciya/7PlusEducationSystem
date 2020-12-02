@@ -12,7 +12,11 @@
       }"
     >
       <!-- 题型选择 start -->
-      <a-radio-group v-model:value="category" button-style="solid">
+      <a-radio-group
+        v-model:value="category"
+        button-style="solid"
+        @change="getQuestion"
+      >
         <a-radio-button value="SST">SST（录音总结）</a-radio-button>
         <a-radio-button value="WED">WED（听写句子）</a-radio-button>
         <a-radio-button value="FIB">FIB（听力填空）</a-radio-button>
@@ -38,6 +42,7 @@
             size="small"
             v-model:value="labelId"
             style="min-width: 90px"
+            @change="getQuestion"
           >
             <a-select-option value=""> 全部 </a-select-option>
             <a-select-option
@@ -47,7 +52,6 @@
             >
               {{ item.name }}
             </a-select-option>
-            <a-select-option value="Yiminghe"> 预测 </a-select-option>
           </a-select>
           <!-- 标签类型 下拉筛选器 end  -->
         </template>
@@ -64,7 +68,35 @@
       <!-- 题目列表头部 end -->
 
       <!-- 题目列表 start -->
-      <a-table bordered :columns="questionColumns"> </a-table>
+      <a-table
+        bordered
+        :columns="questionColumns"
+        :data-source="questionList"
+        row-key="id"
+        :loading="isLoading"
+      >
+        <template #labels>
+          <!-- 题目标签选择器 start -->
+          <a-select
+            v-model:value="arr"
+            mode="multiple"
+            style="width: 100%"
+            placeholder="select one country"
+            option-label-prop="label"
+            @change="printArr"
+          >
+            <a-select-option
+              :value="item.name"
+              :label="item.name"
+              v-for="item in labelList"
+              :key="item.id"
+            >
+              {{ item.name }}
+            </a-select-option>
+          </a-select>
+          <!-- 题目标签选择器 end -->
+        </template>
+      </a-table>
       <!-- 题目列表 end -->
     </div>
     <!-- 主体Main end -->
@@ -82,12 +114,20 @@ import { useQuestionColumns } from "./useQuestionColumns";
 import { useGetQuestion } from "./useGetQuestion";
 // 导入 获取 全部标签类型
 import { useGetLabels } from "../QuestionLabel/useGetLables";
+import { ref } from "vue";
 
 export default {
   // setup响应api入口
   setup() {
-    // 渲染表格
-    let { category, labelId } = useGetQuestion();
+    // 渲染题目列表
+    let {
+      category,
+      labelId,
+      getQuestion,
+      questionList,
+      isLoading,
+      total,
+    } = useGetQuestion();
 
     // 获取全部标签类型
     let { labelList, getLabels } = useGetLabels();
@@ -95,10 +135,17 @@ export default {
     // 题目列表 列配置
     let { questionColumns } = useQuestionColumns();
 
+    let arr = ref([]);
+    let printArr = () => {
+      console.log(arr.value);
+    };
+
     // 初始化时
     onMounted(() => {
       // 获取所有标签
       getLabels();
+      // 获取题目列表
+      getQuestion();
     });
 
     // 返回
@@ -111,6 +158,16 @@ export default {
       labelList,
       // 题目列配置
       questionColumns,
+      // 获取题目列表
+      getQuestion,
+      // 题目列表
+      questionList,
+      // 加载状态
+      isLoading,
+      // 数据库中题目总条数
+      total,
+      arr,
+      printArr,
     };
   },
   // 使用组件
