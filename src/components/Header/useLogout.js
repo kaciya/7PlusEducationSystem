@@ -11,7 +11,7 @@ import { message } from "ant-design-vue";
 import { useRouter } from "vue-router";
 export const useLogout = () => {
   // 使用router
-  let router = useRouter();
+  const router = useRouter();
 
   // 退出登录方法
   function handleLogout() {
