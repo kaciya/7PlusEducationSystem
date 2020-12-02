@@ -10,50 +10,47 @@ import { message } from "ant-design-vue";
 import { useRouter } from "vue-router";
 // 导入共享库
 import { useStore } from "vuex";
+
 export const useLoginSubmit = () => {
   // 使用router
-  const router = useRouter();
+  let router = useRouter();
   // 使用共享库
-  const store = useStore();
+  let store = useStore();
   // 登录表单数据
-  const loginData = reactive({
+  let loginData = reactive({
     username: "",
     password: ""
   });
   // 声明loginForm
-  const loginForm = ref(null);
+  let loginForm = ref(null);
 
   // 提交表单
-  const loginSubmit = () => {
+  let loginSubmit = () => {
     // 校验登录表单的数据
     loginForm.value
       .validate()
       .then(() => {
         // 准备参数
-        const params = {
+        let params = {
           username: loginData.username,
           password: loginData.password
         };
         // 发起登录请求
-        httpPost(auth.UserLogin, params)
-          .then(res => {
-            if (res.success) {
-              // 保存token
-              window.sessionStorage.setItem("token", res.data.token);
-              // 提示用户登录成功
-              message.success("登录成功");
-              // 将permissions信息存入共享库
-              store.commit("SET_PERMISSIONS", res.data.permissions);
-              // 跳转主页
-              router.push("/home");
-            } else {
-              // 提示用户登录失败
-              message.error(res.message);
-            }
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        httpPost(auth.UserLogin, params).then(res => {
+          if (res.success) {
+            // 保存token
+            window.sessionStorage.setItem("token", res.data.token);
+            // 提示用户登录成功
+            message.success("登录成功");
+            // 将permissions信息存入共享库
+            store.commit("SET_PERMISSIONS", res.data.permissions);
+            // 跳转主页
+            router.push("/home");
+          } else {
+            // 提示用户登录失败
+            message.error(res.message);
+          }
+        });
       })
       .catch(error => {
         console.log("error", error);
@@ -61,7 +58,7 @@ export const useLoginSubmit = () => {
   };
 
   // 清除表单密码
-  const clearPassword = () => {
+  let clearPassword = () => {
     loginData.password = "";
   };
 
