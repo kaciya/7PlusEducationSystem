@@ -14,6 +14,8 @@ jobs:
       uses: JamesIves/github-pages-deploy-action@3.7.1
       env:
         ACCESS_TOKEN: ${{ secrets.WANLUM }}
+        # 自己见一个分支 用来存储
         BRANCH: gh-pages
         FOLDER: build
         BUILD_SCRIPT: npm install && npm run build
+
