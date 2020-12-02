@@ -5,13 +5,13 @@ const routes = [
   // 默认重定向到登录页
   {
     path: "/",
-    redirect: "/login",
+    redirect: "/login"
   },
   // 登录页
   {
     path: "/login",
     name: "Login",
-    component: Login,
+    component: Login
   },
   // 404
   {
@@ -29,7 +29,7 @@ const routes = [
       // 默认重定向首页主体
       {
         path: "/home",
-        redirect: "/home/main",
+        redirect: "/home/main"
       },
       //#region 首页主体
       {
@@ -42,7 +42,7 @@ const routes = [
       // 用户列表
       {
         path: "/user/user-list",
-        component: () => import('@/views/UserList')
+        component: () => import("@/views/UserList")
       },
 
       //#endregion
@@ -75,7 +75,7 @@ const routes = [
       // 公告
       {
         path: "/platform/notice",
-        component: () => import('@/views/PlatFormManage')
+        component: () => import("@/views/PlatFormManage")
       },
       //#endregion
       //#region 运营管理
@@ -89,7 +89,7 @@ const routes = [
         path: "/operation/teacher",
         component: () => import("@/views/Operation/TeacherInfo")
       },
-      //#endregion 
+      //#endregion
       //#region 权限管理
       //权限组
       {
@@ -108,7 +108,7 @@ const routes = [
         path: "/sys/log",
         name: "SysLog",
         component: () => import("@/views/Sys/SysLog")
-      },
+      }
       //#endregion
     ]
   },
@@ -118,7 +118,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes,
+  routes
 });
 
 // 添加路由前置守卫
