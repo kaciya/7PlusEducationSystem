@@ -1,26 +1,50 @@
 <template>
   <a-layout-content>
     <!-- 面包屑 start -->
-    <Crumbs
-      :crumbName="[
-        { name: '用户管理' },
-        { name: '用户列表', route: '#' },
-        { name: '详情' }
-      ]"
-    />
+    <Crumbs :crumbName="[{ name: '首页' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
     <div
       :style="{
         padding: '20px',
         background: '#fff',
-        minHeight: '93%'
+        minHeight: '93%',
+        overflow: 'hidden'
       }"
     >
-      【使用说明】 我是每个页面主体内容的模板，使用方式如下:
-      1.直接ctrl+A,然后ctrl+C 最后ctrl+V粘贴到自己页面当中
-      2.修改面包屑组件中传递的数据 3.把这段【使用说明】删掉
-      4.书写自己页面对应的主体内容
+      <!-- 概要 start -->
+      <a-page-header
+        class="profile"
+        style="border: 1px solid rgb(235, 237, 240)"
+        title="概要"
+      >
+        <a-row class="a-row" :gutter="[48, 8]">
+          <a-col :span="4" :offset="1"
+            ><div>
+              <span>累计用户数</span><br />
+              <b>{{ statistics["data"].userCount || 0 }}</b>
+            </div></a-col
+          >
+          <a-col :span="5"
+            ><div>
+              <span>近7日平均新增用户</span><br />
+              <b>{{ statistics["data"].userCountAvg7 || 0 }}</b>
+            </div></a-col
+          >
+          <a-col :span="4"
+            ><div>
+              <span>近30日平均新增用户</span><br />
+              <b>{{ statistics["data"].userCountAvg30 || 0 }}</b>
+            </div></a-col
+          >
+        </a-row>
+      </a-page-header>
+      <!-- 概要 end -->
+
+      <!-- 用户增长折线图 -->
+      <UserAddChart />
+      <!-- 用户来源饼图 -->
+      <UserSourceChart />
     </div>
     <!-- 主体Main end -->
   </a-layout-content>
@@ -29,14 +53,67 @@
 <script>
 // 引入面包屑组件
 import Crumbs from "@/components/Crumbs";
+// 引入用户增长折线图
+import UserAddChart from "@/components/UserAddChart";
+// 导入用户来源饼图
+import UserSourceChart from "@/components/UserSourceChart";
+// 导入首页统计数据
+import { useGetStatistics } from "./useGetStatistics";
 export default {
   // 使用组件
   components: {
-    Crumbs
+    Crumbs,
+    UserAddChart,
+    UserSourceChart
   },
   // setup响应api入口
-  setup() {}
+  setup() {
+    // 获取首页统计数据
+    const { statistics } = useGetStatistics();
+    // 返回
+    return {
+      // 首页统计数据
+      statistics
+    };
+  }
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.profile {
+  min-width: 1111px;
+  padding-top: 12px;
+  margin-bottom: 20px;
+
+  .a-row {
+    border-top: 1px solid rgb(235, 237, 240);
+    padding-top: 10px;
+  }
+
+  [class~="ant-col"] {
+    background: transparent;
+    border: 0;
+  }
+
+  [class~="ant-col"] {
+    > div {
+      // background-color: rgba(0, 0, 0, 0.025);
+      height: 80px;
+      line-height: 34px;
+      text-align: center;
+      padding-top: 10px;
+
+      > span {
+        font-size: 15px;
+        color: #555;
+      }
+
+      > b {
+        color: #333;
+        font-size: 22px;
+        font-family: "微软雅黑 Bold", "微软雅黑 Regular", "微软雅黑";
+      }
+    }
+  }
+}
+</style>

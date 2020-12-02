@@ -10,27 +10,28 @@ import { message } from "ant-design-vue";
 import { useRouter } from "vue-router";
 // 导入共享库
 import { useStore } from "vuex";
+
 export const useLoginSubmit = () => {
   // 使用router
-  const router = useRouter();
+  let router = useRouter();
   // 使用共享库
-  const store = useStore();
+  let store = useStore();
   // 登录表单数据
-  const loginData = reactive({
+  let loginData = reactive({
     username: "",
     password: ""
   });
   // 声明loginForm
-  const loginForm = ref(null);
+  let loginForm = ref(null);
 
   // 提交表单
-  const loginSubmit = () => {
+  let loginSubmit = () => {
     // 校验登录表单的数据
     loginForm.value
       .validate()
       .then(() => {
         // 准备参数
-        const params = {
+        let params = {
           username: loginData.username,
           password: loginData.password
         };
@@ -49,8 +50,6 @@ export const useLoginSubmit = () => {
             // 提示用户登录失败
             message.error(res.message);
           }
-        }).catch((err) => {
-          console.log(err);
         });
       })
       .catch(error => {
@@ -59,7 +58,7 @@ export const useLoginSubmit = () => {
   };
 
   // 清除表单密码
-  const clearPassword = () => {
+  let clearPassword = () => {
     loginData.password = "";
   };
 

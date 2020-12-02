@@ -1,16 +1,18 @@
 //#region 获取侧边栏功能
 // 导入响应api
 import { reactive } from "vue";
+// 导入vue-router
+// import { useRouter } from "vue-router";
 
 // 定义功能函数
 export const useGetSideBar = () => {
   // 声明sideBarList
-  let sideBarList = reactive([]);
+  const sideBarList = reactive([]);
   // 声明侧边栏key(id)列表
-  let sideBarKeys = reactive([]);
+  const sideBarKeys = reactive([]);
 
   // 模拟data
-  let sideBarListData = [
+  const sideBarListData = [
     {
       id: 100,
       authName: "首页",
@@ -20,12 +22,12 @@ export const useGetSideBar = () => {
     {
       id: 110,
       authName: "用户管理",
-      path: "users",
+      path: "user",
       children: [
         {
           id: 111,
           authName: "用户列表",
-          path: "home"
+          path: "user/user-list"
         }
       ]
     },
@@ -49,12 +51,12 @@ export const useGetSideBar = () => {
     {
       id: 130,
       authName: "题库管理",
-      path: "ckgl",
+      path: "question",
       children: [
         {
           id: 131,
           authName: "标签管理",
-          path: "home"
+          path: "question/label"
         },
         {
           id: 132,
@@ -93,46 +95,46 @@ export const useGetSideBar = () => {
     {
       id: 150,
       authName: "用户提交",
-      path: "ckgl",
+      path: "sub",
       children: [
         {
           id: 151,
           authName: "反馈列表",
-          path: "home"
+          path: "sub/feedback"
         },
         {
           id: 152,
           authName: "联系记录",
-          path: "home"
+          path: "sub/contact"
         }
       ]
     },
     {
       id: 160,
       authName: "平台管理",
-      path: "ckgl",
+      path: "platform",
       children: [
         {
           id: 161,
           authName: "公告",
-          path: "home"
+          path: "platform/notice"
         }
       ]
     },
     {
       id: 170,
       authName: "运营管理",
-      path: "ckgl",
+      path: "operation",
       children: [
         {
           id: 171,
           authName: "参数管理(综合)",
-          path: "home"
+          path: "operation/param"
         },
         {
           id: 172,
           authName: "师资管理(官网)",
-          path: "home"
+          path: "operation/teacher"
         },
         {
           id: 173,
@@ -175,22 +177,21 @@ export const useGetSideBar = () => {
     {
       id: 180,
       authName: "权限管理",
-      path: "ckgl",
       children: [
         {
           id: 181,
           authName: "权限组",
-          path: "home"
+          path: "sys/role"
         },
         {
           id: 182,
           authName: "账号管理",
-          path: "home"
+          path: "sys/user"
         },
         {
           id: 183,
           authName: "操作日志",
-          path: "home"
+          path: "sys/log"
         }
       ]
     }

@@ -71,7 +71,7 @@
                         size="large"
                         @click="clearPassword"
                       >
-                        重置
+                        删除
                       </a-button>
                     </a-tooltip>
                     <!-- 删除密码按钮 end -->
@@ -97,14 +97,9 @@ import { useLoginSubmit } from "./useLoginSubmit";
 export default {
   setup() {
     // 表单提交
-    const {
-      loginData,
-      loginSubmit,
-      loginForm,
-      clearPassword,
-    } = useLoginSubmit();
+    let { loginData, loginSubmit, loginForm, clearPassword } = useLoginSubmit();
     // 表单校验
-    const { loginRules } = userLoginRules();
+    let { loginRules } = userLoginRules();
     // 返回
     return {
       // 登录表单
