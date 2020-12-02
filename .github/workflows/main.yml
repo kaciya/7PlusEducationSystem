@@ -14,6 +14,6 @@ jobs:
       uses: JamesIves/github-pages-deploy-action@3.7.1
       env:
         ACCESS_TOKEN: ${{ secrets.WANLUM }}
-        BRANCH: main
+        BRANCH: gh-pages
         FOLDER: build
         BUILD_SCRIPT: npm install && npm run build
