@@ -14,7 +14,7 @@
       <!-- 开始日期-结束日期 -->
       <a-range-picker
         lang="range-picker"
-        :style="{ width: '246px', marginRight: '8px' }"
+        :style="{ width: '246px', marginRight: '10px' }"
         @change="dateRangeChange"
       />
     </template>
@@ -255,8 +255,8 @@ export default {
 <style lang="scss" scoped>
 .user-growth-page {
   float: left;
-  // width: 922px;
-  width: 1022px;
+  // width: 1022px;
+  width: 1066px;
   padding: 0;
   padding-top: 16px;
   padding-bottom: 4px;

@@ -30,7 +30,7 @@ export const useGetStatistics = () => {
       console.log(err);
     });
 
-  // 处理数字数据格式方法 (x,xxx,xxx)
+  //#region  处理数字数据格式方法 (x,xxx,xxx)
   function dealDigitalData(n) {
     const num = String(n);
     const length = num.length;
@@ -54,6 +54,7 @@ export const useGetStatistics = () => {
       return numArr.reverse().join("");
     }
   }
+  //#endregion
 
   // 返回
   return {

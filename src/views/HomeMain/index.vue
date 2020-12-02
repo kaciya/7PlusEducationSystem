@@ -7,9 +7,9 @@
     <div
       :style="{
         padding: '20px',
-        background: '#fff',
+        backgroundColor: '#fff',
         minHeight: '93%',
-        overflow: 'hidden'
+        overflow: 'hidden',
       }"
     >
       <!-- 概要 start -->
@@ -64,7 +64,7 @@ export default {
   components: {
     Crumbs,
     UserAddChart,
-    UserSourceChart
+    UserSourceChart,
   },
   // setup响应api入口
   setup() {
@@ -73,9 +73,9 @@ export default {
     // 返回
     return {
       // 首页统计数据
-      statistics
+      statistics,
     };
-  }
+  },
 };
 </script>
 
