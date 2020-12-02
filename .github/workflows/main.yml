@@ -11,7 +11,7 @@ jobs:
       uses: actions/checkout@main
       
     - name: Build and Deploy
-      uses: JamesIves/github-pages-deploy-action@main
+      uses: JamesIves/github-pages-deploy-action
       env:
         ACCESS_TOKEN: ${{ secrets.WANLUM }}
         BRANCH: main
