@@ -13,6 +13,12 @@ const routes = [
     name: "Login",
     component: Login,
   },
+  // 404
+  {
+    path: "/404",
+    component: () => import("@/views/404"),
+    hidden: true
+  },
   // 主页
   {
     path: "/home",
@@ -25,19 +31,53 @@ const routes = [
         path: "/home",
         redirect: "/home/main",
       },
-      // 首页主体
+      //#region 首页主体
       {
         path: "/home/main",
         name: "HomeMain",
         component: () => import("@/views/HomeMain")
       },
+      //#endregion
+      //#region 用户管理
+      // 用户列表
+      {
+        path: "/user/user-list",
+        component: () => import('@/views/UserList')
+      },
 
-      //#region 权限管理
-      //权限组
+      //#endregion
+      //#region 词库管理
+      //#endregion
+      //#region 题库管理
+      // 标签管理
       {
         path: "/question/label",
         component: () => import("@/views/QuestionLabel")
       },
+      //#endregion
+      //#region 柒加圈
+      //#endregion
+      //#region 用户提交
+      //反馈列表
+      {
+        path: "/sub/feedback",
+        name: "SubFeedback",
+        component: () => import("@/views/Sub/SubFeedback")
+      },
+      //联系记录
+      {
+        path: "/sub/contact",
+        name: "SubContact",
+        component: () => import("@/views/Sub/SubContact")
+      },
+      //#endregion
+      //#region 平台管理
+      // 公告
+      {
+        path: "/platform/notice",
+        component: () => import('@/views/PlatFormManage')
+      },
+      //#endregion
       //#region 运营管理
       {
         // 参数管理
@@ -49,6 +89,9 @@ const routes = [
         path: "/operation/teacher",
         component: () => import("@/views/Operation/TeacherInfo")
       },
+      //#endregion 
+      //#region 权限管理
+      //权限组
       {
         path: "/sys/role",
         name: "SysRole",
@@ -67,24 +110,11 @@ const routes = [
         component: () => import("@/views/Sys/SysLog")
       },
       //#endregion
-
-      //#region 用户提交
-      //反馈列表
-      {
-        path: "/sub/feedback",
-        name: "SubFeedback",
-        component: () => import("@/views/Sub/SubFeedback")
-      },
-      //联系记录
-      {
-        path: "/sub/contact",
-        name: "SubContact",
-        component: () => import("@/views/Sub/SubContact")
-      }
-      //#endregion
     ]
-  }
-]
+  },
+  // The 404 page must be placed at the end
+  { path: "/:catchAll(.*)", redirect: "/404", hidden: true }
+];
 
 const router = createRouter({
   history: createWebHashHistory(),

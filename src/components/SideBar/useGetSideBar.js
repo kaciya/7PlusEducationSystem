@@ -1,16 +1,18 @@
 //#region 获取侧边栏功能
 // 导入响应api
 import { reactive } from "vue";
+// 导入vue-router
+// import { useRouter } from "vue-router";
 
 // 定义功能函数
 export const useGetSideBar = () => {
   // 声明sideBarList
-  let sideBarList = reactive([]);
+  const sideBarList = reactive([]);
   // 声明侧边栏key(id)列表
-  let sideBarKeys = reactive([]);
+  const sideBarKeys = reactive([]);
 
   // 模拟data
-  let sideBarListData = [
+  const sideBarListData = [
     {
       id: 100,
       authName: "首页",
@@ -20,12 +22,12 @@ export const useGetSideBar = () => {
     {
       id: 110,
       authName: "用户管理",
-      path: "users",
+      path: "user",
       children: [
         {
           id: 111,
           authName: "用户列表",
-          path: "home"
+          path: "user/user-list"
         }
       ]
     },
@@ -49,12 +51,12 @@ export const useGetSideBar = () => {
     {
       id: 130,
       authName: "题库管理",
-      path: "ckgl",
+      path: "question",
       children: [
         {
           id: 131,
           authName: "标签管理",
-          path: "home"
+          path: "question/label"
         },
         {
           id: 132,
@@ -93,6 +95,7 @@ export const useGetSideBar = () => {
     {
       id: 150,
       authName: "用户提交",
+      path: "sub",
       children: [
         {
           id: 151,
@@ -109,12 +112,12 @@ export const useGetSideBar = () => {
     {
       id: 160,
       authName: "平台管理",
-      path: "ckgl",
+      path: "platform",
       children: [
         {
           id: 161,
           authName: "公告",
-          path: "home"
+          path: "platform/notice"
         }
       ]
     },
