@@ -8,10 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@main
+      uses: actions/checkout@master
       
     - name: Build and Deploy
-      uses: JamesIves/github-pages-deploy-action
+      uses: JamesIves/github-pages-deploy-action@master
       env:
         ACCESS_TOKEN: ${{ secrets.WANLUM }}
         BRANCH: main
