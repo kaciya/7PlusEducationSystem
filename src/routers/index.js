@@ -54,6 +54,11 @@ const routes = [
         path: "/question/label",
         component: () => import("@/views/QuestionLabel")
       },
+      // 听力题库
+      {
+        path: "/question/listening",
+        component: () => import("@/views/Listening")
+      },
       //#endregion
       //#region 柒加圈
       //#endregion
