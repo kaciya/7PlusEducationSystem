@@ -35,11 +35,11 @@
     <!-- 分页 -->
     <a-pagination
       show-size-changer
-      v-model:current="pagination.Current"
-      v-model:pageSize="pagination.PageSize"
+      v-model:current="pagination.pageNum"
+      v-model:pageSize="pagination.pageSize"
       @change="handleTopicPageChange"
       @showSizeChange="handelTopicSizeChange"
-      :page-size-options="pagination.PageSizeOptions"
+      :page-size-options="pagination.pageSizeOptions"
       :total="pagination.total"
     >
     </a-pagination>
@@ -83,6 +83,7 @@ export default {
   .content {
     width: 260px;
     text-align: center;
+    // 内容文字超出隐藏出现省略号
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

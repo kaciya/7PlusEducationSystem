@@ -12,11 +12,11 @@
     <!-- 分页 -->
     <a-pagination
       show-size-changer
-      v-model:current="pagination.Current"
-      v-model:pageSize="pagination.PageSize"
-      @change="handleTopicPageChange"
-      @showSizeChange="handelTopicSizeChange"
-      :page-size-options="pagination.PageSizeOptions"
+      v-model:current="pagination.pageNum"
+      v-model:pageSize="pagination.pageSize"
+      @change="handleJournalPageChange"
+      @showSizeChange="handleJournalSizeChange"
+      :page-size-options="pagination.pageSizeOptions"
       :total="pagination.total"
     >
     </a-pagination>
@@ -32,14 +32,14 @@ export default {
     const {
       loginJournalData, // 表格数据
       pagination, //分页数据
-      handelTopicSizeChange, // 点击页码跳转事件
-      handleTopicPageChange, // 选择每页显示条数事件
+      handleJournalPageChange, // 点击页码跳转事件
+      handleJournalSizeChange, // 选择每页显示条数事件
     } = LoginJournal(prop.userID);
     return {
       loginJournalData,
       pagination,
-      handelTopicSizeChange,
-      handleTopicPageChange,
+      handleJournalPageChange,
+      handleJournalSizeChange,
     };
   },
 };

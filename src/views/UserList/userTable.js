@@ -55,7 +55,7 @@ export const userTable = () => {
   //#region 分页数据
   const pagination = reactive({
     // 第几页
-    current: 1,
+    pageNum: 1,
     // 每页显示几条
     pageSize: 20,
     // 数据总数
@@ -77,7 +77,7 @@ export const userTable = () => {
   // 获取后台数据
   const getUserTabelData = async () => {
     const res = await httpGet(user.UserPage, {
-      pageNum: pagination.current,
+      pageNum: pagination.pageNum,
       pageSize: pagination.pageSize,
       id: userModel.id,
       mobile: userModel.mobile,
@@ -100,13 +100,13 @@ export const userTable = () => {
   // 点击页码显示对应数据
   const handlePageChange = (page, pageSizes) => {
     pagination.pageSize = pageSizes;
-    pagination.current = page;
+    pagination.pageNum = page;
     getUserTabelData();
   };
   // 选择每页显示多少条数据显示对应条数
   const onShowSizeChange = (page, pageSizes) => {
     pagination.pageSize = pageSizes;
-    pagination.current = page;
+    pagination.pageNum = page;
     getUserTabelData();
   };
 

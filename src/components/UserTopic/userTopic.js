@@ -49,16 +49,16 @@ export const userTopic = (id) => {
   });
   // 分页数据
   const pagination = reactive({
-    Current: 1,
-    PageSize: 10,
-    PageSizeOptions: ["10"],
+    pageNum: 1,
+    pageSize: 10,
+    pageSizeOptions: ["10"],
     total: 0,
   });
   // 获取后台数据
   const getUserTopicData = async () => {
     const res = await httpGet(user.UserTopic + `/${id}`, {
-      pageNum: pagination.Current,
-      pageSize: pagination.PageSize,
+      pageNum: pagination.pageNum,
+      pageSize: pagination.pageSize,
     });
     if (res.code == 200) {
       userTopicData.topicData = res.data;
@@ -67,14 +67,14 @@ export const userTopic = (id) => {
   };
   // 点击页码显示对应数据
   const handleTopicPageChange = (page, pageSizes) => {
-    pagination.PageSize = pageSizes;
-    pagination.Current = page;
+    pagination.pageSize = pageSizes;
+    pagination.pageNum = page;
     getUserTopicData();
   };
   // 选择每页显示多少条数据显示对应条数
   const handelTopicSizeChange = (page, pageSizes) => {
-    pagination.PageSize = pageSizes;
-    pagination.Current = page;
+    pagination.pageSize = pageSizes;
+    pagination.pageNum = page;
     getUserTopicData();
   };
   // 初始化获取数据
