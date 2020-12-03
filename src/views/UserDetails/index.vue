@@ -137,9 +137,7 @@ export default {
       line-height: 45px;
       text-align: left;
       font-size: 13px;
-      font-family: "微软雅黑";
       font-weight: 400;
-      font-style: normal;
       color: rgb(102, 102, 102);
       padding: 0 10px;
       border-left: 1px solid #ddd;
@@ -151,7 +149,6 @@ export default {
       text-align: right;
       padding: 0 16px;
       background-color: #f5f5f5;
-      font-family: "微软雅黑 Bold", "微软雅黑 Regular", "微软雅黑";
     }
   }
 }

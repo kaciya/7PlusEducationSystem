@@ -114,7 +114,7 @@
         </a-table>
         <a-pagination
           show-size-changer
-          v-model:current="pagination.current"
+          v-model:current="pagination.pageNum"
           v-model:pageSize="pagination.pageSize"
           @change="handlePageChange"
           @showSizeChange="onShowSizeChange"
@@ -189,10 +189,9 @@ export default {
     width: 70px;
   }
   .query-box-title {
-    font-family: "微软雅黑";
     font-weight: 400;
-    font-style: normal;
     font-size: 14px;
+    font-style: normal;
     text-align: right;
     color: #333333;
   }
@@ -200,8 +199,8 @@ export default {
 // 查询输入框样式 end
 // 表格样式 start
 .user-table {
-  border: 1px solid #ddd;
   overflow: hidden;
+  border: 1px solid #ddd;
   .user-table-title {
     height: 50px;
     border-bottom: 1px solid #ddd;

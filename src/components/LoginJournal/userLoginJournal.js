@@ -34,19 +34,19 @@ export const LoginJournal = (id) => {
 
   const pagination = reactive({
     // 第几页
-    Current: 1,
+    pageNum: 1,
     // 每页显示多少条
-    PageSize: 10,
+    pageSize: 10,
     // 数据总数
     total: 0,
     // 每页可以显示多少条
-    PageSizeOptions: ["10"],
+    pageSizeOptions: ["10"],
   });
   // 获取后台数据
   const getUserTopicData = async () => {
     const res = await httpGet(user.LoginJournal + `/${id}`, {
-      pageNum: pagination.Current,
-      pageSize: pagination.PageSize,
+      pageNum: pagination.pageNum,
+      pageSize: pagination.pageSize,
     });
     if (res.code == 200) {
       // 数据
@@ -56,16 +56,16 @@ export const LoginJournal = (id) => {
     }
   };
   // 点击页码显示对应数据
-  const handleTopicPageChange = (page, pageSizes) => {
-    pagination.PageSize = pageSizes;
-    pagination.Current = page;
+  const handleJournalPageChange = (page, pageSizes) => {
+    pagination.pageSize = pageSizes;
+    pagination.pageNum = page;
     getUserTopicData(page, pageSizes);
     console.log(1);
   };
   // 选择每页显示多少条数据显示对应条数
-  const handelTopicSizeChange = (page, pageSizes) => {
-    pagination.PageSize = pageSizes;
-    pagination.Current = page;
+  const handleJournalSizeChange = (page, pageSizes) => {
+    pagination.pageSize = pageSizes;
+    pagination.pageNum = page;
     getUserTopicData();
     console.log(2);
   };
@@ -77,7 +77,7 @@ export const LoginJournal = (id) => {
     getUserTopicData,
     loginJournalData,
     pagination,
-    handelTopicSizeChange,
-    handleTopicPageChange,
+    handleJournalPageChange,
+    handleJournalSizeChange,
   };
 };
