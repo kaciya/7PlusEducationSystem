@@ -41,7 +41,7 @@ instance.interceptors.request.use(
 // 4.声明响应拦截器
 instance.interceptors.response.use(
   response => {
-    console.log(response)
+    console.log(response);
     // 这里还需要更改
     let { data } = response;
     // 这里可以对后端的一些状态码进行处理
@@ -73,8 +73,8 @@ instance.interceptors.response.use(
           message.warning("登录超时");
           setTimeout(() => {
             window.location.replace("/");
-          }, 200)
-        }, 100)
+          }, 200);
+        }, 100);
         return Promise.reject(error);
     }
     //#endregion
@@ -98,14 +98,14 @@ instance.interceptors.response.use(
     // 计算重试次数
     config.__retryCount += 1;
     // 创建一个新的Promise 来处理 exponential backoff
-    let backoff = new Promise(function (resolve) {
-      setTimeout(function () {
+    let backoff = new Promise(function(resolve) {
+      setTimeout(function() {
         resolve();
       }, config.retryDelay || 1);
     });
 
     // return the promise in which  recalls axios to retry the request
-    return backoff.then(function () {
+    return backoff.then(function() {
       return instance(config);
     });
   }

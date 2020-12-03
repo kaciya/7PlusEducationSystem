@@ -5,19 +5,19 @@ const routes = [
   // 默认重定向到登录页
   {
     path: "/",
-    redirect: "/login",
+    redirect: "/login"
   },
   // 登录页
   {
     path: "/login",
     name: "Login",
-    component: Login,
+    component: Login
   },
   // 404
   {
     path: "/404",
     component: () => import("@/views/404"),
-    hidden: true,
+    hidden: true
   },
   // 主页
   {
@@ -29,26 +29,26 @@ const routes = [
       // 默认重定向首页主体
       {
         path: "/home",
-        redirect: "/home/main",
+        redirect: "/home/main"
       },
       //#region 首页主体
       {
         path: "/home/main",
         name: "HomeMain",
-        component: () => import("@/views/HomeMain"),
+        component: () => import("@/views/HomeMain")
       },
       //#endregion
       //#region 用户管理
       // 用户列表
       {
         path: "/user/user-list",
-        component: () => import("@/views/UserList"),
+        component: () => import("@/views/UserList")
       },
       // 用户详情
       {
         path: "/user/user-details/:userID",
         component: () => import("@/views/UserDetails"),
-        props: true,
+        props: true
       },
       //#endregion
       //#region 词库管理
@@ -57,12 +57,12 @@ const routes = [
       // 标签管理
       {
         path: "/question/label",
-        component: () => import("@/views/QuestionLabel"),
+        component: () => import("@/views/QuestionLabel")
       },
       // 听力题库
       {
         path: "/question/listening",
-        component: () => import("@/views/Listening"),
+        component: () => import("@/views/Listening")
       },
       //#endregion
       //#region 柒加圈
@@ -72,32 +72,32 @@ const routes = [
       {
         path: "/sub/feedback",
         name: "SubFeedback",
-        component: () => import("@/views/Sub/SubFeedback"),
+        component: () => import("@/views/Sub/SubFeedback")
       },
       //联系记录
       {
         path: "/sub/contact",
         name: "SubContact",
-        component: () => import("@/views/Sub/SubContact"),
+        component: () => import("@/views/Sub/SubContact")
       },
       //#endregion
       //#region 平台管理
       // 公告
       {
         path: "/platform/notice",
-        component: () => import("@/views/PlatFormManage"),
+        component: () => import("@/views/PlatFormManage")
       },
       //#endregion
       //#region 运营管理
       {
         // 参数管理
         path: "/operation/param",
-        component: () => import("@/views/Operation/Parameter"),
+        component: () => import("@/views/Operation/Parameter")
       },
       {
         // 师咨信息
         path: "/operation/teacher",
-        component: () => import("@/views/Operation/TeacherInfo"),
+        component: () => import("@/views/Operation/TeacherInfo")
       },
       //#endregion
       //#region 权限管理
@@ -105,30 +105,30 @@ const routes = [
       {
         path: "/sys/role",
         name: "SysRole",
-        component: () => import("@/views/Sys/SysRole"),
+        component: () => import("@/views/Sys/SysRole")
       },
       //账号管理
       {
         path: "/sys/user",
         name: "SysUser",
-        component: () => import("@/views/Sys/SysUser"),
+        component: () => import("@/views/Sys/SysUser")
       },
       //操作日志
       {
         path: "/sys/log",
         name: "SysLog",
-        component: () => import("@/views/Sys/SysLog"),
-      },
+        component: () => import("@/views/Sys/SysLog")
+      }
       //#endregion
-    ],
+    ]
   },
   // The 404 page must be placed at the end
-  { path: "/:catchAll(.*)", redirect: "/404", hidden: true },
+  { path: "/:catchAll(.*)", redirect: "/404", hidden: true }
 ];
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes,
+  routes
 });
 
 // 添加路由前置守卫
@@ -143,7 +143,7 @@ router.beforeEach((to, from, next) => {
   if (to.name !== "Login" && !isAuthenticated) {
     // 强制转到login
     next({
-      name: "Login",
+      name: "Login"
     });
   } else {
     next(); // 否则放行
