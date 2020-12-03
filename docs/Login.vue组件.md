@@ -64,8 +64,6 @@ export default router;
     <a-layout-content>
       <a-row>
         <a-col :span="8" :offset="8">
-            
-            
         </a-col>
       </a-row>
     </a-layout-content>
@@ -165,8 +163,6 @@ export default {
 };
 </script>
 ```
-
-
 
 5.3 密码输入框模板 （表单验证功能分离到了userLoginRules.js）
 

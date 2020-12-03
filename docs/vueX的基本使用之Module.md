@@ -40,15 +40,15 @@ const state = {
   useName: "sam"
 };
 const mutations = {
- 
+
 };
 const actions = {
- 
+
 };
 const getters = {
- 
+
 };
- 
+
 // 不要忘记把state, mutations等暴露出去。
 export default {
   state,
@@ -80,7 +80,7 @@ export default createStore({
   <h1>{{useName}}</h1>
  </div>
 </template>
- 
+
 <script>
 export default {
  // computed属性，从store 中获取状态state，不要忘记login命名空间。
@@ -112,7 +112,7 @@ const mutations = {
     state.useName = anotherName;
   }
 };
- 
+
 const actions = {
   changeName ({commit},anotherName) {
     commit("CHANGE_NAME", anotherName)
@@ -129,7 +129,7 @@ methods: {
    this.$store.dispatch("changeName", "Jason")
   }
 },
-    
+
 说明：
    在模块中，state 是被限制到模块的命名空间下，需要命名空间才能访问。 但actions 和mutations, 其实还有 getters 却没有被限制，在默认情况下，它们是注册到全局命名空间下的，所谓的注册到全局命名空间下，其实就是我们访问它们的方式和原来没有module 的时候是一样的。比如没有module 的时候，this.$store.dispatch(“actions”), 现在有了modules, actions 也写在了module 下面（changeName 写到了login目录下的index.js中），我们仍然可以这么写，this.$store.dispatch(“changeName”)， 组件中的getters, 也是通过 this.$store.getters.module中getters 来获取。
 ```
@@ -169,7 +169,7 @@ methods: {
 <template>
  <div id="app">
   <h1>{{useName}}</h1>
- 
+
   <!-- 增加h2 展示 localJobTitle -->
   <h2>{{jobTitle}}</h2>
   <!-- 添加按钮 -->
@@ -178,7 +178,7 @@ methods: {
   </div>
  </div>
 </template>
- 
+
 <script>
 import {mapActions, mapState,mapGetters} from "vuex";
 export default {
@@ -187,7 +187,7 @@ export default {
   ...mapState({
    useName: state => state.loginStroe.useName
   }),
- 
+
   // mapGeter 直接获得全局注册的getters
   ...mapGetters(["jobTitle"])
  },
@@ -251,7 +251,7 @@ export default {
  <div id="app">
   <img src="./assets/logo.png">
   <h1 @click ="alertName">{{useName}}</h1>
- 
+
   <!-- 增加h2 展示 localJobTitle -->
   <h2>{{localJobTitle}}</h2>
   <!-- 添加按钮 -->
@@ -260,7 +260,7 @@ export default {
   </div>
  </div>
 </template>
- 
+
 <script>
 import {mapActions, mapState,mapGetters} from "vuex";
 export default {
@@ -269,7 +269,7 @@ export default {
   ...mapState("loginStroe",{
    useName: state => state.useName
   }),
- 
+
    localJobTitle() {
     return this.$store.getters["loginStroe/localJobTitle"]
    }
@@ -316,4 +316,3 @@ export default {
 ```http
 https://blog.csdn.net/qq_39523111/article/details/79638614?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-5.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-5.control
 ```
-
