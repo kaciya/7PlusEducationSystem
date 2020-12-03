@@ -12,7 +12,5 @@ jobs:
       
     - name: Build and Deploy
       uses: JamesIves/github-pages-deploy-action@3.7.1
-      env:
-        ACCESS_TOKEN: ${{ secrets.WANLUM }}
-        BUILD_SCRIPT: npm install && npm run build
+
 
