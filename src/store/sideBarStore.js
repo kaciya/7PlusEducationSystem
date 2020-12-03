@@ -8,7 +8,7 @@ export default {
     return {
       // 侧边栏伸缩状态
       collapsed: false
-    };
+    }; 
   },
   mutations: {
     // 切换侧边栏伸缩状态
