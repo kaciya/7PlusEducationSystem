@@ -15,7 +15,7 @@ jobs:
       env:
         ACCESS_TOKEN: ${{ secrets.WANLUM }}
         # 自己见一个分支 用来存储
-        BRANCH: gh-pages
+        BRANCH: main
         FOLDER: build
         BUILD_SCRIPT: npm install && npm run build
 
