@@ -8,7 +8,7 @@
       :style="{
         padding: '20px',
         background: '#fff',
-        minHeight: '93%',
+        minHeight: '93%'
       }"
     >
       <!-- 查询输入框 start -->
@@ -96,7 +96,7 @@
           :columns="userTableData.tableColumns"
           :data-source="userTableData.tableData.records"
           :pagination="false"
-          :row-key="(record) => record.id"
+          :row-key="record => record.id"
         >
           <!-- 来源 -->
           <template #channel="{ record }">
@@ -140,7 +140,7 @@ import { userReset } from "./userReset";
 export default {
   // 使用组件
   components: {
-    Crumbs,
+    Crumbs
   },
   // setup响应api入口
   setup() {
@@ -152,7 +152,7 @@ export default {
       handlePageChange, // 点击页码事件
       onShowSizeChange, // 选择每页数据条数事件
       getUserTabelData, // 获取数据方法
-      userTableData, // 表格数据
+      userTableData // 表格数据
     } = userTable();
     // 重置事件
     // userForm:表单ref
@@ -168,9 +168,9 @@ export default {
       handlePageChange,
       onShowSizeChange,
       getUserTabelData,
-      userTableData,
+      userTableData
     };
-  },
+  }
 };
 </script>
 

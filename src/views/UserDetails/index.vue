@@ -5,7 +5,7 @@
       :crumbName="[
         { name: '用户管理' },
         { name: '用户列表', route: '/user/user-list' },
-        { name: '详情' },
+        { name: '详情' }
       ]"
     />
     <!-- 面包屑 end -->
@@ -14,7 +14,7 @@
       :style="{
         padding: '20px',
         background: '#fff',
-        minHeight: '93%',
+        minHeight: '93%'
       }"
     >
       <!-- 基础信息 start -->
@@ -93,7 +93,7 @@ export default {
   components: {
     Crumbs,
     Topic,
-    Journal,
+    Journal
   },
   // setup响应api入口
   setup(prop) {
@@ -102,9 +102,9 @@ export default {
     //#endregion
     return {
       // 用户个人信息
-      userDetailData,
+      userDetailData
     };
-  },
+  }
 };
 </script>
 

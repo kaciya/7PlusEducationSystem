@@ -6,7 +6,7 @@
       :columns="loginJournalData.journalColumns"
       :data-source="loginJournalData.journalData.records"
       :pagination="false"
-      :row-key="(record) => record.ip"
+      :row-key="record => record.ip"
     >
     </a-table>
     <!-- 分页 -->
@@ -33,15 +33,15 @@ export default {
       loginJournalData, // 表格数据
       pagination, //分页数据
       handleJournalPageChange, // 点击页码跳转事件
-      handleJournalSizeChange, // 选择每页显示条数事件
+      handleJournalSizeChange // 选择每页显示条数事件
     } = LoginJournal(prop.userID);
     return {
       loginJournalData,
       pagination,
       handleJournalPageChange,
-      handleJournalSizeChange,
+      handleJournalSizeChange
     };
-  },
+  }
 };
 </script>
 

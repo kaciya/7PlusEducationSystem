@@ -15,17 +15,17 @@ export const userTable = () => {
     tableColumns: [
       {
         title: "ID",
-        dataIndex: "id",
+        dataIndex: "id"
       },
       {
         title: "用户昵称",
         dataIndex: "userName",
-        width: "18%",
+        width: "18%"
       },
       {
         title: "手机号",
         dataIndex: "mobile",
-        width: "18%",
+        width: "18%"
       },
       {
         title: "注册时间",
@@ -34,21 +34,21 @@ export const userTable = () => {
         // 排序 默认降序
         defaultSortOrder: "descend",
         // 排序规则
-        sorter: (a, b) => (a.createTime > b.createTime ? 1 : -1),
+        sorter: (a, b) => (a.createTime > b.createTime ? 1 : -1)
       },
       {
         title: "来源",
         slots: { customRender: "channel" },
         align: "center",
-        width: "18%",
+        width: "18%"
       },
       {
         title: "操作",
         align: "center",
         width: "18%",
-        slots: { customRender: "operation" },
-      },
-    ],
+        slots: { customRender: "operation" }
+      }
+    ]
   });
 
   // #endregion 表单数据
@@ -61,14 +61,14 @@ export const userTable = () => {
     // 数据总数
     total: 0,
     // 每页可以显示多少条
-    pageSizeOptions: ["20"],
+    pageSizeOptions: ["20"]
   });
   //#endregion 分页数据
   //#region 输入框数据
   const userModel = reactive({
     userName: "",
     mobile: "",
-    id: "",
+    id: ""
   });
   //#endregion 输入框数据
   //#region 获取（查询）数据
@@ -81,7 +81,7 @@ export const userTable = () => {
       pageSize: pagination.pageSize,
       id: userModel.id,
       mobile: userModel.mobile,
-      userName: userModel.userName,
+      userName: userModel.userName
     });
     if (res.code == 200) {
       // 数据
@@ -138,6 +138,6 @@ export const userTable = () => {
     getUserTabelData,
     queryUserList,
     handlePageChange,
-    onShowSizeChange,
+    onShowSizeChange
   };
 };

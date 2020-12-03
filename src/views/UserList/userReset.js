@@ -6,7 +6,7 @@ import { ExclamationCircleOutlined } from "@ant-design/icons-vue";
 // 引入确认框
 import { createVNode } from "vue";
 import { Modal } from "ant-design-vue";
-export const userReset = (getUserTabelData) => {
+export const userReset = getUserTabelData => {
   //#region 重置
   // 定义表单数据相当于$ref
   let userRef = ref(null);
@@ -26,13 +26,13 @@ export const userReset = (getUserTabelData) => {
       // 点击取消事件
       onCancel() {
         message.info("您已经取消重置");
-      },
+      }
     });
   };
   //#endregion
 
   return {
     userRef,
-    resetUserList,
+    resetUserList
   };
 };
