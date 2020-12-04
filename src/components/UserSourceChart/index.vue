@@ -11,9 +11,9 @@
         id="myChart"
         ref="myCharts"
         :style="{
-          width: '600px',
-          height: '470px',
-          left: '-30px',
+          width: '500px',
+          height: '100%',
+          left: '14px',
           top: '-50px'
         }"
       />
@@ -163,11 +163,11 @@ export default {
 <style lang="scss" scoped>
 .user-source-page {
   float: left;
-  width: 522px;
+  // width: 500px;
   padding: 0;
   padding-top: 16px;
   padding-bottom: 4px;
-  margin-left: 20px;
+  // margin-left: 20px;
 
   .user-source-page-heading {
     padding-left: 24px;
@@ -177,9 +177,9 @@ export default {
 }
 
 .user-source {
-  width: 100%;
+  width: 500px;
+  height: 470px;
   border-top: 1px solid #e9e9e9;
-  // padding-bottom: 10px;
   overflow: hidden;
 }
 </style>
