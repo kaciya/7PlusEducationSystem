@@ -99,6 +99,11 @@ const routes = [
         path: "/operation/teacher",
         component: () => import("@/views/Operation/TeacherInfo")
       },
+      {
+        // 互动练习
+        path: "/operation/exercise",
+        component: () => import("@/views/Operation/Exercise")
+      },
       //#endregion
       //#region 权限管理
       //权限组
