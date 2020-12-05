@@ -29,7 +29,7 @@
       <!-- 头部按钮 end -->
       <!-- 表格 start -->
       <a-table
-        :columns="columns"
+        :columns="teacherListData.columns"
         :data-source="teacherListData.data"
         :row-key="record => record.id"
         bordered
@@ -56,7 +56,7 @@
         <a-col :span="24">
           <a-pagination
             show-size-changer
-            v-model:current="current1"
+            v-model:current="pageNum"
             v-model:pageSize="pageSize"
             :total="teacherListData.total"
             style="margin-top: 15px;float: right"
@@ -70,26 +70,25 @@
       <!-- 添加用户信息模态框 start -->
       <a-modal
           title="添加成员"
-          v-model:visible="ModalState"
+          v-model:visible="addLabelVisible"
           @ok="handleOk"
           :confirm-loading="confirmLoading"
       >
         <a-form
-          ref="teacherModelRef"
-          :model="teacherModel"
-          :rules="teacherFormRule"
-          name="custom-validation"
+          ref="addLabelFormRef"
+          :model="addLabelForm"
+          :rules="addLabelRule"
         >
           <a-row>
             <a-col :span="24">
               <a-form-item has-feedback label="顺序值" name="sort" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
-                <a-input  type="text" autocomplete="off" v-model:value="teacherModel.sort" />
+                <a-input  type="text" autocomplete="off" v-model:value="addLabelForm.sort" />
               </a-form-item>
               <a-form-item has-feedback label="老师名称" name="name" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
-                <a-input  type="text" autocomplete="off" v-model:value="teacherModel.name"/>
+                <a-input  type="text" autocomplete="off" v-model:value="addLabelForm.name"/>
               </a-form-item>
               <a-form-item has-feedback label="上传图片" name="photo" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
-                <a-input  type="text" autocomplete="off" v-model:value="teacherModel.photo"/>
+                <a-input  type="text" autocomplete="off" v-model:value="addLabelForm.photo"/>
               </a-form-item>
 <!--              <a-form-item has-feedback label="上传图片" name="photo" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
                 <a-upload
@@ -100,10 +99,10 @@
                 </a-upload>
               </a-form-item>-->
               <a-form-item label="简介" :labelCol="{ span: 4 }" :wrapperCol="{span: 16}" name="profiles">
-                <a-textarea  placeholder="请输入简介" :rows="5" v-model:value="teacherModel.profiles" />
+                <a-textarea  placeholder="请输入简介" :rows="5" v-model:value="addLabelForm.profiles" />
               </a-form-item>
               <a-form-item label="具体介绍" :labelCol="{ span: 4 }" :wrapperCol="{span: 16}" name="position">
-                <a-textarea  placeholder="请输入具体介绍" :rows="5" v-model:value="teacherModel.position" />
+                <a-textarea  placeholder="请输入具体介绍" :rows="5" v-model:value="addLabelForm.position" />
               </a-form-item>
             </a-col>
           </a-row>
@@ -113,26 +112,26 @@
       <!-- 编辑用户信息模态框 start -->
       <a-modal
         title="编辑成员"
-        v-model:visible="EditModalState"
+        v-model:visible="EditLabelVisible"
         @ok="handleEditOk"
         :confirm-loading="EditModalLoad"
       >
         <a-form
           ref="teacherEditlRef"
-          :model="teacherEditModel"
-          :rules="teacherEditRule"
+          :model="editLabForm"
+          :rules="editLabelRule"
           name="custom-validation"
         >
           <a-row>
             <a-col :span="24">
               <a-form-item has-feedback label="顺序值" name="sort" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
-                <a-input  type="text" autocomplete="off" v-model:value="teacherEditModel.sort" />
+                <a-input  type="text" autocomplete="off" v-model:value="editLabForm.sort" />
               </a-form-item>
               <a-form-item has-feedback label="老师名称" name="name" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
-                <a-input  type="text" autocomplete="off" v-model:value="teacherEditModel.name"/>
+                <a-input  type="text" autocomplete="off" v-model:value="editLabForm.name"/>
               </a-form-item>
               <a-form-item has-feedback label="上传图片" name="photo" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
-                <a-input  type="text" autocomplete="off" v-model:value="teacherEditModel.photo"/>
+                <a-input  type="text" autocomplete="off" v-model:value="editLabForm.photo"/>
               </a-form-item>
               <!--              <a-form-item has-feedback label="上传图片" name="photo" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
                               <a-upload
@@ -143,10 +142,10 @@
                               </a-upload>
                             </a-form-item>-->
               <a-form-item label="简介" :labelCol="{ span: 4 }" :wrapperCol="{span: 16}" name="profiles">
-                <a-textarea  placeholder="请输入简介" :rows="5" v-model:value="teacherEditModel.profiles" />
+                <a-textarea  placeholder="请输入简介" :rows="5" v-model:value="editLabForm.profiles" />
               </a-form-item>
               <a-form-item label="具体介绍" :labelCol="{ span: 4 }" :wrapperCol="{span: 16}" name="position">
-                <a-textarea  placeholder="请输入具体介绍" :rows="5" v-model:value="teacherEditModel.position" />
+                <a-textarea  placeholder="请输入具体介绍" :rows="5" v-model:value="editLabForm.position" />
               </a-form-item>
             </a-col>
           </a-row>
@@ -185,44 +184,41 @@ export default {
   // setup响应api入口
   setup() {
     // 分页
-    const { current1,pageSize,loadState,pageSizeOptions,handleTogglePage,showSizeChange } = getPagination();
+    const { pageNum,pageSize,loadState,pageSizeOptions,handleTogglePage,showSizeChange } = getPagination();
 
     // 获取数据
-    getTacherList(current1.value, pageSize.value, () => {
+    getTacherList(pageNum.value, pageSize.value, () => {
       loadState.value = false;
-      console.log(loadState);
     });
 
     //#region 删除老师
     const handleDeleteTeacher = (id) => {
       DeleteTeacher(id,() => {
         // 获取数据
-        getTacherList(current1.value, pageSize.value, () => {
+        getTacherList(pageNum.value, pageSize.value, () => {
           loadState.value = false;
-          console.log(loadState);
         });
       })
     }
     //#endregion
 
     //#region 添加老师
-    const { ModalState,showModal,teacherModel,teacherFormRule,confirmLoading,teacherModelRef,handleSubmit } = addTeacher();
+    const { addLabelVisible,showModal,addLabelForm,addLabelRule,confirmLoading,addLabelFormRef,handleSubmit } = addTeacher();
     // 点击ok的回调函数
     const handleOk = () => {
       handleSubmit(() => {
-        getTacherList(current1.value, pageSize.value, () => {
+        getTacherList(pageNum.value, pageSize.value, () => {
           loadState.value = false;
-          console.log(loadState);
         })
       });
     }
     //#endregion
 
     //#region 编辑老师
-    const { EditModalState,teacherEditModel,teacherEditRule,teacherEditlRef,EditModalLoad,showEditModal,handleEditSubmit } = editTeacher();
+    const { EditLabelVisible,editLabForm,editLabelRule,teacherEditlRef,EditModalLoad,showEditModal,handleEditSubmit } = editTeacher();
     const handleEditOk = () => {
       handleEditSubmit(() => {
-        getTacherList(current1.value, pageSize.value, () => {
+        getTacherList(pageNum.value, pageSize.value, () => {
           loadState.value = false;
         });
       })
@@ -235,7 +231,7 @@ export default {
       //#region 获取列表数据以及分页
       teacherListData,
       loadState,
-      current1,
+      pageNum,
       pageSize,
       pageSizeOptions,
       handleTogglePage,
@@ -244,20 +240,20 @@ export default {
       // 删除教师
       handleDeleteTeacher,
       //#region 添加老师
-      ModalState,
+      addLabelVisible,
       showModal,
-      teacherModel,
-      teacherFormRule,
+      addLabelForm,
+      addLabelRule,
       handleSubmit,
-      teacherModelRef,
+      addLabelFormRef,
       confirmLoading,
       handleOk,
       //#endregion
       //#region 编辑老师
-      EditModalState,
+      EditLabelVisible,
       EditModalLoad,
-      teacherEditModel,
-      teacherEditRule,
+      editLabForm,
+      editLabelRule,
       teacherEditlRef,
       showEditModal,
       handleEditOk,

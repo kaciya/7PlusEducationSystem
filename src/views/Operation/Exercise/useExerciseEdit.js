@@ -3,7 +3,7 @@
  * */
 import { reactive, ref } from "vue";
 // 引入api
-import { Exercise } from "@/api/Operation/Exercise";
+import { exercise } from "@/api/operationAPI";;
 import { httpPost } from "@/utils/http";
 
 export const ExerciseEdit = () => {
@@ -13,13 +13,13 @@ export const ExerciseEdit = () => {
   // 获取对象名称
   const objectName = ref(null);
   // 设置模态框状态
-  const ExerciseModalState = ref(false);
+  const editVisibility = ref(false);
   // 设置模态框按钮状态
   const confirmLoading = ref(false);
 
   // 显示模态框
-  const showExerciseModal = (id,name) => {
-    ExerciseModalState.value = true;
+  const editShow = (id,name) => {
+    editVisibility.value = true;
     // 获取用户id
     userId.value = id;
     // 获取对象名称
@@ -27,7 +27,7 @@ export const ExerciseEdit = () => {
   }
 
   // 获取表单的值
-  const ExerciseEditModel = reactive({
+  const editLabForm = reactive({
     content: ''
   })
 
@@ -41,7 +41,7 @@ export const ExerciseEdit = () => {
     }
   }
   // 创建表单校验规则
-  const ExerciseEditModelRule = {
+  const editLabFormRule = {
     content: [
       { validator: validateContent, trigger: 'change' }
     ]
@@ -55,15 +55,15 @@ export const ExerciseEdit = () => {
       .validate()
       .then(() => {
         // 发送ajax请求
-        httpPost(Exercise.UpdateExerciseContent,{
+        httpPost(exercise.UpdateExerciseContent,{
           id: userId.value,
-          content: ExerciseEditModel.content,
+          content: editLabForm.content,
           name: objectName.value
         })
           .then(res => {
             console.log(res);
             confirmLoading.value = false;
-            ExerciseModalState.value = false;
+            editVisibility.value = false;
             // 重新获取数据
             callback();
           })
@@ -80,12 +80,12 @@ export const ExerciseEdit = () => {
   }
 
   return {
-    ExerciseModalState,
-    ExerciseEditModel,
-    ExerciseEditModelRule,
+    editVisibility,
+    editLabForm,
+    editLabFormRule,
     ExerciseEditRef,
     confirmLoading,
-    showExerciseModal,
+    editShow,
     ExerciseEditSubmit
   }
 }
