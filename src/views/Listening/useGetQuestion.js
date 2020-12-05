@@ -4,7 +4,7 @@ import { httpGet } from "@/utils/http"
 // 导入接口配置文件
 import question from "@/api/questionAPI";
 // 引入响应式API
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 export function useGetQuestion() {
   // 当前题目分类
@@ -22,6 +22,10 @@ export function useGetQuestion() {
   // 总条数
   const total = ref(0);
 
+  // 记录当前页码，每页条数
+  const pagenum = ref(1);
+  const pagesize = ref(10);
+
 
   // 获取题目
   const getQuestion = () => {
@@ -34,9 +38,9 @@ export function useGetQuestion() {
       // 标签
       labelId: labelId.value,
       // 页码
-      pageNum: 1,
+      pageNum: pagenum.value,
       // 分页大小
-      pageSize: 10,
+      pageSize: pagesize.value,
       // 类型  1.听
       type: 1,
     }).then((res) => {
@@ -45,16 +49,38 @@ export function useGetQuestion() {
       if (success) {
         // 保存数据
         questionList.value = data.records;
+        console.log(data);
         // 记录数据库中的数据总数
         total.value = data.total;
         // 关闭加载状态
         isLoading.value = false;
-
       }
     }).catch((err) => {
       console.log(err);
     })
+  };
+
+  // 跳转页码时
+  function changePagenum(page, pageSize) {
+    // 根据分页器的 page, size 刷新页面
+    pagenum.value = page;
+    pagesize.value = pageSize;
+    getQuestion();
   }
+
+  // 修改每页多少条
+  function showSizeChange(current, size) {
+    // 根据分页器的 page, size 刷新页面
+    pagenum.value = current;
+    pagesize.value = size;
+    getQuestion();
+  }
+
+  // 初始化时
+  onMounted(() => {
+    // 获取题目列表
+    getQuestion();
+  });
 
   return {
     category,
@@ -62,7 +88,9 @@ export function useGetQuestion() {
     getQuestion,
     questionList,
     isLoading,
-    total
+    total,
+    changePagenum,
+    showSizeChange
   }
 }
 //#endregion

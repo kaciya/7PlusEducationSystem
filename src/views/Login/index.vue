@@ -55,7 +55,12 @@
                 <a-row type="flex" justify="space-between">
                   <a-col :span="5">
                     <!-- 确定登录按钮 start -->
-                    <a-button type="primary" size="large" @click="loginSubmit">
+                    <a-button
+                      type="primary"
+                      size="large"
+                      :loading="logining"
+                      @click="loginSubmit"
+                    >
                       登录
                     </a-button>
                     <!-- 确定登录按钮 end -->
@@ -94,12 +99,17 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
 import { userLoginRules } from "./userLoginRules";
 // 导入表单登录方法
 import { useLoginSubmit } from "./useLoginSubmit";
+// 导入清除密码功能
+import { useClearPassword } from "./useClearPassword";
+
 export default {
   setup() {
     // 表单提交
-    let { loginData, loginSubmit, loginForm, clearPassword } = useLoginSubmit();
+    let { loginData, loginSubmit, loginForm, logining } = useLoginSubmit();
     // 表单校验
     let { loginRules } = userLoginRules();
+    // 清除密码
+    let { clearPassword } = useClearPassword(loginData);
     // 返回
     return {
       // 登录表单
@@ -112,6 +122,8 @@ export default {
       loginSubmit,
       // 点击删除密码
       clearPassword,
+      // 正在登录的状态
+      logining,
     };
   },
   components: {

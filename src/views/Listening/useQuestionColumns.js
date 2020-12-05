@@ -29,7 +29,7 @@ export function useQuestionColumns() {
       },
       {
         title: "备注",
-        key: "remark"
+        dataIndex: "remark"
       },
       {
         title: "练习次数",
@@ -37,7 +37,8 @@ export function useQuestionColumns() {
       },
       {
         title: "操作",
-        key: "operation"
+        key: "operation",
+        slots: { customRender: 'operation' }
       },
     ]
   );
