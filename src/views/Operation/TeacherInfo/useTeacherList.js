@@ -3,13 +3,13 @@ import {
   httpGet
 } from "@/utils/http";
 // 引入api
-import techaer from "@/api/Operation/TeacherInfo";
+import { teacherInfo } from "@/api/operationAPI";
 import {
   reactive, ref
 } from "vue";
 
 // 创建表格格式
-export const columns = reactive([{
+const columns = reactive([{
     title: '序号',
     width: 80,
     slots: { customRender: 'index' }
@@ -38,12 +38,14 @@ export const columns = reactive([{
 ]);
 
 // 创建表格数据
-export const teacherListData = reactive({});
+export const teacherListData = reactive({
+  columns
+});
 
 // 获取教师数据
 export const getTacherList = (pageNum = 1, pageSize = 5,callback) => {
   // 获取数据
-  httpGet(techaer.GetTacherList, {
+  httpGet(teacherInfo.GetTacherList, {
       pageNum,
       pageSize
     })
@@ -71,7 +73,7 @@ export const getPagination = () => {
   // 页面是否在加载
   const loadState = ref(true);
   // 当前页面
-  const current1 = ref(1);
+  const pageNum = ref(1);
   // 当前页面显示多少条数据
   const pageSize = ref(20);
   // 指定每页可以显示多少条
@@ -98,7 +100,7 @@ export const getPagination = () => {
     // 是否在加载数据
     loadState,
     // 当前页面
-    current1,
+    pageNum,
     // 当前页面显示多少条数据
     pageSize,
     // 每页可以显示多少条数据

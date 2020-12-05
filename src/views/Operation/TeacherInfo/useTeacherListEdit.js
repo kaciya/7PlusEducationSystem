@@ -4,13 +4,13 @@
  * */
 import { reactive, ref } from "vue";
 import { httpPost } from "@/utils/http";
-import teacher from "@/api/Operation/TeacherInfo";
+import { teacherInfo } from "@/api/operationAPI";
 import { message } from "ant-design-vue";
 
 // 编辑老师
 export const editTeacher = () => {
   // 编辑模态的框状态
-  const EditModalState = ref(false);
+  const EditLabelVisible = ref(false);
   // 设置模态框确定按钮的加载状态
   const EditModalLoad = ref(false);
   // 获取id
@@ -19,11 +19,11 @@ export const editTeacher = () => {
   // 显示编辑模态框
   const showEditModal = (id) => {
     userId.value = id;
-    EditModalState.value = true;
+    EditLabelVisible.value = true;
   }
 
   // 获取表单数据
-  const teacherEditModel = reactive({
+  const editLabForm = reactive({
     name: '',
     photo: '',
     position: '',
@@ -54,7 +54,7 @@ export const editTeacher = () => {
   }
 
   // 创建表单校验规则
-  const teacherEditRule = reactive({
+  const editLabelRule = reactive({
     sort: [{validator: checkSort, trigger: 'change'}],
     name: [{ required: true, message: '请输入老师名称', trigger: 'change' }],
     profiles: [{validator: checkProfiles, trigger: 'change' }],
@@ -70,11 +70,11 @@ export const editTeacher = () => {
       .validate()
       .then(() => {
         // 创建数据
-        const params = teacherEditModel;
+        const params = editLabForm;
         // 设置id
         params["id"] = userId;
         // 发起ajax请求
-        httpPost(teacher.EditTeacherList,teacherEditModel)
+        httpPost(teacherInfo.EditTeacherList,editLabForm)
           .then(res => {
             console.log(res);
             if (res.code === 200) {
@@ -82,7 +82,7 @@ export const editTeacher = () => {
               // 消息提示
               message.success(res.message);
               // 关闭模态框
-              EditModalState.value = false;
+              EditLabelVisible.value = false;
               // 清除表单里面的值
               teacherEditlRef.value.resetFields();
               callback();
@@ -100,10 +100,10 @@ export const editTeacher = () => {
   }
 
   return {
-    EditModalState,
+    EditLabelVisible,
     EditModalLoad,
-    teacherEditModel,
-    teacherEditRule,
+    editLabForm,
+    editLabelRule,
     teacherEditlRef,
     showEditModal,
     handleEditSubmit

@@ -12,7 +12,7 @@ import { Modal,message } from 'ant-design-vue';
 // 引入http
 import { httpDelete } from "@/utils/http";
 // 引入api
-import teacher from "@/api/Operation/TeacherInfo";
+import { teacherInfo } from "@/api/operationAPI";
 
 // 删除教师方法
 export const DeleteTeacher = (id,callback) => {
@@ -23,7 +23,7 @@ export const DeleteTeacher = (id,callback) => {
     content: createVNode('div', { style: 'color:red;' }, '这将会永久删除'),
     onOk() {
       // 发送请求
-      httpDelete(teacher.DeleteTeacherList + `/${id}`)
+      httpDelete(teacherInfo.DeleteTeacherList + `/${id}`)
         .then(res => {
           // 判断是否删除成功
           if (res.code === 200) {
