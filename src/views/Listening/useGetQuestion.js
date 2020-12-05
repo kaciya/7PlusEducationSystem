@@ -1,6 +1,6 @@
 //#region 选择题目分类
 // 导入get请求
-import { httpGet } from "@/utils/http"
+import { httpGet } from "@/utils/http";
 // 导入接口配置文件
 import question from "@/api/questionAPI";
 // 引入响应式API
@@ -8,10 +8,10 @@ import { ref, onMounted } from "vue";
 
 export function useGetQuestion() {
   // 当前题目分类
-  const category = ref('SST');
+  const category = ref("SST");
 
   // 当前题目标签筛选（默认空字符串为全部）
-  const labelId = ref('');
+  const labelId = ref("");
 
   // 加载状态
   const isLoading = ref(false);

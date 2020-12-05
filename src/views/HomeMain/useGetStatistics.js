@@ -19,41 +19,15 @@ export const useGetStatistics = () => {
         // 处理数据
         for (const key in statistics.data) {
           // 调用处理数字数据
-          // statistics.data[key] = dealDigitalData(statistics.data[key]);
-          if (key == "userCount")
-            statistics.data[key] = dealDigitalData(2805763);
-          else statistics.data[key] = dealDigitalData(1000);
+          // statistics.data[key] = statistics.data[key];
+          if (key == "userCount") statistics.data[key] = 2805763;
+          else statistics.data[key] = 12345;
         }
       }
     })
     .catch(err => {
       console.log(err);
     });
-
-  // 处理数字数据格式方法 (x,xxx,xxx)
-  function dealDigitalData(n) {
-    const num = String(n);
-    const length = num.length;
-    // 长度小于4 直接返回num
-    if (length < 4) {
-      return num;
-    } else {
-      // 转为数组，再反转数组
-      const numArr = num.split("").reverse();
-      // 遍历数组，每3个长度添加一个','
-      for (let i = 3; i < numArr.length; i += 3) {
-        // 如果当前下标无值，跳出循环
-        if (!numArr[i]) break;
-        // 添加','
-        numArr.splice(i, 0, ",");
-        // 索引自增
-        i++;
-      }
-      // console.log(numArr.reverse().join(""));
-      // 返回处理后的数据
-      return numArr.reverse().join("");
-    }
-  }
 
   // 返回
   return {

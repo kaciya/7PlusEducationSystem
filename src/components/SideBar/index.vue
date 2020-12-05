@@ -8,7 +8,7 @@
   >
     <!-- logo标题 -->
     <div class="logo">
-      <img src="../../assets/images/sideBar/logo.svg" alt="" />
+      <img src="@/assets/images/sideBar/logo.svg" alt="" />
       <span class="title">柒加教育</span>
     </div>
     <!-- 菜单栏 -->
@@ -50,7 +50,7 @@
 
 <script>
 // 导入侧边栏方法
-import { useGetSideBar } from "../SideBar/useGetSideBar";
+import { useGetSideBar } from "./useGetSideBar";
 // 导入共享collapsed方法
 import { useSetCollapsed } from "../Header/useSetCollapsed";
 // 导入图标icons
@@ -94,21 +94,9 @@ export default {
 
   /*滚动条样式*/
   &::-webkit-scrollbar {
-    /*滚动条整体样式*/
     width: 0px; /*高宽分别对应横竖滚动条的尺寸*/
     height: 0px;
-  }
-  &::-webkit-scrollbar-thumb {
-    /*滚动条里面小方块*/
-    border-radius: 5px;
-    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-    background: rgba(255, 255, 255, 0.8);
-  }
-  &::-webkit-scrollbar-track {
-    /*滚动条里面轨道*/
-    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-    border-radius: 0;
-    background: rgba(255, 255, 255, 0.9);
+    display: none;
   }
 
   // logo
@@ -136,7 +124,7 @@ export default {
 
   // menu
   .ant-menu {
-    transition: background 0.3s, width 0.1s cubic-bezier(0.2, 0, 0, 1) 0s;
+    transition: backgroundColor 0.3s, width 0.1s cubic-bezier(0.2, 0, 0, 1) 0s;
   }
 
   .ant-menu-item .anticon,
@@ -193,13 +181,13 @@ export default {
 </style>
 <style scoped>
 /* 样式穿透 */
-#side-bar /deep/ .ant-menu-vertical-left .ant-menu-item,
-#side-bar /deep/ .ant-menu-vertical-right .ant-menu-item,
-#side-bar /deep/ .ant-menu-inline .ant-menu-item,
-#side-bar /deep/ .ant-menu-vertical .ant-menu-submenu-title,
-#side-bar /deep/ .ant-menu-vertical-left .ant-menu-submenu-title,
-#side-bar /deep/ .ant-menu-vertical-right .ant-menu-submenu-title,
-#side-bar /deep/ .ant-menu-inline .ant-menu-submenu-title {
+#side-bar ::v-deep(.ant-menu-vertical-left .ant-menu-item),
+#side-bar ::v-deep(.ant-menu-vertical-right .ant-menu-item),
+#side-bar ::v-deep(.ant-menu-inline .ant-menu-item),
+#side-bar ::v-deep(.ant-menu-vertical .ant-menu-submenu-title),
+#side-bar ::v-deep(.ant-menu-vertical-left .ant-menu-submenu-title),
+#side-bar ::v-deep(.ant-menu-vertical-right .ant-menu-submenu-title),
+#side-bar ::v-deep(.ant-menu-inline .ant-menu-submenu-title) {
   height: 51px;
   line-height: 51px;
   margin-top: 0;
@@ -207,10 +195,10 @@ export default {
   border-bottom: 1px solid #f2f2f2;
 }
 
-#side-bar /deep/ .ant-menu-vertical .ant-menu-item:not(:last-child),
-#side-bar /deep/ .ant-menu-vertical-left .ant-menu-item:not(:last-child),
-#side-bar /deep/ .ant-menu-vertical-right .ant-menu-item:not(:last-child),
-#side-bar /deep/ .ant-menu-inline .ant-menu-item:not(:last-child) {
+#side-bar ::v-deep(.ant-menu-vertical .ant-menu-item:not(:last-child)),
+#side-bar ::v-deep(.ant-menu-vertical-left .ant-menu-item:not(:last-child)),
+#side-bar ::v-deep(.ant-menu-vertical-right .ant-menu-item:not(:last-child)),
+#side-bar ::v-deep(.ant-menu-inline .ant-menu-item:not(:last-child)) {
   margin-bottom: 0px;
   border-bottom: 1px solid #f2f2f2;
 }

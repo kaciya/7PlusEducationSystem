@@ -45,6 +45,6 @@ export function useQuestionColumns() {
 
   return {
     questionColumns
-  }
+  };
 }
 //#endregion
