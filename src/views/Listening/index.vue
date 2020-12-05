@@ -8,7 +8,7 @@
       :style="{
         padding: '20px',
         background: '#fff',
-        minHeight: '93%',
+        minHeight: '93%'
       }"
     >
       <!-- 题型选择 start -->
@@ -126,7 +126,7 @@ export default {
       getQuestion,
       questionList,
       isLoading,
-      total,
+      total
     } = useGetQuestion();
 
     // 获取全部标签类型
@@ -167,13 +167,13 @@ export default {
       // 数据库中题目总条数
       total,
       arr,
-      printArr,
+      printArr
     };
   },
   // 使用组件
   components: {
-    Crumbs,
-  },
+    Crumbs
+  }
 };
 </script>
 

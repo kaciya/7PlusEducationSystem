@@ -1,6 +1,6 @@
 //#region 选择题目分类
 // 导入get请求
-import { httpGet } from "@/utils/http"
+import { httpGet } from "@/utils/http";
 // 导入接口配置文件
 import question from "@/api/questionAPI";
 // 引入响应式API
@@ -8,10 +8,10 @@ import { ref } from "vue";
 
 export function useGetQuestion() {
   // 当前题目分类
-  const category = ref('SST');
+  const category = ref("SST");
 
   // 当前题目标签筛选（默认空字符串为全部）
-  const labelId = ref('');
+  const labelId = ref("");
 
   // 加载状态
   const isLoading = ref(false);
@@ -21,7 +21,6 @@ export function useGetQuestion() {
 
   // 总条数
   const total = ref(0);
-
 
   // 获取题目
   const getQuestion = () => {
@@ -38,23 +37,24 @@ export function useGetQuestion() {
       // 分页大小
       pageSize: 10,
       // 类型  1.听
-      type: 1,
-    }).then((res) => {
-      let { success, data } = res;
-      // 如果数据获取成功
-      if (success) {
-        // 保存数据
-        questionList.value = data.records;
-        // 记录数据库中的数据总数
-        total.value = data.total;
-        // 关闭加载状态
-        isLoading.value = false;
-
-      }
-    }).catch((err) => {
-      console.log(err);
+      type: 1
     })
-  }
+      .then(res => {
+        let { success, data } = res;
+        // 如果数据获取成功
+        if (success) {
+          // 保存数据
+          questionList.value = data.records;
+          // 记录数据库中的数据总数
+          total.value = data.total;
+          // 关闭加载状态
+          isLoading.value = false;
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   return {
     category,
@@ -63,6 +63,6 @@ export function useGetQuestion() {
     questionList,
     isLoading,
     total
-  }
+  };
 }
 //#endregion
