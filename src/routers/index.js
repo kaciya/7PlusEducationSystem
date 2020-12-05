@@ -48,7 +48,12 @@ const routes = [
         path: "/user/user-list",
         component: () => import("@/views/UserList")
       },
-
+      // 用户详情
+      {
+        path: "/user/user-details/:userID",
+        component: () => import("@/views/UserDetails"),
+        props: true
+      },
       //#endregion
       //#region 词库管理
       //#endregion

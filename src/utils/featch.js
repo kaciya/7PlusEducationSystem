@@ -41,7 +41,6 @@ instance.interceptors.request.use(
 // 4.声明响应拦截器
 instance.interceptors.response.use(
   response => {
-    // console.log(response)
     // 这里还需要更改
     const { data } = response;
     // 这里可以对后端的一些状态码进行处理
