@@ -48,7 +48,7 @@ export default {
      */
     delay: {
       type: Number,
-      default: 10
+      default: 0
     },
     /**
      * @description 渐变时长

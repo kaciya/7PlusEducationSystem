@@ -13,12 +13,14 @@ export const useGetSideBar = () => {
 
   // 模拟data
   const sideBarListData = [
+    // 首页
     {
       id: 100,
       authName: "首页",
       path: "home",
       children: []
     },
+    // 用户管理
     {
       id: 110,
       authName: "用户管理",
@@ -31,6 +33,7 @@ export const useGetSideBar = () => {
         }
       ]
     },
+    // 词库管理
     {
       id: 120,
       authName: "词库管理",
@@ -48,6 +51,7 @@ export const useGetSideBar = () => {
         }
       ]
     },
+    // 题库管理
     {
       id: 130,
       authName: "题库管理",
@@ -61,7 +65,7 @@ export const useGetSideBar = () => {
         {
           id: 132,
           authName: "听力题库",
-          path: "home"
+          path: "question/listening"
         },
         {
           id: 133,
@@ -80,6 +84,7 @@ export const useGetSideBar = () => {
         }
       ]
     },
+    // 柒加圈
     {
       id: 140,
       authName: "柒加圈",
@@ -92,6 +97,7 @@ export const useGetSideBar = () => {
         }
       ]
     },
+    // 用户提交
     {
       id: 150,
       authName: "用户提交",
@@ -109,6 +115,7 @@ export const useGetSideBar = () => {
         }
       ]
     },
+    // 平台管理
     {
       id: 160,
       authName: "平台管理",
@@ -121,6 +128,7 @@ export const useGetSideBar = () => {
         }
       ]
     },
+    // 运营管理
     {
       id: 170,
       authName: "运营管理",
@@ -174,6 +182,7 @@ export const useGetSideBar = () => {
         }
       ]
     },
+    // 权限管理
     {
       id: 180,
       authName: "权限管理",
