@@ -14,7 +14,7 @@
       <!-- 开始日期-结束日期 -->
       <a-range-picker
         lang="range-picker"
-        :style="{ width: '246px', marginRight: '10px' }"
+        :style="{ width: '246px', marginRight: '14px' }"
         @change="dateRangeChange"
       />
     </template>
@@ -23,8 +23,8 @@
         id="myChart"
         ref="myCharts"
         :style="{
-          width: '1140px',
-          height: '470px',
+          width: '1066px',
+          height: '100%',
           left: '-44px',
           top: '-26px'
         }"
@@ -255,8 +255,7 @@ export default {
 <style lang="scss" scoped>
 .user-growth-page {
   float: left;
-  // width: 1022px;
-  width: 1066px;
+  // width: 1066px;
   padding: 0;
   padding-top: 16px;
   padding-bottom: 4px;
@@ -275,9 +274,9 @@ export default {
 }
 
 .user-growth {
-  width: 100%;
+  width: 1000px;
+  height: 470px;
   border-top: 1px solid #e9e9e9;
-  // padding-bottom: 10px;
   overflow: hidden;
 }
 </style>
