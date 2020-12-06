@@ -2,7 +2,7 @@
 import { reactive } from "vue";
 
 //导入 API接口
-import { contact } from "@/api/subAPI";
+import { contact } from "@/api/subUserAPI";
 
 //导入 GET请求方法
 import { httpGet } from "@/utils/http";
@@ -85,7 +85,7 @@ export const showContactList = () => {
   return {
     dates,
     contactColums,
-    contactData
+    contactData,
   };
 };
 //#endregion

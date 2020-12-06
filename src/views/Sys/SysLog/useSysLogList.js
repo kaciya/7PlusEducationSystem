@@ -46,6 +46,7 @@ export const showLogList = () => {
     }
   ];
 
+
   //#region 发起请求  获取数据列表
   //创建变量  储存请求获取的数据列表
   let logData = reactive({});
@@ -55,7 +56,7 @@ export const showLogList = () => {
     pageNum: 1,
     pageSize: 10
   });
-
+  //请求接口: /admin/log/page
   httpGet(log.sysLogList, params)
     .then(res => {
       if (res.success == true) {

@@ -10,7 +10,7 @@
       :style="{
         padding: '20px',
         background: '#fff',
-        minHeight: '93%'
+        minHeight: '93%',
       }"
     >
       <!-- 日期 账号名称 查询内容 -->
@@ -49,9 +49,10 @@
 
       <!-- 数据列表 -->
       <a-table
-        :rowKey="record => record.id"
+        :rowKey="(record) => record.id"
         :columns="feedbackColums"
         :data-source="feedbackData.data"
+        :pagination="false"
         bordered
       >
         <!-- 列表索引 -->
@@ -59,6 +60,12 @@
           {{ index + 1 }}
         </template>
         <!-- 列表索引 end -->
+
+        <!-- 图片 -->
+        <template #picUrls="{ record }">
+          <image :src="record.picUrls" />
+        </template>
+        <!-- 图片 end -->
 
         <!-- 状态 -->
         <template #status="{ record }">
@@ -77,6 +84,21 @@
         <!-- 操作 end -->
       </a-table>
       <!-- 数据列表 end -->
+      <a-row>
+        <a-col :span="24">
+          <!-- 分页 -->
+          <a-pagination
+            show-size-changer
+            show-less-items
+            v-model:current="current"
+            v-model:pageSize="pageSize"
+            :total="total"
+            @change="pageChange"
+            style="float: right; margin: 10px 0"
+          />
+          <!-- 分页 end -->
+        </a-col>
+      </a-row>
     </div>
     <!-- 主体Main end -->
   </a-layout-content>
@@ -87,14 +109,14 @@
 import Crumbs from "@/components/Crumbs";
 
 //导入 useSysLogList 文件 获取相应的方法
-import { showContactList } from "./useSubFeedbackList";
+import { showContactList, pageChange } from "./useSubFeedbackList";
 
 //导入 图标样式
 import {
   SearchOutlined,
   SyncOutlined,
   LineOutlined,
-  AlertOutlined
+  AlertOutlined,
 } from "@ant-design/icons-vue";
 
 export default {
@@ -104,20 +126,32 @@ export default {
     SearchOutlined,
     SyncOutlined,
     LineOutlined,
-    AlertOutlined
+    AlertOutlined,
   },
 
+  //setup 编写 主要内容
   setup() {
     //获取 方法中的 参数
-    let { dates, feedbackColums, feedbackData } = showContactList();
+    let {
+      dates,
+      feedbackColums,
+      feedbackData,
+      total,
+      pageSize,
+      current,
+    } = showContactList();
 
     //返回参数
     return {
       dates,
       feedbackColums,
-      feedbackData
+      feedbackData,
+      total,
+      pageSize,
+      current,
+      pageChange,
     };
-  }
+  },
 };
 </script>
 
