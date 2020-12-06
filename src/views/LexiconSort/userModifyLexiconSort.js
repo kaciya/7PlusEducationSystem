@@ -24,10 +24,12 @@ export const ModifylexiconSort = getlexiconSortData => {
   // 词库名称ID
   let lexiconId = ref(null);
   // 点击修改显示模态框
-  const updateSort = id => {
+  const updateSort = record => {
     updateVisible.value = true;
     // 存储词库名称ID
-    lexiconId.value = id;
+    lexiconId.value = record.id;
+    // 回显数据
+    updateForm.name = record.name;
   };
   // 表格ref相当于$refs
   let updateRuleForm = ref(null);

@@ -9,7 +9,7 @@
         padding: '20px',
         backgroundColor: '#fff',
         minHeight: '93%',
-        overflow: 'hidden',
+        overflow: 'hidden'
       }"
     >
       <!-- 数据列表 start -->
@@ -33,15 +33,11 @@
           :columns="lexiconSortData.Columns"
           :data-source="lexiconSortData.Data"
           :pagination="false"
-          :row-key="(record) => record.id"
+          :row-key="record => record.id"
         >
           <!-- 操作 -->
           <template #operation="{ record }">
-            <a-button
-              type="primary"
-              size="small"
-              @click="updateSort(record.id)"
-            >
+            <a-button type="primary" size="small" @click="updateSort(record)">
               修改
             </a-button>
           </template>
@@ -113,7 +109,7 @@ import { ModifylexiconSort } from "./userModifyLexiconSort";
 export default {
   // 使用组件
   components: {
-    Crumbs,
+    Crumbs
   },
   // setup响应api入口
   setup() {
@@ -127,7 +123,7 @@ export default {
       addForm, // 表格model
       addRules, // 表格rules
       addRuleForm, // 表格
-      handleAddEmpty, //模态框关闭回调
+      handleAddEmpty //模态框关闭回调
     } = AddlexiconSort(getlexiconSortData);
     // 修改词库名称
     const {
@@ -137,7 +133,7 @@ export default {
       updateForm, // 表格model
       updateRules, // 表格rules
       updateRuleForm, // 表格
-      handleUpdateEmpty, //模态框关闭回调
+      handleUpdateEmpty //模态框关闭回调
     } = ModifylexiconSort(getlexiconSortData);
     // 返回
     return {
@@ -156,9 +152,9 @@ export default {
       updateForm,
       updateRules,
       updateRuleForm,
-      handleUpdateEmpty,
+      handleUpdateEmpty
     };
-  },
+  }
 };
 </script>
 
