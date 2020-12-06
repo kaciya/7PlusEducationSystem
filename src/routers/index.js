@@ -56,6 +56,11 @@ const routes = [
       },
       //#endregion
       //#region 词库管理
+      // 词库分类
+      {
+        path: "/lexicon/sort",
+        component: () => import("@/views/LexiconSort")
+      },
       //#endregion
       //#region 题库管理
       // 标签管理
