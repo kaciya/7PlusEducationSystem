@@ -2,11 +2,12 @@ import { reactive, ref } from "vue";
 // 引入请求方式
 import { httpPost } from "@/utils/http";
 // 引入请求接口
-import wordType from "@/api/wordType";
-export const ModifylexiconSort = getlexiconSortData => {
+import Issues from "@/api/Operation/Issues";
+export const ModifyIssue = getIssuesData => {
   // 输入框数据
   const updateForm = reactive({
-    name: ""
+    name: "",
+    content: ""
   });
   // 表单校验
   const updateRules = reactive({
@@ -17,19 +18,28 @@ export const ModifylexiconSort = getlexiconSortData => {
         message: "词库名称不能为空",
         trigger: "blur"
       }
+    ],
+    // 问题内容不能为空
+    content: [
+      {
+        required: true,
+        message: "内容不能为空",
+        trigger: "blur"
+      }
     ]
   });
-  // 控制添加模态框显示隐藏
+  // 控制修改模态框显示隐藏
   let updateVisible = ref(false);
   // 词库名称ID
-  let lexiconId = ref(null);
-  // 点击修改显示模态框
-  const updateSort = record => {
+  let IssuesId = ref(null);
+  // 点击修改,显示模态框
+  const updateIssues = record => {
     updateVisible.value = true;
     // 存储词库名称ID
-    lexiconId.value = record.id;
-    // 回显数据
-    updateForm.name = record.name;
+    IssuesId.value = record.id;
+    // 数据回显
+    updateForm.name = record.question;
+    updateForm.content = record.answer;
   };
   // 表格ref相当于$refs
   let updateRuleForm = ref(null);
@@ -41,15 +51,16 @@ export const ModifylexiconSort = getlexiconSortData => {
       .then(() => {
         // 表单验证通过
         // 发送请求添加数据
-        httpPost(wordType.UpdateLexiconSort, {
-          name: updateForm.name,
-          id: lexiconId.value
+        httpPost(Issues.UpdateIssue, {
+          answer: updateForm.content,
+          id: IssuesId.value,
+          question: updateForm.name
         })
           .then(res => {
-            // 判断是否添加成功
+            // 判断是否修改成功
             if (res.code == 200) {
               // 更新数据
-              getlexiconSortData();
+              getIssuesData();
               // 关闭模态框
               updateVisible.value = false;
             }
@@ -71,7 +82,7 @@ export const ModifylexiconSort = getlexiconSortData => {
   };
   return {
     handleupdateOk,
-    updateSort,
+    updateIssues,
     updateVisible,
     updateForm,
     updateRules,

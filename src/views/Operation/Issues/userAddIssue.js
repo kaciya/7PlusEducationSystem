@@ -2,20 +2,31 @@ import { reactive, ref } from "vue";
 // 引入请求方式
 import { httpPost } from "@/utils/http";
 // 引入请求接口
-import wordType from "@/api/wordType";
-export const AddlexiconSort = getlexiconSortData => {
+import Issues from "@/api/Operation/Issues";
+export const AddIssues = getIssuesData => {
   //#region 表单校验
   // 输入框数据
   const addForm = reactive({
-    name: ""
+    // 问题名称
+    name: "",
+    // 问题内容
+    content: ""
   });
   // 表单校验
   const addRules = reactive({
-    // 分类名称不能为空
+    // 问题名称不能为空
     name: [
       {
         required: true,
-        message: "分类名称不能为空",
+        message: "问题名称不能为空",
+        trigger: "blur"
+      }
+    ],
+    // 问题内容不能为空
+    content: [
+      {
+        required: true,
+        message: "内容不能为空",
         trigger: "blur"
       }
     ]
@@ -25,7 +36,7 @@ export const AddlexiconSort = getlexiconSortData => {
   // 控制添加模态框显示隐藏
   let addvisible = ref(false);
   // 点击添加显示模态框
-  const addSort = () => {
+  const addIssues = () => {
     addvisible.value = true;
   };
   //#endregion 显示添加模态框
@@ -40,14 +51,16 @@ export const AddlexiconSort = getlexiconSortData => {
       .then(() => {
         // 表单验证通过
         // 发送请求添加数据
-        httpPost(wordType.AddLexiconSort, {
-          name: addForm.name
+        httpPost(Issues.AddIssue, {
+          answer: addForm.name,
+          question: addForm.content
         })
           .then(res => {
+            console.log(res);
             // 判断是否添加成功
             if (res.code == 200) {
               // 更新数据
-              getlexiconSortData();
+              getIssuesData();
               // 关闭模态框
               addvisible.value = false;
             }
@@ -71,12 +84,12 @@ export const AddlexiconSort = getlexiconSortData => {
   };
   //#endregion
   return {
-    handleAddOk,
-    addSort,
+    addIssues,
     addvisible,
     addForm,
     addRules,
     addRuleForm,
+    handleAddOk,
     handleAddEmpty
   };
 };
