@@ -56,6 +56,11 @@ const routes = [
       },
       //#endregion
       //#region 词库管理
+      // 词库分类
+      {
+        path: "/lexicon/sort",
+        component: () => import("@/views/LexiconSort")
+      },
       //#endregion
       //#region 题库管理
       // 标签管理
@@ -102,6 +107,11 @@ const routes = [
         // 师咨信息
         path: "/operation/teacher",
         component: () => import("@/views/Operation/TeacherInfo")
+      },
+      {
+        // 互动练习
+        path: "/operation/exercise",
+        component: () => import("@/views/Operation/Exercise")
       },
       //#endregion
       //#region 权限管理
