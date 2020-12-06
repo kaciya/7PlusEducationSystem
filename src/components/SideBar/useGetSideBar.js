@@ -37,12 +37,12 @@ export const useGetSideBar = () => {
     {
       id: 120,
       authName: "词库管理",
-      path: "ckgl",
+      path: "lexicon",
       children: [
         {
           id: 121,
           authName: "词库分类",
-          path: "home"
+          path: "lexicon/sort"
         },
         {
           id: 122,
