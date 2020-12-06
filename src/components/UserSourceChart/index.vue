@@ -11,10 +11,8 @@
         id="myChart"
         ref="chart"
         :style="{
-          width: '500px',
+          width: '89%',
           height: '100%',
-          left: '14px',
-          top: '-50px',
         }"
       />
     </div>
@@ -94,7 +92,7 @@ export default {
           data: ["PC", "APP", "小程序"],
           x: "center",
           y: "bottom",
-          padding: [0, 0, 2, 0],
+          padding: [0, 0, 40, 0],
           textStyle: {
             color: "#8c8c8c",
             padding: [0, 4],
@@ -114,7 +112,7 @@ export default {
             name: "用户来源",
             type: "pie",
             radius: "57%",
-            center: ["50%", "56%"],
+            center: ["52%", "46%"],
             // 高亮扇区的偏移距离
             hoverOffset: 0,
             // 放大动画效果
@@ -182,6 +180,7 @@ export default {
 .user-source-page {
   float: left;
   // width: 500px;
+  width: 100%;
   padding: 0;
   padding-top: 16px;
   padding-bottom: 4px;
@@ -195,9 +194,10 @@ export default {
 }
 
 .user-source {
-  width: 500px;
+  // width: 500px;
+  width: 100%;
   height: 470px;
   border-top: 1px solid #e9e9e9;
-  overflow: hidden;
+  // overflow: hidden;
 }
 </style>
