@@ -9,7 +9,7 @@
         padding: '20px',
         backgroundColor: '#fff',
         minHeight: '93%',
-        overflow: 'hidden'
+        overflow: 'hidden',
       }"
     >
       <!-- 概要 start -->
@@ -49,12 +49,11 @@
         </a-row>
       </a-page-header>
       <!-- 概要 end -->
-
-      <a-row :style="{ width: '1640px' }">
+      <a-row :gutter="20">
         <!-- 用户增长折线图 -->
-        <a-col :span="15"><UserAddChart /></a-col>
+        <a-col class="gutter-row" :span="15"><UserAddChart /></a-col>
         <!-- 用户来源饼图 -->
-        <a-col :span="7"><UserSourceChart /></a-col>
+        <a-col class="gutter-row" :span="8"><UserSourceChart /></a-col>
       </a-row>
     </div>
     <!-- 主体Main end -->
@@ -78,7 +77,7 @@ export default {
     Crumbs,
     UserAddChart,
     UserSourceChart,
-    CountTo
+    CountTo,
   },
   // setup响应api入口
   setup() {
@@ -87,9 +86,9 @@ export default {
     // 返回
     return {
       // 首页统计数据
-      statistics
+      statistics,
     };
-  }
+  },
 };
 </script>
 
