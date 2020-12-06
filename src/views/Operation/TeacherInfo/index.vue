@@ -172,7 +172,7 @@ import { DeleteTeacher } from "./useTeacherListDelete";
 // 引入编辑老师方法
 import { editTeacher } from "./useTeacherListEdit"
 // 引入表格列
-import { columns } from "./useTeacherList";
+import { columns } from "./useTeacherColumns";
 // 引入表格数据
 import { teacherListData } from "./useTeacherList";
 
