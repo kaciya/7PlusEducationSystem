@@ -1,16 +1,14 @@
 <template>
   <a-layout-content>
     <!-- 面包屑 start -->
-    <Crumbs
-      :crumbName="[{ name: '权限管理', route: '#' }, { name: '账号管理' }]"
-    />
+    <Crumbs :crumbName="[{ name: '权限管理' }, { name: '账号管理' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
     <div
       :style="{
         padding: '20px',
         background: '#fff',
-        minHeight: '93%'
+        minHeight: '93%',
       }"
     >
       <!-- 权限管理列表上标题 -->
@@ -28,9 +26,10 @@
       <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
         <!-- 账号列表 -->
         <a-table
-          :rowKey="record => record.userId"
-          :columns="sysUsersColums"
-          :data-source="sysUsersData.data"
+          :rowKey="(record) => record.userId"
+          :columns="sysUsersTable.sysUsersColums"
+          :data-source="sysUsersTable.sysUsersData"
+          :pagination="false"
           bordered
         >
           <template #index="{ index }">
@@ -49,6 +48,23 @@
           </template>
         </a-table>
         <!-- 账号列表 end -->
+        <!-- 分页 -->
+        <a-row>
+          <a-col :span="24">
+            <a-pagination
+              show-size-changer
+              v-model:current="pageInfo.pageNum"
+              v-model:pageSize="pageInfo.pageSize"
+              :page-size-options="pageInfo.pageSizeOptions"
+              :defaultPageSize="10"
+              :total="pageInfo.total"
+              @change="pageChange"
+              @showSizeChange="pageSizeChange"
+              style="float: right; margin: 10px 0"
+            />
+          </a-col>
+        </a-row>
+        <!-- 分页 end -->
       </div>
       <!-- 权限管理内容 end -->
     </div>
@@ -63,11 +79,14 @@ import Crumbs from "@/components/Crumbs";
 //导入sysUserList中返回的数据
 import { showSysUserList } from "./useSysUserList";
 
+// 引入 钩子函数
+import { onMounted } from "vue";
+
 //导入图标
 import {
   PlusOutlined,
   DeleteOutlined,
-  SyncOutlined
+  SyncOutlined,
 } from "@ant-design/icons-vue";
 
 export default {
@@ -75,18 +94,32 @@ export default {
     Crumbs,
     PlusOutlined,
     SyncOutlined,
-    DeleteOutlined
+    DeleteOutlined,
   },
 
   setup() {
     //通过sysUserList方法获取
-    let { sysUsersColums, sysUsersData } = showSysUserList();
+    let { sysUsersTable, getSysUserList, removeSysUser , pageInfo , pageChange , pageSizeChange } = showSysUserList();
 
+    //在Mounted 获取列表
+    onMounted(() => {
+      getSysUserList();
+    });
+
+    //返回
     return {
-      sysUsersColums,
-      sysUsersData
+      //账号列表 表格数据
+      sysUsersTable,
+      //删除方法
+      removeSysUser,
+      //分页数据对象
+      pageInfo,
+      //点击下一页方法
+      pageChange,
+      //每页显示多少条数据的方法
+      pageSizeChange,
     };
-  }
+  },
 };
 </script>
 

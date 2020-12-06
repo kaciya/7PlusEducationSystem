@@ -2,7 +2,7 @@
   <a-layout-content>
     <!-- 面包屑 start -->
     <Crumbs
-      :crumbName="[{ name: '权限管理', route: '#' }, { name: '权限组' }]"
+      :crumbName="[{ name: '权限管理' }, { name: '权限组' }]"
     />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
@@ -29,8 +29,9 @@
         <!-- 标签列表 -->
         <a-table
           :rowKey="record => record.roleId"
-          :columns="rolesColums"
-          :data-source="rolesData.data"
+          :columns="rolesTable.rolesColums"
+          :data-source="rolesTable.rolesData"
+          :pagination="false"
           bordered
         >
           <!-- 配置 # index 索引 -->
@@ -59,6 +60,23 @@
           <!-- 配置 operation 操作 end -->
         </a-table>
         <!-- 标签列表 end -->
+        <!-- 分页 -->
+        <a-row>
+        <a-col :span="24">
+          <a-pagination
+            show-size-changer
+            v-model:current="pageInfo.pageNum"
+            v-model:pageSize="pageInfo.pageSize"
+            :page-size-options="pageInfo.pageSizeOptions"
+            :defaultPageSize="10"
+            :total="pageInfo.total"
+            @change="pageChange"
+            @showSizeChange="pageSizeChange"
+            style="float: right; margin: 10px 0"
+          />
+        </a-col>
+      </a-row>
+       <!-- 分页 end -->
       </div>
       <!-- 权限组内容 end -->
     </div>
@@ -72,6 +90,9 @@ import Crumbs from "@/components/Crumbs";
 
 //导入图标组件
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons-vue";
+
+// 引入 钩子函数
+import { onMounted } from "vue";
 
 //导入rolesList中返回的数据
 import { showRoleList } from "./useSysRolesList";
@@ -90,11 +111,25 @@ export default {
 
   setup() {
     //通过showRoleList方法获取 列表项和数据
-    let { rolesColums, rolesData } = showRoleList();
+    let { rolesTable , pageInfo , pageChange , getSysRolesData , pageSizeChange } = showRoleList();
+    
+    //在Mounted 获取列表
+    onMounted(() => {
+      getSysRolesData();
+    });
+    
     //返回参数
     return {
-      rolesColums,
-      rolesData
+      //权限组列表
+      rolesTable,
+      //分页数据对象
+      pageInfo,
+      //渲染权限组列表方法
+      getSysRolesData,
+      //点击下一页方法
+      pageChange,
+      //每页显示多少条数据的方法
+      pageSizeChange,
     };
   }
 };
