@@ -9,12 +9,12 @@
     <div class="user-source">
       <div
         id="myChart"
-        ref="myCharts"
+        ref="chart"
         :style="{
           width: '500px',
           height: '100%',
           left: '14px',
-          top: '-50px'
+          top: '-50px',
         }"
       />
     </div>
@@ -22,23 +22,30 @@
 </template>
 
 <script>
-// 导入getCurrentInstance方法等
-import { getCurrentInstance, onMounted } from "vue";
+// 导入vue中的方法
+import { onMounted, inject } from "vue";
+// 导入获取用户来源
+import { useGetUserSource } from "./useGetUserSource";
 export default {
   setup() {
-    // 使用ctx
-    const { ctx } = getCurrentInstance();
+    // 用户来源数据
+    const { chart, getUserSource } = useGetUserSource();
+    // 获取$echarts
+    const echarts = inject("$echarts");
+    // 定义echarts实例存储变量
+    let myCharts = null;
     // 在mounted周期中执行
     onMounted(() => {
+      // 初始化echarts实例
+      myCharts = echarts.init(chart.value);
       // 调用绘图函数
       drawLine();
+      // 初始化图形
+      // setUserSource();
     });
 
     //#region 绘图函数
     function drawLine() {
-      // 初始化echarts实例
-      const myCharts = ctx.$echarts.init(ctx.$refs.myCharts);
-
       //#region 指定配置图形参数
       const options = {
         title: {
@@ -50,7 +57,7 @@ export default {
         tooltip: {
           trigger: "item",
           // formatter: "{b} : {c} ({d}%)",
-          formatter: function(param) {
+          formatter: function (param) {
             // 声明字符拼接
             let htmlStr = "";
             // 图例颜色
@@ -79,8 +86,8 @@ export default {
           textStyle: {
             color: "#666",
             fontSize: 12,
-            lineHeight: 24
-          }
+            lineHeight: 24,
+          },
         },
         // 图例组件
         legend: {
@@ -90,16 +97,16 @@ export default {
           padding: [0, 0, 2, 0],
           textStyle: {
             color: "#8c8c8c",
-            padding: [0, 4]
+            padding: [0, 4],
           },
           // 修改图标样式
           icon: "circle",
           itemWidth: 8,
-          itemHeight: 8
+          itemHeight: 8,
         },
         // 饼图图形上的文本标签
         label: {
-          formatter: "{b}: {d}%"
+          formatter: "{b}: {d}%",
         },
         // 系列列表
         series: [
@@ -119,33 +126,33 @@ export default {
             data: [
               { value: 2991, name: "PC" },
               { value: 2949, name: "APP" },
-              { value: 4060, name: "小程序" }
+              { value: 4060, name: "小程序" },
             ],
             label: {
               // 标签样式
               normal: {
-                color: "#545454"
-              }
+                color: "#545454",
+              },
             },
             labelLine: {
               // 标签的视觉引导线样式
               normal: {
                 length: 28,
                 length2: 0,
-                smooth: true
-              }
+                smooth: true,
+              },
             },
             // 饼图扇形样式
             itemStyle: {
               normal: {
                 borderColor: "#fff",
-                borderWidth: 1
-              }
+                borderWidth: 1,
+              },
             },
             // 高亮时样式
-            emphasis: {}
-          }
-        ]
+            emphasis: {},
+          },
+        ],
       };
       //#endregion
 
@@ -154,9 +161,20 @@ export default {
     }
     //#endregion
 
+    //#region 设置用户来源数据
+    function setUserSource() {
+      // 开启加载动画
+      myCharts.showLoading();
+      // 获取数据异步加载
+      getUserSource(myCharts);
+    }
+    //#endregion
+
     // 返回
-    return {};
-  }
+    return {
+      chart,
+    };
+  },
 };
 </script>
 

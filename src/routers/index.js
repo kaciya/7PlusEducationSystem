@@ -1,5 +1,9 @@
 import { createRouter, createWebHashHistory } from "vue-router";
+import NProgress from "nprogress"; //引入进度条
+import "nprogress/nprogress.css"; //引入进度条样式
 import Login from "@/views/Login";
+// NProgress配置
+NProgress.configure({ showSpinner: false }); //禁用进度环
 
 const routes = [
   // 默认重定向到登录页
@@ -136,6 +140,8 @@ const router = createRouter({
 // from：代表来自哪个路由
 // next：下一步去哪里，next()代表放行，如果next("/login")代表强制跳转到到login路由
 router.beforeEach((to, from, next) => {
+  // 开启进度条
+  NProgress.start();
   // 获取token
   let isAuthenticated = window.sessionStorage.getItem("token");
   // 1. 去登录页时不拦截   2. 检测是否获取token经过校验
@@ -148,6 +154,11 @@ router.beforeEach((to, from, next) => {
   } else {
     next(); // 否则放行
   }
+});
+
+router.afterEach(() => {
+  // 终止进度条
+  NProgress.done();
 });
 
 export default router;

@@ -8,8 +8,12 @@
     </template>
     <template #extra>
       <a-radio-group class="daysGroup" v-model:value="daysValueModel">
-        <a-radio-button value="n7d"> 近七天 </a-radio-button>
-        <a-radio-button value="n30d"> 近30天 </a-radio-button>
+        <a-radio-button value="n7d" @click="setUserAddForDays(7)">
+          近七天
+        </a-radio-button>
+        <a-radio-button value="n30d" @click="setUserAddForDays(30)">
+          近30天
+        </a-radio-button>
       </a-radio-group>
       <!-- 开始日期-结束日期 -->
       <a-range-picker
@@ -21,12 +25,12 @@
     <div class="user-growth">
       <div
         id="myChart"
-        ref="myCharts"
+        ref="chart"
         :style="{
           width: '1066px',
           height: '100%',
           left: '-44px',
-          top: '-26px'
+          top: '-26px',
         }"
       />
     </div>
@@ -34,23 +38,30 @@
 </template>
 
 <script>
-// 导入getCurrentInstance方法等
-import { getCurrentInstance, onMounted, ref } from "vue";
+// 导入vue中的方法
+import { onMounted, ref, inject } from "vue";
+// 导入获取用户增长数据
+import { useGetUserAdd } from "./useGetUserAdd";
 export default {
   setup() {
-    // 使用ctx
-    const { ctx } = getCurrentInstance();
+    // 用户增长数据
+    const { chart, getUserAddForDays, getUserAddStartToEnd } = useGetUserAdd();
+    // 获取$echarts
+    const echarts = inject("$echarts");
+    // 定义echarts实例存储变量
+    let myCharts = null;
     // 在mounted周期中执行
     onMounted(() => {
+      // 初始化echarts实例
+      myCharts = echarts.init(chart.value);
       // 调用绘图函数
       drawLine();
+      // 初始化图形
+      // setUserAddForDays(7);
     });
 
     //#region 绘图函数
     function drawLine() {
-      // 初始化echarts实例
-      const myCharts = ctx.$echarts.init(ctx.$refs.myCharts);
-
       //#region 指定配置图形参数
       const options = {
         title: {
@@ -62,10 +73,10 @@ export default {
           trigger: "axis",
           // 坐标轴指示器配置项
           axisPointer: {
-            type: "none"
+            type: "none",
           },
           // 自定义提示框模板
-          formatter: function(params) {
+          formatter: function (params) {
             let htmlStr = "";
             for (let i = 0; i < params.length; i++) {
               const param = params[i];
@@ -99,8 +110,8 @@ export default {
           textStyle: {
             color: "#666",
             fontSize: 12,
-            lineHeight: 24
-          }
+            lineHeight: 24,
+          },
         },
         // 图例组件
         legend: {
@@ -110,12 +121,12 @@ export default {
           padding: [0, 0, 2, 0],
           textStyle: {
             color: "#8c8c8c",
-            padding: [0, 4]
+            padding: [0, 4],
           },
           // 修改图标样式
           icon: "rect",
           itemWidth: 12,
-          itemHeight: 3
+          itemHeight: 3,
         },
         // 直角坐标系 grid 中的 x 轴
         xAxis: [
@@ -126,13 +137,13 @@ export default {
             axisLine: {
               lineStyle: {
                 color: "#dfdfdf",
-                width: 2
-              }
+                width: 2,
+              },
             },
             // 坐标轴刻度标签
             axisLabel: {
               color: "#545454",
-              margin: 16
+              margin: 16,
             },
             data: [
               "2018-06-25",
@@ -146,9 +157,9 @@ export default {
               "2018-08-04",
               "2018-08-09",
               "2018-08-14",
-              "2018-08-19"
-            ]
-          }
+              "2018-08-19",
+            ],
+          },
         ],
         // 直角坐标系 grid 中的 y 轴
         yAxis: [
@@ -161,25 +172,25 @@ export default {
             // 坐标轴轴线
             axisLine: {
               lineStyle: {
-                opacity: 0
-              }
+                opacity: 0,
+              },
             },
             // 分割线
             splitLine: {
               lineStyle: {
                 type: "dashed",
-                opacity: 0.8
-              }
+                opacity: 0.8,
+              },
             },
             // 坐标轴刻度
             axisTick: {
               lineStyle: {
-                opacity: 0
-              }
+                opacity: 0,
+              },
             },
             // 坐标轴刻度标签
-            axisLabel: { margin: 12 }
-          }
+            axisLabel: { margin: 12 },
+          },
         ],
         series: [
           // 驱动图表生成的数据内容数组，几条折现，数组中就会有几个对应对象，来表示对应的折线
@@ -199,16 +210,16 @@ export default {
                 borderWidth: 1,
                 borderColor: "#fff",
                 lineStyle: {
-                  color: "#1890ff"
-                }
-              }
+                  color: "#1890ff",
+                },
+              },
             },
             // 图形高亮样式。
             emphasis: {
               itemStyle: {
                 shadowColor: "rgba(24, 144, 255, 0.8)", //高亮时阴影颜色
-                shadowBlur: 8 //高亮时阴影模糊大小
-              }
+                shadowBlur: 8, //高亮时阴影模糊大小
+              },
             },
             //
             data: [
@@ -223,10 +234,10 @@ export default {
               2330,
               1830,
               1390,
-              960
-            ]
-          }
-        ]
+              960,
+            ],
+          },
+        ],
       };
       //#endregion
 
@@ -235,6 +246,16 @@ export default {
     }
     //#endregion
 
+    //#region 设置近几日用户增长数据（默认近7天）
+    function setUserAddForDays(d = 7) {
+      // 开启加载动画
+      myCharts.showLoading();
+      // 获取数据异步加载
+      getUserAddForDays(myCharts, d);
+    }
+    //#endregion
+
+    //#region 处理切换数据按钮
     // 声明近几日选择值
     let daysValueModel = ref("n7d");
     // 侦听日期选择范围变化
@@ -242,13 +263,29 @@ export default {
       console.log(dateString);
       // 取消近几日按钮选中状态
       daysValueModel.value = "";
+      // 选择日期获取用户增长数据
+      setUserAddStartToEnd(dateString[0], dateString[1]);
     }
+    //#endregion
+
+    //#region 设置日期用户增长数据（开始结束日期）
+    function setUserAddStartToEnd(start, end) {
+      // 开启加载动画
+      myCharts.showLoading();
+      // 获取数据异步加载
+      getUserAddStartToEnd(myCharts, start, end);
+    }
+    //#endregion
+
     // 返回
     return {
       daysValueModel,
-      dateRangeChange
+      dateRangeChange,
+      chart,
+      setUserAddForDays, //获取用户增长数据（近几日）
+      getUserAddStartToEnd, //获取用户增长数据（选择日期）
     };
-  }
+  },
 };
 </script>
 
