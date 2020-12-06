@@ -27,10 +27,8 @@
         id="myChart"
         ref="chart"
         :style="{
-          width: '1066px',
+          width: '89%',
           height: '100%',
-          left: '-44px',
-          top: '-26px',
         }"
       />
     </div>
@@ -118,7 +116,7 @@ export default {
           data: ["新增用户"],
           x: "center",
           y: "bottom",
-          padding: [0, 0, 2, 0],
+          padding: [0, 0, 8, 0],
           textStyle: {
             color: "#8c8c8c",
             padding: [0, 4],
@@ -128,6 +126,15 @@ export default {
           itemWidth: 12,
           itemHeight: 3,
         },
+        // 直角坐标系内绘图网格
+        grid: [
+          {
+            width: "90%",
+            left: "6.8%",
+            top: "7.2%",
+            bottom: "14%",
+          },
+        ],
         // 直角坐标系 grid 中的 x 轴
         xAxis: [
           {
@@ -167,7 +174,8 @@ export default {
             // y轴坐标数据
             type: "value",
             show: true, //显示Y轴
-            maxInterval: 400, //坐标轴最大间隔大小
+            // maxInterval: 1000, //坐标轴最大间隔大小
+            minInterval: 1, //保证分割刻度显示成整数
 
             // 坐标轴轴线
             axisLine: {
@@ -223,18 +231,18 @@ export default {
             },
             //
             data: [
-              700,
-              690,
-              950,
-              1450,
-              1840,
-              2150,
-              2520,
-              2650,
-              2330,
-              1830,
-              1390,
-              960,
+              888,
+              2222,
+              1666,
+              2333,
+              3240,
+              3000,
+              5220,
+              3350,
+              4430,
+              2530,
+              2190,
+              3333,
             ],
           },
         ],
@@ -293,6 +301,7 @@ export default {
 .user-growth-page {
   float: left;
   // width: 1066px;
+  width: 100%;
   padding: 0;
   padding-top: 16px;
   padding-bottom: 4px;
@@ -311,7 +320,8 @@ export default {
 }
 
 .user-growth {
-  width: 1000px;
+  // width: 1000px;
+  width: 100%;
   height: 470px;
   border-top: 1px solid #e9e9e9;
   overflow: hidden;
