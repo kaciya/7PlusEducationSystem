@@ -104,6 +104,11 @@ const routes = [
         path: "/operation/teacher",
         component: () => import("@/views/Operation/TeacherInfo")
       },
+      //常见问题
+      {
+        path: "/operation/Issues",
+        component: () => import("@/views/Operation/Issues")
+      },
       //#endregion
       //#region 权限管理
       //权限组
