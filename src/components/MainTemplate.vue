@@ -5,7 +5,7 @@
       :crumbName="[
         { name: '用户管理' },
         { name: '用户列表', route: '#' },
-        { name: '详情' },
+        { name: '详情' }
       ]"
     />
     <!-- 面包屑 end -->
@@ -14,7 +14,7 @@
       :style="{
         padding: '20px',
         backgroundColor: '#fff',
-        minHeight: '93%',
+        minHeight: '93%'
       }"
     >
       【使用说明】 我是每个页面主体内容的模板，使用方式如下:
@@ -32,10 +32,10 @@ import Crumbs from "@/components/Crumbs";
 export default {
   // 使用组件
   components: {
-    Crumbs,
+    Crumbs
   },
   // setup响应api入口
-  setup() {},
+  setup() {}
 };
 </script>
 
