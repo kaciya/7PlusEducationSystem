@@ -3,7 +3,7 @@ import { reactive, ref } from "vue";
 import { httpPost } from "@/utils/http";
 // 引入请求接口
 import wordType from "@/api/wordType";
-export const AddlexiconSort = getlexiconSortData => {
+export const AddWordCategory = getWordCategoryData => {
   //#region 表单校验
   // 输入框数据
   const addForm = reactive({
@@ -23,10 +23,10 @@ export const AddlexiconSort = getlexiconSortData => {
   //#endregion 表单校验
   //#region 显示添加模态框
   // 控制添加模态框显示隐藏
-  let addvisible = ref(false);
+  let addVisible = ref(false);
   // 点击添加显示模态框
-  const addSort = () => {
-    addvisible.value = true;
+  const addCategory = () => {
+    addVisible.value = true;
   };
   //#endregion 显示添加模态框
   //#region  发送请求添加数据
@@ -40,16 +40,16 @@ export const AddlexiconSort = getlexiconSortData => {
       .then(() => {
         // 表单验证通过
         // 发送请求添加数据
-        httpPost(wordType.AddLexiconSort, {
+        httpPost(wordType.AddWordCategory, {
           name: addForm.name
         })
           .then(res => {
             // 判断是否添加成功
             if (res.code == 200) {
               // 更新数据
-              getlexiconSortData();
+              getWordCategoryData();
               // 关闭模态框
-              addvisible.value = false;
+              addVisible.value = false;
             }
           })
           .catch(err => {
@@ -72,8 +72,8 @@ export const AddlexiconSort = getlexiconSortData => {
   //#endregion
   return {
     handleAddOk,
-    addSort,
-    addvisible,
+    addCategory,
+    addVisible,
     addForm,
     addRules,
     addRuleForm,
