@@ -7,7 +7,9 @@ export const role = {
 //关于 账号管理 接口
 export const sys = {
   //渲染账号列表
-  sysUserList: "/sys/user/list"
+  sysUserList: "/sys/user/list",
+  //删除账号
+  removeSysUser: "/sys/user/delete"
 };
 
 //关于 操作日志 接口

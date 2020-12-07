@@ -9,20 +9,20 @@
         padding: '20px',
         backgroundColor: '#fff',
         minHeight: '93%',
-        overflow: 'hidden',
+        overflow: 'hidden'
       }"
     >
       <!-- 数据列表 start -->
-      <div class="sort-table">
+      <div class="category-table">
         <!-- 表格顶部 start -->
-        <div class="sort-table-title">
+        <div class="category-table-title">
           <span>分类列表</span>
           <!-- 添加分类按钮 -->
           <a-button
             type="primary"
-            class="addStort"
+            class="addCategory"
             style="margin-top: 8px"
-            @click="addSort"
+            @click="addCategory"
           >
             添加分类
           </a-button>
@@ -30,17 +30,17 @@
         <!-- 表格顶部 end -->
         <a-table
           bordered
-          :columns="lexiconSortData.Columns"
-          :data-source="lexiconSortData.Data"
+          :columns="wordCategoryData.Columns"
+          :data-source="wordCategoryData.Data"
           :pagination="false"
-          :row-key="(record) => record.id"
+          :row-key="record => record.id"
         >
           <!-- 操作 -->
           <template #operation="{ record }">
             <a-button
               type="primary"
               size="small"
-              @click="updateSort(record.id)"
+              @click="updateCategory(record)"
             >
               修改
             </a-button>
@@ -52,7 +52,7 @@
       <!-- 添加模态框 start -->
       <a-modal
         title="添加分类"
-        v-model:visible="addvisible"
+        v-model:visible="addVisible"
         @ok="handleAddOk"
         :afterClose="handleAddEmpty"
       >
@@ -77,7 +77,7 @@
       <a-modal
         title="添加分类"
         v-model:visible="updateVisible"
-        @ok="handleupdateOk"
+        @ok="handleUpdateOk"
         :afterClose="handleUpdateEmpty"
       >
         <a-form ref="updateRuleForm" :model="updateForm" :rules="updateRules">
@@ -105,69 +105,69 @@
 // 引入面包屑组件
 import Crumbs from "@/components/Crumbs";
 // 获取词库分类列表
-import { lexiconSort } from "./userGetLexiconSort";
+import { WordCategory } from "./userGetWordCategory";
 // 添加分类列表
-import { AddlexiconSort } from "./userAddLexiconSort";
+import { AddWordCategory } from "./userAddWordCategory";
 // 修改词库名称
-import { ModifylexiconSort } from "./userModifyLexiconSort";
+import { ModifyWordCategory } from "./userModifyWordCategory";
 export default {
   // 使用组件
   components: {
-    Crumbs,
+    Crumbs
   },
   // setup响应api入口
   setup() {
     // 获取分类列表数据
-    const { lexiconSortData, getlexiconSortData } = lexiconSort();
+    const { wordCategoryData, getWordCategoryData } = WordCategory();
     // 添加分类
     const {
       handleAddOk, //点击确定事件
-      addSort, // 点击添加按钮事件
-      addvisible, // 控制模态框显示隐藏
+      addCategory, // 点击添加按钮事件
+      addVisible, // 控制模态框显示隐藏
       addForm, // 表格model
       addRules, // 表格rules
       addRuleForm, // 表格
-      handleAddEmpty, //模态框关闭回调
-    } = AddlexiconSort(getlexiconSortData);
+      handleAddEmpty //模态框关闭回调
+    } = AddWordCategory(getWordCategoryData);
     // 修改词库名称
     const {
-      handleupdateOk, //点击确定事件
-      updateSort, // 点击修改按钮事件
+      handleUpdateOk, //点击确定事件
+      updateCategory, // 点击修改按钮事件
       updateVisible, // 控制模态框显示隐藏
       updateForm, // 表格model
       updateRules, // 表格rules
       updateRuleForm, // 表格
-      handleUpdateEmpty, //模态框关闭回调
-    } = ModifylexiconSort(getlexiconSortData);
+      handleUpdateEmpty //模态框关闭回调
+    } = ModifyWordCategory(getWordCategoryData);
     // 返回
     return {
-      getlexiconSortData,
-      lexiconSortData,
-      addvisible,
+      getWordCategoryData,
+      wordCategoryData,
+      addVisible,
       handleAddOk,
-      addSort,
+      addCategory,
       addForm,
       addRules,
       addRuleForm,
       handleAddEmpty,
-      handleupdateOk,
-      updateSort,
+      handleUpdateOk,
+      updateCategory,
       updateVisible,
       updateForm,
       updateRules,
       updateRuleForm,
-      handleUpdateEmpty,
+      handleUpdateEmpty
     };
-  },
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 // 表格样式 start
-.sort-table {
+.category-table {
   border: 1px solid #ddd;
   overflow: hidden;
-  .sort-table-title {
+  .category-table-title {
     height: 50px;
     line-height: 50px;
     border-bottom: 1px solid #ddd;
@@ -176,7 +176,7 @@ export default {
       font-weight: 700;
       color: #333;
     }
-    .addStort {
+    .addCategory {
       float: right;
     }
   }

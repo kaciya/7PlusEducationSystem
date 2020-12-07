@@ -3,9 +3,9 @@ import { reactive, onMounted } from "vue";
 import { httpGet } from "@/utils/http";
 // 引入请求接口
 import wordType from "@/api/wordType";
-export const lexiconSort = () => {
+export const WordCategory = () => {
   // 表格数据
-  const lexiconSortData = reactive({
+  const wordCategoryData = reactive({
     // 表格数据
     Data: [],
     // 表格标题
@@ -24,20 +24,20 @@ export const lexiconSort = () => {
   });
 
   // 获取后台数据
-  const getlexiconSortData = async () => {
-    const res = await httpGet(wordType.LexiconSortList);
+  const getWordCategoryData = async () => {
+    const res = await httpGet(wordType.WordCategoryList);
     // 数据获取成功
     if (res.code == 200) {
-      lexiconSortData.Data = res.data;
+      wordCategoryData.Data = res.data;
     }
   };
 
   // 初始化获取数据
   onMounted(() => {
-    getlexiconSortData();
+    getWordCategoryData();
   });
   return {
-    getlexiconSortData,
-    lexiconSortData
+    getWordCategoryData,
+    wordCategoryData
   };
 };
