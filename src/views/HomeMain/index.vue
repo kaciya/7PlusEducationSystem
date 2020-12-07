@@ -9,7 +9,7 @@
         padding: '20px',
         backgroundColor: '#fff',
         minHeight: '93%',
-        overflow: 'hidden',
+        overflow: 'hidden'
       }"
     >
       <!-- 概要 start -->
@@ -77,7 +77,7 @@ export default {
     Crumbs,
     UserAddChart,
     UserSourceChart,
-    CountTo,
+    CountTo
   },
   // setup响应api入口
   setup() {
@@ -86,9 +86,9 @@ export default {
     // 返回
     return {
       // 首页统计数据
-      statistics,
+      statistics
     };
-  },
+  }
 };
 </script>
 

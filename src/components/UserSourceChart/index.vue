@@ -11,8 +11,8 @@
         id="myChart"
         ref="chart"
         :style="{
-          width: '89%',
-          height: '100%',
+          width: '100%',
+          height: '100%'
         }"
       />
     </div>
@@ -55,7 +55,7 @@ export default {
         tooltip: {
           trigger: "item",
           // formatter: "{b} : {c} ({d}%)",
-          formatter: function (param) {
+          formatter: function(param) {
             // 声明字符拼接
             let htmlStr = "";
             // 图例颜色
@@ -84,8 +84,8 @@ export default {
           textStyle: {
             color: "#666",
             fontSize: 12,
-            lineHeight: 24,
-          },
+            lineHeight: 24
+          }
         },
         // 图例组件
         legend: {
@@ -95,16 +95,16 @@ export default {
           padding: [0, 0, 40, 0],
           textStyle: {
             color: "#8c8c8c",
-            padding: [0, 4],
+            padding: [0, 4]
           },
           // 修改图标样式
           icon: "circle",
           itemWidth: 8,
-          itemHeight: 8,
+          itemHeight: 8
         },
         // 饼图图形上的文本标签
         label: {
-          formatter: "{b}: {d}%",
+          formatter: "{b}: {d}%"
         },
         // 系列列表
         series: [
@@ -124,33 +124,33 @@ export default {
             data: [
               { value: 2991, name: "PC" },
               { value: 2949, name: "APP" },
-              { value: 4060, name: "小程序" },
+              { value: 4060, name: "小程序" }
             ],
             label: {
               // 标签样式
               normal: {
-                color: "#545454",
-              },
+                color: "#545454"
+              }
             },
             labelLine: {
               // 标签的视觉引导线样式
               normal: {
                 length: 28,
                 length2: 0,
-                smooth: true,
-              },
+                smooth: true
+              }
             },
             // 饼图扇形样式
             itemStyle: {
               normal: {
                 borderColor: "#fff",
-                borderWidth: 1,
-              },
+                borderWidth: 1
+              }
             },
             // 高亮时样式
-            emphasis: {},
-          },
-        ],
+            emphasis: {}
+          }
+        ]
       };
       //#endregion
 
@@ -170,9 +170,9 @@ export default {
 
     // 返回
     return {
-      chart,
+      chart
     };
-  },
+  }
 };
 </script>
 
@@ -184,7 +184,6 @@ export default {
   padding: 0;
   padding-top: 16px;
   padding-bottom: 4px;
-  // margin-left: 20px;
 
   .user-source-page-heading {
     padding-left: 24px;
@@ -194,7 +193,7 @@ export default {
 }
 
 .user-source {
-  // width: 500px;
+  max-width: 532px;
   width: 100%;
   height: 470px;
   border-top: 1px solid #e9e9e9;
