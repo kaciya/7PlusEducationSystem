@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import NProgress from "nprogress"; //引入进度条
 import "nprogress/nprogress.css"; //引入进度条样式
 import Login from "@/views/Login";
+import Home from "@/views/Home";
 // NProgress配置
 NProgress.configure({ showSpinner: false }); //禁用进度环
 
@@ -27,7 +28,7 @@ const routes = [
   {
     path: "/home",
     name: "Home",
-    component: () => import("@/views/Home"),
+    component: Home,
     // 主体
     children: [
       // 默认重定向首页主体
@@ -38,8 +39,7 @@ const routes = [
       //#region 首页主体
       {
         path: "/home/main",
-        name: "HomeMain",
-        component: () => import("@/views/HomeMain")
+        component: import("@/views/HomeMain")
       },
       //#endregion
       //#region 用户管理
