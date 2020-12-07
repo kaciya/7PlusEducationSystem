@@ -21,7 +21,7 @@
                   placeholder="请输入登录账号"
                   size="large"
                   :value="loginData.username"
-                  @input="(v) => (loginData.username = v.target.value)"
+                  @input="v => (loginData.username = v.target.value)"
                 >
                   <template #prefix>
                     <UserOutlined style="color: rgba(0, 0, 0, 0.25)" />
@@ -40,7 +40,7 @@
                   placeholder="请输入登录密码"
                   size="large"
                   :value="loginData.password"
-                  @input="(v) => (loginData.password = v.target.value)"
+                  @input="v => (loginData.password = v.target.value)"
                   @keyup.enter="loginSubmit"
                 >
                   <template #prefix>
@@ -123,13 +123,13 @@ export default {
       // 点击删除密码
       clearPassword,
       // 正在登录的状态
-      logining,
+      logining
     };
   },
   components: {
     UserOutlined,
-    LockOutlined,
-  },
+    LockOutlined
+  }
 };
 </script>
 

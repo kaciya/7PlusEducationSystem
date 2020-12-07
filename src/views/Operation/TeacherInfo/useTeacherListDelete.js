@@ -4,23 +4,23 @@
  * */
 
 // 引入小图标
-import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
+import { ExclamationCircleOutlined } from "@ant-design/icons-vue";
 // 引入虚拟DOM
-import { createVNode } from 'vue';
+import { createVNode } from "vue";
 // 引入模态框
-import { Modal,message } from 'ant-design-vue';
+import { Modal, message } from "ant-design-vue";
 // 引入http
 import { httpDelete } from "@/utils/http";
 // 引入api
 import { teacherInfo } from "@/api/operationAPI";
 
 // 删除教师方法
-export const DeleteTeacher = (id,callback) => {
+export const DeleteTeacher = (id, callback) => {
   // 模态框
   Modal.confirm({
-    title: '您真的要删除吗?',
+    title: "您真的要删除吗?",
     icon: createVNode(ExclamationCircleOutlined),
-    content: createVNode('div', { style: 'color:red;' }, '这将会永久删除'),
+    content: createVNode("div", { style: "color:red;" }, "这将会永久删除"),
     onOk() {
       // 发送请求
       httpDelete(teacherInfo.DeleteTeacherList + `/${id}`)
@@ -35,14 +35,12 @@ export const DeleteTeacher = (id,callback) => {
         })
         .catch(err => {
           console.log(err);
-        })
+        });
     },
 
     onCancel() {
-      console.log('Cancel');
+      console.log("Cancel");
     },
-    class: 'test',
+    class: "test"
   });
-}
-
-
+};

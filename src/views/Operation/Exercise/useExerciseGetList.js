@@ -8,12 +8,12 @@ import { exercise } from "@/api/operationAPI";
 import { httpGet } from "@/utils/http";
 import { reactive } from "vue";
 // 引入列表数据
-import { columns } from "./useExerciseColumns"
+import { columns } from "./useExerciseColumns";
 
 // 获取表格数据
 export const getExerciseList = () => {
   // 储存请求数据
-  const ExerciseData = reactive({columns});
+  const ExerciseData = reactive({ columns });
   // 发送请求
   const getExercise = () => {
     httpGet(exercise.GetExerciseList)
@@ -26,13 +26,11 @@ export const getExerciseList = () => {
       .catch(err => {
         console.log(err);
       });
-  }
+  };
 
   // 导出数据
   return {
     ExerciseData,
     getExercise
-  }
-}
-
-
+  };
+};

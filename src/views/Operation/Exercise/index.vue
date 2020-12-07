@@ -1,10 +1,9 @@
 <template>
   <a-layout-content>
     <!-- 面包屑 start -->
-    <Crumbs :crumbName="[
-        { name: '官网管理' },
-        { name: '互动练习', route: '#' },
-      ]" />
+    <Crumbs
+      :crumbName="[{ name: '官网管理' }, { name: '互动练习', route: '#' }]"
+    />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
     <div
@@ -24,7 +23,7 @@
           <a-button
             type="primary"
             style="margin-left: 40px"
-            @click="editShow(record.id,record.name)"
+            @click="editShow(record.id, record.name)"
           >
             <EditOutlined />编辑
           </a-button>
@@ -45,7 +44,11 @@
         >
           <a-row>
             <a-col :span="24">
-              <a-form-item label="新内容" :wrapperCol="{span: 24}" name="content">
+              <a-form-item
+                label="新内容"
+                :wrapperCol="{ span: 24 }"
+                name="content"
+              >
                 <a-textarea
                   v-model:value="editLabForm.content"
                   placeholder="请输入新内容"

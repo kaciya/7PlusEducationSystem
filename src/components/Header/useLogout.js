@@ -29,21 +29,23 @@ export const useLogout = () => {
       autoFocusButton: "cancel", //指定自动获得焦点的按钮
       onOk() {
         return new Promise(resolve => {
-          httpPost(auth.UserLogout).then(res => {
-            // console.log(res);
-            if (res.success) {
-              // 移除token
-              window.sessionStorage.removeItem("token");
-              // 调回登录页
-              router.push("/login");
-              // 提示退出成功
-              message.success("退出成功", 2);
-              // 结束加载
-              resolve();
-            }
-          }).catch(err => {
-            console.log(err);
-          })
+          httpPost(auth.UserLogout)
+            .then(res => {
+              // console.log(res);
+              if (res.success) {
+                // 移除token
+                window.sessionStorage.removeItem("token");
+                // 调回登录页
+                router.push("/login");
+                // 提示退出成功
+                message.success("退出成功", 2);
+                // 结束加载
+                resolve();
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            });
         }).catch(() => console.log("Oops errors!"));
       },
       onCancel() {
