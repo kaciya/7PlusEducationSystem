@@ -4,7 +4,7 @@
     <Crumbs
       :crumbName="[
         { name: '运营管理' },
-        { name: '参数管理', route: '/operation/param' }
+        { name: '参数管理', route: '/operation/param' },
       ]"
     />
     <!-- 面包屑 end -->
@@ -35,9 +35,6 @@
 // 引入面包屑组件
 import Crumbs from "@/components/Crumbs";
 // 引入http
-import { httpGet } from "@/utils/http";
-// 引入api
-import OM from "@/api/Operation/Parameter";
 export default {
   // 使用组件
   components: {
@@ -45,18 +42,6 @@ export default {
   },
   // setup响应api入口
   setup() {
-    const getAdList = () => {
-      // 发起ajax请求
-      httpGet(OM.adList)
-        .then(res => {
-          console.log(res);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    };
-
-    getAdList();
 
     return {};
   }

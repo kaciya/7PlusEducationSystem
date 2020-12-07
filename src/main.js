@@ -11,7 +11,7 @@ import "ant-design-vue/dist/antd.css";
 
 // 使用echarts
 import echarts from "echarts";
-app.config.globalProperties.$echarts = echarts;
+app.provide('$echarts', echarts);
 
 app
   .use(store)
