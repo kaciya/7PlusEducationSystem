@@ -3,7 +3,7 @@ import { reactive, ref } from "vue";
 import { httpPost } from "@/utils/http";
 // 引入请求接口
 import wordType from "@/api/wordType";
-export const ModifylexiconSort = getlexiconSortData => {
+export const ModifyWordCategory = getWordCategoryData => {
   // 输入框数据
   const updateForm = reactive({
     name: ""
@@ -22,34 +22,34 @@ export const ModifylexiconSort = getlexiconSortData => {
   // 控制添加模态框显示隐藏
   let updateVisible = ref(false);
   // 词库名称ID
-  let lexiconId = ref(null);
+  let categoryId = ref(null);
   // 点击修改显示模态框
-  const updateSort = record => {
+  const updateCategory = record => {
     updateVisible.value = true;
     // 存储词库名称ID
-    lexiconId.value = record.id;
+    categoryId.value = record.id;
     // 回显数据
     updateForm.name = record.name;
   };
   // 表格ref相当于$refs
   let updateRuleForm = ref(null);
   // 点击确定触发事件
-  const handleupdateOk = () => {
+  const handleUpdateOk = () => {
     // 表单校验
     updateRuleForm.value
       .validate()
       .then(() => {
         // 表单验证通过
         // 发送请求添加数据
-        httpPost(wordType.UpdateLexiconSort, {
+        httpPost(wordType.UpdateWordCategory, {
           name: updateForm.name,
-          id: lexiconId.value
+          id: categoryId.value
         })
           .then(res => {
             // 判断是否添加成功
             if (res.code == 200) {
               // 更新数据
-              getlexiconSortData();
+              getWordCategoryData();
               // 关闭模态框
               updateVisible.value = false;
             }
@@ -70,8 +70,8 @@ export const ModifylexiconSort = getlexiconSortData => {
     updateRuleForm.value.resetFields();
   };
   return {
-    handleupdateOk,
-    updateSort,
+    handleUpdateOk,
+    updateCategory,
     updateVisible,
     updateForm,
     updateRules,

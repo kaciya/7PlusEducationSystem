@@ -46,20 +46,20 @@ const routes = [
       // 用户列表
       {
         path: "/user/user-list",
-        component: () => import("@/views/UserList"),
+        component: () => import("@/views/UserManage/UserList"),
       },
       // 用户详情
       {
         path: "/user/user-details/:userID",
-        component: () => import("@/views/UserDetails"),
+        component: () => import("@/views/UserManage/UserDetails"),
         props: true,
       },
       //#endregion
       //#region 词库管理
       // 词库分类
       {
-        path: "/lexicon/sort",
-        component: () => import("@/views/LexiconSort"),
+        path: "/Word/category",
+        component: () => import("@/views/Word/WordCategory"),
       },
       //#endregion
       //#region 题库管理
