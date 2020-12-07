@@ -80,10 +80,12 @@ export const showRoleList = () => {
   const getSysRolesData = () => {
     //请求地址 /admin/role/list
     httpGet(role.sysRolesList)
-      .then(results => {
+      .then(res => {
         //判断相应状态
-        if (results.success) {
-          rolesTable.rolesData = results.data;
+        if (res.success) {
+          rolesTable.rolesData = res.data;
+          //获取多少条数据
+          pageInfo.total = res.data.length;
         }
       })
 

@@ -122,6 +122,7 @@ export const showFeedbackList = () => {
           });
           //将获取到的数据列表存入变量中
           feedbackTable.feedbackData = res.data.records;
+          //获取多少条数据
           pageInfo.total = res.data.records.length;
         }
       })

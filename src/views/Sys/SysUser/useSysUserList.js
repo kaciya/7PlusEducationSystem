@@ -88,6 +88,8 @@ export const showSysUserList = () => {
         //判断相应状态
         if (res.success) {
           sysUsersTable.sysUsersData = res.data;
+          //获取多少条数据
+          pageInfo.total = res.data.length;
         }
       })
       .catch(error => {

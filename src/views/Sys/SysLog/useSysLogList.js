@@ -99,6 +99,8 @@ export const showLogList = () => {
         if (res.success == true) {
           //获取操作日志数据
           logTable.logData = res.data.records;
+          //获取多少条数据
+          pageInfo.total = res.data.records.length;
         }
       })
       .catch(error => {
