@@ -66,12 +66,12 @@ const routes = [
       // 标签管理
       {
         path: "/question/label",
-        component: () => import("@/views/QuestionLabel"),
+        component: () => import("@/views/Question/QuestionLabel"),
       },
       // 听力题库
       {
         path: "/question/listening",
-        component: () => import("@/views/Listening"),
+        component: () => import("@/views/Question/Listening"),
       },
       //#endregion
       //#region 柒加圈
