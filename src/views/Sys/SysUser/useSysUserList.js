@@ -11,7 +11,7 @@ import {
 //导入 GET请求方法
 import {
   httpGet,
-  httpDelete
+  httpPost
 } from "@/utils/http";
 
 //导入 全局提示信息
@@ -98,21 +98,6 @@ export const showSysUserList = () => {
   }
   //#endregion
 
-  //#region 删除
-  const removeSysUser = (sysUserId) => {
-    //向后台发起请求  删除此项
-    httpDelete(`${sys.removeSysUser}/${sysUserId}`)
-      .then(res => {
-        if (res.success) {
-          message.success("删除成功");
-        }
-      })
-      .catch(error => {
-        message.error("删除失败: " + error);
-      })
-  }
-  //#endregion
-
   //#region 点击下一页方法
   const pageChange = (page, pageSize) => {
     pageInfo.pageNum = page;
@@ -129,14 +114,34 @@ export const showSysUserList = () => {
   }
   //#endregion
 
+
+  //#region 改变启用状态方法
+  const statusChange = (userId) => {
+    //发起请求  更改列的启用状态
+    httpPost(`${sys.changeSysUserStatus}/${userId}`).then(res => {
+      //判断是否改变成功
+      if(res.success){
+        //重新渲染列表
+        getSysUserList();
+        //全局提示
+        message.success("状态改变成功");
+      }
+    })
+    .catch(error => {
+      message.error("状态改变失败: " + error);
+    });
+  }
+  //#endregion
+
+
   //返回数据
   return {
     sysUsersTable,
     pageInfo,
     getSysUserList,
-    removeSysUser,
     pageChange,
     pageSizeChange,
+    statusChange
   };
 };
 //#endregion

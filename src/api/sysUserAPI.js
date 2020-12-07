@@ -9,7 +9,9 @@ export const sys = {
   //渲染账号列表
   sysUserList: "/sys/user/list",
   //删除账号
-  removeSysUser: "/sys/user/delete"
+  removeSysUser: "/sys/user/delete",
+  //更改启动状态
+  changeSysUserStatus : "/sys/user/status"
 };
 
 //关于 操作日志 接口

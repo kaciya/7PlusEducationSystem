@@ -6,7 +6,7 @@
     <!-- 主体Main start -->
     <div
       :style="{
-        padding: '20px',
+        padding: '20px', 
         background: '#fff',
         minHeight: '93%',
       }"
@@ -36,15 +36,23 @@
             {{ index + 1 }}
           </template>
           <template #status="{ record }">
-            <a-switch :checked="record.status == 1 ? true : false" />
+            <a-switch :checked="record.status == 1 ? true : false" @click="statusChange(record.userId)"/>
           </template>
-          <template #operation>
+          <template #operation="{ record }">
+            <!-- 密码重置 -->
             <a-button type="primary" style="margin: 0 5px">
               <SyncOutlined /> 密码重置
             </a-button>
-            <a-button type="danger" style="margin: 0 5px">
+            <!-- 密码重置 end -->
+            <!-- 删除按钮 -->
+            <a-button
+              type="danger"
+              style="margin: 0 5px"
+              @click="showDelConfirm(record.userId)"
+            >
               <DeleteOutlined /> 删除
             </a-button>
+            <!-- 删除按钮 end -->
           </template>
         </a-table>
         <!-- 账号列表 end -->
@@ -79,6 +87,9 @@ import Crumbs from "@/components/Crumbs";
 //导入sysUserList中返回的数据
 import { showSysUserList } from "./useSysUserList";
 
+//导入sysUserDel中返回的数据
+import { removeSysUser } from "./useSysUserDel";
+
 // 引入 钩子函数
 import { onMounted } from "vue";
 
@@ -99,7 +110,17 @@ export default {
 
   setup() {
     //通过sysUserList方法获取
-    let { sysUsersTable, getSysUserList, removeSysUser , pageInfo , pageChange , pageSizeChange } = showSysUserList();
+    let {
+      sysUsersTable,
+      getSysUserList,
+      pageInfo,
+      pageChange,
+      pageSizeChange,
+      statusChange
+    } = showSysUserList();
+
+    //通过removeSysUser方法获取
+    let { showDelConfirm } = removeSysUser();
 
     //在Mounted 获取列表
     onMounted(() => {
@@ -110,21 +131,23 @@ export default {
     return {
       //账号列表 表格数据
       sysUsersTable,
-      //删除方法
-      removeSysUser,
       //分页数据对象
       pageInfo,
       //点击下一页方法
       pageChange,
       //每页显示多少条数据的方法
       pageSizeChange,
+      //显示删除模态框
+      showDelConfirm,
+      //改变启用状态方法
+      statusChange
     };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.ant-btn{
+.ant-btn {
   width: auto;
 }
 </style>
