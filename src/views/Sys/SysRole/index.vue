@@ -1,16 +1,14 @@
 <template>
   <a-layout-content>
     <!-- 面包屑 start -->
-    <Crumbs
-      :crumbName="[{ name: '权限管理' }, { name: '权限组' }]"
-    />
+    <Crumbs :crumbName="[{ name: '权限管理' }, { name: '权限组' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
     <div
       :style="{
         padding: '20px',
         background: '#fff',
-        minHeight: '93%'
+        minHeight: '93%',
       }"
     >
       <!-- 权限组列表上标题 -->
@@ -28,7 +26,7 @@
       <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
         <!-- 标签列表 -->
         <a-table
-          :rowKey="record => record.roleId"
+          :rowKey="(record) => record.roleId"
           :columns="rolesTable.rolesColums"
           :data-source="rolesTable.rolesData"
           :pagination="false"
@@ -62,21 +60,21 @@
         <!-- 标签列表 end -->
         <!-- 分页 -->
         <a-row>
-        <a-col :span="24">
-          <a-pagination
-            show-size-changer
-            v-model:current="pageInfo.pageNum"
-            v-model:pageSize="pageInfo.pageSize"
-            :page-size-options="pageInfo.pageSizeOptions"
-            :defaultPageSize="10"
-            :total="pageInfo.total"
-            @change="pageChange"
-            @showSizeChange="pageSizeChange"
-            style="float: right; margin: 10px 0"
-          />
-        </a-col>
-      </a-row>
-       <!-- 分页 end -->
+          <a-col :span="24">
+            <a-pagination
+              show-size-changer
+              v-model:current="pageInfo.pageNum"
+              v-model:pageSize="pageInfo.pageSize"
+              :page-size-options="pageInfo.pageSizeOptions"
+              :defaultPageSize="10"
+              :total="pageInfo.total"
+              @change="pageChange"
+              @showSizeChange="pageSizeChange"
+              style="float: right; margin: 10px 0"
+            />
+          </a-col>
+        </a-row>
+        <!-- 分页 end -->
       </div>
       <!-- 权限组内容 end -->
     </div>
@@ -106,18 +104,24 @@ export default {
     Crumbs,
     PlusOutlined,
     EditOutlined,
-    DeleteOutlined
+    DeleteOutlined,
   },
 
   setup() {
     //通过showRoleList方法获取 列表项和数据
-    let { rolesTable , pageInfo , pageChange , getSysRolesData , pageSizeChange } = showRoleList();
-    
+    let {
+      rolesTable,
+      pageInfo,
+      pageChange,
+      getSysRolesData,
+      pageSizeChange,
+    } = showRoleList();
+
     //在Mounted 获取列表
     onMounted(() => {
       getSysRolesData();
     });
-    
+
     //返回参数
     return {
       //权限组列表
@@ -131,8 +135,12 @@ export default {
       //每页显示多少条数据的方法
       pageSizeChange,
     };
-  }
+  },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.ant-btn{
+  width: auto;
+}
+</style>
