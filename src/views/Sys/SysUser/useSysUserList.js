@@ -10,21 +10,15 @@ import {
 
 //导入 GET请求方法
 import {
-  httpGet,
-  httpPost
+  httpGet
 } from "@/utils/http";
-
-//导入 全局提示信息
-import {
-  message
-} from 'ant-design-vue';
 
 //#region 定义方法  获取账号列表
 export const showSysUserList = () => {
   //#region 分页所需数据
   const pageInfo = reactive({
     //列表所在页数
-    pageNum: 2,
+    pageNum: 1,
     //现在一页显示多少条数据
     pageSize: 10,
     //指定每页可以显示多少条
@@ -114,26 +108,6 @@ export const showSysUserList = () => {
   }
   //#endregion
 
-
-  //#region 改变启用状态方法
-  const statusChange = (userId) => {
-    //发起请求  更改列的启用状态
-    httpPost(`${sys.changeSysUserStatus}/${userId}`).then(res => {
-      //判断是否改变成功
-      if(res.success){
-        //重新渲染列表
-        getSysUserList();
-        //全局提示
-        message.success("状态改变成功");
-      }
-    })
-    .catch(error => {
-      message.error("状态改变失败: " + error);
-    });
-  }
-  //#endregion
-
-
   //返回数据
   return {
     sysUsersTable,
@@ -141,7 +115,6 @@ export const showSysUserList = () => {
     getSysUserList,
     pageChange,
     pageSizeChange,
-    statusChange
   };
 };
 //#endregion

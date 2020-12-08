@@ -34,7 +34,7 @@ export const showLogList = () => {
   //#region 分页所需数据
   const pageInfo = reactive({
     //列表所在页数
-    pageNum: 2,
+    pageNum: 1,
     //现在一页显示多少条数据
     pageSize: 10,
     //指定每页可以显示多少条

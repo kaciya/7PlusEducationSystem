@@ -1,7 +1,6 @@
 //导入 reactive 对象
 import {
-  reactive,
-  ref
+  reactive
 } from "vue";
 
 //导入 API接口
@@ -19,7 +18,7 @@ export const showRoleList = () => {
   //#region 分页所需数据
   const pageInfo = reactive({
     //列表所在页数
-    pageNum: 2,
+    pageNum: 1,
     //现在一页显示多少条数据
     pageSize: 10,
     //指定每页可以显示多少条
@@ -88,7 +87,6 @@ export const showRoleList = () => {
           pageInfo.total = res.data.length;
         }
       })
-
       .catch(error => {
         console.log("error", error);
       });

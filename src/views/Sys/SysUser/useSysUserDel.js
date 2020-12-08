@@ -22,7 +22,8 @@ import {
 
 //#region 显示删除模态框
 export const removeSysUser = () => {
-    const showDelConfirm = (userId) => {
+
+    const showDelConfirm = (userId , callback) => {
         Modal.confirm({
             title: '确定删除该操作员?',
             icon: createVNode(ExclamationCircleOutlined),
@@ -48,6 +49,8 @@ export const removeSysUser = () => {
                             .then(res => {
                                 if (res.success) {
                                     message.success("删除成功");
+                                    //刷新页面
+                                    callback();
                                 }
                             })
                             .catch(error => {

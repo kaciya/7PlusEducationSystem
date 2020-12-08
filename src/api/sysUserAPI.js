@@ -1,7 +1,11 @@
 //关于 权限组 接口
 export const role = {
   //渲染权限列表
-  sysRolesList: "/role/list"
+  sysRolesList: "/role/list",
+  //删除列表项
+  removeSysRoles: "/role/delete",
+  //更改启用状态
+  changeSysRolesStatus: "/role/status"
 };
 
 //关于 账号管理 接口
@@ -10,7 +14,7 @@ export const sys = {
   sysUserList: "/sys/user/list",
   //删除账号
   removeSysUser: "/sys/user/delete",
-  //更改启动状态
+  //更改启用状态
   changeSysUserStatus : "/sys/user/status"
 };
 

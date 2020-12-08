@@ -36,7 +36,7 @@
             {{ index + 1 }}
           </template>
           <template #status="{ record }">
-            <a-switch :checked="record.status == 1 ? true : false" @click="statusChange(record.userId)"/>
+            <a-switch :checked="record.status == 1 ? true : false" @click="statusChange(record.userId , getSysUserList)"/>
           </template>
           <template #operation="{ record }">
             <!-- 密码重置 -->
@@ -48,7 +48,7 @@
             <a-button
               type="danger"
               style="margin: 0 5px"
-              @click="showDelConfirm(record.userId)"
+              @click="showDelConfirm(record.userId , getSysUserList)"
             >
               <DeleteOutlined /> 删除
             </a-button>
@@ -90,6 +90,9 @@ import { showSysUserList } from "./useSysUserList";
 //导入sysUserDel中返回的数据
 import { removeSysUser } from "./useSysUserDel";
 
+//导入UpdateUserStatus中返回的数据
+import { updateUserStatus } from "./useUpdateUserStatus";
+
 // 引入 钩子函数
 import { onMounted } from "vue";
 
@@ -116,8 +119,10 @@ export default {
       pageInfo,
       pageChange,
       pageSizeChange,
-      statusChange
     } = showSysUserList();
+    
+    //通过updateUserStatus方法更改账号启用状态
+    let { statusChange } = updateUserStatus();
 
     //通过removeSysUser方法获取
     let { showDelConfirm } = removeSysUser();
