@@ -110,6 +110,11 @@ const routes = [
         component: () => import("@/views/Operation/TeacherInfo"),
       },
       {
+        // 课程服务
+        path: "/operation/course",
+        component: () => import("@/views/Operation/Course")
+      },
+      {
         // 互动练习
         path: "/operation/exercise",
         component: () => import("@/views/Operation/Exercise"),

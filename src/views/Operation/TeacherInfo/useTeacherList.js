@@ -9,7 +9,7 @@ import {
 } from "vue";
 
 // 创建表格格式
-const columns = reactive([{
+export const columns = reactive([{
     title: '序号',
     width: 80,
     slots: { customRender: 'index' }
