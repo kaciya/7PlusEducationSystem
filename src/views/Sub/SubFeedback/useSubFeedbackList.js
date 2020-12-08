@@ -51,6 +51,7 @@ export const showFeedbackList = () => {
   const feedbackTable = reactive({
     feedbackColums: [{
         title: "索引",
+        align: "center",
         key: "index",
         slots: {
           customRender: "index"
@@ -59,14 +60,17 @@ export const showFeedbackList = () => {
       },
       {
         title: "内容",
+        align: "center",
         dataIndex: "content"
       },
       {
         title: "联系方式",
+        align: "center",
         dataIndex: "mobile"
       },
       {
         title: "图片",
+        align: "center",
         key: "picUrls",
         slots: {
           customRender: "picUrls"
@@ -74,6 +78,7 @@ export const showFeedbackList = () => {
       },
       {
         title: "提交时间",
+        align: "center",
         dataIndex: "createTime",
         //默认降序排列
         defaultSortOrder: 'descend',
@@ -86,10 +91,12 @@ export const showFeedbackList = () => {
       },
       {
         title: "处理时间",
+        align: "center",
         dataIndex: "updateTime"
       },
       {
         title: "状态",
+        align: "center",
         key: "status",
         slots: {
           customRender: "status"
@@ -97,6 +104,7 @@ export const showFeedbackList = () => {
       },
       {
         title: "操作",
+        align: "center",
         key: "operation",
         slots: {
           customRender: "operation"

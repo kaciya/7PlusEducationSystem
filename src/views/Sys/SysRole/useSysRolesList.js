@@ -32,6 +32,7 @@ export const showRoleList = () => {
   const rolesTable = reactive({
     rolesColums: [{
         title: "索引",
+        align: "center",
         key: "index",
         slots: {
           customRender: "index"
@@ -39,14 +40,17 @@ export const showRoleList = () => {
       },
       {
         title: "权限组",
+        align: "center",
         dataIndex: "roleName"
       },
       {
         title: "人员",
+        align: "center",
         dataIndex: "count"
       },
       {
         title: "更新时间",
+        align: "center",
         dataIndex: "updateTime",
         //默认降序排列
         defaultSortOrder: 'descend',
@@ -59,6 +63,7 @@ export const showRoleList = () => {
       },
       {
         title: "启用",
+        align: "center",
         key: "status",
         slots: {
           customRender: "status"
@@ -66,6 +71,7 @@ export const showRoleList = () => {
       },
       {
         title: "操作",
+        align: "center",
         key: "operation",
         slots: {
           customRender: "operation"

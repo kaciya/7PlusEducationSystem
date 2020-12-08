@@ -99,7 +99,7 @@ import { showRoleList } from "./useSysRolesList";
 import { removeSysRoles } from "./useSysRolesDel";
 
 //导入rolesStatus中返回的数据
-import { updateRoleStatus } from "./useUpdateRoleStatus";
+import { updateRoleStatus } from "./useSysRoleStatusEdit";
 
 //导入图标
 import { PlusOutlined } from "@ant-design/icons-vue";

@@ -48,6 +48,7 @@ export const showContactList = () => {
   const contactTable = reactive({
     contactColums: [{
         title: "索引",
+        align: "center",
         key: "index",
         slots: {
           customRender: "index"
@@ -56,26 +57,32 @@ export const showContactList = () => {
       },
       {
         title: "姓名",
+        align: "center",
         dataIndex: "name"
       },
       {
         title: "邮箱",
+        align: "center",
         dataIndex: "email"
       },
       {
         title: "电话",
+        align: "center",
         dataIndex: "mobile"
       },
       {
         title: "QQ",
+        align: "center",
         dataIndex: "qq"
       },
       {
         title: "内容",
+        align: "center",
         dataIndex: "content"
       },
       {
         title: "提交时间",
+        align: "center",
         dataIndex: "createTime",
         //默认降序排列
         defaultSortOrder: 'descend',
@@ -88,10 +95,12 @@ export const showContactList = () => {
       },
       {
         title: "处理时间",
+        align: "center",
         dataIndex: "updateTime"
       },
       {
         title: "状态",
+        align: "center",
         key: "state",
         slots: {
           customRender: "state"
@@ -99,6 +108,7 @@ export const showContactList = () => {
       },
       {
         title: "操作",
+        align: "center",
         key: "operation",
         slots: {
           customRender: "operation"

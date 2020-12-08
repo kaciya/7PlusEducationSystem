@@ -48,6 +48,7 @@ export const showLogList = () => {
   const logTable = reactive({
     logColums: [{
         title: "索引",
+        align: "center",
         key: "index",
         slots: {
           customRender: "index"
@@ -55,6 +56,7 @@ export const showLogList = () => {
       },
       {
         title: "日志时间",
+        align: "center",
         dataIndex: "createTime",
         //默认降序排列
         defaultSortOrder: 'descend',
@@ -67,18 +69,22 @@ export const showLogList = () => {
       },
       {
         title: "账号",
+        align: "center",
         dataIndex: "username"
       },
       {
         title: "操作员名称",
+        align: "center",
         dataIndex: "realName"
       },
       {
         title: "操作模块",
+        align: "center",
         dataIndex: "title"
       },
       {
         title: "内容",
+        align: "center",
         dataIndex: "params"
       }
     ],
