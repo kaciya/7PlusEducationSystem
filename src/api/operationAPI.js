@@ -29,3 +29,15 @@ export const exercise = {
   // 更新互动练习内容
   UpdateExerciseContent: 'interactive/update',
 }
+
+// 常见问题
+export const problem = {
+  // 获取常见问题列表
+  GetProblemList: "issue/list",
+  // 添加常见问题
+  AddProblemList: "issue/add",
+  // 编辑常见问题
+  EditProblemList: "issue/update",
+  // 删除常见问题
+  DeleteProblemList: "issue"
+}
