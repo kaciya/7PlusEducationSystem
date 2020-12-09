@@ -1,3 +1,5 @@
+import { reactive } from "vue";
+
 // 创建表格格式
 export const columns = reactive([{
     title: '序号',
