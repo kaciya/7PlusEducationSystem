@@ -124,6 +124,16 @@ const routes = [
         path: "/operation/Issues",
         component: () => import("@/views/Operation/Issues"),
       },
+      {
+        // 课程服务
+        path: "/operation/course",
+        component: () => import("@/views/Operation/Course")
+      },
+      {
+        // 常见问题
+        path: "/operation/problem",
+        component: () => import("@/views/Operation/Problem")
+      },
       //#endregion
       //#region 权限管理
       //权限组
