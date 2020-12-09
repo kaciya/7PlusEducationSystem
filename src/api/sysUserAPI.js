@@ -20,6 +20,8 @@ export const sys = {
   changeSysUserStatus : "/sys/user/status",
   //添加账号
   addSysUser: "/sys/user/add",
+  //重置账号密码
+  resetSysUser: "/sys/user/resetPwd"
 };
 
 //关于 操作日志 接口

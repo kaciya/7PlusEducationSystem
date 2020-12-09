@@ -30,6 +30,7 @@ export const showRoleList = () => {
 
   //定义 表格项
   const rolesTable = reactive({
+    //表格列
     rolesColums: [{
         title: "索引",
         align: "center",
@@ -78,6 +79,7 @@ export const showRoleList = () => {
         }
       }
     ],
+    //表格数据
     rolesData: []
   });
 

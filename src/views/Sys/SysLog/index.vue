@@ -1,9 +1,7 @@
 <template>
   <a-layout-content>
     <!-- 面包屑 start -->
-    <Crumbs
-      :crumbName="[{ name: '权限管理' }, { name: '操作日志' }]"
-    />
+    <Crumbs :crumbName="[{ name: '权限管理' }, { name: '操作日志' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
     <div
@@ -44,7 +42,7 @@
             <a-button
               type="primary"
               style="margin: 0 10px; float: right"
-              @click="searchClick"
+              @click="searchClick(getLogData(params))"
             >
               <SearchOutlined /> 查询
             </a-button>
@@ -100,6 +98,9 @@ import Crumbs from "@/components/Crumbs";
 //导入 useSysLogList 文件 获取相应的方法
 import { showLogList } from "./useSysLogList";
 
+//导入 useSysLogSearch 获取 相应的方法
+import { useSysLogHeader } from "./useSysLogSearch";
+
 // 引入 钩子函数
 import { onMounted } from "vue";
 
@@ -117,22 +118,26 @@ export default {
   setup() {
     //获取 showLogList 中的 变量
     let {
-      usernameModel,
       logTable,
       pageInfo,
       pageChange,
       pageSizeChange,
-      dateModel,
       getLogData,
+    } = showLogList();
+
+    //获取 useSysLogHeader 中的变量和方法
+    let {
+      usernameModel,
+      dateModel,
       dateChange,
       dateChangeOk,
       resetClick,
-      searchClick
-    } = showLogList();
+      searchClick,
+    } = useSysLogHeader();
 
     //在Mounted 获取列表
     onMounted(() => {
-      getLogData();
+      getLogData({});
     });
 
     //返回参数
@@ -165,7 +170,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ant-btn{
+.ant-btn {
   width: auto;
 }
 </style>

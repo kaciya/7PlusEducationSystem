@@ -25,10 +25,12 @@ export const updateUserStatus = () => {
                     message.success("状态改变成功");
                     //刷新页面
                     callback();
+                }else{
+                    message.error("状态改变失败");
                 }
             })
             .catch(error => {
-                message.error("状态改变失败: " + error);
+                console.log(error);
             });
     }
 

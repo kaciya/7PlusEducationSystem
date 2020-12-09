@@ -40,11 +40,14 @@ export const removeSysRoles = () => {
                     //判断是否删除成功
                     if(res.success){
                         message.success("删除成功");
+                        //刷新页面
                         callback();
+                    }else{
+                        message.error("删除失败");
                     }
                 })
                 .catch(error => {
-                    message.error("删除失败: " + error);
+                    console.log(error);
                 });
             },
         });

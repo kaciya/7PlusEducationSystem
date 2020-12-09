@@ -33,7 +33,7 @@
       >
         <!-- 自定义 页脚 -->
         <template #footer>
-          <span style="float:left; margin-top:5px;">创建子账号时默认密码为：QJ123.</span>
+          <span style="float:left; margin-top:5px;color:#c5c5c5;">创建子账号时默认密码为：QJ123.</span>
           <a-button key="back" @click="handleAddCancel"> 取消 </a-button>
           <a-button
             key="submit"
@@ -119,7 +119,7 @@
           </template>
           <template #operation="{ record }">
             <!-- 密码重置 -->
-            <a-button type="primary" style="margin: 0 5px">
+            <a-button type="primary" style="margin: 0 5px" @click="handleResetPwd(record.userId , getSysUserList)">
               <SyncOutlined /> 密码重置
             </a-button>
             <!-- 密码重置 end -->
@@ -127,7 +127,7 @@
             <a-button
               type="danger"
               style="margin: 0 5px"
-              @click="showDelConfirm(record.userId, getSysUserList)"
+              @click="showDelConfirm(record.userId , getSysUserList)"
             >
               <DeleteOutlined /> 删除
             </a-button>
@@ -172,6 +172,9 @@ import { removeSysUser } from "./useSysUserDel";
 //导入sysUserStatusEdit中返回的方法
 import { updateUserStatus } from "./useSysUserStatusEdit";
 
+//导入sysUserResetPwd中返回的方法
+import { sysUserResetPwd } from "./useSysUserResetPwd";
+
 //导入sysUserAdd中返回的方法
 import { addSysUser, sysUserRules, getUserPermissions } from "./useSysUserAdd";
 
@@ -211,6 +214,9 @@ export default {
 
     //通过UserPermissions获取权限组列表
     let { getPermissions, RolesPermissionsList } = getUserPermissions();
+
+    //通过sysUserResetPwd获取重置密码方法
+    let { handleResetPwd } = sysUserResetPwd();
 
     //通过addSysUser方法获取数据
     let {
@@ -261,6 +267,8 @@ export default {
       handleAddOk,
       //添加账号取消时回调
       handleAddCancel,
+      //重置账号密码回调
+      handleResetPwd,
     };
   },
 };

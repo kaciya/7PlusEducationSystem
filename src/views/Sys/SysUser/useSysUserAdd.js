@@ -40,6 +40,7 @@ export const getUserPermissions = () => {
         //发起请求  获取权限列表
         httpPost(role.sysRolesPermissions).then(res => {
                 if (res.success) {
+                    //获取权限列表数据
                     RolesPermissionsList.data = res.data;
                 }
             })
@@ -85,6 +86,7 @@ export const addSysUser = () => {
     const handleAddOk = (callback) => {
         //发起请求 添加账号                     
         addUserForm.value.validate().then(() => {
+                //获取请求需要参数
                 let params = {
                     realName: sysUserForm.realName,
                     roleIds: sysUserForm.roleIds,
@@ -92,26 +94,34 @@ export const addSysUser = () => {
                 }
                 //发起请求  添加数据
                 httpPost(sys.addSysUser, params).then(res => {
+                    //判断如果请求成功
                     if (res.success) {
+                        //显示确认加载
                         confirmLoading.value = true;
                         message.success("添加成功");
+                        //设置定时器
                         setTimeout(() => {
+                            //关闭加载与弹窗
                             addUserVisible.value = false;
                             confirmLoading.value = false;
                             //重新刷新页面
                             callback();
-                        }, 1000);
+                        }, 700);
+                    }else{
+                        message.error("添加失败");
                     }
                 })
             })
             .catch(error => {
-                message.error("添加失败: " + error);
+                console.log(error);
             });
     }
 
     //添加账号取消时的回调
     const handleAddCancel = () => {
+        //清空表单
         addUserForm.value.resetFields();
+        //关闭弹窗
         addUserVisible.value = false;
     }
 

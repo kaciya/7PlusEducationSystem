@@ -24,6 +24,7 @@ import {
 export const removeSysUser = () => {
 
     const showDelConfirm = (userId , callback) => {
+        //一次弹窗是否删除
         Modal.confirm({
             title: '确定删除该操作员?',
             icon: createVNode(ExclamationCircleOutlined),
@@ -34,6 +35,7 @@ export const removeSysUser = () => {
             centered: true,
             cancelText: '取消',
             onOk() {
+                //二次弹窗确认是否删除
                 Modal.confirm({
                     title: '确定删除该操作员?(二次确认)',
                     icon: createVNode(ExclamationCircleOutlined),
@@ -51,10 +53,12 @@ export const removeSysUser = () => {
                                     message.success("删除成功");
                                     //刷新页面
                                     callback();
+                                }else{
+                                    message.error("删除失败");
                                 }
                             })
                             .catch(error => {
-                                message.error("删除失败: " + error);
+                                console.log(error);
                             })
                     },
                 });

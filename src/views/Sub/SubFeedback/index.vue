@@ -1,9 +1,7 @@
 <template>
   <a-layout-content>
     <!-- 面包屑 start -->
-    <Crumbs
-      :crumbName="[{ name: '用户提交' }, { name: '反馈列表' }]"
-    />
+    <Crumbs :crumbName="[{ name: '用户提交' }, { name: '反馈列表' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
     <div
@@ -48,7 +46,7 @@
             <a-button
               type="primary"
               style="margin: 0 10px; float: right"
-              @click="searchClick"
+              @click="searchClick(getFeedbackData(params))"
             >
               <SearchOutlined /> 查询
             </a-button>
@@ -138,8 +136,11 @@ import Crumbs from "@/components/Crumbs";
 // 引入 钩子函数
 import { onMounted } from "vue";
 
-//导入 useSysLogList 文件 获取相应的方法
+//导入 useSubFeedbackList 文件 获取相应的方法
 import { showFeedbackList } from "./useSubFeedbackList";
+
+//导入 useSubFeedbackHeader 文件 获取相应的方法
+import { SubFeedbackHeader } from "./useSubFeedbackHeader";
 
 //导入 图标样式
 import {
@@ -164,28 +165,32 @@ export default {
 
   //setup 编写 主要内容
   setup() {
-    //获取 方法中的 参数dateModel
+    //获取 showFeedbackList 方法中的 参数
     let {
       feedbackTable,
       pageInfo,
       getFeedbackData,
       pageChange,
       pageSizeChange,
+      manageClick,
+    } = showFeedbackList();
+
+    //获取 SubFeedbackHeader 方法中的 参数
+    let {
       dateModel,
-      dateChange,
-      dateChangeOk,
       selectModel,
       selectChange,
+      dateChange,
+      dateChangeOk,
       resetClick,
       searchClick,
-    } = showFeedbackList();
+    } = SubFeedbackHeader();
 
     //在Mounted 获取列表
     onMounted(() => {
       getFeedbackData({});
     });
 
-    
     //返回参数
     return {
       //反馈列表
@@ -216,7 +221,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ant-btn{
+.ant-btn {
   width: auto;
 }
 </style>
