@@ -4,14 +4,14 @@
 export default {
   state() {
     return {
-      // 用户权限列表
-      permissions: []
+      // 用户信息
+      userInfos: []
     };
   },
   mutations: {
     // 设置用户权限
-    SET_PERMISSIONS(state, payload) {
-      state.permissions = payload;
+    SET_USERINFOS(state, payload) {
+      state.userInfos = payload;
     }
   },
   actions: {},
