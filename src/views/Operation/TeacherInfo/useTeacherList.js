@@ -1,53 +1,60 @@
 // 引入http
-import { httpGet } from "@/utils/http";
+import {
+  httpGet
+} from "@/utils/http";
 // 引入api
-import techaer from "@/api/Operation/TeacherInfo";
-import { reactive } from "vue";
+import { teacherInfo } from "@/api/operationAPI";
+import {
+  reactive, ref
+} from "vue";
 
 // 创建表格格式
-export const columns = reactive([
-  {
-    title: "序号",
+export const columns = reactive([{
+    title: '序号',
     width: 80,
-    slots: { customRender: "index" }
+    slots: { customRender: 'index' }
   },
   {
     title: "姓名",
-    dataIndex: "name",
-    key: "name",
+    dataIndex: 'name',
+    key: 'name',
     width: 180
   },
   {
     title: "照片",
     width: 180,
-    slots: { customRender: "photo" }
+    slots: { customRender: 'photo' }
   },
   {
     title: "简介",
-    dataIndex: "profiles",
-    key: "profiles"
+    dataIndex: 'profiles',
+    key: 'profiles',
   },
   {
     title: "操作",
     width: 200,
-    slots: { customRender: "operational" }
+    slots: { customRender: 'operational' }
   }
 ]);
 
 // 创建表格数据
-export const teacherListData = reactive({});
+export const teacherListData = reactive({
+  columns
+});
 
 // 获取教师数据
-export const getTacherList = (pageNum = 1, pageSize = 5, callback) => {
+export const getTacherList = (pageNum = 1, pageSize = 5,callback) => {
   // 获取数据
-  httpGet(techaer.GetTacherList, {
-    pageNum,
-    pageSize
-  })
+  httpGet(teacherInfo.GetTacherList, {
+      pageNum,
+      pageSize
+    })
     .then(res => {
       // 判断数据是否获取成功
       if (res.code === 200) {
-        let { data } = res;
+        let {
+          data
+        } = res;
         // 将数据设置到teacherListData上
         teacherListData.data = data.records;
         teacherListData.total = data.total;
@@ -58,5 +65,49 @@ export const getTacherList = (pageNum = 1, pageSize = 5, callback) => {
     })
     .catch(err => {
       console.log(err);
+    })
+}
+
+// 分页功能
+export const getPagination = () => {
+  // 页面是否在加载
+  const loadState = ref(true);
+  // 当前页面
+  const pageNum = ref(1);
+  // 当前页面显示多少条数据
+  const pageSize = ref(20);
+  // 指定每页可以显示多少条
+  const pageSizeOptions = ["20"];
+
+  // pageSize变化的回调
+  const showSizeChange = (current, size) => {
+    loadState.value = true;
+    // 重新获取数据
+    getTacherList(current, size, () => {
+      loadState.value = false;
     });
-};
+  };
+  // 页码改变的回调
+  const handleTogglePage = (page, pageSize) => {
+    loadState.value = true;
+    // 重新获取分页数据
+    getTacherList(page, pageSize, () => {
+      loadState.value = false;
+    });
+  };
+
+  return {
+    // 是否在加载数据
+    loadState,
+    // 当前页面
+    pageNum,
+    // 当前页面显示多少条数据
+    pageSize,
+    // 每页可以显示多少条数据
+    pageSizeOptions,
+    // pageSize变化的回调
+    showSizeChange,
+    // 页码改变的回调
+    handleTogglePage
+  }
+}

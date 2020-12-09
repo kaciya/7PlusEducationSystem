@@ -13,7 +13,7 @@
     <div
       :style="{
         padding: '20px',
-        background: '#fff',
+        backgroundColor: '#fff',
         minHeight: '93%'
       }"
     >

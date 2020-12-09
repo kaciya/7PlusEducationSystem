@@ -4,7 +4,8 @@
     <Crumbs
       :crumbName="[
         { name: '运营管理' },
-        { name: '参数管理', route: '/operation/teacher' }
+        { name: '参数管理' },
+        { name:  '师资管理', route: '/operation/teacher'}
       ]"
     />
     <!-- 面包屑 end -->
@@ -20,38 +21,30 @@
       <a-row style="margin-bottom: 10px">
         <a-col :span="20"></a-col>
         <a-col :span="4">
-          <a-button
-            type="primary"
-            size="large"
-            style="float: right"
-            @click="showModel"
-            >添加成员</a-button
-          >
+          <a-button type="primary" size="large" style="float: right" @click="showModal">
+            添加成员
+          </a-button>
         </a-col>
       </a-row>
       <!-- 头部按钮 end -->
       <!-- 表格 start -->
       <a-table
-        :columns="columns"
+        :columns="teacherListData.columns"
         :data-source="teacherListData.data"
         :row-key="record => record.id"
         bordered
         :pagination="false"
         :loading="loadState"
       >
-        <template #index="{ index }">{{ index + 1 }}</template>
+        <template #index="{ index }">{{index + 1}}</template>
         <template #photo="{ record }">
-          <img
-            :src="record.photo"
-            :title="record.position"
-            class="teacher-img"
-          />
+          <img :src="record.photo" :title="record.position" class="teacher-img" />
         </template>
-        <template #operational>
-          <a-button type="primary" size="small" style="margin-right: 10px">
+        <template #operational="{record}">
+          <a-button type="primary" size="small" style="margin-right: 10px" @click="showEditModal(record.id)">
             <EditOutlined />编辑
           </a-button>
-          <a-button type="danger" size="small">
+          <a-button type="danger" size="small" @click="handleDeleteTeacher(record.id)">
             <DeleteOutlined />删除
           </a-button>
         </template>
@@ -59,88 +52,130 @@
       <!-- 表格 end -->
 
       <!-- 分页器 start -->
-      <a-pagination
-        show-size-changer
-        v-model:current="current1"
-        v-model:pageSize="pageSize"
-        :total="teacherListData.total"
-        style="margin-top: 15px"
-        @change="handleTogglePage"
-        :page-size-options="pageSizeOptions"
-        @show-size-change="showSizeChange"
-      />
+      <a-row>
+        <a-col :span="24">
+          <a-pagination
+            show-size-changer
+            v-model:current="pageNum"
+            v-model:pageSize="pageSize"
+            :total="teacherListData.total"
+            style="margin-top: 15px;float: right"
+            @change="handleTogglePage"
+            :page-size-options="pageSizeOptions"
+            @show-size-change="showSizeChange"
+          />
+        </a-col>
+      </a-row>
       <!-- 分页器 end -->
+      <!-- 添加用户信息模态框 start -->
+      <a-modal
+          title="添加成员"
+          v-model:visible="addLabelVisible"
+          @ok="handleOk"
+          :confirm-loading="confirmLoading"
+      >
+        <a-form
+          ref="addLabelFormRef"
+          :model="addLabelForm"
+          :rules="addLabelRule"
+        >
+          <a-row>
+            <a-col :span="24">
+              <a-form-item has-feedback label="顺序值" name="sort" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
+                <a-input  type="text" autocomplete="off" v-model:value="addLabelForm.sort" />
+              </a-form-item>
+              <a-form-item has-feedback label="老师名称" name="name" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
+                <a-input  type="text" autocomplete="off" v-model:value="addLabelForm.name"/>
+              </a-form-item>
+              <a-form-item has-feedback label="上传图片" name="photo" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
+                <a-input  type="text" autocomplete="off" v-model:value="addLabelForm.photo"/>
+              </a-form-item>
+<!--              <a-form-item has-feedback label="上传图片" name="photo" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
+                <a-upload
+                  list-type="picture"
+                  :beforeUpload="beforeUpload"
+                >
+                  <a-button> <upload-outlined /> upload </a-button>
+                </a-upload>
+              </a-form-item>-->
+              <a-form-item label="简介" :labelCol="{ span: 4 }" :wrapperCol="{span: 16}" name="profiles">
+                <a-textarea  placeholder="请输入简介" :rows="5" v-model:value="addLabelForm.profiles" />
+              </a-form-item>
+              <a-form-item label="具体介绍" :labelCol="{ span: 4 }" :wrapperCol="{span: 16}" name="position">
+                <a-textarea  placeholder="请输入具体介绍" :rows="5" v-model:value="addLabelForm.position" />
+              </a-form-item>
+            </a-col>
+          </a-row>
+        </a-form>
+      </a-modal>
+      <!-- 添加用户信息模态框 end -->
+      <!-- 编辑用户信息模态框 start -->
+      <a-modal
+        title="编辑成员"
+        v-model:visible="EditLabelVisible"
+        @ok="handleEditOk"
+        :confirm-loading="EditModalLoad"
+      >
+        <a-form
+          ref="teacherEditlRef"
+          :model="editLabForm"
+          :rules="editLabelRule"
+          name="custom-validation"
+        >
+          <a-row>
+            <a-col :span="24">
+              <a-form-item has-feedback label="顺序值" name="sort" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
+                <a-input  type="text" autocomplete="off" v-model:value="editLabForm.sort" />
+              </a-form-item>
+              <a-form-item has-feedback label="老师名称" name="name" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
+                <a-input  type="text" autocomplete="off" v-model:value="editLabForm.name"/>
+              </a-form-item>
+              <a-form-item has-feedback label="上传图片" name="photo" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
+                <a-input  type="text" autocomplete="off" v-model:value="editLabForm.photo"/>
+              </a-form-item>
+              <!--              <a-form-item has-feedback label="上传图片" name="photo" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
+                              <a-upload
+                                list-type="picture"
+                                :beforeUpload="beforeUpload"
+                              >
+                                <a-button> <upload-outlined /> upload </a-button>
+                              </a-upload>
+                            </a-form-item>-->
+              <a-form-item label="简介" :labelCol="{ span: 4 }" :wrapperCol="{span: 16}" name="profiles">
+                <a-textarea  placeholder="请输入简介" :rows="5" v-model:value="editLabForm.profiles" />
+              </a-form-item>
+              <a-form-item label="具体介绍" :labelCol="{ span: 4 }" :wrapperCol="{span: 16}" name="position">
+                <a-textarea  placeholder="请输入具体介绍" :rows="5" v-model:value="editLabForm.position" />
+              </a-form-item>
+            </a-col>
+          </a-row>
+        </a-form>
+      </a-modal>
+      <!-- 编辑用户模态框 end -->
     </div>
-    <!-- 主体Main start -->
-    <!-- 添加用户信息模态框 -->
-    <a-modal title="添加成员" v-model:visible="visible">
-      <a-form name="custom-validation">
-        <a-row>
-          <a-col :span="24">
-            <a-form-item
-              required
-              has-feedback
-              label="顺序值"
-              name="pass"
-              :labelCol="{ span: 4 }"
-              :wrapperCol="{ span: 20 }"
-            >
-              <a-input type="password" autocomplete="off" />
-            </a-form-item>
-            <a-form-item
-              required
-              has-feedback
-              label="老师名称"
-              name="pass"
-              :labelCol="{ span: 4 }"
-              :wrapperCol="{ span: 20 }"
-            >
-              <a-input type="password" autocomplete="off" />
-            </a-form-item>
-            <a-form-item
-              required
-              has-feedback
-              label="上传图片"
-              name="pass"
-              :labelCol="{ span: 4 }"
-              :wrapperCol="{ span: 20 }"
-            >
-              <a-input type="password" autocomplete="off" />
-            </a-form-item>
-            <a-form-item
-              label="简介"
-              :labelCol="{ span: 4 }"
-              :wrapperCol="{ span: 16 }"
-            >
-              <a-textarea placeholder="请输入简介" :rows="5" />
-            </a-form-item>
-            <a-form-item
-              label="具体介绍"
-              :labelCol="{ span: 4 }"
-              :wrapperCol="{ span: 16 }"
-            >
-              <a-textarea placeholder="请输入具体介绍" :rows="5" />
-            </a-form-item>
-          </a-col>
-        </a-row>
-      </a-form>
-    </a-modal>
     <!-- 主体Main end -->
   </a-layout-content>
+
 </template>
 
 <script>
 // 引入图标
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons-vue";
+import { EditOutlined, DeleteOutlined,UploadOutlined } from "@ant-design/icons-vue";
 // 引入面包屑组件
 import Crumbs from "@/components/Crumbs";
-// 引入获取教师列表方法
-import { getTacherList } from "./useTeacherList";
+// 引入获取教师列表方法和分页方法
+import { getTacherList,getPagination } from "./useTeacherList";
+// 引入添加教师方法
+import { addTeacher } from "./useTeacherListAdd"
+// 引入删除教师方法
+import { DeleteTeacher } from "./useTeacherListDelete";
+// 引入编辑老师方法
+import { editTeacher } from "./useTeacherListEdit"
 // 引入表格列
-import { columns } from "./useTeacherList";
+import { columns } from "./useTeacherColumns";
 // 引入表格数据
 import { teacherListData } from "./useTeacherList";
-import { ref } from "vue";
+
 export default {
   // 使用组件
   components: {
@@ -148,73 +183,87 @@ export default {
   },
   // setup响应api入口
   setup() {
-    //#region 分页数据
-    // 页面是否在加载
-    let loadState = ref(true);
-    // 当前页面
-    let current1 = ref(1);
-    // 当前页面显示多少条数据
-    let pageSize = ref(5);
-    // 指定每页可以显示多少条
-    const pageSizeOptions = ["5", "10", "20", "30", "40", "50"];
-    // pageSize变化的回调
-    const showSizeChange = (current, size) => {
-      loadState.value = true;
-      // 重新获取数据
-      getTacherList(current, size, () => {
-        loadState.value = false;
-      });
-    };
-    // 页码改变的回调
-    const handleTogglePage = (page, pageSize) => {
-      loadState.value = true;
-      // 重新获取分页数据
-      getTacherList(page, pageSize, () => {
-        loadState.value = false;
-      });
-    };
-    //#endregion
+    // 设置表格列
+    teacherListData.columns = columns;
+    // 分页
+    const { pageNum,pageSize,loadState,pageSizeOptions,handleTogglePage,showSizeChange } = getPagination();
 
     // 获取数据
-    getTacherList(current1, pageSize, () => {
+    getTacherList(pageNum.value, pageSize.value, () => {
       loadState.value = false;
-      console.log(loadState);
     });
 
-    //#region 添加成员
-    // 模态框状态
-    let visible = ref(false);
-    // 显示模态框
-    const showModel = () => {
-      visible.value = true;
-    };
+    //#region 删除老师
+    const handleDeleteTeacher = (id) => {
+      DeleteTeacher(id,() => {
+        // 获取数据
+        getTacherList(pageNum.value, pageSize.value, () => {
+          loadState.value = false;
+        });
+      })
+    }
+    //#endregion
 
+    //#region 添加老师
+    const { addLabelVisible,showModal,addLabelForm,addLabelRule,confirmLoading,addLabelFormRef,handleSubmit } = addTeacher();
+    // 点击ok的回调函数
+    const handleOk = () => {
+      handleSubmit(() => {
+        getTacherList(pageNum.value, pageSize.value, () => {
+          loadState.value = false;
+        })
+      });
+    }
+    //#endregion
+
+    //#region 编辑老师
+    const { EditLabelVisible,editLabForm,editLabelRule,teacherEditlRef,EditModalLoad,showEditModal,handleEditSubmit } = editTeacher();
+    const handleEditOk = () => {
+      handleEditSubmit(() => {
+        getTacherList(pageNum.value, pageSize.value, () => {
+          loadState.value = false;
+        });
+      })
+    }
     //#endregion
 
     return {
       // 列表格式
       columns,
-      // 列表数据
+      //#region 获取列表数据以及分页
       teacherListData,
-      // 页面是否在加载
       loadState,
-      // 当前页面
-      current1,
-      // 当前显示多少条数据
+      pageNum,
       pageSize,
-      // 指定每页可以显示多少条
       pageSizeOptions,
-      // 页码改变的回调
       handleTogglePage,
-      // pageSize变化的回调
       showSizeChange,
-      // 模态框的状态
-      visible,
-      // 显示模态框
-      showModel,
+      //#endregion
+      // 删除教师
+      handleDeleteTeacher,
+      //#region 添加老师
+      addLabelVisible,
+      showModal,
+      addLabelForm,
+      addLabelRule,
+      handleSubmit,
+      addLabelFormRef,
+      confirmLoading,
+      handleOk,
+      //#endregion
+      //#region 编辑老师
+      EditLabelVisible,
+      EditModalLoad,
+      editLabForm,
+      editLabelRule,
+      teacherEditlRef,
+      showEditModal,
+      handleEditOk,
+      //#endregion
       // 导出组件
       EditOutlined,
-      DeleteOutlined
+      DeleteOutlined,
+      UploadOutlined
     };
   }
 };

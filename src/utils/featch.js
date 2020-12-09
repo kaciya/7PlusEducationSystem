@@ -41,9 +41,8 @@ instance.interceptors.request.use(
 // 4.声明响应拦截器
 instance.interceptors.response.use(
   response => {
-    console.log(response)
     // 这里还需要更改
-    let { data } = response;
+    const { data } = response;
     // 这里可以对后端的一些状态码进行处理
     switch (data.code) {
       // 如果返回的状态码为200说明接口请求成功
@@ -66,21 +65,21 @@ instance.interceptors.response.use(
   error => {
     // 获取error对象的config和response属性
     const { config, response } = error;
+    const { data } = response;
     //#region 处理错误时的状态码信息
-    switch (response.status) {
+    switch (data.code) {
       case 401: // 没有被授权
         setTimeout(() => {
-          message.warning("登录超时");
+          message.warning("登录超时，请重新登录", 2);
           setTimeout(() => {
             window.location.replace("/");
-          }, 200)
-        }, 100)
+          }, 200);
+        }, 100);
         return Promise.reject(error);
     }
     //#endregion
     // 如果config不存在，或者retry选项没有设置，用reject
     if (!config || !config.retry) return Promise.reject(error);
-    console.log(2222);
     // 设置变量来跟踪重试次数
     config.__retryCount = config.__retryCount || 0;
 
@@ -98,14 +97,14 @@ instance.interceptors.response.use(
     // 计算重试次数
     config.__retryCount += 1;
     // 创建一个新的Promise 来处理 exponential backoff
-    let backoff = new Promise(function (resolve) {
-      setTimeout(function () {
+    let backoff = new Promise(function(resolve) {
+      setTimeout(function() {
         resolve();
       }, config.retryDelay || 1);
     });
 
     // return the promise in which  recalls axios to retry the request
-    return backoff.then(function () {
+    return backoff.then(function() {
       return instance(config);
     });
   }

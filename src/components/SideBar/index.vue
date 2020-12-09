@@ -15,7 +15,11 @@
     <a-menu :inlineIndent="30" theme="light" mode="inline">
       <!-- 首页 -->
       <a-menu-item class="menu-pri menu-home" :key="sideBarKeys[0]">
-        <router-link to="/home" class="menu-link home-link">
+        <router-link
+          to="/home/main"
+          @click="reloadHome"
+          class="menu-link home-link"
+        >
           <HomeOutlined />
           <span class="home-text">首页</span>
         </router-link>
@@ -67,6 +71,10 @@ export default {
     let { sideBarList, sideBarKeys } = useGetSideBar();
     // 侧边栏伸缩状态
     let { collapsed } = useSetCollapsed();
+    function reloadHome() {
+      // location.href = "#/home/main";
+      // location.reload();
+    }
     // 返回
     return {
       // 侧边栏列表
@@ -74,7 +82,9 @@ export default {
       // 侧边栏keys
       sideBarKeys,
       // 侧边栏伸缩状态
-      collapsed
+      collapsed,
+      // 重载首页
+      reloadHome
     };
   }
 };
@@ -94,21 +104,9 @@ export default {
 
   /*滚动条样式*/
   &::-webkit-scrollbar {
-    /*滚动条整体样式*/
     width: 0px; /*高宽分别对应横竖滚动条的尺寸*/
     height: 0px;
-  }
-  &::-webkit-scrollbar-thumb {
-    /*滚动条里面小方块*/
-    border-radius: 5px;
-    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-    background: rgba(255, 255, 255, 0.8);
-  }
-  &::-webkit-scrollbar-track {
-    /*滚动条里面轨道*/
-    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-    border-radius: 0;
-    background: rgba(255, 255, 255, 0.9);
+    display: none;
   }
 
   // logo
@@ -136,7 +134,7 @@ export default {
 
   // menu
   .ant-menu {
-    transition: background 0.3s, width 0.1s cubic-bezier(0.2, 0, 0, 1) 0s;
+    transition: backgroundColor 0.3s, width 0.1s cubic-bezier(0.2, 0, 0, 1) 0s;
   }
 
   .ant-menu-item .anticon,
