@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import NProgress from "nprogress"; //引入进度条
 import "nprogress/nprogress.css"; //引入进度条样式
 import Login from "@/views/Login";
+import Home from "@/views/Home";
 // NProgress配置
 NProgress.configure({ showSpinner: false }); //禁用进度环
 
@@ -27,7 +28,7 @@ const routes = [
   {
     path: "/home",
     name: "Home",
-    component: () => import("@/views/Home"),
+    component: Home,
     // 主体
     children: [
       // 默认重定向首页主体
@@ -46,32 +47,32 @@ const routes = [
       // 用户列表
       {
         path: "/user/user-list",
-        component: () => import("@/views/UserList"),
+        component: () => import("@/views/UserManage/UserList"),
       },
       // 用户详情
       {
         path: "/user/user-details/:userID",
-        component: () => import("@/views/UserDetails"),
+        component: () => import("@/views/UserManage/UserDetails"),
         props: true,
       },
       //#endregion
       //#region 词库管理
       // 词库分类
       {
-        path: "/lexicon/sort",
-        component: () => import("@/views/LexiconSort"),
+        path: "/Word/category",
+        component: () => import("@/views/Word/WordCategory"),
       },
       //#endregion
       //#region 题库管理
       // 标签管理
       {
         path: "/question/label",
-        component: () => import("@/views/QuestionLabel"),
+        component: () => import("@/views/Question/QuestionLabel"),
       },
       // 听力题库
       {
         path: "/question/listening",
-        component: () => import("@/views/Listening"),
+        component: () => import("@/views/Question/Listening"),
       },
       //#endregion
       //#region 柒加圈
@@ -107,6 +108,11 @@ const routes = [
         // 师咨信息
         path: "/operation/teacher",
         component: () => import("@/views/Operation/TeacherInfo"),
+      },
+      {
+        // 课程服务
+        path: "/operation/course",
+        component: () => import("@/views/Operation/Course")
       },
       {
         // 互动练习

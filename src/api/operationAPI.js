@@ -10,6 +10,18 @@ export const teacherInfo = {
     EditTeacherList: "teacher/update"
 }
 
+// 课程服务
+export const course = {
+  // 课程列表
+  getCourseList: "course/page",
+  // 添加课程
+  addCourseList: "course/add",
+  // 修改课程
+  editCourseList: "course/update",
+  // 删除课程
+  deleteCourseList: "course"
+}
+
 // 互动练习
 export const exercise = {
     // 互动练习列表

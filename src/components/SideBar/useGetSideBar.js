@@ -147,7 +147,7 @@ export const useGetSideBar = () => {
         {
           id: 173,
           authName: "课程服务(官网)",
-          path: "home"
+          path: "operation/course"
         },
         {
           id: 174,
