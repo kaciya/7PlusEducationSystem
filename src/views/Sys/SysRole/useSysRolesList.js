@@ -13,8 +13,14 @@ import {
   httpGet
 } from "@/utils/http";
 
+// 导入router
+import { useRouter } from "vue-router";
+
 //#region 渲染权限组标签列表 和 表头
 export const showRoleList = () => {
+  //使用useRouter
+  const router = useRouter();
+
   //#region 分页所需数据
   const pageInfo = reactive({
     //列表所在页数
@@ -118,6 +124,18 @@ export const showRoleList = () => {
   }
   //#endregion
 
+  //#region 添加路由跳转
+  const handleAddRouter = () => {
+    router.push("/sys/role/add");
+  }
+  //#endregion
+
+    //#region 编辑路由跳转
+    const handleEditRouter = (roleId) => {
+      router.push("/sys/role/edit/"+roleId);
+    }
+    //#endregion
+
   //返回
   return {
     rolesTable,
@@ -125,6 +143,8 @@ export const showRoleList = () => {
     getSysRolesData,
     pageChange,
     pageSizeChange,
+    handleAddRouter,
+    handleEditRouter,
   };
 };
 //#endregion

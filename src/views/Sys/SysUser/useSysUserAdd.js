@@ -12,7 +12,8 @@ import {
 
 //导入 GET请求方法
 import {
-    httpPost
+    httpPost,
+    httpGet
 } from "@/utils/http";
 
 // 引入提示框
@@ -20,7 +21,7 @@ import { message } from "ant-design-vue";
 
 //#region 定义账号添加表单校验规则
 export const sysUserRules = reactive({
-    realName: [{
+    realName: [{ 
         required: true,
         message: "操作员名称不能为空",
         trigger: "blur"
@@ -30,6 +31,12 @@ export const sysUserRules = reactive({
         message: "账号不能为空",
         trigger: "blur"
     }],
+    roleIds: [{
+        required: true,
+        message: "权限组不能为空",
+        trigger: "blur",
+        type: "number"
+    }],
 })
 //#endregion
 
@@ -38,7 +45,7 @@ export const getUserPermissions = () => {
     let RolesPermissionsList = reactive({});
     const getPermissions = () => {
         //发起请求  获取权限列表
-        httpPost(role.sysRolesPermissions).then(res => {
+        httpGet(role.sysRolesList).then(res => {
                 if (res.success) {
                     //获取权限列表数据
                     RolesPermissionsList.data = res.data;
@@ -98,7 +105,7 @@ export const addSysUser = () => {
                     if (res.success) {
                         //显示确认加载
                         confirmLoading.value = true;
-                        message.success("添加成功");
+                        message.success(res.message);
                         //设置定时器
                         setTimeout(() => {
                             //关闭加载与弹窗
@@ -108,7 +115,7 @@ export const addSysUser = () => {
                             callback();
                         }, 700);
                     }else{
-                        message.error("添加失败");
+                        message.error("添加失败: "+ res.message);
                     }
                 })
             })

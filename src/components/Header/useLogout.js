@@ -30,7 +30,6 @@ export const useLogout = () => {
       onOk() {
         return new Promise(resolve => {
           httpPost(auth.UserLogout).then(res => {
-            // console.log(res);
             if (res.success) {
               // 移除token
               window.sessionStorage.removeItem("token");

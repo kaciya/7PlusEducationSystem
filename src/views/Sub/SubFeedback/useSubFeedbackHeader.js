@@ -9,10 +9,18 @@ import {
     message
 } from 'ant-design-vue';
 
+//导入 useSubFeedbackList 文件 获取相应的方法
+import { showFeedbackList } from "./useSubFeedbackList";
+
 //#region 顶部 查询 和 重置 功能
 export const SubFeedbackHeader = () => {
+    //获取 showFeedbackList 方法中的 参数
+    let {
+        getFeedbackData,
+      } = showFeedbackList();
+
     //日期选择器发生改变时的 指定日期
-    let dateModel = reactive([]);
+    let dateModel = reactive({});
     //日期选择器确定后的 指定日期
     let dateConfrim = reactive({});
 
@@ -27,9 +35,8 @@ export const SubFeedbackHeader = () => {
     //#endregion
 
     //#region 日期选择器发生变换方法
-    const dateChange = (data, dataString) => {
-        dateModel = dataString;
-        console.log(dateModel);
+    const dateChange = (data) => {
+        dateModel.date = data;
     }
     //#endregion
 
@@ -45,15 +52,15 @@ export const SubFeedbackHeader = () => {
     const resetClick = () => {
         //将双向绑定的 日期 和 选择项 中的值 重置
         selectModel.value = "2";
-        dateModel = [];
+        dateModel.date = [];
         dateConfrim = {};
-        console.log(dateModel);
+        getFeedbackData({});
         message.success('日期选择 与 状态 已重置');
     }
     //#endregion
 
     //#region 查询列表
-    const searchClick = (callback) => {
+    const searchClick = () => {
         //创建变量  存储接口查询参数
         let params = reactive({});
 
@@ -71,7 +78,11 @@ export const SubFeedbackHeader = () => {
         }
 
         //发起查询请求
-        callback(params);
+        getFeedbackData(params);
+        //将双向绑定的 日期 和 选择项 中的值 重置
+        selectModel.value = "2";
+        dateModel.date = [];
+        dateConfrim = {};
     }
     //#endregion
 

@@ -17,7 +17,7 @@
           <h3 style="font-weight: 600">标签列表</h3>
         </a-col>
         <a-col :span="2" offset="20">
-          <a-button type="primary"> <PlusOutlined />添加 </a-button>
+          <a-button type="primary" @click="handleAddRouter"> <PlusOutlined />添加 </a-button>
         </a-col>
       </a-row>
       <!-- 权限组列表上标题 end -->
@@ -48,7 +48,7 @@
 
           <!-- 配置 operation 操作 -->
           <template #operation="{ record }">
-            <a-button type="primary" style="margin: 0 5px">
+            <a-button type="primary" style="margin: 0 5px" @click="handleEditRouter(record.roleId)">
               <EditOutlined /> 编辑
             </a-button>
             <a-button type="danger" style="margin: 0 5px" @click="showDelConfirm(record.roleId,getSysRolesData)"
@@ -121,6 +121,8 @@ export default {
       pageChange,
       getSysRolesData,
       pageSizeChange,
+      handleAddRouter,
+      handleEditRouter,
     } = showRoleList();
 
     //通过removeSysRoles获取删除模态框
@@ -149,7 +151,11 @@ export default {
       //显示删除模态框方法
       showDelConfirm,
       //更改用户状态方法
-      statusChange
+      statusChange,
+      //权限组添加路由跳转
+      handleAddRouter,
+      //权限组编辑路由跳转
+      handleEditRouter,
     };
   },
 };

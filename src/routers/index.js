@@ -124,6 +124,16 @@ const routes = [
         path: "/operation/Issues",
         component: () => import("@/views/Operation/Issues"),
       },
+      {
+        // 课程服务
+        path: "/operation/course",
+        component: () => import("@/views/Operation/Course")
+      },
+      {
+        // 常见问题
+        path: "/operation/problem",
+        component: () => import("@/views/Operation/Problem")
+      },
       //#endregion
       //#region 权限管理
       //权限组
@@ -131,6 +141,18 @@ const routes = [
         path: "/sys/role",
         name: "SysRole",
         component: () => import("@/views/Sys/SysRole"),
+      },
+      //权限组添加
+      {
+        path: "/sys/role/add",
+        name: "SysRoleAdd",
+        component: () => import("@/views/Sys/SysRoleAdd"),
+      },
+      //权限组编辑
+      {
+        path: "/sys/role/edit/:id",
+        name: "SysRoleEdit",
+        component: () => import("@/views/Sys/SysRoleEdit"),
       },
       //账号管理
       {

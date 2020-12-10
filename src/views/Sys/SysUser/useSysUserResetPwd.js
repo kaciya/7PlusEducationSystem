@@ -18,7 +18,7 @@ import { Modal , message } from 'ant-design-vue';
 //#region 重置用户账号密码
 export const sysUserResetPwd = () => {
     //显示重置账号密码提示框
-    const handleResetPwd = (userId,callback) => {
+    const handleResetPwd = (userId) => {
         //弹窗验证是否重置密码
         Modal.confirm({
             title: '确定重置该账户密码为初始密码？',
@@ -31,8 +31,6 @@ export const sysUserResetPwd = () => {
                 httpPost(sys.resetSysUser + "/" + userId).then(res => {
                     if(res.success){
                         message.success("重置账号密码成功");
-                        //刷新页面
-                        callback();
                     }else{
                         message.error("重置账号密码失败");
                     }

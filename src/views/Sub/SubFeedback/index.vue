@@ -19,7 +19,7 @@
               <a-range-picker
                 :show-time="{ format: 'HH:mm:ss' }"
                 format="YYYY-MM-DD HH:mm:ss"
-                v-model:value="dateModel.data"
+                v-model:value="dateModel.date"
                 :placeholder="['开始日期', '结束日期']"
                 @change="dateChange"
                 @ok="dateChangeOk"
@@ -46,7 +46,7 @@
             <a-button
               type="primary"
               style="margin: 0 10px; float: right"
-              @click="searchClick(getFeedbackData(params))"
+              @click="searchClick"
             >
               <SearchOutlined /> 查询
             </a-button>
@@ -209,6 +209,8 @@ export default {
       dateChangeOk,
       //默认选择项
       selectModel,
+      //渲染表格数据方法
+      getFeedbackData,
       //选择项改变方法
       selectChange,
       //重置状态 和 时间范围

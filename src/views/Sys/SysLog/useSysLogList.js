@@ -1,7 +1,6 @@
 //导入 reactive 对象
 import {
-  reactive,
-  ref
+  reactive
 } from "vue";
 
 //导入 API接口
@@ -79,17 +78,16 @@ export const showLogList = () => {
 
   //#region 发起请求  获取数据列表
   const getLogData = (getParam) => {
-
     //创建变量params 将请求需要的参数传递给后台
     let params = reactive({
       pageNum: 1,
       pageSize: 10,
     })
     //判断获取到的参数是否为空
-    if (getParam != {}) {
+    if (getParam) {
         //不为空则 添加到 params对象中
-        params.endTime = getParam.endTime,
-        params.startTime = getParam.startTime,
+        params.endTime = getParam.endDate,
+        params.startTime = getParam.startDate,
         params.username = getParam.username
     }
 

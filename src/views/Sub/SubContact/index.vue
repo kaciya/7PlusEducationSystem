@@ -19,7 +19,7 @@
               <a-range-picker
                 :show-time="{ format: 'HH:mm:ss' }"
                 format="YYYY-MM-DD HH:mm:ss"
-                v-model:value="dateModel.data"
+                v-model:value="dateModel.date"
                 :placeholder="['开始日期', '结束日期']"
                 @change="dateChange"
                 @ok="dateChangeOk"
@@ -46,7 +46,7 @@
             <a-button
               type="primary"
               style="margin: 0 10px; float: right"
-              @click="searchClick(getContactData(params))"
+              @click="searchClick"
             >
               <SearchOutlined /> 查询
             </a-button>

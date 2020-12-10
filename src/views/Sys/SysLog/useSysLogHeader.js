@@ -9,10 +9,20 @@ import {
     message
 } from 'ant-design-vue';
 
+//导入 useSysLogList 文件 获取相应的方法
+import {
+    showLogList
+} from "./useSysLogList";
+
 //#region 顶部 查询 和 重置 功能 
 export const useSysLogHeader = () => {
+    //获取 showLogList 中的 变量
+    let {
+        getLogData
+    } = showLogList();
+
     //日期选择器发生改变时的 指定日期
-    let dateModel = reactive([]);
+    let dateModel = reactive({});
     //日期选择器确定后的 指定日期
     let dateConfrim = reactive({});
 
@@ -20,9 +30,8 @@ export const useSysLogHeader = () => {
     let usernameModel = ref("");
 
     //#region 日期选择器发生变换方法
-    const dateChange = (data, dataString) => {
-        dateModel = dataString;
-        console.log(dateModel);
+    const dateChange = (data) => {
+        dateModel.date = data;
     }
     //#endregion
 
@@ -37,34 +46,38 @@ export const useSysLogHeader = () => {
     //#region 重置列表项 和 时间范围
     const resetClick = () => {
         //将双向绑定的 日期 和 账号名称 中的值 重置
-        usernameModel.value = '';
-        dateModel = [];
+        dateModel.date = [];
+        usernameModel.value = "";
         dateConfrim = {};
-        console.log(dateModel);
+        getLogData({});
         message.success('日期选择 与 状态 已重置');
     }
     //#endregion
 
     //#region 查询列表
-    const searchClick = (callback) => {
+    const searchClick = () => {
         //创建变量  存储接口查询参数
         let params = reactive({});
 
         //获取日期范围
         //判断获取的日期是否为空
-        if (dateModel.length != 0) {
+        if (dateModel.data.length != 0) {
             params.startDate = dateConfrim.startDate;
             params.endDate = dateConfrim.endDate;
         }
 
         //获取状态
         //判断账号名称是否为空
-        if (dateModel.value) {
-            params.username = dateModel.value;
+        if (usernameModel.value) {
+            params.username = usernameModel.value;
         }
-
         //发起查询请求
-        callback(params);
+        getLogData(params);
+
+        //将双向绑定的 日期 和 账号名称 中的值 重置
+        dateModel.date = [];
+        usernameModel.value = "";
+        dateConfrim = {};
     }
     //#endregion
 

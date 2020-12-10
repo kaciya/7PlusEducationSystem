@@ -87,10 +87,10 @@
             >
               <a-select-option
                 v-for="item in RolesPermissionsList.data"
-                :key="item.permissionId"
-                :value="item.permissionId"
+                :key="item.roleId"
+                :value="item.roleId"
               >
-                {{ item.name }}
+                {{ item.roleName }}
               </a-select-option>
             </a-select>
           </a-form-item>
@@ -233,6 +233,7 @@ export default {
     onMounted(() => {
       getSysUserList();
       getPermissions();
+      handleResetPwd(1);
     });
 
     //返回
@@ -249,6 +250,8 @@ export default {
       addUserForm,
       //账号添加表单校验规则
       sysUserRules,
+      //渲染表格
+      getSysUserList,
       //点击下一页方法
       pageChange,
       //每页显示多少条数据的方法
