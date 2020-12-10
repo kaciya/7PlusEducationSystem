@@ -2,7 +2,7 @@ import { reactive, ref } from "vue";
 // 引入请求方式
 import { httpPost } from "@/utils/http";
 // 引入请求接口
-import Issues from "@/api/Operation/Issues";
+import Issues from "@/api/IssuesAPI";
 export const ModifyIssue = getIssuesData => {
   // 输入框数据
   const updateForm = reactive({

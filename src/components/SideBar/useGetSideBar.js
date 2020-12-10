@@ -18,7 +18,7 @@ export const useGetSideBar = () => {
       id: 100,
       authName: "首页",
       path: "home",
-      children: []
+      children: [],
     },
     // 用户管理
     {
@@ -29,9 +29,9 @@ export const useGetSideBar = () => {
         {
           id: 111,
           authName: "用户列表",
-          path: "user/user-list"
-        }
-      ]
+          path: "user/user-list",
+        },
+      ],
     },
     // 词库管理
     {
@@ -42,14 +42,14 @@ export const useGetSideBar = () => {
         {
           id: 121,
           authName: "词库分类",
-          path: "lexicon/sort"
+          path: "word/category",
         },
         {
           id: 122,
           authName: "词库",
-          path: "home"
-        }
-      ]
+          path: "home",
+        },
+      ],
     },
     // 题库管理
     {
@@ -60,29 +60,29 @@ export const useGetSideBar = () => {
         {
           id: 131,
           authName: "标签管理",
-          path: "question/label"
+          path: "question/label",
         },
         {
           id: 132,
           authName: "听力题库",
-          path: "question/listening"
+          path: "question/listening",
         },
         {
           id: 133,
           authName: "口语题库",
-          path: "home"
+          path: "home",
         },
         {
           id: 134,
           authName: "阅读题库",
-          path: "home"
+          path: "home",
         },
         {
           id: 135,
           authName: "写作题库",
-          path: "home"
-        }
-      ]
+          path: "home",
+        },
+      ],
     },
     // 柒加圈
     {
@@ -93,9 +93,9 @@ export const useGetSideBar = () => {
         {
           id: 141,
           authName: "发布列表",
-          path: "home"
-        }
-      ]
+          path: "home",
+        },
+      ],
     },
     // 用户提交
     {
@@ -106,14 +106,14 @@ export const useGetSideBar = () => {
         {
           id: 151,
           authName: "反馈列表",
-          path: "sub/feedback"
+          path: "sub/feedback",
         },
         {
           id: 152,
           authName: "联系记录",
-          path: "sub/contact"
-        }
-      ]
+          path: "sub/contact",
+        },
+      ],
     },
     // 平台管理
     {
@@ -124,9 +124,9 @@ export const useGetSideBar = () => {
         {
           id: 161,
           authName: "公告",
-          path: "platform/notice"
-        }
-      ]
+          path: "platform/notice",
+        },
+      ],
     },
     // 运营管理
     {
@@ -137,12 +137,12 @@ export const useGetSideBar = () => {
         {
           id: 171,
           authName: "参数管理(综合)",
-          path: "operation/param"
+          path: "operation/param",
         },
         {
           id: 172,
           authName: "师资管理(官网)",
-          path: "operation/teacher"
+          path: "operation/teacher",
         },
         {
           id: 173,
@@ -152,35 +152,35 @@ export const useGetSideBar = () => {
         {
           id: 174,
           authName: "互动练习(官网)",
-          path: "operation/exercise"
+          path: "operation/exercise",
         },
         {
           id: 175,
           authName: "校区管理(官网)",
-          path: "home"
+          path: "home",
         },
         {
           id: 176,
           authName: "文章列表(官网)",
-          path: "home"
+          path: "home",
         },
 
         {
           id: 177,
           authName: "关于PTE",
-          path: "home"
+          path: "home",
         },
         {
           id: 178,
           authName: "备考指南(学习中心)",
-          path: "home"
+          path: "operation/guide",
         },
         {
           id: 179,
           authName: "常见问题(学习中心)",
-          path: "operation/problem"
-        }
-      ]
+          path: "operation/issues",
+        },
+      ],
     },
     // 权限管理
     {
@@ -190,20 +190,20 @@ export const useGetSideBar = () => {
         {
           id: 181,
           authName: "权限组",
-          path: "sys/role"
+          path: "sys/role",
         },
         {
           id: 182,
           authName: "账号管理",
-          path: "sys/user"
+          path: "sys/user",
         },
         {
           id: 183,
           authName: "操作日志",
-          path: "sys/log"
-        }
-      ]
-    }
+          path: "sys/log",
+        },
+      ],
+    },
   ];
 
   // 调用获取侧边栏数据方法
@@ -221,7 +221,7 @@ export const useGetSideBar = () => {
    * @param {Array} data 需要转存的数据
    */
   function storeSideBarData(data) {
-    data.forEach(item => {
+    data.forEach((item) => {
       sideBarKeys.push(item.id); //存储菜单栏id
       if (item.path == "home") return; //不存储home栏
       sideBarList.push(item); //存储菜单栏
@@ -231,7 +231,7 @@ export const useGetSideBar = () => {
   // 返回数据
   return {
     sideBarList,
-    sideBarKeys
+    sideBarKeys,
   };
 };
 //#endregion

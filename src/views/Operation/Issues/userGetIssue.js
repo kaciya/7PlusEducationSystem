@@ -2,7 +2,7 @@ import { reactive, onMounted } from "vue";
 // 引入请求方式
 import { httpGet } from "@/utils/http";
 // 引入请求接口
-import Issues from "@/api/Operation/Issues";
+import Issues from "@/api/IssuesAPI";
 export const userGetIssues = () => {
   // 表格数据
   const issuesData = reactive({
