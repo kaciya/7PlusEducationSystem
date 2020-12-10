@@ -5,7 +5,7 @@
       :columns="userTopicData.topicColumns"
       :data-source="userTopicData.topicData.records"
       :pagination="false"
-      :row-key="(record) => record.id"
+      :row-key="record => record.id"
     >
       <!-- 序号 -->
       <template #index="{ index }">
@@ -52,15 +52,15 @@ export default {
       userTopicData, // 表格数据
       pagination, // 分页数据
       handelTopicSizeChange, // 点击页码跳转事件
-      handleTopicPageChange, // 选择每页显示条数事件
+      handleTopicPageChange // 选择每页显示条数事件
     } = userTopic(prop.userID);
     return {
       userTopicData,
       pagination,
       handelTopicSizeChange,
-      handleTopicPageChange,
+      handleTopicPageChange
     };
-  },
+  }
 };
 </script>
 

@@ -3,7 +3,7 @@ import { reactive, onMounted } from "vue";
 import { httpGet } from "@/utils/http";
 // 引入请求接口
 import user from "@/api/userAPI";
-export const LoginJournal = (id) => {
+export const LoginJournal = id => {
   // 表格数据
   const loginJournalData = reactive({
     // 表格数据
@@ -13,19 +13,19 @@ export const LoginJournal = (id) => {
       {
         title: "时间",
         align: "center",
-        dataIndex: "createTime",
+        dataIndex: "createTime"
       },
       {
         title: "IP",
         align: "center",
-        dataIndex: "ip",
+        dataIndex: "ip"
       },
       {
         title: "登录方式",
         align: "center",
-        dataIndex: "channel",
-      },
-    ],
+        dataIndex: "channel"
+      }
+    ]
   });
 
   const pagination = reactive({
@@ -36,7 +36,7 @@ export const LoginJournal = (id) => {
     // 数据总数
     total: 0,
     // 每页可以显示多少条
-    pageSizeOptions: ["10"],
+    pageSizeOptions: ["10"]
   });
   // 获取后台数据
   const getUserTopicData = async () => {
@@ -44,7 +44,7 @@ export const LoginJournal = (id) => {
       // 降序
       descColumns: "createTime",
       pageNum: pagination.pageNum,
-      pageSize: pagination.pageSize,
+      pageSize: pagination.pageSize
     });
     if (res.code == 200) {
       // 数据
@@ -76,6 +76,6 @@ export const LoginJournal = (id) => {
     loginJournalData,
     pagination,
     handleJournalPageChange,
-    handleJournalSizeChange,
+    handleJournalSizeChange
   };
 };
