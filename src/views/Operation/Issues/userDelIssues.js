@@ -1,7 +1,7 @@
 // 引入请求方式
 import { httpDelete } from "@/utils/http";
 // 引入请求接口
-import Issue from "@/api/Operation/Issues";
+import Issue from "@/api/IssuesAPI";
 // 图标
 import { ExclamationCircleOutlined } from "@ant-design/icons-vue";
 // 确认框
