@@ -112,6 +112,7 @@
             </a-button>
           </template>
         </a-table>
+        <!-- 分页start -->
         <a-pagination
           show-size-changer
           v-model:current="pagination.pageNum"
@@ -122,6 +123,7 @@
           :total="pagination.total"
         >
         </a-pagination>
+        <!-- 分页end -->
       </div>
       <!-- 数据列表 end -->
     </div>
@@ -136,7 +138,6 @@ import Crumbs from "@/components/Crumbs";
 import { userTable } from "./userTable";
 // 引入重置方法文件
 import { userReset } from "./userReset";
-// import { onMounted } from "vue";
 export default {
   // 使用组件
   components: {
@@ -144,20 +145,24 @@ export default {
   },
   // setup响应api入口
   setup() {
-    // 获取（查询）数据
+    //#region 获取（查询）数据
     let {
       pagination, // 分页数据
+      userTableData, // 表格数据
       userModel, // 表单数据
-      queryUserList, // 查询
+      queryUserList, // 点击查询的回调
       handlePageChange, // 点击页码事件
       onShowSizeChange, // 选择每页数据条数事件
-      getUserTabelData, // 获取数据方法
-      userTableData // 表格数据
+      getUserTabelData // 获取数据方法
     } = userTable();
-    // 重置事件
-    // userForm:表单ref
-    // handelReset:重置方法
+    //#endregion
+    //#region 重置事件
+    /**
+     * userForm:表单ref
+     * handelReset:点击重置的回调
+     */
     let { userRef, resetUserList } = userReset(getUserTabelData);
+    //#endregion
     // 导出数据
     return {
       pagination,
