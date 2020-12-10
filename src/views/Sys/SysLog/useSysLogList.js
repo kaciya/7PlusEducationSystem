@@ -144,7 +144,6 @@ export const showLogList = () => {
     usernameModel.value = '';
     dateModel = [];
     dateConfrim = {};
-    console.log(dateModel);
     message.success('日期选择 与 状态 已重置');
   }
   //#endregion
