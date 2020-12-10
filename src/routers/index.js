@@ -58,7 +58,7 @@ const routes = [
       //#region 词库管理
       // 词库分类
       {
-        path: "/Word/category",
+        path: "/word/category",
         component: () => import("@/views/Word/WordCategory"),
       },
       //#endregion
@@ -112,11 +112,16 @@ const routes = [
         // 互动练习
         path: "/operation/exercise",
         component: () => import("@/views/Operation/Exercise"),
-        //常见问题
       },
+      //常见问题
       {
-        path: "/operation/Issues",
+        path: "/operation/issues",
         component: () => import("@/views/Operation/Issues"),
+      },
+      // 备考指南
+      {
+        path: "/operation/guide",
+        component: () => import("@/views/Operation/Guide"),
       },
       //#endregion
       //#region 权限管理
