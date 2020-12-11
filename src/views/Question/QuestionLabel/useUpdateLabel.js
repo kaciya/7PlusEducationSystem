@@ -6,12 +6,12 @@ import { httpPost } from "@/utils/http";
 import questionLabel from "@/api/questionLabelAPI";
 import { message } from "ant-design-vue";
 
-export function useUpdateLabel() {
+export function useUpdateLabel(getLabels) {
   // 添加标签模态框是否显示
   const updateLabelVisible = ref(false);
 
   // 添加标签表单
-  const updateLabelForm = reactive({
+  const updateLabelModel = reactive({
     name: "",
     id: "",
     oldName: ""
@@ -21,8 +21,8 @@ export function useUpdateLabel() {
   const showUpdateLabel = (id, name) => {
     updateLabelVisible.value = true;
     // 记录要修改的id和旧标签名
-    updateLabelForm.id = id;
-    updateLabelForm.oldName = name;
+    updateLabelModel.id = id;
+    updateLabelModel.oldName = name;
   };
 
   // 添加标签表单校验规则
@@ -34,28 +34,28 @@ export function useUpdateLabel() {
   });
 
   // 表单
-  const updateForm = ref(null);
+  const updateFormRef = ref(null);
 
   // 修改标签方法
-  const updateLabel = callback => {
+  const updateLabel = () => {
     // 校验
-    updateForm.value
+    updateFormRef.value
       .validate()
       .then(() => {
         // 发起修改请求
         httpPost(questionLabel.UpdateLabel, {
-          id: updateLabelForm.id,
-          name: updateLabelForm.name
+          id: updateLabelModel.id,
+          name: updateLabelModel.name
         }).then(res => {
           if (res.success == true) {
             // 提示用户
             message.success("修改标签成功");
             // 重置表单
-            updateForm.value.resetFields();
+            updateFormRef.value.resetFields();
             // 关闭模态框
             updateLabelVisible.value = false;
             // 刷新表单
-            callback();
+            getLabels();
           } else {
             message.error(res.message);
           }
@@ -68,15 +68,15 @@ export function useUpdateLabel() {
 
   // 取消添加标签
   const cancelUpdateLabel = () => {
-    updateForm.value.resetFields();
+    updateFormRef.value.resetFields();
   };
 
   return {
     updateLabelVisible,
     showUpdateLabel,
-    updateLabelForm,
+    updateLabelModel,
     updateLabelRules,
-    updateForm,
+    updateFormRef,
     updateLabel,
     cancelUpdateLabel
   };

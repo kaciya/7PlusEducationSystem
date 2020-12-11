@@ -11,8 +11,8 @@ export function useSetLabels() {
    * 
    * @param {*} id 题目id
    * @param {*} category 分类
-   * @param {*} checkedLabels 选中的题目
-   * @param {*} allLabels 所有题目
+   * @param {*} checkedLabels 选中的标签
+   * @param {*} allLabels 所有标签
    */
   const setLabels = (id, category, checkedLabels, allLabels) => {
     // 限制用户只能选择最多三个标签

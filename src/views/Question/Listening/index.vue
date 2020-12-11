@@ -91,9 +91,10 @@
         <!-- 说明提示 -->
         <a-alert type="info" show-icon>
           <template #message>
-            <p style="margin: 0px">说明：</p>
-            <p style="margin: 0px">1. 文件格式必须是xls、xlsx</p>
-            <p style="margin: 0px">2. 单词字段对应列数据不能为空</p>
+            <p style="margin: 0px">
+              说明：<br />1. 文件格式必须是xls、xlsx <br />2.
+              单词字段对应列数据不能为空
+            </p>
           </template>
         </a-alert>
         <!-- 模板下载 -->
