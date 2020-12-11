@@ -96,11 +96,12 @@ export const addSysUser = () => {
                 //获取请求需要参数
                 let params = {
                     realName: sysUserForm.realName,
-                    roleIds: sysUserForm.roleIds,
+                    roleIds: [sysUserForm.roleIds],
                     username: sysUserForm.username
                 }
+                console.log(params);
                 //发起请求  添加数据
-                httpPost(sys.addSysUser, params).then(res => {
+                httpPost(sys.addSysUser,params).then(res => {
                     //判断如果请求成功
                     if (res.success) {
                         //显示确认加载
