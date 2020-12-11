@@ -41,7 +41,7 @@
           <!-- 配置 status 用户状态 -->
           <template #status="{ record }">
             <div>
-              <a-switch :checked="record.status == 1 ? true : false" @click="statusChange(record.roleId,getSysRolesData)"/>
+              <a-switch :checked="record.status == 1 ? true : false" @click="statusChange(record.roleId)"/>
             </div>
           </template>
           <!-- 配置 用户状态 end -->
@@ -51,7 +51,7 @@
             <a-button type="primary" style="margin: 0 5px" @click="handleEditRouter(record.roleId)">
               <EditOutlined /> 编辑
             </a-button>
-            <a-button type="danger" style="margin: 0 5px" @click="showDelConfirm(record.roleId,getSysRolesData)"
+            <a-button type="danger" style="margin: 0 5px" @click="showDelConfirm(record.roleId)"
               ><DeleteOutlined /> 删除
             </a-button>
           </template>
@@ -101,6 +101,9 @@ import { removeSysRoles } from "./useSysRolesDel";
 //导入rolesStatus中返回的数据
 import { updateRoleStatus } from "./useSysRoleStatusEdit";
 
+//导入useSysRolesColums中返回的列表数据
+import { useSysRolesColums } from "./useSysRolesColums";
+
 //导入图标
 import { PlusOutlined } from "@ant-design/icons-vue";
 
@@ -114,22 +117,24 @@ export default {
   },
 
   setup() {
-    //通过showRoleList方法获取 列表项和数据
+    //通过useSysRolesColums方法获取 列表数据
+    let { rolesTable } = useSysRolesColums();
+
+    //通过showRoleList方法 渲染列表和分页数据
     let {
-      rolesTable,
       pageInfo,
       pageChange,
       getSysRolesData,
       pageSizeChange,
       handleAddRouter,
       handleEditRouter,
-    } = showRoleList();
+    } = showRoleList(rolesTable);
 
     //通过removeSysRoles获取删除模态框
-    let { showDelConfirm } = removeSysRoles();
+    let { showDelConfirm } = removeSysRoles(getSysRolesData);
 
     //通过updateRoleStatus获取更改权限组启用状态方法
-    let { statusChange } = updateRoleStatus();
+    let { statusChange } = updateRoleStatus(getSysRolesData);
 
     //在Mounted 获取列表
     onMounted(() => {

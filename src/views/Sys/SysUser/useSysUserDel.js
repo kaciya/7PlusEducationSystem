@@ -21,9 +21,9 @@ import {
 } from 'ant-design-vue';
 
 //#region 显示删除模态框
-export const removeSysUser = () => {
+export const removeSysUser = (getSysUserList) => {
 
-    const showDelConfirm = (userId , callback) => {
+    const showDelConfirm = (userId) => {
         //一次弹窗是否删除
         Modal.confirm({
             title: '确定删除该操作员?',
@@ -52,7 +52,7 @@ export const removeSysUser = () => {
                                 if (res.success) {
                                     message.success("删除成功");
                                     //刷新页面
-                                    callback();
+                                    getSysUserList();
                                 }else{
                                     message.error("删除失败");
                                 }

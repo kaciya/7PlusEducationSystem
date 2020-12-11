@@ -101,6 +101,9 @@ import { showLogList } from "./useSysLogList";
 //导入 useSysLogSearch 获取 相应的方法
 import { useSysLogHeader } from "./useSysLogHeader";
 
+//导入 useSysLogColums 获取 相应的列表数据
+import { useSysLogColums } from "./useSysLogColums";
+
 // 引入 钩子函数
 import { onMounted } from "vue";
 
@@ -117,14 +120,16 @@ export default {
 
   // setup响应api入口
   setup() {
+    //获取 useSysLogColums 中的 列表
+    let { logTable } = useSysLogColums();
+
     //获取 showLogList 中的 变量
     let {
-      logTable,
       pageInfo,
       pageChange,
       pageSizeChange,
       getLogData,
-    } = showLogList();
+    } = showLogList(logTable);
 
     //获取 useSysLogHeader 中的变量和方法
     let {
@@ -134,7 +139,7 @@ export default {
       dateChangeOk,
       resetClick,
       searchClick,
-    } = useSysLogHeader();
+    } = useSysLogHeader(getLogData);
 
     //在Mounted 获取列表
     onMounted(() => {

@@ -114,12 +114,12 @@
           <template #status="{ record }">
             <a-switch
               :checked="record.status == 1 ? true : false"
-              @click="statusChange(record.userId, getSysUserList)"
+              @click="statusChange(record.userId)"
             />
           </template>
           <template #operation="{ record }">
             <!-- 密码重置 -->
-            <a-button type="primary" style="margin: 0 5px" @click="handleResetPwd(record.userId , getSysUserList)">
+            <a-button type="primary" style="margin: 0 5px" @click="handleResetPwd(record.userId)">
               <SyncOutlined /> 密码重置
             </a-button>
             <!-- 密码重置 end -->
@@ -127,7 +127,7 @@
             <a-button
               type="danger"
               style="margin: 0 5px"
-              @click="showDelConfirm(record.userId , getSysUserList)"
+              @click="showDelConfirm(record.userId)"
             >
               <DeleteOutlined /> 删除
             </a-button>
@@ -178,6 +178,9 @@ import { sysUserResetPwd } from "./useSysUserResetPwd";
 //导入sysUserAdd中返回的方法
 import { addSysUser, sysUserRules, getUserPermissions } from "./useSysUserAdd";
 
+//导入sysuserColums中返回的列表
+import { useSysuserColums } from "./useSysUserColums";
+
 // 引入 钩子函数
 import { onMounted } from "vue";
 
@@ -197,20 +200,22 @@ export default {
   },
 
   setup() {
+    //通过sysUserColums方法获取列表
+    let { sysUsersTable } = useSysuserColums();
+
     //通过sysUserList方法获取
     let {
-      sysUsersTable,
       getSysUserList,
       pageInfo,
       pageChange,
       pageSizeChange,
-    } = showSysUserList();
+    } = showSysUserList(sysUsersTable);
 
     //通过updateUserStatus方法更改账号启用状态
-    let { statusChange } = updateUserStatus();
+    let { statusChange } = updateUserStatus(getSysUserList);
 
     //通过removeSysUser方法获取显示删除模态框方法
-    let { showDelConfirm } = removeSysUser();
+    let { showDelConfirm } = removeSysUser(getSysUserList);
 
     //通过UserPermissions获取权限组列表
     let { getPermissions, RolesPermissionsList } = getUserPermissions();
@@ -227,7 +232,7 @@ export default {
       handleAddOk,
       handleAddCancel,
       addUserForm,
-    } = addSysUser();
+    } = addSysUser(getSysUserList);
 
     //在Mounted 获取列表
     onMounted(() => {

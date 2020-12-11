@@ -136,6 +136,9 @@ import { showContactList } from "./useSubContactList";
 //导入 useSysContactHeader 文件 获取相应方法
 import { SubContactHeader } from "./useSubContactHeader";
 
+//导入 useSysContactColumns 文件 获取相应的列表项
+import { useSubContactColums } from "./useSubContactColums";
+
 //导入 图标样式
 import {
   SearchOutlined,
@@ -156,14 +159,15 @@ export default {
 
   setup() {
     //获取 方法中的 参数
+    let { contactTable } = useSubContactColums();
+
     let {
-      contactTable,
       pageInfo,
       getContactData,
       pageChange,
       manageClick,
       pageSizeChange,
-    } = showContactList();
+    } = showContactList(contactTable);
 
     let {
       dateModel,
@@ -173,7 +177,7 @@ export default {
       selectChange,
       resetClick,
       searchClick,
-    } = SubContactHeader();
+    } = SubContactHeader(getContactData);
 
     //在Mounted 获取列表
     onMounted(() => {
