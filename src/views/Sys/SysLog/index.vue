@@ -1,9 +1,7 @@
 <template>
   <a-layout-content>
     <!-- 面包屑 start -->
-    <Crumbs
-      :crumbName="[{ name: '权限管理' }, { name: '操作日志' }]"
-    />
+    <Crumbs :crumbName="[{ name: '权限管理' }, { name: '操作日志' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
     <div
@@ -17,11 +15,11 @@
       <a-form>
         <a-row>
           <a-col :span="7" :offset="1">
-            <a-form-item label="时间范围">
+            <a-form-item label="时间范围" name="date">
               <a-range-picker
                 :show-time="{ format: 'HH:mm:ss' }"
                 format="YYYY-MM-DD HH:mm:ss"
-                v-model:value="dateModel.data"
+                v-model:value="dateModel.date"
                 :placeholder="['开始日期', '结束日期']"
                 @change="dateChange"
                 @ok="dateChangeOk"
@@ -29,7 +27,7 @@
             </a-form-item>
           </a-col>
           <a-col :span="5">
-            <a-form-item label="账号名称">
+            <a-form-item label="账号名称" name="username">
               <a-input
                 placeholder="账号名称"
                 style="width: 150px"
@@ -100,6 +98,9 @@ import Crumbs from "@/components/Crumbs";
 //导入 useSysLogList 文件 获取相应的方法
 import { showLogList } from "./useSysLogList";
 
+//导入 useSysLogSearch 获取 相应的方法
+import { useSysLogHeader } from "./useSysLogHeader";
+
 // 引入 钩子函数
 import { onMounted } from "vue";
 
@@ -113,26 +114,31 @@ export default {
     SearchOutlined,
     SyncOutlined,
   },
+
   // setup响应api入口
   setup() {
     //获取 showLogList 中的 变量
     let {
-      usernameModel,
       logTable,
       pageInfo,
       pageChange,
       pageSizeChange,
-      dateModel,
       getLogData,
+    } = showLogList();
+
+    //获取 useSysLogHeader 中的变量和方法
+    let {
+      usernameModel,
+      dateModel,
       dateChange,
       dateChangeOk,
       resetClick,
-      searchClick
-    } = showLogList();
+      searchClick,
+    } = useSysLogHeader();
 
     //在Mounted 获取列表
     onMounted(() => {
-      getLogData();
+      getLogData({});
     });
 
     //返回参数
@@ -165,7 +171,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ant-btn{
+.ant-btn {
   width: auto;
 }
 </style>

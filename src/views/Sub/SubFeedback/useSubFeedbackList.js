@@ -26,18 +26,10 @@ export const showFeedbackList = () => {
   //图片获取正则表达
   const matchReg = ref("\\[(.*?)\\]");
 
-  //日期选择器发生改变时的 指定日期
-  let dateModel = reactive([]);
-  //日期选择器确定后的 指定日期
-  let dateConfrim = reactive({});
-
-  //下拉列表 选择
-  let selectModel = ref('2');
-
   //#region 分页所需数据
   const pageInfo = reactive({
     //列表所在页数
-    pageNum: 2,
+    pageNum: 1,
     //现在一页显示多少条数据
     pageSize: 10,
     //指定每页可以显示多少条
@@ -51,6 +43,7 @@ export const showFeedbackList = () => {
   const feedbackTable = reactive({
     feedbackColums: [{
         title: "索引",
+        align: "center",
         key: "index",
         slots: {
           customRender: "index"
@@ -59,14 +52,17 @@ export const showFeedbackList = () => {
       },
       {
         title: "内容",
+        align: "center",
         dataIndex: "content"
       },
       {
         title: "联系方式",
+        align: "center",
         dataIndex: "mobile"
       },
       {
         title: "图片",
+        align: "center",
         key: "picUrls",
         slots: {
           customRender: "picUrls"
@@ -74,6 +70,7 @@ export const showFeedbackList = () => {
       },
       {
         title: "提交时间",
+        align: "center",
         dataIndex: "createTime",
         //默认降序排列
         defaultSortOrder: 'descend',
@@ -86,10 +83,12 @@ export const showFeedbackList = () => {
       },
       {
         title: "处理时间",
+        align: "center",
         dataIndex: "updateTime"
       },
       {
         title: "状态",
+        align: "center",
         key: "status",
         slots: {
           customRender: "status"
@@ -97,6 +96,7 @@ export const showFeedbackList = () => {
       },
       {
         title: "操作",
+        align: "center",
         key: "operation",
         slots: {
           customRender: "operation"
@@ -122,6 +122,7 @@ export const showFeedbackList = () => {
           });
           //将获取到的数据列表存入变量中
           feedbackTable.feedbackData = res.data.records;
+          //获取多少条数据
           pageInfo.total = res.data.records.length;
         }
       })
@@ -146,63 +147,6 @@ export const showFeedbackList = () => {
     getSysRolesData();
   }
   //#endregion
-
-  //#region 选择项改变
-  const selectChange = (value) => {
-    //将改变的项 属性值储存 到 双向绑定的selectModel中
-    selectModel.value = value;
-  }
-  //#endregion
-
-  //#region 日期选择器发生变换方法
-  const dateChange = (data, dataString) => {
-    dateModel = dataString;
-    console.log(dateModel);
-  }
-  //#endregion
-
-  //#region 日期选择确定方法
-  const dateChangeOk = (data) => {
-    //将获取的日期存入dateModel中
-    dateConfrim.startDate = data[0].format('YYYY-MM-DD HH:mm:ss');
-    dateConfrim.endDate = data[1].format('YYYY-MM-DD HH:mm:ss');
-  }
-  //#endregion
-
-  //#region 重置列表项 和 时间范围
-  const resetClick = () => {
-    //将双向绑定的 日期 和 选择项 中的值 重置
-    selectModel.value = "2";
-    dateModel = [];
-    dateConfrim = {};
-    console.log(dateModel);
-    message.success('日期选择 与 状态 已重置');
-  }
-  //#endregion
-
-  //#region 查询列表
-  const searchClick = () => {
-    //创建变量  存储接口查询参数
-    let params = reactive({});
-
-    //获取日期范围
-    //判断获取的日期是否为空
-    if (dateModel.length != 0) {
-      params.startDate = dateConfrim.startDate;
-      params.endDate = dateConfrim.endDate;
-    }
-
-    //获取状态
-    //判断状态值是否为 2
-    if (selectModel == "1" || selectModel == "0") {
-      params.status = selectModel.value;
-    }
-
-    //发起查询请求
-    getFeedbackData(params);
-  }
-  //#endregion
-
 
   //#region 操作处理 点击事件
   const manageClick = (feedId) => {
@@ -230,16 +174,9 @@ export const showFeedbackList = () => {
   return {
     feedbackTable,
     pageInfo,
-    dateModel,
-    selectModel,
     getFeedbackData,
     pageChange,
     pageSizeChange,
-    selectChange,
-    dateChange,
-    dateChangeOk,
-    resetClick,
-    searchClick,
     manageClick,
   };
 };
