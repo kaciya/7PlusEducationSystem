@@ -10,21 +10,15 @@ import {
 
 //导入 GET请求方法
 import {
-  httpGet,
-  httpDelete
+  httpGet
 } from "@/utils/http";
-
-//导入 全局提示信息
-import {
-  message
-} from 'ant-design-vue';
 
 //#region 定义方法  获取账号列表
 export const showSysUserList = () => {
   //#region 分页所需数据
   const pageInfo = reactive({
     //列表所在页数
-    pageNum: 2,
+    pageNum: 1,
     //现在一页显示多少条数据
     pageSize: 10,
     //指定每页可以显示多少条
@@ -40,6 +34,7 @@ export const showSysUserList = () => {
       // 列表索引
       {
         title: "索引",
+        align: "center",
         key: "index",
         slots: {
           customRender: "index"
@@ -48,21 +43,25 @@ export const showSysUserList = () => {
       //用户名
       {
         title: "账号",
+        align: "center",
         dataIndex: "username"
       },
       //真实姓名
       {
         title: "操作员名称",
+        align: "center",
         dataIndex: "realName"
       },
       //权限组
       {
         title: "权限组",
+        align: "center",
         dataIndex: "roleName"
       },
       //状态
       {
         title: "是否启用",
+        align: "center",
         key: "status",
         slots: {
           customRender: "status"
@@ -71,6 +70,7 @@ export const showSysUserList = () => {
       //操作
       {
         title: "操作",
+        align: "center",
         key: "operation",
         slots: {
           customRender: "operation"
@@ -88,26 +88,13 @@ export const showSysUserList = () => {
         //判断相应状态
         if (res.success) {
           sysUsersTable.sysUsersData = res.data;
+          //获取多少条数据
+          pageInfo.total = res.data.length;
         }
       })
       .catch(error => {
         console.log(error);
       });
-  }
-  //#endregion
-
-  //#region 删除
-  const removeSysUser = (sysUserId) => {
-    //向后台发起请求  删除此项
-    httpDelete(`${sys.removeSysUser}/${sysUserId}`)
-      .then(res => {
-        if (res.success) {
-          message.success("删除成功");
-        }
-      })
-      .catch(error => {
-        message.error("删除失败: " + error);
-      })
   }
   //#endregion
 
@@ -132,7 +119,6 @@ export const showSysUserList = () => {
     sysUsersTable,
     pageInfo,
     getSysUserList,
-    removeSysUser,
     pageChange,
     pageSizeChange,
   };

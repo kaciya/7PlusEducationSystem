@@ -137,6 +137,18 @@ const routes = [
         name: "SysRole",
         component: () => import("@/views/Sys/SysRole"),
       },
+      //权限组添加
+      {
+        path: "/sys/role/add",
+        name: "SysRoleAdd",
+        component: () => import("@/views/Sys/SysRoleAdd"),
+      },
+      //权限组编辑
+      {
+        path: "/sys/role/edit/:id",
+        name: "SysRoleEdit",
+        component: () => import("@/views/Sys/SysRoleEdit"),
+      },
       //账号管理
       {
         path: "/sys/user",

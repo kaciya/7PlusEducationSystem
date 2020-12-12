@@ -17,7 +17,7 @@
           <h3 style="font-weight: 600">标签列表</h3>
         </a-col>
         <a-col :span="2" offset="20">
-          <a-button type="primary"> <PlusOutlined />添加 </a-button>
+          <a-button type="primary" @click="handleAddRouter"> <PlusOutlined />添加 </a-button>
         </a-col>
       </a-row>
       <!-- 权限组列表上标题 end -->
@@ -41,17 +41,17 @@
           <!-- 配置 status 用户状态 -->
           <template #status="{ record }">
             <div>
-              <a-switch :checked="record.status == 1 ? true : false" />
+              <a-switch :checked="record.status == 1 ? true : false" @click="statusChange(record.roleId,getSysRolesData)"/>
             </div>
           </template>
           <!-- 配置 用户状态 end -->
 
           <!-- 配置 operation 操作 -->
-          <template #operation>
-            <a-button type="primary" style="margin: 0 5px">
+          <template #operation="{ record }">
+            <a-button type="primary" style="margin: 0 5px" @click="handleEditRouter(record.roleId)">
               <EditOutlined /> 编辑
             </a-button>
-            <a-button type="danger" style="margin: 0 5px"
+            <a-button type="danger" style="margin: 0 5px" @click="showDelConfirm(record.roleId,getSysRolesData)"
               ><DeleteOutlined /> 删除
             </a-button>
           </template>
@@ -95,6 +95,12 @@ import { onMounted } from "vue";
 //导入rolesList中返回的数据
 import { showRoleList } from "./useSysRolesList";
 
+//导入rolesDel中返回的数据
+import { removeSysRoles } from "./useSysRolesDel";
+
+//导入rolesStatus中返回的数据
+import { updateRoleStatus } from "./useSysRoleStatusEdit";
+
 //导入图标
 import { PlusOutlined } from "@ant-design/icons-vue";
 
@@ -115,7 +121,15 @@ export default {
       pageChange,
       getSysRolesData,
       pageSizeChange,
+      handleAddRouter,
+      handleEditRouter,
     } = showRoleList();
+
+    //通过removeSysRoles获取删除模态框
+    let { showDelConfirm } = removeSysRoles();
+
+    //通过updateRoleStatus获取更改权限组启用状态方法
+    let { statusChange } = updateRoleStatus();
 
     //在Mounted 获取列表
     onMounted(() => {
@@ -134,6 +148,14 @@ export default {
       pageChange,
       //每页显示多少条数据的方法
       pageSizeChange,
+      //显示删除模态框方法
+      showDelConfirm,
+      //更改用户状态方法
+      statusChange,
+      //权限组添加路由跳转
+      handleAddRouter,
+      //权限组编辑路由跳转
+      handleEditRouter,
     };
   },
 };

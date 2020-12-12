@@ -1,9 +1,7 @@
 <template>
   <a-layout-content>
     <!-- 面包屑 start -->
-    <Crumbs
-      :crumbName="[{ name: '用户提交' }, { name: '联系记录' }]"
-    />
+    <Crumbs :crumbName="[{ name: '用户提交' }, { name: '联系记录' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
     <div
@@ -21,7 +19,7 @@
               <a-range-picker
                 :show-time="{ format: 'HH:mm:ss' }"
                 format="YYYY-MM-DD HH:mm:ss"
-                v-model:value="dateModel.data"
+                v-model:value="dateModel.date"
                 :placeholder="['开始日期', '结束日期']"
                 @change="dateChange"
                 @ok="dateChangeOk"
@@ -132,8 +130,11 @@ import Crumbs from "@/components/Crumbs";
 // 引入 钩子函数
 import { onMounted } from "vue";
 
-//导入 useSysLogList 文件 获取相应的方法
+//导入 useSysContactList 文件 获取相应的方法
 import { showContactList } from "./useSubContactList";
+
+//导入 useSysContactHeader 文件 获取相应方法
+import { SubContactHeader } from "./useSubContactHeader";
 
 //导入 图标样式
 import {
@@ -157,19 +158,22 @@ export default {
     //获取 方法中的 参数
     let {
       contactTable,
-      dateChangeOk,
-      dateChange,
-      dateModel,
-      selectModel,
-      selectChange,
       pageInfo,
       getContactData,
       pageChange,
-      resetClick,
-      searchClick,
       manageClick,
       pageSizeChange,
     } = showContactList();
+
+    let {
+      dateModel,
+      selectModel,
+      dateChangeOk,
+      dateChange,
+      selectChange,
+      resetClick,
+      searchClick,
+    } = SubContactHeader();
 
     //在Mounted 获取列表
     onMounted(() => {
@@ -210,7 +214,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ant-btn{
+.ant-btn {
   width: auto;
 }
 </style>
