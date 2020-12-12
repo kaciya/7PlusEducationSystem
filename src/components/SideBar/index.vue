@@ -1,6 +1,6 @@
 <template>
   <a-layout-sider
-    id="side-bar"
+    class="side-bar"
     theme="light"
     v-model:collapsed="collapsed"
     :trigger="null"
@@ -91,7 +91,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#side-bar {
+.side-bar {
   overflow-x: hidden;
   overflow-y: auto;
   transition: all 0.1s;
@@ -191,13 +191,13 @@ export default {
 </style>
 <style scoped>
 /* 样式穿透 */
-#side-bar ::v-deep(.ant-menu-vertical-left .ant-menu-item),
-#side-bar ::v-deep(.ant-menu-vertical-right .ant-menu-item),
-#side-bar ::v-deep(.ant-menu-inline .ant-menu-item),
-#side-bar ::v-deep(.ant-menu-vertical .ant-menu-submenu-title),
-#side-bar ::v-deep(.ant-menu-vertical-left .ant-menu-submenu-title),
-#side-bar ::v-deep(.ant-menu-vertical-right .ant-menu-submenu-title),
-#side-bar ::v-deep(.ant-menu-inline .ant-menu-submenu-title) {
+.side-bar ::v-deep(.ant-menu-vertical-left .ant-menu-item),
+.side-bar ::v-deep(.ant-menu-vertical-right .ant-menu-item),
+.side-bar ::v-deep(.ant-menu-inline .ant-menu-item),
+.side-bar ::v-deep(.ant-menu-vertical .ant-menu-submenu-title),
+.side-bar ::v-deep(.ant-menu-vertical-left .ant-menu-submenu-title),
+.side-bar ::v-deep(.ant-menu-vertical-right .ant-menu-submenu-title),
+.side-bar ::v-deep(.ant-menu-inline .ant-menu-submenu-title) {
   height: 51px;
   line-height: 51px;
   margin-top: 0;
@@ -205,10 +205,10 @@ export default {
   border-bottom: 1px solid #f2f2f2;
 }
 
-#side-bar ::v-deep(.ant-menu-vertical .ant-menu-item:not(:last-child)),
-#side-bar ::v-deep(.ant-menu-vertical-left .ant-menu-item:not(:last-child)),
-#side-bar ::v-deep(.ant-menu-vertical-right .ant-menu-item:not(:last-child)),
-#side-bar ::v-deep(.ant-menu-inline .ant-menu-item:not(:last-child)) {
+.side-bar ::v-deep(.ant-menu-vertical .ant-menu-item:not(:last-child)),
+.side-bar ::v-deep(.ant-menu-vertical-left .ant-menu-item:not(:last-child)),
+.side-bar ::v-deep(.ant-menu-vertical-right .ant-menu-item:not(:last-child)),
+.side-bar ::v-deep(.ant-menu-inline .ant-menu-item:not(:last-child)) {
   margin-bottom: 0px;
   border-bottom: 1px solid #f2f2f2;
 }

@@ -8,8 +8,7 @@
     </template>
     <div class="user-source">
       <div
-        id="myChart"
-        ref="chart"
+        ref="chartRef"
         :style="{
           width: '100%',
           height: '100%'
@@ -27,19 +26,19 @@ import { useGetUserSource } from "./useGetUserSource";
 export default {
   setup() {
     // 用户来源数据
-    const { chart, getUserSource } = useGetUserSource();
+    const { chartRef, getUserSource } = useGetUserSource();
     // 获取$echarts
     const echarts = inject("$echarts");
     // 定义echarts实例存储变量
-    let myCharts = null;
+    let chart = null;
     // 在mounted周期中执行
     onMounted(() => {
       // 初始化echarts实例
-      myCharts = echarts.init(chart.value);
+      chart = echarts.init(chartRef.value);
       // 调用绘图函数
       drawLine();
       // 初始化图形
-      // setUserSource();
+      setUserSource();
     });
 
     //#region 绘图函数
@@ -155,22 +154,22 @@ export default {
       //#endregion
 
       // 使用刚指定的配置项和数据显示图表
-      myCharts.setOption(options);
+      chart.setOption(options);
     }
     //#endregion
 
     //#region 设置用户来源数据
     function setUserSource() {
       // 开启加载动画
-      myCharts.showLoading();
+      chart.showLoading();
       // 获取数据异步加载
-      getUserSource(myCharts);
+      getUserSource(chart);
     }
     //#endregion
 
     // 返回
     return {
-      chart
+      chartRef
     };
   }
 };

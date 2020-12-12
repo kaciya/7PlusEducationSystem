@@ -9,7 +9,7 @@ import { ref } from "vue";
 // 定义功能函数
 export const useGetUserAdd = () => {
   // 定义图形ref
-  const chart = ref(null);
+  const chartRef = ref(null);
 
   //#region 请求近几日数据方法
   function getUserAddForDays(chart, d) {
@@ -112,7 +112,7 @@ export const useGetUserAdd = () => {
   //#endregion
 
   return {
-    chart,
+    chartRef,
     getUserAddForDays, //近几日
     getUserAddStartToEnd //开始-结束日期
   };

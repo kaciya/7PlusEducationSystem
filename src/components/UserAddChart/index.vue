@@ -7,11 +7,19 @@
       <div class="user-growth-page-heading">用户增长趋势</div>
     </template>
     <template #extra>
-      <a-radio-group class="daysGroup" v-model:value="daysValueModel">
+      <a-radio-group
+        class="daysGroup"
+        v-model:value="daysValueModel"
+        button-style="solid"
+      >
         <a-radio-button value="n7d" @click="setUserAddForDays(7)">
           近七天
         </a-radio-button>
-        <a-radio-button value="n30d" @click="setUserAddForDays(30)">
+        <a-radio-button
+          value="n30d"
+          @click="setUserAddForDays(30)"
+          style="margin-left: 6px"
+        >
           近30天
         </a-radio-button>
       </a-radio-group>
@@ -28,11 +36,10 @@
     </template>
     <div class="user-growth">
       <div
-        id="myChart"
-        ref="chart"
+        ref="chartRef"
         :style="{
           width: '100%',
-          height: '100%'
+          height: '100%',
         }"
       />
     </div>
@@ -49,19 +56,23 @@ import moment from "moment";
 export default {
   setup() {
     // 用户增长数据
-    const { chart, getUserAddForDays, getUserAddStartToEnd } = useGetUserAdd();
+    const {
+      chartRef,
+      getUserAddForDays,
+      getUserAddStartToEnd,
+    } = useGetUserAdd();
     // 获取$echarts
     const echarts = inject("$echarts");
     // 定义echarts实例存储变量
-    let myCharts = null;
+    let chart = null;
     // 在mounted周期中执行
     onMounted(() => {
       // 初始化echarts实例
-      myCharts = echarts.init(chart.value);
+      chart = echarts.init(chartRef.value);
       // 调用绘图函数
       drawLine();
       // 初始化图形
-      // setUserAddForDays(7);
+      setUserAddForDays(7);
     });
 
     //#region 绘图函数
@@ -78,10 +89,10 @@ export default {
           trigger: "axis",
           // 坐标轴指示器配置项
           axisPointer: {
-            type: "none"
+            type: "none",
           },
           // 自定义提示框模板
-          formatter: function(params) {
+          formatter: function (params) {
             let htmlStr = "";
             for (let i = 0; i < params.length; i++) {
               const param = params[i];
@@ -115,8 +126,8 @@ export default {
           textStyle: {
             color: "#666",
             fontSize: 12,
-            lineHeight: 24
-          }
+            lineHeight: 24,
+          },
         },
         // 图例组件
         legend: {
@@ -126,12 +137,12 @@ export default {
           padding: [0, 0, 8, 0],
           textStyle: {
             color: "#8c8c8c",
-            padding: [0, 4]
+            padding: [0, 4],
           },
           // 修改图标样式
           icon: "rect",
           itemWidth: 12,
-          itemHeight: 3
+          itemHeight: 3,
         },
         // 直角坐标系 grid 中的 x 轴
         xAxis: [
@@ -142,13 +153,13 @@ export default {
             axisLine: {
               lineStyle: {
                 color: "#dfdfdf",
-                width: 2
-              }
+                width: 2,
+              },
             },
             // 坐标轴刻度标签
             axisLabel: {
               color: "#545454",
-              margin: 16
+              margin: 16,
             },
             data: [
               "2018-06-25",
@@ -162,9 +173,9 @@ export default {
               "2018-08-04",
               "2018-08-09",
               "2018-08-14",
-              "2018-08-19"
-            ]
-          }
+              "2018-08-19",
+            ],
+          },
         ],
         // 直角坐标系 grid 中的 y 轴
         yAxis: [
@@ -178,25 +189,25 @@ export default {
             // 坐标轴轴线
             axisLine: {
               lineStyle: {
-                opacity: 0
-              }
+                opacity: 0,
+              },
             },
             // 分割线
             splitLine: {
               lineStyle: {
                 type: "dashed",
-                opacity: 0.8
-              }
+                opacity: 0.8,
+              },
             },
             // 坐标轴刻度
             axisTick: {
               lineStyle: {
-                opacity: 0
-              }
+                opacity: 0,
+              },
             },
             // 坐标轴刻度标签
-            axisLabel: { margin: 12 }
-          }
+            axisLabel: { margin: 12 },
+          },
         ],
         series: [
           // 驱动图表生成的数据内容数组，几条折现，数组中就会有几个对应对象，来表示对应的折线
@@ -216,16 +227,16 @@ export default {
                 borderWidth: 1,
                 borderColor: "#fff",
                 lineStyle: {
-                  color: "#1890ff"
-                }
-              }
+                  color: "#1890ff",
+                },
+              },
             },
             // 图形高亮样式。
             emphasis: {
               itemStyle: {
                 shadowColor: "rgba(24, 144, 255, 0.8)", //高亮时阴影颜色
-                shadowBlur: 8 //高亮时阴影模糊大小
-              }
+                shadowBlur: 8, //高亮时阴影模糊大小
+              },
             },
             //
             data: [
@@ -240,9 +251,9 @@ export default {
               4430,
               2530,
               2190,
-              3333
-            ]
-          }
+              3333,
+            ],
+          },
         ],
         // 直角坐标系内绘图网格
         grid: [
@@ -250,8 +261,8 @@ export default {
             width: "90%",
             left: "6.8%",
             top: "7.2%",
-            bottom: "14%"
-          }
+            bottom: "14%",
+          },
         ],
         // 区域缩放
         dataZoom: [
@@ -261,22 +272,22 @@ export default {
             start: 0,
             end: 100,
             minSpan: 50,
-            maxSpan: 100
-          }
-        ]
+            maxSpan: 100,
+          },
+        ],
       };
       //#endregion
       // 使用刚指定的配置项和数据显示图表
-      myCharts.setOption(options);
+      chart.setOption(options);
     }
     //#endregion
 
     //#region 设置近几日用户增长数据（默认近7天）
     function setUserAddForDays(d = 7) {
       // 开启加载动画
-      myCharts.showLoading();
+      chart.showLoading();
       // 获取数据异步加载
-      getUserAddForDays(myCharts, d);
+      getUserAddForDays(chart, d);
     }
     //#endregion
 
@@ -288,8 +299,6 @@ export default {
     // 侦听日期选择范围变化
     function dateRangeChange(date, dateString) {
       // console.log(dateString);
-      // 取消近几日按钮选中状态
-      daysValueModel.value = "";
       // 存储选择日期范围[start-end]
       dateSTE.start = dateString[0];
       dateSTE.end = dateString[1];
@@ -298,10 +307,12 @@ export default {
 
     //#region 设置日期用户增长数据（开始结束日期）
     function setUserAddStartToEnd() {
+      // 取消近几日按钮选中状态
+      daysValueModel.value = "";
       // 开启加载动画
-      myCharts.showLoading();
+      chart.showLoading();
       // 获取数据异步加载
-      getUserAddStartToEnd(myCharts, dateSTE.start, dateSTE.end);
+      getUserAddStartToEnd(chart, dateSTE.start, dateSTE.end);
     }
     //#endregion
 
@@ -310,16 +321,14 @@ export default {
       return (
         current &&
         current.format("YYYY-MM-DD") >=
-          moment()
-            .endOf("day")
-            .format("YYYY-MM-DD")
+          moment().endOf("day").format("YYYY-MM-DD")
       );
     }
     //#endregion
 
     //#region 定义日期浮层的容器
     function getCalendarContainer() {
-      return triggerNode => triggerNode.parentNode.parentNode.parentNode;
+      return (triggerNode) => triggerNode.parentNode.parentNode.parentNode;
     }
     //#endregion
 
@@ -327,14 +336,14 @@ export default {
     return {
       daysValueModel,
       dateRangeChange,
-      chart,
+      chartRef,
       setUserAddForDays, //设置用户增长数据（近几日）
       getUserAddStartToEnd, //获取用户增长数据（选择日期）
       setUserAddStartToEnd, //设置用户增长数据（选择日期）
       disabledDate, //设置不可选择日期
-      getCalendarContainer //定义浮层的容器
+      getCalendarContainer, //定义浮层的容器
     };
-  }
+  },
 };
 </script>
 
