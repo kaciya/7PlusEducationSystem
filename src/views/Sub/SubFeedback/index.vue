@@ -41,14 +41,14 @@
           </a-col>
           <a-col :span="4" :offset="7">
             <a-button style="margin: 0 10px; float: right" @click="resetClick">
-              <SyncOutlined /> 重置
+              重置
             </a-button>
             <a-button
               type="primary"
               style="margin: 0 10px; float: right"
               @click="searchClick"
             >
-              <SearchOutlined /> 查询
+              查询
             </a-button>
           </a-col>
         </a-row>
@@ -147,10 +147,7 @@ import { useSubFeedbackColums } from "./useSubFeedbackColums";
 
 //导入 图标样式
 import {
-  SearchOutlined,
-  SyncOutlined,
   LineOutlined,
-  AlertOutlined,
 } from "@ant-design/icons-vue";
 
 //导入 reactive 对象
@@ -160,10 +157,7 @@ export default {
   // 使用组件
   components: {
     Crumbs,
-    SearchOutlined,
-    SyncOutlined,
     LineOutlined,
-    AlertOutlined,
   },
 
   //setup 编写 主要内容

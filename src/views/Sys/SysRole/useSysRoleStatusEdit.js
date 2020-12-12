@@ -3,7 +3,7 @@ import {
     role
 } from "@/api/sysUserAPI";
 
-//导入 GET请求方法
+//导入 Post请求方法
 import {
     httpPost
 } from "@/utils/http";

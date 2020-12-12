@@ -16,8 +16,8 @@
         <a-col :span="2">
           <h3 style="font-weight: 600">标签列表</h3>
         </a-col>
-        <a-col :span="2" offset="20">
-          <a-button type="primary" @click="handleAddRouter"> <PlusOutlined />添加 </a-button>
+        <a-col :span="1" offset="20">
+          <a-button type="primary" @click="handleAddRouter"> 添加 </a-button>
         </a-col>
       </a-row>
       <!-- 权限组列表上标题 end -->
@@ -49,10 +49,10 @@
           <!-- 配置 operation 操作 -->
           <template #operation="{ record }">
             <a-button type="primary" style="margin: 0 5px" @click="handleEditRouter(record.roleId)">
-              <EditOutlined /> 编辑
+              编辑
             </a-button>
             <a-button type="danger" style="margin: 0 5px" @click="showDelConfirm(record.roleId)"
-              ><DeleteOutlined /> 删除
+              >删除
             </a-button>
           </template>
           <!-- 配置 operation 操作 end -->
@@ -104,16 +104,10 @@ import { updateRoleStatus } from "./useSysRoleStatusEdit";
 //导入useSysRolesColums中返回的列表数据
 import { useSysRolesColums } from "./useSysRolesColums";
 
-//导入图标
-import { PlusOutlined } from "@ant-design/icons-vue";
-
 export default {
   // 组件
   components: {
     Crumbs,
-    PlusOutlined,
-    EditOutlined,
-    DeleteOutlined,
   },
 
   setup() {

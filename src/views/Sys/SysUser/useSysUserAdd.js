@@ -75,7 +75,7 @@ export const addSysUser = (getSysUserList) => {
     let confirmLoading = ref(false);
 
     //#region 定义表单
-    const addUserForm = ref(null);
+    const addUserFormRef = ref(null);
     //#endregion
 
     //显示添加账号模态框
@@ -94,7 +94,7 @@ export const addSysUser = (getSysUserList) => {
     //添加账号确定时的回调
     const handleAddOk = () => {
         //发起请求 添加账号                     
-        addUserForm.value.validate().then(() => {
+        addUserFormRef.value.validate().then(() => {
                 //获取请求需要参数
                 let params = {
                     realName: sysUserForm.realName,
@@ -114,7 +114,7 @@ export const addSysUser = (getSysUserList) => {
                             addUserVisible.value = false;
                             confirmLoading.value = false;
                             //清空表单
-                            addUserForm.value.resetFields();
+                            addUserFormRef.value.resetFields();
                             //重新刷新页面
                             getSysUserList();
                         }, 700);
@@ -131,7 +131,7 @@ export const addSysUser = (getSysUserList) => {
     //添加账号取消时的回调
     const handleAddCancel = () => {
         //清空表单
-        addUserForm.value.resetFields();
+        addUserFormRef.value.resetFields();
         //关闭弹窗
         addUserVisible.value = false;
     }
@@ -140,7 +140,7 @@ export const addSysUser = (getSysUserList) => {
     return {
         addUserVisible,
         confirmLoading,
-        addUserForm,
+        addUserFormRef,
         sysUserForm,
         showAddModal,
         handleAddOk,

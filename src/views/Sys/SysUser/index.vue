@@ -18,7 +18,7 @@
         </a-col>
         <a-col :span="2" offset="20">
           <a-button type="primary" @click="showAddModal">
-            <PlusOutlined />添加账号
+              添加账号
           </a-button>
         </a-col>
       </a-row>
@@ -47,9 +47,9 @@
 
         <!-- 添加账号表单 -->
         <a-form
-          :rules="sysUserRules"
           v-model:model="sysUserForm"
-          ref="addUserForm"
+          :rules="sysUserRules"
+          ref="addUserFormRef"
         >
           <a-form-item
             label="操作员名称"
@@ -120,7 +120,7 @@
           <template #operation="{ record }">
             <!-- 密码重置 -->
             <a-button type="primary" style="margin: 0 5px" @click="handleResetPwd(record.userId)">
-              <SyncOutlined /> 密码重置
+              密码重置
             </a-button>
             <!-- 密码重置 end -->
             <!-- 删除按钮 -->
@@ -129,7 +129,7 @@
               style="margin: 0 5px"
               @click="showDelConfirm(record.userId)"
             >
-              <DeleteOutlined /> 删除
+              删除
             </a-button>
             <!-- 删除按钮 end -->
           </template>
@@ -184,19 +184,9 @@ import { useSysuserColums } from "./useSysUserColums";
 // 引入 钩子函数
 import { onMounted } from "vue";
 
-//导入图标
-import {
-  PlusOutlined,
-  DeleteOutlined,
-  SyncOutlined,
-} from "@ant-design/icons-vue";
-
 export default {
   components: {
     Crumbs,
-    PlusOutlined,
-    SyncOutlined,
-    DeleteOutlined,
   },
 
   setup() {
@@ -231,7 +221,7 @@ export default {
       showAddModal,
       handleAddOk,
       handleAddCancel,
-      addUserForm,
+      addUserFormRef,
     } = addSysUser(getSysUserList);
 
     //在Mounted 获取列表
@@ -252,7 +242,7 @@ export default {
       //权限列表
       RolesPermissionsList,
       //添加表单
-      addUserForm,
+      addUserFormRef,
       //账号添加表单校验规则
       sysUserRules,
       //渲染表格
