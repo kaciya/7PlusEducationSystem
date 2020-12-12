@@ -25,9 +25,9 @@ import Header from "@/components/Header";
 export default {
   components: {
     SideBar, //侧边栏
-    Header //顶部栏
+    Header, //顶部栏
   },
-  setup() {}
+  setup() {},
 };
 </script>
 

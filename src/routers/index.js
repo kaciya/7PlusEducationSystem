@@ -51,7 +51,7 @@ const routes = [
       },
       // 用户详情
       {
-        path: "/user/user-details/:userID",
+        path: "/user/details/:id",
         component: () => import("@/views/UserManage/UserDetails"),
         props: true,
       },
@@ -59,7 +59,7 @@ const routes = [
       //#region 词库管理
       // 词库分类
       {
-        path: "/Word/category",
+        path: "/word/category",
         component: () => import("@/views/Word/WordCategory"),
       },
       //#endregion
@@ -117,27 +117,22 @@ const routes = [
       {
         // 课程服务
         path: "/operation/course",
-        component: () => import("@/views/Operation/Course")
+        component: () => import("@/views/Operation/Course"),
       },
       {
         // 互动练习
         path: "/operation/exercise",
         component: () => import("@/views/Operation/Exercise"),
-        //常见问题
-      },
-      {
-        path: "/operation/Issues",
-        component: () => import("@/views/Operation/Issues"),
       },
       {
         // 课程服务
         path: "/operation/course",
-        component: () => import("@/views/Operation/Course")
+        component: () => import("@/views/Operation/Course"),
       },
+      // 备考指南
       {
-        // 常见问题
-        path: "/operation/problem",
-        component: () => import("@/views/Operation/Problem")
+        path: "/operation/guide",
+        component: () => import("@/views/Operation/Guide"),
       },
       //#endregion
       //#region 权限管理

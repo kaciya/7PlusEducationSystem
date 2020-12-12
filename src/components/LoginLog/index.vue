@@ -3,10 +3,10 @@
     <!-- 表格 -->
     <a-table
       bordered
-      :columns="loginJournalData.journalColumns"
-      :data-source="loginJournalData.journalData.records"
+      :columns="logColumns"
+      :data-source="loginLoglData.Data.records"
       :pagination="false"
-      :row-key="record => record.ip"
+      :row-key="(record) => record.ip"
     >
     </a-table>
     <!-- 分页 -->
@@ -14,8 +14,8 @@
       show-size-changer
       v-model:current="pagination.pageNum"
       v-model:pageSize="pagination.pageSize"
-      @change="handleJournalPageChange"
-      @showSizeChange="handleJournalSizeChange"
+      @change="handleLogPageChange"
+      @showSizeChange="handleLogSizeChange"
       :page-size-options="pagination.pageSizeOptions"
       :total="pagination.total"
     >
@@ -24,24 +24,27 @@
 </template>
 
 <script>
-import { LoginJournal } from "./userLoginJournal";
+import { LoginLog } from "./userLoginLog";
+import { userLogColumns } from "./userLogColumns";
 export default {
   // 接收用户id
   props: ["userID"],
   setup(prop) {
     const {
-      loginJournalData, // 表格数据
+      loginLoglData, // 表格数据
       pagination, //分页数据
-      handleJournalPageChange, // 点击页码跳转事件
-      handleJournalSizeChange // 选择每页显示条数事件
-    } = LoginJournal(prop.userID);
+      handleLogPageChange, // 点击页码跳转事件
+      handleLogSizeChange, // 选择每页显示条数事件
+    } = LoginLog(prop.userID);
+    const { logColumns } = userLogColumns();
     return {
-      loginJournalData,
+      loginLoglData,
       pagination,
-      handleJournalPageChange,
-      handleJournalSizeChange
+      handleLogPageChange,
+      handleLogSizeChange,
+      logColumns,
     };
-  }
+  },
 };
 </script>
 
@@ -51,10 +54,10 @@ export default {
   position: relative;
   top: -17px;
   height: 1120px;
-  border-top: 0px;
   padding: 16px 30px;
   overflow: hidden;
   border: 1px solid #f0f0f0;
+  border-top: 0px;
   // 分页
   .ant-pagination {
     float: right;
