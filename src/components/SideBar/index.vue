@@ -17,7 +17,6 @@
       <a-menu-item class="menu-pri menu-home" :key="sideBarKeys[0]">
         <router-link
           to="/home/main"
-          @click="reloadHome"
           class="menu-link home-link"
         >
           <HomeOutlined />
@@ -68,13 +67,10 @@ export default {
   // setup响应api入口
   setup() {
     // 获取侧边栏数据
-    let { sideBarList, sideBarKeys } = useGetSideBar();
+    const { sideBarList, sideBarKeys } = useGetSideBar();
     // 侧边栏伸缩状态
-    let { collapsed } = useSetCollapsed();
-    function reloadHome() {
-      // location.href = "#/home/main";
-      // location.reload();
-    }
+    const { collapsed } = useSetCollapsed();
+
     // 返回
     return {
       // 侧边栏列表
@@ -83,8 +79,6 @@ export default {
       sideBarKeys,
       // 侧边栏伸缩状态
       collapsed,
-      // 重载首页
-      reloadHome
     };
   }
 };

@@ -61,7 +61,7 @@ export const useGetUserSource = () => {
       xData.push(item.channel);
       yData.push({ value: item.value, name: item.channel });
     });
-    console.log({ xData, yData });
+    // console.log({ xData, yData });
     return { xData, yData };
   }
   //#endregion
