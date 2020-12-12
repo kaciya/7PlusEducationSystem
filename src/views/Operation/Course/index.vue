@@ -19,7 +19,6 @@
       <a-row>
         <a-col :span="24" style="margin-bottom: 10px">
           <a-button type="primary" size="large" style="float: right" @click="showAddForm">
-            <FileAddOutlined />
             添加课程
           </a-button>
         </a-col>
@@ -34,11 +33,9 @@
       >
         <template #operational="{ record }">
           <a-button type="primary" style="margin-right: 45px" @click="handleShowEdit(record)">
-            <EditOutlined />
             编辑
           </a-button>
-          <a-button type="danger" @click="handleDelete(record.id)">
-            <DeleteOutlined />
+          <a-button type="danger" @click="showDelete(record.id)">
             删除
           </a-button>
         </template>
@@ -48,27 +45,28 @@
       <a-modal
         title="添加课程"
         v-model:visible="addFormVisibility"
-        @ok="handleAddOk"
+        @ok="handleAddSubmit"
+        @cancel="handelAddCancel"
       >
         <a-form
-          ref="AddFormRef"
-          :model="AddForm"
-          :rules="addFormRules"
+          :model="AddModel"
+          :rules="addRules"
+          ref="AddRef"
         >
           <a-form-item name="name" label="课程名称" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
-            <a-input v-model:value="AddForm.name" />
+            <a-input v-model:value="AddModel.name" />
           </a-form-item>
           <a-form-item name="introduce" label="课程介绍" class="addForm" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
-            <a-textarea v-model:value="AddForm.introduce" />
+            <a-textarea v-model:value="AddModel.introduce" />
           </a-form-item>
           <a-form-item name="fit" label="适合人群" class="addForm" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
-            <a-textarea v-model:value="AddForm.fit" />
+            <a-textarea v-model:value="AddModel.fit" />
           </a-form-item>
           <a-form-item name="trait" label="课程特点" class="addForm" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
-            <a-textarea v-model:value="AddForm.trait" />
+            <a-textarea v-model:value="AddModel.trait" />
           </a-form-item>
           <a-form-item name="isShow" label="首页展示" class="addForm" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
-            <a-switch v-model:checked="AddForm.isShow" />
+            <a-switch v-model:checked="AddModel.isShow" />
           </a-form-item>
         </a-form>
       </a-modal>
@@ -77,27 +75,28 @@
       <a-modal
         title="编辑课程"
         v-model:visible="Editvisible"
-        @ok="handleEditOk"
+        @ok="handleEditSubmit"
+        @cancel="handleEditCancel"
       >
         <a-form
-          ref="EditFormRef"
-          :model="EditForm"
-          :rules="EditFormRules"
+          :model="editModel"
+          :rules="editRules"
+          ref="editRef"
         >
           <a-form-item name="name" label="课程名称" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
-            <a-input v-model:value="EditForm.name" />
+            <a-input v-model:value="editModel.name" />
           </a-form-item>
           <a-form-item name="introduce" label="课程介绍" class="addForm" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
-            <a-textarea v-model:value="EditForm.introduce" />
+            <a-textarea v-model:value="editModel.introduce" />
           </a-form-item>
           <a-form-item name="fit" label="适合人群" class="addForm" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
-            <a-textarea v-model:value="EditForm.fit" />
+            <a-textarea v-model:value="editModel.fit" />
           </a-form-item>
           <a-form-item name="trait" label="课程特点" class="addForm" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
-            <a-textarea v-model:value="EditForm.trait" />
+            <a-textarea v-model:value="editModel.trait" />
           </a-form-item>
           <a-form-item name="isShow" label="首页展示" class="addForm" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
-            <a-switch v-model:checked="EditForm.isShow" />
+            <a-switch v-model:checked="editModel.isShow" />
           </a-form-item>
         </a-form>
       </a-modal>
@@ -110,8 +109,6 @@
 <script>
 // 引入面包屑组件
 import Crumbs from "@/components/Crumbs";
-// 引入小图标
-import { EditOutlined,DeleteOutlined,FileAddOutlined } from "@ant-design/icons-vue";
 // 引入列表格式
 import { columns } from "./useCourseColumn";
 // 引入获取数据方法
@@ -127,9 +124,6 @@ export default {
   // 使用组件
   components: {
     Crumbs,
-    EditOutlined,
-    DeleteOutlined,
-    FileAddOutlined
   },
   setup() {
     //#region 获取数据
@@ -141,29 +135,15 @@ export default {
     //#endregion
 
     //#region 添加数据
-    const { addFormVisibility,AddForm,addFormRules,AddFormRef,showAddForm,handleAddSubmit } = CourseAdd();
-    const handleAddOk = () => {
-      handleAddSubmit(() => {
-        getCourse();
-      })
-    }
+    const { addFormVisibility,AddModel,addRules,AddRef,showAddForm,handleAddSubmit,handelAddCancel } = CourseAdd(getCourse);
     //#endregion
 
     //region 编辑课程
-    const { Editvisible,EditForm,EditFormRules,EditFormRef,handleShowEdit,handleEditSubmit } = courseEdit();
-    const handleEditOk = () => {
-      handleEditSubmit(() => {
-        // 重新获取数据
-        getCourse();
-      })
-    }
+    const { Editvisible,editModel,editRules,editRef,handleShowEdit,handleEditSubmit,handleEditCancel } = courseEdit(getCourse);
     //endregion
 
     //#region 删除课程
-    const { showDelete } = deleteCourse();
-    const handleDelete = (id) => {
-      showDelete(id,getCourse)
-    }
+    const { showDelete } = deleteCourse(getCourse);
     //#endregion
 
     return {
@@ -172,22 +152,24 @@ export default {
       //#endregion
       //#region 添加课程
       addFormVisibility,
-      AddForm,
-      addFormRules,
-      AddFormRef,
+      AddModel,
+      addRules,
+      AddRef,
       showAddForm,
-      handleAddOk,
+      handleAddSubmit,
+      handelAddCancel,
       //#endregion
       //#region 编辑课程
       Editvisible,
-      EditForm,
-      EditFormRules,
-      EditFormRef,
+      editModel,
+      editRules,
+      editRef,
       handleShowEdit,
-      handleEditOk,
+      handleEditSubmit,
+      handleEditCancel,
       //#endregion
       //#region 删除课程
-      handleDelete
+      showDelete
       //#endregion
     }
   }

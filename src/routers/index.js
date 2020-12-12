@@ -143,8 +143,26 @@ const routes = [
       },
       // 备考指南
       {
+
+        // 文章列表
+        path: "/operation/article",
+        component: () => import("@/views/Operation/Article")
+      },
+      {
+        // 关于PTE
+        path: "/operation/about",
+        component: () => import("@/views/Operation/AboutPTE")
+      },
+      {
+        // 常见问题
+        path: "/operation/problem",
+        component: () => import("@/views/Operation/Problem")
+      },
+      
+      {
         path: "/operation/guide",
         component: () => import("@/views/Operation/Guide"),
+
       },
       //#endregion
       //#region 权限管理

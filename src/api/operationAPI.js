@@ -30,6 +30,20 @@ export const exercise = {
   UpdateExerciseContent: 'interactive/update',
 }
 
+// 文章列表
+export const article = {
+  // 获取文章列表
+  GetArticleList: "article/page",
+  // 开启/关闭文章
+  SetArticleState: "article/status"
+}
+
+// 关于PTE
+export const about = {
+  // 获取数据列表
+  GetAboutList: "about/page"
+}
+
 // 常见问题
 export const problem = {
   // 获取常见问题列表

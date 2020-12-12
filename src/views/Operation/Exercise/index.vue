@@ -19,6 +19,7 @@
         :data-source="ExerciseData.data"
         bordered
         :row-key="record => record.id"
+        :pagination="false"
       >
         <template #action="{record}">
           <a-button
@@ -26,7 +27,7 @@
             style="margin-left: 40px"
             @click="editShow(record.id,record.name)"
           >
-            <EditOutlined />编辑
+            编辑
           </a-button>
         </template>
       </a-table>
@@ -35,19 +36,18 @@
         title="编辑内容"
         v-model:visible="editVisibility"
         :confirm-loading="confirmLoading"
-        @ok="handleClickEdit"
+        @ok="ExerciseEditSubmit"
       >
         <a-form
-          :model="editLabForm"
-          :rules="editLabFormRule"
+          :model="editMode"
+          :rules="editRule"
           ref="ExerciseEditRef"
-          name="custom-validation"
         >
           <a-row>
             <a-col :span="24">
               <a-form-item label="新内容" :wrapperCol="{span: 24}" name="content">
                 <a-textarea
-                  v-model:value="editLabForm.content"
+                  v-model:value="editMode.content"
                   placeholder="请输入新内容"
                   :rows="5"
                 />
@@ -62,8 +62,6 @@
 </template>
 
 <script>
-// 引入图标
-import { EditOutlined } from "@ant-design/icons-vue";
 // 引入面包屑组件
 import Crumbs from "@/components/Crumbs";
 // 引入列表组件
@@ -74,6 +72,9 @@ import { getExerciseList } from "./useExerciseGetList";
 import { ExerciseEdit } from "./useExerciseEdit";
 
 export default {
+  components: {
+    Crumbs,
+  },
   // setup响应api入口
   setup() {
     //#region 获取数据
@@ -84,19 +85,13 @@ export default {
     //#region 编辑功能
     const {
       editVisibility,
-      editLabForm,
-      editLabFormRule,
+      editMode,
+      editRule,
       ExerciseEditRef,
       confirmLoading,
       editShow,
       ExerciseEditSubmit
-    } = ExerciseEdit();
-    // 模态框点击确定的回调函数
-    const handleClickEdit = () => {
-      ExerciseEditSubmit(() => {
-        getExercise();
-      });
-    };
+    } = ExerciseEdit(getExercise);
     //#endregion
 
     return {
@@ -106,16 +101,13 @@ export default {
       //#endregion
       //#region 编辑功能
       editVisibility,
-      editLabForm,
-      editLabFormRule,
+      editMode,
+      editRule,
       ExerciseEditRef,
       confirmLoading,
+      ExerciseEditSubmit,
       editShow,
-      handleClickEdit,
       //#endregion
-      // 导出组件
-      Crumbs,
-      EditOutlined
     };
   }
 };

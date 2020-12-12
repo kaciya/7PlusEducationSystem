@@ -14,7 +14,7 @@ import {
 } from "@/utils/http";
 
 //#region 定义方法  获取账号列表
-export const showSysUserList = () => {
+export const showSysUserList = (sysUsersTable) => {
   //#region 分页所需数据
   const pageInfo = reactive({
     //列表所在页数
@@ -27,58 +27,6 @@ export const showSysUserList = () => {
     total: 0,
   });
   //#endregion
-
-  //定义 表格项
-  const sysUsersTable = reactive({
-    sysUsersColums: [
-      // 列表索引
-      {
-        title: "索引",
-        align: "center",
-        key: "index",
-        slots: {
-          customRender: "index"
-        }
-      },
-      //用户名
-      {
-        title: "账号",
-        align: "center",
-        dataIndex: "username"
-      },
-      //真实姓名
-      {
-        title: "操作员名称",
-        align: "center",
-        dataIndex: "realName"
-      },
-      //权限组
-      {
-        title: "权限组",
-        align: "center",
-        dataIndex: "roleName"
-      },
-      //状态
-      {
-        title: "是否启用",
-        align: "center",
-        key: "status",
-        slots: {
-          customRender: "status"
-        }
-      },
-      //操作
-      {
-        title: "操作",
-        align: "center",
-        key: "operation",
-        slots: {
-          customRender: "operation"
-        }
-      }
-    ],
-    sysUsersData: []
-  });
 
   //#region 根据后台接口地址发送请求获取权限组数据
   const getSysUserList = () => {
@@ -116,7 +64,6 @@ export const showSysUserList = () => {
 
   //返回数据
   return {
-    sysUsersTable,
     pageInfo,
     getSysUserList,
     pageChange,

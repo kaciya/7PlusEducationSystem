@@ -9,18 +9,8 @@ import {
     message
 } from 'ant-design-vue';
 
-//导入 useSysLogList 文件 获取相应的方法
-import {
-    showLogList
-} from "./useSysLogList";
-
 //#region 顶部 查询 和 重置 功能 
-export const useSysLogHeader = () => {
-    //获取 showLogList 中的 变量
-    let {
-        getLogData
-    } = showLogList();
-
+export const useSysLogHeader = (getLogData) => {
     //日期选择器发生改变时的 指定日期
     let dateModel = reactive({});
     //日期选择器确定后的 指定日期
@@ -61,7 +51,7 @@ export const useSysLogHeader = () => {
 
         //获取日期范围
         //判断获取的日期是否为空
-        if (dateModel.data.length != 0) {
+        if (dateModel.date.length != 0) {
             params.startDate = dateConfrim.startDate;
             params.endDate = dateConfrim.endDate;
         }

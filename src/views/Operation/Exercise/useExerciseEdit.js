@@ -6,7 +6,7 @@ import { reactive, ref } from "vue";
 import { exercise } from "@/api/operationAPI";;
 import { httpPost } from "@/utils/http";
 
-export const ExerciseEdit = () => {
+export const ExerciseEdit = (getExercise) => {
 
   // 获取用户id
   const userId = ref(null);
@@ -27,7 +27,7 @@ export const ExerciseEdit = () => {
   }
 
   // 获取表单的值
-  const editLabForm = reactive({
+  const editMode = reactive({
     content: ''
   })
 
@@ -41,14 +41,14 @@ export const ExerciseEdit = () => {
     }
   }
   // 创建表单校验规则
-  const editLabFormRule = {
+  const editRule = {
     content: [
-      { validator: validateContent, trigger: 'change' }
+      { validator: validateContent, trigger: 'blur' }
     ]
   }
 
   // 更改数据
-  const ExerciseEditSubmit = (callback) => {
+  const ExerciseEditSubmit = () => {
     confirmLoading.value = true;
     // 进行表单校验
     ExerciseEditRef.value
@@ -57,7 +57,7 @@ export const ExerciseEdit = () => {
         // 发送ajax请求
         httpPost(exercise.UpdateExerciseContent,{
           id: userId.value,
-          content: editLabForm.content,
+          content: editMode.content,
           name: objectName.value
         })
           .then(res => {
@@ -65,7 +65,7 @@ export const ExerciseEdit = () => {
             confirmLoading.value = false;
             editVisibility.value = false;
             // 重新获取数据
-            callback();
+            getExercise();
           })
           .catch(err => {
             console.log(err);
@@ -81,8 +81,8 @@ export const ExerciseEdit = () => {
 
   return {
     editVisibility,
-    editLabForm,
-    editLabFormRule,
+    editMode,
+    editRule,
     ExerciseEditRef,
     confirmLoading,
     editShow,
