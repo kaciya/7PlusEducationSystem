@@ -154,13 +154,13 @@ export const useGetSideBar = () => {
         {
           id: 176,
           authName: "文章列表(官网)",
-          path: "home"
+          path: "operation/article"
         },
 
         {
           id: 177,
           authName: "关于PTE",
-          path: "home"
+          path: "operation/about"
         },
         {
           id: 178,

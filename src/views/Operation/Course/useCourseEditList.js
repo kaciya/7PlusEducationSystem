@@ -8,14 +8,14 @@ import { course } from "../../../api/operationAPI"
 import { httpPost } from "../../../utils/http";
 import { message } from "ant-design-vue";
 
-export const courseEdit = () => {
+export const courseEdit = (getCourse) => {
   // 设置模态框的状态
   const Editvisible = ref(false);
   // 课程id
   const courseId = ref(null);
 
   // 创建表单数据
-  const EditForm = reactive({
+  const editModel = reactive({
     name: '',
     introduce: '',
     fit: '',
@@ -25,21 +25,15 @@ export const courseEdit = () => {
 
   // 显示模态框
   const handleShowEdit = (record) => {
-    // 设置表单数据
-    EditForm['name'] = record.name;
-    EditForm['introduce'] = record.introduce;
-    EditForm['fit'] = record.fit;
-    EditForm['trait'] = record.trait;
-    EditForm['isShow'] = Boolean(record.isShow);
     courseId.value = record.id;
     Editvisible.value = true;
   }
 
   // 获取ref
-  const EditFormRef = ref(null);
+  const editRef = ref(null);
 
   // 创建规则
-  const EditFormRules = {
+  const editRules = {
     name: [
       {min: 1,required: true,message: '课程名称必须填写',trigger: "change"},
     ],
@@ -55,12 +49,12 @@ export const courseEdit = () => {
   }
 
   // 点击确定的回调
-  const handleEditSubmit = (callback) => {
-    EditFormRef.value
+  const handleEditSubmit = () => {
+    editRef.value
       .validate()
       .then(async () => {
         // 结构数据
-        let { name,introduce, fit, trait, isShow } = EditForm;
+        let { name,introduce, fit, trait, isShow } = editModel;
         isShow = Number(isShow);
         // 发送请求
         let res = await httpPost(course.editCourseList,{
@@ -77,9 +71,9 @@ export const courseEdit = () => {
           // 关闭模态框
           Editvisible.value = false;
           // 清空表单数据
-          EditFormRef.value.resetFields();
+          editRef.value.resetFields();
           // 执行回调
-          callback();
+          getCourse();
         }
       })
       .catch(err => {
@@ -87,12 +81,19 @@ export const courseEdit = () => {
       })
   }
 
+  // 点击取消的回调函数
+  const handleEditCancel =() => {
+    // 清空表单数据
+    editRef.value.resetFields();
+  }
+
   return {
     Editvisible,
-    EditForm,
-    EditFormRules,
-    EditFormRef,
+    editModel,
+    editRules,
+    editRef,
     handleShowEdit,
-    handleEditSubmit
+    handleEditSubmit,
+    handleEditCancel
   }
 }
