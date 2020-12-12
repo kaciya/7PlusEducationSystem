@@ -17,9 +17,9 @@
     "echarts": "^4.9.0",
     "moment": "^2.29.1",
     "nprogress": "^0.2.0",
-    "vue": "^3.0.0",
+    "vue": "^3.0.4",
     "vue-loader-v16": "^16.0.0-beta.5.4",
-    "vue-router": "^4.0.0-0",
+    "vue-router": "^4.0.1",
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
