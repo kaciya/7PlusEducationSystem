@@ -9,7 +9,7 @@ import { ref } from "vue";
 // 定义功能函数
 export const useGetUserSource = () => {
   // 定义图形ref
-  const chart = ref(null);
+  const chartRef = ref(null);
 
   //#region 请求数据方法
   function getUserSource(chart) {
@@ -61,14 +61,14 @@ export const useGetUserSource = () => {
       xData.push(item.channel);
       yData.push({ value: item.value, name: item.channel });
     });
-    console.log({ xData, yData });
+    // console.log({ xData, yData });
     return { xData, yData };
   }
   //#endregion
 
   // 返回
   return {
-    chart,
+    chartRef,
     getUserSource
   };
 };

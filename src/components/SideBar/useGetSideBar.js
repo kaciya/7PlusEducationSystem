@@ -70,7 +70,7 @@ export const useGetSideBar = () => {
         {
           id: 133,
           authName: "口语题库",
-          path: "home"
+          path: "question/speaking"
         },
         {
           id: 134,

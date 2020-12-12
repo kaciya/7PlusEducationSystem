@@ -74,6 +74,11 @@ const routes = [
         path: "/question/listening",
         component: () => import("@/views/Question/Listening"),
       },
+      // 口语题库
+      {
+        path: "/question/speaking",
+        component: () => import("@/views/Question/Speaking"),
+      },
       //#endregion
       //#region 柒加圈
       //#endregion
