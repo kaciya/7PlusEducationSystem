@@ -1,4 +1,4 @@
-// 公告管理接口配置
+// 柒加圈管理接口配置
 export default {
   // 标签列表
   getDataList: "/topic/page",
