@@ -89,7 +89,7 @@
           <a-button> <upload-outlined /> 选择文件 </a-button>
         </a-upload>
         <!-- 说明提示 -->
-        <a-alert type="info" show-icon>
+        <a-alert type="info" show-icon style="margin-top: 10px">
           <template #message>
             <p style="margin: 0px">
               说明：<br />1. 文件格式必须是xls、xlsx <br />2.
@@ -98,7 +98,7 @@
           </template>
         </a-alert>
         <!-- 模板下载 -->
-        <p>
+        <p style="margin-top: 5px">
           模版下载：
           <a-button type="link">
             <a :href="downloadTemplateUrl">题库SST.xlsx</a>
@@ -125,9 +125,7 @@
             style="width: 100%"
             placeholder="请选择标签，最多可以选择3项"
             option-label-prop="label"
-            @change="
-              setLabels(record.id, record.category, record.labels, labelList)
-            "
+            @change="setLabels(record.id, record.category, record.labels)"
           >
             <!-- 渲染所有标签 -->
             <a-select-option
@@ -215,7 +213,7 @@ export default {
     let { questionColumns } = useQuestionColumns();
 
     // 设置 题目标签
-    let { setLabels } = useSetLabels();
+    let { setLabels } = useSetLabels(labelList);
 
     // 批量上传 功能
     let {
