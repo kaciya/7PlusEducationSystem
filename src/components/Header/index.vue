@@ -10,7 +10,10 @@
     <a-dropdown>
       <!-- 用户账户 -->
       <div class="user">
-        <UserOutlined />
+        <a-avatar
+          size="small"
+          src="https://img2.woyaogexing.com/2020/12/09/cbfae31998fb4c50ae3981274a7551d8!400x400.jpeg"
+        />
         <span class="user-name">Admin</span>
       </div>
       <!-- 下拉menu -->
@@ -20,15 +23,6 @@
         </a-menu>
       </template>
     </a-dropdown>
-    <!-- 退出按钮 -->
-    <!-- <a-button
-      type="primary"
-      class="logout-btn"
-      @click="handleLogout"
-      style="float: right; margin: 16px 24px"
-    >
-      退出
-    </a-button> -->
   </a-layout-header>
 </template>
 
@@ -37,25 +31,24 @@
 import { useSetCollapsed } from "./useSetCollapsed";
 // 导入退出登录功能
 import { useLogout } from "./useLogout";
+// 导入用户信息
+import { useGetUserInfo } from "./useGetUserInfo";
 // 引入图标icons
-import {
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  UserOutlined,
-} from "@ant-design/icons-vue";
+import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons-vue";
 export default {
   // 导入组件
   components: {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
-    UserOutlined,
   },
   // setup响应api入口
   setup() {
     // 侧边栏状态
-    let { collapsed, setCollapsed } = useSetCollapsed();
+    const { collapsed, setCollapsed } = useSetCollapsed();
     // 退出登录
-    let { handleLogout } = useLogout();
+    const { handleLogout } = useLogout();
+    // 用户信息
+    const { userInfos } = useGetUserInfo();
 
     //#region 下拉菜单
     function dropdownClick({ key }) {
@@ -103,7 +96,7 @@ export default {
       padding-left: 8px;
       vertical-align: middle;
       position: relative;
-      top: 1px;
+      top: 2px;
     }
 
     &:hover {
