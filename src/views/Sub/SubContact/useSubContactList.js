@@ -1,7 +1,6 @@
 //导入 reactive 对象
 import {
-  reactive,
-  ref
+  reactive
 } from "vue";
 
 //导入 API接口
@@ -21,7 +20,7 @@ import {
 } from 'ant-design-vue';
 
 //#region 获取 用户提交 联系记录列表
-export const showContactList = () => {
+export const showContactList = (contactTable) => {
   //#region 分页所需数据
   const pageInfo = reactive({
     //列表所在页数
@@ -34,80 +33,6 @@ export const showContactList = () => {
     total: 0,
   });
   //#endregion
-
-  //创建变量  获取表格项
-  const contactTable = reactive({
-    contactColums: [{
-        title: "索引",
-        align: "center",
-        key: "index",
-        slots: {
-          customRender: "index"
-        },
-        align: "center"
-      },
-      {
-        title: "姓名",
-        align: "center",
-        dataIndex: "name"
-      },
-      {
-        title: "邮箱",
-        align: "center",
-        dataIndex: "email"
-      },
-      {
-        title: "电话",
-        align: "center",
-        dataIndex: "mobile"
-      },
-      {
-        title: "QQ",
-        align: "center",
-        dataIndex: "qq"
-      },
-      {
-        title: "内容",
-        align: "center",
-        dataIndex: "content"
-      },
-      {
-        title: "提交时间",
-        align: "center",
-        dataIndex: "createTime",
-        //默认降序排列
-        defaultSortOrder: 'descend',
-        //日期排序
-        sorter: (a, b) => {
-          let aTime = new Date(a.createTime);
-          let bTime = new Date(b.createTime);
-          return aTime - bTime;
-        }
-      },
-      {
-        title: "处理时间",
-        align: "center",
-        dataIndex: "updateTime"
-      },
-      {
-        title: "状态",
-        align: "center",
-        key: "state",
-        slots: {
-          customRender: "state"
-        }
-      },
-      {
-        title: "操作",
-        align: "center",
-        key: "operation",
-        slots: {
-          customRender: "operation"
-        }
-      }
-    ],
-    contactData: []
-  });
 
   //#region 根据后台接口地址发送请求联系记录
   const getContactData = (params) => {
@@ -163,7 +88,6 @@ export const showContactList = () => {
 
   //返回
   return {
-    contactTable,
     pageInfo,
     pageChange,
     pageSizeChange,
