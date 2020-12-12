@@ -81,6 +81,18 @@ const routes = [
       },
       //#endregion
       //#region 柒加圈
+      //柒加圈发布列表
+      {
+        path: "/topic/page",
+        name: "TopicPage",
+        component: () => import("@/views/SevenPlusCircle")
+      },
+      //柒加圈发布详情
+      {
+        path: "/topic/article/:id",
+        name: "TopicArticle",
+        component: () => import("@/views/SevenPlusCircle/ArticleDetails")
+      },
       //#endregion
       //#region 用户提交
       //反馈列表
