@@ -10,10 +10,34 @@ export const teacherInfo = {
     EditTeacherList: "teacher/update"
 }
 
+// 课程服务
+export const course = {
+  // 课程列表
+  getCourseList: "course/page",
+  // 添加课程
+  addCourseList: "course/add",
+  // 修改课程
+  editCourseList: "course/update",
+  // 删除课程
+  deleteCourseList: "course"
+}
+
 // 互动练习
 export const exercise = {
     // 互动练习列表
   GetExerciseList: "interactive/list",
   // 更新互动练习内容
   UpdateExerciseContent: 'interactive/update',
+}
+
+// 常见问题
+export const problem = {
+  // 获取常见问题列表
+  GetProblemList: "issue/list",
+  // 添加常见问题
+  AddProblemList: "issue/add",
+  // 编辑常见问题
+  EditProblemList: "issue/update",
+  // 删除常见问题
+  DeleteProblemList: "issue"
 }

@@ -183,6 +183,8 @@ export default {
   },
   // setup响应api入口
   setup() {
+    // 设置表格列
+    teacherListData.columns = columns;
     // 分页
     const { pageNum,pageSize,loadState,pageSizeOptions,handleTogglePage,showSizeChange } = getPagination();
 

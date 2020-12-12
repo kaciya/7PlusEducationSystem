@@ -49,8 +49,8 @@ export const useLoginSubmit = () => {
             window.sessionStorage.setItem("token", res.data.token);
             // 提示用户登录成功
             message.success("登录成功");
-            // 将permissions信息存入共享库
-            store.commit("SET_PERMISSIONS", res.data.permissions);
+            // 将 用户信息 存入共享库
+            store.commit("SET_USERINFOS", res.data);
             // 跳转主页
             router.push("/home");
           } else {

@@ -15,7 +15,6 @@ export const useGetUserSource = () => {
   function getUserSource(chart) {
     httpGet(home.UserSource)
       .then(res => {
-        // console.log(res);
         if (res.success) {
           // 调用并存储处理数据
           const userSourceData = dealWithData(res.data);

@@ -298,7 +298,8 @@ export default {
     const dateSTE = reactive({});
     // 侦听日期选择范围变化
     function dateRangeChange(date, dateString) {
-      // console.log(dateString);
+      // 取消近几日按钮选中状态
+      daysValueModel.value = "";
       // 存储选择日期范围[start-end]
       dateSTE.start = dateString[0];
       dateSTE.end = dateString[1];
