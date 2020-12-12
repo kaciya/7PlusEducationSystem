@@ -10,7 +10,7 @@
               <p>Management System</p>
             </div>
             <!-- 登录表单 start  -->
-            <a-form :rules="loginRules" ref="loginForm" :model="loginData">
+            <a-form :model="loginModel" :rules="loginRules" ref="loginFormRef">
               <!-- wrapperCol为输入控件布局设置 -->
               <!-- 用户名输入框 start -->
               <a-form-item
@@ -20,8 +20,7 @@
                 <a-input
                   placeholder="请输入登录账号"
                   size="large"
-                  :value="loginData.username"
-                  @input="v => (loginData.username = v.target.value)"
+                  v-model:value="loginModel.username"
                 >
                   <template #prefix>
                     <UserOutlined style="color: rgba(0, 0, 0, 0.25)" />
@@ -39,8 +38,7 @@
                   type="password"
                   placeholder="请输入登录密码"
                   size="large"
-                  :value="loginData.password"
-                  @input="v => (loginData.password = v.target.value)"
+                  v-model:value="loginModel.password"
                   @keyup.enter="loginSubmit"
                 >
                   <template #prefix>
@@ -55,7 +53,12 @@
                 <a-row type="flex" justify="space-between">
                   <a-col :span="5">
                     <!-- 确定登录按钮 start -->
-                    <a-button type="primary" size="large" @click="loginSubmit">
+                    <a-button
+                      type="primary"
+                      size="large"
+                      :loading="logining"
+                      @click="loginSubmit"
+                    >
                       登录
                     </a-button>
                     <!-- 确定登录按钮 end -->
@@ -94,30 +97,37 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
 import { userLoginRules } from "./userLoginRules";
 // 导入表单登录方法
 import { useLoginSubmit } from "./useLoginSubmit";
+// 导入清除密码功能
+import { useClearPassword } from "./useClearPassword";
+
 export default {
   setup() {
     // 表单提交
-    let { loginData, loginSubmit, loginForm, clearPassword } = useLoginSubmit();
+    let { loginModel, loginSubmit, loginFormRef, logining } = useLoginSubmit();
     // 表单校验
     let { loginRules } = userLoginRules();
+    // 清除密码
+    let { clearPassword } = useClearPassword(loginModel);
     // 返回
     return {
       // 登录表单
-      loginForm,
+      loginFormRef,
       // 登录表单数据
-      loginData,
+      loginModel,
       // 登录表单数据校验规则
       loginRules,
       // 点击登录方法
       loginSubmit,
       // 点击删除密码
-      clearPassword
+      clearPassword,
+      // 正在登录的状态
+      logining,
     };
   },
   components: {
     UserOutlined,
-    LockOutlined
-  }
+    LockOutlined,
+  },
 };
 </script>
 

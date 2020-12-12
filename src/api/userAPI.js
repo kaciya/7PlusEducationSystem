@@ -7,5 +7,5 @@ export default {
   // 柒加圈
   UserTopic: "user/topic",
   // 登录日志
-  LoginJournal: "user/login",
+  LoginJournal: "user/login"
 };

@@ -1,5 +1,5 @@
 <template>
-  <a-layout id="home-page">
+  <a-layout class="home-page">
     <!-- 侧边栏 start -->
     <SideBar />
     <!-- 侧边栏 end -->
@@ -9,7 +9,7 @@
       <Header />
       <!-- 顶部栏 end -->
       <!-- 主体 start -->
-      <router-view id="router-view" />
+      <router-view class="router-view" />
       <!-- 主体 end -->
     </a-layout>
     <!-- 展示栏 end -->
@@ -25,18 +25,18 @@ import Header from "@/components/Header";
 export default {
   components: {
     SideBar, //侧边栏
-    Header //顶部栏
+    Header, //顶部栏
   },
-  setup() {}
+  setup() {},
 };
 </script>
 
 <style lang="scss" scoped>
-#home-page {
+.home-page {
   height: 100%;
 }
 
-#router-view {
+.router-view {
   padding: 0 10px;
 }
 </style>
