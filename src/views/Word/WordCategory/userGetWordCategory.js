@@ -8,19 +8,6 @@ export const WordCategory = () => {
   const wordCategoryData = reactive({
     // 表格数据
     Data: [],
-    // 表格标题
-    Columns: [
-      {
-        title: "词库名称",
-        align: "center",
-        dataIndex: "name"
-      },
-      {
-        title: "操作",
-        align: "center",
-        slots: { customRender: "operation" }
-      }
-    ]
   });
 
   // 获取后台数据
@@ -38,6 +25,6 @@ export const WordCategory = () => {
   });
   return {
     getWordCategoryData,
-    wordCategoryData
+    wordCategoryData,
   };
 };

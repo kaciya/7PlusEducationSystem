@@ -67,7 +67,7 @@
           </a-tab-pane>
           <a-tab-pane key="2" tab="登录日志">
             <!-- 登录日志 -->
-            <Journal :userID="id" />
+            <Log :userID="id" />
           </a-tab-pane>
         </a-tabs>
       </div>
@@ -85,7 +85,7 @@ import { userDetail } from "./userDetail";
 // 柒加圈组件
 import Topic from "@/components/UserTopic";
 // 登录日志组件
-import Journal from "@/components/LoginJournal";
+import Log from "@/components/LoginLog";
 export default {
   // 获取用户id
   props: ["id"],
@@ -93,7 +93,7 @@ export default {
   components: {
     Crumbs,
     Topic,
-    Journal,
+    Log,
   },
   // setup响应api入口
   setup(prop) {

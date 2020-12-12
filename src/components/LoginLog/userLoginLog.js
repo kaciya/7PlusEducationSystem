@@ -3,29 +3,29 @@ import { reactive, onMounted } from "vue";
 import { httpGet } from "@/utils/http";
 // 引入请求接口
 import user from "@/api/userAPI";
-export const LoginJournal = id => {
+export const LoginLog = (id) => {
   // 表格数据
-  const loginJournalData = reactive({
+  const loginLoglData = reactive({
     // 表格数据
-    journalData: [],
+    Data: [],
     // 表格标题
-    journalColumns: [
+    Columns: [
       {
         title: "时间",
         align: "center",
-        dataIndex: "createTime"
+        dataIndex: "createTime",
       },
       {
         title: "IP",
         align: "center",
-        dataIndex: "ip"
+        dataIndex: "ip",
       },
       {
         title: "登录方式",
         align: "center",
-        dataIndex: "channel"
-      }
-    ]
+        dataIndex: "channel",
+      },
+    ],
   });
 
   const pagination = reactive({
@@ -36,7 +36,7 @@ export const LoginJournal = id => {
     // 数据总数
     total: 0,
     // 每页可以显示多少条
-    pageSizeOptions: ["10"]
+    pageSizeOptions: ["10"],
   });
   // 获取后台数据
   const getUserTopicData = async () => {
@@ -44,28 +44,26 @@ export const LoginJournal = id => {
       // 降序
       descColumns: "createTime",
       pageNum: pagination.pageNum,
-      pageSize: pagination.pageSize
+      pageSize: pagination.pageSize,
     });
     if (res.code == 200) {
       // 数据
-      loginJournalData.journalData = res.data;
+      loginLoglData.Data = res.data;
       // 数据总数
       pagination.total = res.data.total;
     }
   };
   // 点击页码显示对应数据
-  const handleJournalPageChange = (page, pageSizes) => {
+  const handleLogPageChange = (page, pageSizes) => {
     pagination.pageSize = pageSizes;
     pagination.pageNum = page;
     getUserTopicData(page, pageSizes);
-    console.log(1);
   };
   // 选择每页显示多少条数据显示对应条数
-  const handleJournalSizeChange = (page, pageSizes) => {
+  const handleLogSizeChange = (page, pageSizes) => {
     pagination.pageSize = pageSizes;
     pagination.pageNum = page;
     getUserTopicData();
-    console.log(2);
   };
   // 初始化获取数据
   onMounted(() => {
@@ -73,9 +71,9 @@ export const LoginJournal = id => {
   });
   return {
     getUserTopicData,
-    loginJournalData,
+    loginLoglData,
     pagination,
-    handleJournalPageChange,
-    handleJournalSizeChange
+    handleLogPageChange,
+    handleLogSizeChange,
   };
 };

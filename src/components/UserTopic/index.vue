@@ -2,10 +2,10 @@
   <div class="container-table">
     <a-table
       bordered
-      :columns="userTopicData.topicColumns"
+      :columns="topicColumns"
       :data-source="userTopicData.topicData.records"
       :pagination="false"
-      :row-key="record => record.id"
+      :row-key="(record) => record.id"
     >
       <!-- 序号 -->
       <template #index="{ index }">
@@ -44,6 +44,7 @@
 
 <script>
 import { userTopic } from "./userTopic";
+import { userTopicColumns } from "./userTopicColumns";
 export default {
   // 接收用户id
   props: ["userID"],
@@ -52,15 +53,17 @@ export default {
       userTopicData, // 表格数据
       pagination, // 分页数据
       handelTopicSizeChange, // 点击页码跳转事件
-      handleTopicPageChange // 选择每页显示条数事件
+      handleTopicPageChange, // 选择每页显示条数事件
     } = userTopic(prop.userID);
+    const { topicColumns } = userTopicColumns();
     return {
       userTopicData,
       pagination,
+      topicColumns,
       handelTopicSizeChange,
-      handleTopicPageChange
+      handleTopicPageChange,
     };
-  }
+  },
 };
 </script>
 
