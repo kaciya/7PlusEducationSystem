@@ -93,7 +93,7 @@ export const useGetSideBar = () => {
         {
           id: 141,
           authName: "发布列表",
-          path: "home"
+          path: "topic/page"
         }
       ]
     },
