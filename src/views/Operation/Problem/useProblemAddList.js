@@ -9,7 +9,7 @@ import { httpPost } from "@/utils/http";
 import { problem } from "@/api/operationAPI";
 import { message } from "ant-design-vue";
 
-export const problemAddList = () => {
+export const problemAddList = (getProblem) => {
   // 设置模态框状态
   const addFormVisible = ref(false);
   // 显示模态框
@@ -24,22 +24,22 @@ export const problemAddList = () => {
   })
 
   // 获取ref
-  const addFormRef = ref(null);
+  const addRef = ref(null);
 
   // 创建表单校验规则
-  const addFormRule = {
+  const addRule = {
     question: [
-      {required: true,message: '问题名称必须填写',trigger: "change"}
+      {required: true,message: '问题名称必须填写',trigger: "blur"}
     ],
     answer: [
-      {required: true,message: '内容必须填写',tigger: "change"}
+      {required: true,message: '内容必须填写',tigger: "blur"}
     ]
   }
 
   // 添加数据
-  const handleSubmit = (callback) => {
+  const handleAddSubmit = () => {
     // 进行表单校验
-    addFormRef.value
+    addRef.value
       .validate()
       .then(async () => {
         // 发起请求
@@ -47,11 +47,10 @@ export const problemAddList = () => {
         if(res.code === 200) {
           message.success(res.message);
           // 清空表单
-          addFormRef.value.resetFields();
+          addRef.value.resetFields();
           // 关闭模态框
           addFormVisible.value = false;
-          // 执行回调函数
-          callback();
+          getProblem();
         }
       })
       .catch(err => {
@@ -59,12 +58,19 @@ export const problemAddList = () => {
       })
   }
 
+  // 点击cancel的事件
+  const handleAddCancel = () => {
+    // 清除表单数据
+    addRef.value.resetFields();
+  }
+
   return {
     addFormVisible,
     addForm,
-    addFormRule,
-    addFormRef,
+    addRule,
+    addRef,
     showAddForm,
-    handleSubmit
+    handleAddSubmit,
+    handleAddCancel
   }
 }

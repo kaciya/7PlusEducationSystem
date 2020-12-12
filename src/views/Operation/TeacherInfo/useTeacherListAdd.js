@@ -6,7 +6,8 @@ import { httpPost } from "@/utils/http";
 import { message } from 'ant-design-vue';
 
 // 添加老师
-export const addTeacher = () => {
+export const addTeacher = (options) => {
+
   // 模态框状态
   const addLabelVisible = ref(false);
   // 确定按钮loading
@@ -18,7 +19,7 @@ export const addTeacher = () => {
   }
 
   // 获取表单数据
-  const addLabelForm = reactive({
+  const addModel = reactive({
     name: '',
     photo: '',
     position: '',
@@ -27,45 +28,45 @@ export const addTeacher = () => {
   })
 
   // 创建自定义校验规则
-  let checkSort = async (addLabelRule,value) => {
+  let checkSort = async (addRule,value) => {
     // 判断用户是否输入的数字
     if (!Number(value)) {
       return Promise.reject("请输入输入一个正确的数字")
     }
   }
   // 创建简介校验规则
-  let checkProfiles = async (addLabelRule,value) => {
+  let checkProfiles = async (addRule,value) => {
     // 判断用户输入的字数是否符合要求
     if (value.trim().length > 200) {
       return Promise.reject("字数不能超过200");
     }
   }
   // 创建职位校验规则
-  let checkPosition = async (addLabelRule,value) => {
+  let checkPosition = async (addRule,value) => {
     if (value.trim().length > 200) {
       return Promise.reject("字数不能超过200");
     }
   }
 
   // 创建表单校验规则
-  const addLabelRule = reactive({
-    sort: [{validator: checkSort, trigger: 'change'}],
-    name: [{ required: true, message: '请输入老师名称', trigger: 'change' }],
-    profiles: [{validator: checkProfiles, trigger: 'change' }],
-    position: [{validator: checkPosition, trigger: "change"}]
+  const addRule = reactive({
+    sort: [{validator: checkSort, trigger: 'blur'}],
+    name: [{ required: true, message: '请输入老师名称', trigger: 'blur' }],
+    profiles: [{validator: checkProfiles, trigger: 'blur' }],
+    position: [{validator: checkPosition, trigger: "blur"}]
   })
 
-  let addLabelFormRef = ref(null);
+  let addRef = ref(null);
 
   // 表单点击确定后的回调函数
-  const handleSubmit = (callback) => {
+  const handleSubmit = () => {
     confirmLoading.value = true;
     // 进行表单校验
-    addLabelFormRef.value
+    addRef.value
       .validate()
       .then(() => {
         // 发起ajax请求
-        httpPost(teacherInfo.AddTeacherList,addLabelForm)
+        httpPost(teacherInfo.AddTeacherList,addModel)
           .then(res => {
             if (res.code === 200) {
               confirmLoading.value = false;
@@ -74,8 +75,11 @@ export const addTeacher = () => {
               // 关闭模态框
               addLabelVisible.value = false;
               // 清除表单里面的值
-              addLabelFormRef.value.resetFields();
-              callback();
+              addRef.value.resetFields();
+              // 重新获取数据
+              options.getTacherList(options.pageNum,options.pageSize,() => {
+                options.loadState.value = false;
+              })
             }
           })
           .catch(err => {
@@ -95,12 +99,12 @@ export const addTeacher = () => {
     // 显示模态框
     showModal,
     // 获取表单数据
-    addLabelForm,
+    addModel,
     // 表单校验规则
-    addLabelRule,
+    addRule,
     // 表单点击ok后的回调函数
     handleSubmit,
-    addLabelFormRef,
+    addRef,
     // 确定按钮loading
     confirmLoading
   }
