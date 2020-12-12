@@ -11,60 +11,23 @@ export const userTable = () => {
   const userTableData = reactive({
     // 表格数据
     tableData: [],
-    // 表格标题
-    tableColumns: [
-      {
-        title: "ID",
-        dataIndex: "id"
-      },
-      {
-        title: "用户昵称",
-        dataIndex: "userName",
-        width: "18%"
-      },
-      {
-        title: "手机号",
-        dataIndex: "mobile",
-        width: "18%"
-      },
-      {
-        title: "注册时间",
-        dataIndex: "createTime",
-        width: "18%"
-      },
-      {
-        title: "来源",
-        slots: { customRender: "channel" },
-        align: "center",
-        width: "18%"
-      },
-      {
-        title: "操作",
-        align: "center",
-        width: "18%",
-        slots: { customRender: "operation" }
-      }
-    ]
+  });
+  // #endregion 表单数据
+  //#region 分页配置项
+  const userTablePagination = reactive({
+    current: 1,
+    pageSize: 20,
+    pageSizeOptions: ["20"],
+    total: 0,
+    showSizeChanger: true,
   });
 
-  // #endregion 表单数据
-  //#region 分页数据
-  const pagination = reactive({
-    // 第几页
-    pageNum: 1,
-    // 每页显示几条
-    pageSize: 20,
-    // 数据总数
-    total: 0,
-    // 每页可以显示多少条
-    pageSizeOptions: ["20"]
-  });
   //#endregion 分页数据
   //#region 输入框数据
   const userModel = reactive({
     userName: "",
     mobile: "",
-    id: ""
+    id: "",
   });
   //#endregion 输入框数据
   //#region 获取（查询）数据
@@ -75,38 +38,30 @@ export const userTable = () => {
     const res = await httpGet(user.UserPage, {
       // 降序
       descColumns: "createTime",
-      pageNum: pagination.pageNum,
-      pageSize: pagination.pageSize,
+      pageNum: userTablePagination.current,
+      pageSize: userTablePagination.pageSize,
       id: userModel.id,
       mobile: userModel.mobile,
-      userName: userModel.userName
+      userName: userModel.userName,
     });
     if (res.code == 200) {
       // 数据
       userTableData.tableData = res.data;
       // 数据总数
-      pagination.total = res.data.total;
+      userTablePagination.total = res.data.total;
       // 查询成功 把状态设置为true
       isSuccess.value = true;
     }
+  };
+  let handleTableChange = (pagination) => {
+    userTablePagination.current = pagination.current;
+    userTablePagination.pageSize = pagination.pageSize;
+    getUserTabelData();
   };
   // 初始化
   onMounted(() => {
     getUserTabelData();
   });
-  //#endregion 获取（查询）数据
-  // 点击页码显示对应数据
-  const handlePageChange = (page, pageSizes) => {
-    pagination.pageSize = pageSizes;
-    pagination.pageNum = page;
-    getUserTabelData();
-  };
-  // 选择每页显示多少条数据显示对应条数
-  const onShowSizeChange = (page, pageSizes) => {
-    pagination.pageSize = pageSizes;
-    pagination.pageNum = page;
-    getUserTabelData();
-  };
 
   //#endregion
 
@@ -129,13 +84,12 @@ export const userTable = () => {
   };
   //#endregion
   return {
-    pagination,
     userModel,
     isSuccess,
     userTableData,
     getUserTabelData,
     queryUserList,
-    handlePageChange,
-    onShowSizeChange
+    handleTableChange,
+    userTablePagination,
   };
 };
