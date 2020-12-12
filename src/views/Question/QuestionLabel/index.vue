@@ -8,13 +8,13 @@
       :style="{
         padding: '20px',
         background: '#fff',
-        minHeight: '93%'
+        minHeight: '93%',
       }"
     >
       <!-- 页头 start -->
       <!-- backIcon为false，不渲染返回按钮 -->
       <a-page-header
-        style="border: 1px solid rgb(235, 237, 240)"
+        style="border: 1px solid #ebedf0"
         title="标签列表"
         :backIcon="false"
       >
@@ -29,16 +29,14 @@
       <a-modal
         v-model:visible="addLabelVisible"
         title="添加标签"
-        ok-text="确认"
-        cancel-text="取消"
-        @ok="addLabel(getLabels)"
+        @ok="addLabel"
         @cancel="cancelAddLabel"
       >
         <!-- 添加标签 表单 start -->
-        <a-form :model="addLabelForm" :rules="addLabelRules" ref="addForm">
+        <a-form :model="addLabelModel" :rules="addLabelRules" ref="addLabelRef">
           <a-form-item label="标签名称" name="name">
             <!-- 标签名输入框 -->
-            <a-input v-model:value="addLabelForm.name"> </a-input>
+            <a-input v-model:value="addLabelModel.name"> </a-input>
           </a-form-item>
         </a-form>
         <!-- 添加标签 表单 end -->
@@ -68,9 +66,7 @@
             <!-- 删除按钮 -->
             <a-popconfirm
               title="您确定要删除这个标签吗？"
-              ok-text="确定"
-              cancel-text="取消"
-              @confirm="delLabel(record.id, getLabels)"
+              @confirm="delLabel(record.id)"
             >
               <a-button type="danger"> <DeleteOutlined />删除 </a-button>
             </a-popconfirm>
@@ -84,23 +80,21 @@
       <a-modal
         v-model:visible="updateLabelVisible"
         title="修改标签"
-        ok-text="确认"
-        cancel-text="取消"
-        @ok="updateLabel(getLabels)"
+        @ok="updateLabel"
         @cancel="cancelUpdateLabel"
       >
         <!-- 修改标签 表单 start -->
         <a-form
-          :model="updateLabelForm"
+          :model="updateLabelModel"
           :rules="updateLabelRules"
-          ref="updateForm"
+          ref="updateFormRef"
         >
           <a-form-item label="旧的标签名称" style="padding-left: 11px">
-            <span>{{ updateLabelForm.oldName }}</span>
+            <span>{{ updateLabelModel.oldName }}</span>
           </a-form-item>
           <a-form-item label="新的标签名称" name="name">
             <!-- 标签名输入框 -->
-            <a-input v-model:value="updateLabelForm.name"> </a-input>
+            <a-input v-model:value="updateLabelModel.name"> </a-input>
           </a-form-item>
         </a-form>
         <!-- 修改标签 表单 end -->
@@ -142,25 +136,25 @@ export default {
       addLabelVisible,
       showAddLabel,
       addLabel,
-      addLabelForm,
+      addLabelModel,
       addLabelRules,
-      addForm,
-      cancelAddLabel
-    } = useAddLabel();
+      addLabelRef,
+      cancelAddLabel,
+    } = useAddLabel(getLabels);
 
     // 删除标签功能
-    const { delLabel } = useDelLabel();
+    const { delLabel } = useDelLabel(getLabels);
 
     // 修改标签功能
     const {
       updateLabelVisible,
       showUpdateLabel,
-      updateLabelForm,
+      updateLabelModel,
       updateLabelRules,
-      updateForm,
+      updateFormRef,
       updateLabel,
-      cancelUpdateLabel
-    } = useUpdateLabel();
+      cancelUpdateLabel,
+    } = useUpdateLabel(getLabels);
 
     // 在mounted时候
     onMounted(() => {
@@ -188,11 +182,11 @@ export default {
       // 取消添加标签
       cancelAddLabel,
       // 添加标签表单
-      addLabelForm,
+      addLabelModel,
       // 添加标签表单校验规则
       addLabelRules,
       // 表单
-      addForm,
+      addLabelRef,
       //#endregion
 
       // 删除标签
@@ -204,23 +198,23 @@ export default {
       // 打开修改标签模态框
       showUpdateLabel,
       // 修改标签表单数据
-      updateLabelForm,
+      updateLabelModel,
       // 修改标签规则
       updateLabelRules,
       // 修改标签表单
-      updateForm,
+      updateFormRef,
       // 修改标签
       updateLabel,
       // 取消修改标签
-      cancelUpdateLabel
+      cancelUpdateLabel,
       //#endregion
     };
   },
   components: {
     EditOutlined,
     DeleteOutlined,
-    Crumbs
-  }
+    Crumbs,
+  },
 };
 </script>
 

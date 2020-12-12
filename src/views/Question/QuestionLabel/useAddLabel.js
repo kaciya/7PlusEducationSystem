@@ -8,7 +8,7 @@ import { httpPost } from "@/utils/http";
 import { message } from "ant-design-vue";
 
 // 导出
-export function useAddLabel() {
+export function useAddLabel(getLabels) {
   // 添加标签模态框是否显示
   const addLabelVisible = ref(false);
 
@@ -18,7 +18,7 @@ export function useAddLabel() {
   };
 
   // 添加标签表单
-  const addLabelForm = reactive({
+  const addLabelModel = reactive({
     name: ""
   });
 
@@ -31,26 +31,26 @@ export function useAddLabel() {
   });
 
   // 表单
-  const addForm = ref(null);
+  const addLabelRef = ref(null);
 
   // 添加标签
-  const addLabel = callback => {
-    addForm.value
+  const addLabel = () => {
+    addLabelRef.value
       .validate()
       .then(() => {
         // 发起添加请求
         httpPost(questionLabel.AddLabel, {
-          name: addLabelForm.name
+          name: addLabelModel.name
         }).then(res => {
           if (res.success == true) {
             // 提示用户添加成功
             message.success("添加标签成功");
             // 重置表单
-            addForm.value.resetFields();
+            addLabelRef.value.resetFields();
             // 关闭模态框
             addLabelVisible.value = false;
             // 刷新表单
-            callback();
+            getLabels();
           }
         });
       })
@@ -61,16 +61,16 @@ export function useAddLabel() {
 
   // 取消添加标签
   const cancelAddLabel = () => {
-    addForm.value.resetFields();
+    addLabelRef.value.resetFields();
   };
 
   return {
     addLabelVisible,
     showAddLabel,
     addLabel,
-    addLabelForm,
+    addLabelModel,
     addLabelRules,
-    addForm,
+    addLabelRef,
     cancelAddLabel
   };
 }
