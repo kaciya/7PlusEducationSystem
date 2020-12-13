@@ -1,7 +1,7 @@
 import { reactive } from "vue";
-
-export const userListColumns = () => {
-  const listColumns = reactive([
+// 用户列表columns;
+export const useColumns = () => {
+  const columns = reactive([
     {
       title: "ID",
       dataIndex: "id",
@@ -36,6 +36,6 @@ export const userListColumns = () => {
   ]);
 
   return {
-    listColumns,
+    columns,
   };
 };
