@@ -9,9 +9,9 @@ import { Modal } from "ant-design-vue";
 export const useResetList = (getUserListData) => {
   //#region 重置
   // 定义表单数据相当于$ref
-  let userRef = ref(null);
+  const userRef = ref(null);
   // 点击重置事件
-  let resetUserList = () => {
+  const resetUserList = () => {
     // 重置二次确定模态框
     Modal.confirm({
       title: "您确定要重置吗？",
