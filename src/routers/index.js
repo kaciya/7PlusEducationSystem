@@ -21,7 +21,7 @@ const routes = [
   // 404
   {
     path: "/404",
-    component: () => import("@/views/404"),
+    component: () => import(/* webpackChunkName: "404" */ "@/views/404"),
     hidden: true,
   },
   // 主页
@@ -40,19 +40,19 @@ const routes = [
       {
         path: "/home/main",
         name: "HomeMain",
-        component: () => import("@/views/HomeMain"),
+        component: () => import(/* webpackChunkName: "HomeMain" */ "@/views/HomeMain"),
       },
       //#endregion
       //#region 用户管理
       // 用户列表
       {
         path: "/user/user-list",
-        component: () => import("@/views/UserManage/UserList"),
+        component: () => import(/* webpackChunkName: "UserManage_UserList" */ "@/views/UserManage/UserList"),
       },
       // 用户详情
       {
         path: "/user/user-details/:userID",
-        component: () => import("@/views/UserManage/UserDetails"),
+        component: () => import(/* webpackChunkName: "UserManage_UserDetails" */ "@/views/UserManage/UserDetails"),
         props: true,
       },
       //#endregion
@@ -60,19 +60,19 @@ const routes = [
       // 词库分类
       {
         path: "/Word/category",
-        component: () => import("@/views/Word/WordCategory"),
+        component: () => import(/* webpackChunkName: "Word_WordCategory" */ "@/views/Word/WordCategory"),
       },
       //#endregion
       //#region 题库管理
       // 标签管理
       {
         path: "/question/label",
-        component: () => import("@/views/Question/QuestionLabel"),
+        component: () => import(/* webpackChunkName: "Question_QuestionLabel" */ "@/views/Question/QuestionLabel"),
       },
       // 听力题库
       {
         path: "/question/listening",
-        component: () => import("@/views/Question/Listening"),
+        component: () => import(/* webpackChunkName: "Question_Listening" */ "@/views/Question/Listening"),
       },
       //#endregion
       //#region 柒加圈
@@ -82,57 +82,57 @@ const routes = [
       {
         path: "/sub/feedback",
         name: "SubFeedback",
-        component: () => import("@/views/Sub/SubFeedback"),
+        component: () => import(/* webpackChunkName: "Sub_SubFeedback" */ "@/views/Sub/SubFeedback"),
       },
       //联系记录
       {
         path: "/sub/contact",
         name: "SubContact",
-        component: () => import("@/views/Sub/SubContact"),
+        component: () => import(/* webpackChunkName: "Sub_SubContact" */ "@/views/Sub/SubContact"),
       },
       //#endregion
       //#region 平台管理
       // 公告
       {
         path: "/platform/notice",
-        component: () => import("@/views/PlatFormManage"),
+        component: () => import(/* webpackChunkName: "PlatFormManage" */ "@/views/PlatFormManage"),
       },
       //#endregion
       //#region 运营管理
       {
         // 参数管理
         path: "/operation/param",
-        component: () => import("@/views/Operation/Parameter"),
+        component: () => import(/* webpackChunkName: "Operation_Parameter" */ "@/views/Operation/Parameter"),
       },
       {
         // 师咨信息
         path: "/operation/teacher",
-        component: () => import("@/views/Operation/TeacherInfo"),
+        component: () => import(/* webpackChunkName: "Operation_TeacherInfo" */ "@/views/Operation/TeacherInfo"),
       },
       {
         // 课程服务
         path: "/operation/course",
-        component: () => import("@/views/Operation/Course")
+        component: () => import(/* webpackChunkName: "Operation_Course" */ "@/views/Operation/Course")
       },
       {
         // 互动练习
         path: "/operation/exercise",
-        component: () => import("@/views/Operation/Exercise"),
+        component: () => import(/* webpackChunkName: "Operation_Exercise" */ "@/views/Operation/Exercise"),
         //常见问题
       },
       {
         path: "/operation/Issues",
-        component: () => import("@/views/Operation/Issues"),
+        component: () => import(/* webpackChunkName: "Operation_Issues" */ "@/views/Operation/Issues"),
       },
       {
         // 课程服务
         path: "/operation/course",
-        component: () => import("@/views/Operation/Course")
+        component: () => import(/* webpackChunkName: "Operation_Course" */ "@/views/Operation/Course")
       },
       {
         // 常见问题
         path: "/operation/problem",
-        component: () => import("@/views/Operation/Problem")
+        component: () => import(/* webpackChunkName: "Operation_Problem" */ "@/views/Operation/Problem")
       },
       //#endregion
       //#region 权限管理
@@ -140,31 +140,31 @@ const routes = [
       {
         path: "/sys/role",
         name: "SysRole",
-        component: () => import("@/views/Sys/SysRole"),
+        component: () => import(/* webpackChunkName: "Sys_SysRole" */ "@/views/Sys/SysRole"),
       },
       //权限组添加
       {
         path: "/sys/role/add",
         name: "SysRoleAdd",
-        component: () => import("@/views/Sys/SysRoleAdd"),
+        component: () => import(/* webpackChunkName: "Sys_SysRoleAdd" */ "@/views/Sys/SysRoleAdd"),
       },
       //权限组编辑
       {
         path: "/sys/role/edit/:id",
         name: "SysRoleEdit",
-        component: () => import("@/views/Sys/SysRoleEdit"),
+        component: () => import(/* webpackChunkName: "Sys_SysRoleEdit" */ "@/views/Sys/SysRoleEdit"),
       },
       //账号管理
       {
         path: "/sys/user",
         name: "SysUser",
-        component: () => import("@/views/Sys/SysUser"),
+        component: () => import(/* webpackChunkName: "Sys_SysUser" */ "@/views/Sys/SysUser"),
       },
       //操作日志
       {
         path: "/sys/log",
         name: "SysLog",
-        component: () => import("@/views/Sys/SysLog"),
+        component: () => import(/* webpackChunkName: "Sys_SysLog" */ "@/views/Sys/SysLog"),
       },
       //#endregion
     ],
