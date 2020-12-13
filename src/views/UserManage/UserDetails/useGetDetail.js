@@ -3,7 +3,7 @@ import { ref, onMounted } from "vue";
 import { httpGet } from "@/utils/http";
 // 引入请求接口
 import user from "@/api/userAPI";
-export const userDetail = id => {
+export const useGetDetail = id => {
   // 存放后台数据
   let userDetailData = ref([]);
   // 获取后台数据
