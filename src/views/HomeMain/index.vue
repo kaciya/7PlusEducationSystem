@@ -4,14 +4,7 @@
     <Crumbs :crumbName="[{ name: '首页' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
-    <div
-      :style="{
-        padding: '20px',
-        backgroundColor: '#fff',
-        minHeight: '93%',
-        overflow: 'hidden'
-      }"
-    >
+    <a-card style="min-height: 93%">
       <!-- 概要 start -->
       <a-page-header
         class="profile"
@@ -55,7 +48,7 @@
         <!-- 用户来源饼图 -->
         <a-col class="gutter-row" :span="8"><UserSourceChart /></a-col>
       </a-row>
-    </div>
+    </a-card>
     <!-- 主体Main end -->
   </a-layout-content>
 </template>
@@ -77,7 +70,7 @@ export default {
     Crumbs,
     UserAddChart,
     UserSourceChart,
-    CountTo
+    CountTo,
   },
   // setup响应api入口
   setup() {
@@ -86,9 +79,9 @@ export default {
     // 返回
     return {
       // 首页统计数据
-      statistics
+      statistics,
     };
-  }
+  },
 };
 </script>
 

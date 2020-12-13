@@ -18,7 +18,7 @@
         </a-col>
         <a-col :span="2" offset="20">
           <a-button type="primary" @click="showAddModal">
-            <PlusOutlined />添加账号
+              添加账号
           </a-button>
         </a-col>
       </a-row>
@@ -47,9 +47,9 @@
 
         <!-- 添加账号表单 -->
         <a-form
-          :rules="sysUserRules"
           v-model:model="sysUserForm"
-          ref="addUserForm"
+          :rules="sysUserRules"
+          ref="addUserFormRef"
         >
           <a-form-item
             label="操作员名称"
@@ -114,22 +114,22 @@
           <template #status="{ record }">
             <a-switch
               :checked="record.status == 1 ? true : false"
-              @click="statusChange(record.userId, getSysUserList)"
+              @click="statusChange(record.userId)"
             />
           </template>
           <template #operation="{ record }">
             <!-- 密码重置 -->
-            <a-button type="primary" style="margin: 0 5px" @click="handleResetPwd(record.userId , getSysUserList)">
-              <SyncOutlined /> 密码重置
+            <a-button type="primary" style="margin: 0 5px" @click="handleResetPwd(record.userId)">
+              密码重置
             </a-button>
             <!-- 密码重置 end -->
             <!-- 删除按钮 -->
             <a-button
               type="danger"
               style="margin: 0 5px"
-              @click="showDelConfirm(record.userId , getSysUserList)"
+              @click="showDelConfirm(record.userId)"
             >
-              <DeleteOutlined /> 删除
+              删除
             </a-button>
             <!-- 删除按钮 end -->
           </template>
@@ -178,39 +178,34 @@ import { sysUserResetPwd } from "./useSysUserResetPwd";
 //导入sysUserAdd中返回的方法
 import { addSysUser, sysUserRules, getUserPermissions } from "./useSysUserAdd";
 
+//导入sysuserColums中返回的列表
+import { useSysuserColums } from "./useSysUserColums";
+
 // 引入 钩子函数
 import { onMounted } from "vue";
-
-//导入图标
-import {
-  PlusOutlined,
-  DeleteOutlined,
-  SyncOutlined,
-} from "@ant-design/icons-vue";
 
 export default {
   components: {
     Crumbs,
-    PlusOutlined,
-    SyncOutlined,
-    DeleteOutlined,
   },
 
   setup() {
+    //通过sysUserColums方法获取列表
+    let { sysUsersTable } = useSysuserColums();
+
     //通过sysUserList方法获取
     let {
-      sysUsersTable,
       getSysUserList,
       pageInfo,
       pageChange,
       pageSizeChange,
-    } = showSysUserList();
+    } = showSysUserList(sysUsersTable);
 
     //通过updateUserStatus方法更改账号启用状态
-    let { statusChange } = updateUserStatus();
+    let { statusChange } = updateUserStatus(getSysUserList);
 
     //通过removeSysUser方法获取显示删除模态框方法
-    let { showDelConfirm } = removeSysUser();
+    let { showDelConfirm } = removeSysUser(getSysUserList);
 
     //通过UserPermissions获取权限组列表
     let { getPermissions, RolesPermissionsList } = getUserPermissions();
@@ -226,8 +221,8 @@ export default {
       showAddModal,
       handleAddOk,
       handleAddCancel,
-      addUserForm,
-    } = addSysUser();
+      addUserFormRef,
+    } = addSysUser(getSysUserList);
 
     //在Mounted 获取列表
     onMounted(() => {
@@ -247,7 +242,7 @@ export default {
       //权限列表
       RolesPermissionsList,
       //添加表单
-      addUserForm,
+      addUserFormRef,
       //账号添加表单校验规则
       sysUserRules,
       //渲染表格

@@ -8,7 +8,7 @@
       :style="{
         padding: '20px',
         background: '#fff',
-        minHeight: '93%'
+        minHeight: '93%',
       }"
     >
       <!-- 查询输入框 start -->
@@ -93,10 +93,11 @@
         </div>
         <a-table
           bordered
-          :columns="userTableData.tableColumns"
+          :columns="listColumns"
           :data-source="userTableData.tableData.records"
-          :pagination="false"
-          :row-key="record => record.id"
+          :pagination="userTablePagination"
+          :row-key="(record) => record.id"
+          @change="handleTableChange"
         >
           <!-- 来源 -->
           <template #channel="{ record }">
@@ -106,22 +107,11 @@
           <template #operation="{ record }">
             <!-- 跳转到用户详情页面并传id -->
             <a-button type="primary">
-              <router-link :to="'/user/user-details/' + record.id"
-                >查看</router-link
-              >
+              <router-link :to="'/user/details/' + record.id">查看</router-link>
             </a-button>
           </template>
         </a-table>
-        <a-pagination
-          show-size-changer
-          v-model:current="pagination.pageNum"
-          v-model:pageSize="pagination.pageSize"
-          @change="handlePageChange"
-          @showSizeChange="onShowSizeChange"
-          :page-size-options="pagination.pageSizeOptions"
-          :total="pagination.total"
-        >
-        </a-pagination>
+        <!-- 分页end -->
       </div>
       <!-- 数据列表 end -->
     </div>
@@ -134,30 +124,38 @@
 import Crumbs from "@/components/Crumbs";
 // 引入获取数据文件
 import { userTable } from "./userTable";
+import { userListColumns } from "./userTableColumns";
 // 引入重置方法文件
 import { userReset } from "./userReset";
-// import { onMounted } from "vue";
 export default {
   // 使用组件
   components: {
-    Crumbs
+    Crumbs,
   },
   // setup响应api入口
   setup() {
-    // 获取（查询）数据
+    //#region 获取（查询）数据
     let {
       pagination, // 分页数据
+      userTableData, // 表格数据
       userModel, // 表单数据
-      queryUserList, // 查询
+      queryUserList, // 点击查询的回调
       handlePageChange, // 点击页码事件
       onShowSizeChange, // 选择每页数据条数事件
       getUserTabelData, // 获取数据方法
-      userTableData // 表格数据
+      handleTableChange, // 页码改变触发事件
+      userTablePagination, // 表格分页配置项
     } = userTable();
-    // 重置事件
-    // userForm:表单ref
-    // handelReset:重置方法
+
+    let { listColumns } = userListColumns();
+    //#endregion
+    //#region 重置事件
+    /**
+     * userForm:表单ref
+     * handelReset:点击重置的回调
+     */
     let { userRef, resetUserList } = userReset(getUserTabelData);
+    //#endregion
     // 导出数据
     return {
       pagination,
@@ -168,9 +166,12 @@ export default {
       handlePageChange,
       onShowSizeChange,
       getUserTabelData,
-      userTableData
+      userTableData,
+      listColumns,
+      handleTableChange,
+      userTablePagination,
     };
-  }
+  },
 };
 </script>
 
@@ -224,4 +225,10 @@ export default {
   }
 }
 // 表格样式 end
+</style>
+<style>
+/* 表格标题加粗 */
+.ant-table-thead > tr > th {
+  font-weight: 600;
+}
 </style>

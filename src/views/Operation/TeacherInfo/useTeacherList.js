@@ -8,42 +8,11 @@ import {
   reactive, ref
 } from "vue";
 
-// 创建表格格式
-export const columns = reactive([{
-    title: '序号',
-    width: 80,
-    slots: { customRender: 'index' }
-  },
-  {
-    title: "姓名",
-    dataIndex: 'name',
-    key: 'name',
-    width: 180
-  },
-  {
-    title: "照片",
-    width: 180,
-    slots: { customRender: 'photo' }
-  },
-  {
-    title: "简介",
-    dataIndex: 'profiles',
-    key: 'profiles',
-  },
-  {
-    title: "操作",
-    width: 200,
-    slots: { customRender: 'operational' }
-  }
-]);
-
 // 创建表格数据
-export const teacherListData = reactive({
-  columns
-});
+export const teacherListData = reactive({});
 
 // 获取教师数据
-export const getTacherList = (pageNum = 1, pageSize = 5,callback) => {
+export const getTacherList = (pageNum ,pageSize,callback) => {
   // 获取数据
   httpGet(teacherInfo.GetTacherList, {
       pageNum,

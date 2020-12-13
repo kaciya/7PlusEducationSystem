@@ -8,7 +8,7 @@ import { teacherInfo } from "@/api/operationAPI";
 import { message } from "ant-design-vue";
 
 // 编辑老师
-export const editTeacher = () => {
+export const editTeacher = (options) => {
   // 编辑模态的框状态
   const EditLabelVisible = ref(false);
   // 设置模态框确定按钮的加载状态
@@ -23,7 +23,7 @@ export const editTeacher = () => {
   }
 
   // 获取表单数据
-  const editLabForm = reactive({
+  const editModel = reactive({
     name: '',
     photo: '',
     position: '',
@@ -55,26 +55,26 @@ export const editTeacher = () => {
 
   // 创建表单校验规则
   const editLabelRule = reactive({
-    sort: [{validator: checkSort, trigger: 'change'}],
-    name: [{ required: true, message: '请输入老师名称', trigger: 'change' }],
-    profiles: [{validator: checkProfiles, trigger: 'change' }],
-    position: [{validator: checkPosition, trigger: "change"}]
+    sort: [{validator: checkSort, trigger: 'blur'}],
+    name: [{ required: true, message: '请输入老师名称', trigger: 'blur' }],
+    profiles: [{validator: checkProfiles, trigger: 'blur' }],
+    position: [{validator: checkPosition, trigger: "blur"}]
   })
 
-  let teacherEditlRef = ref(null);
+  let editRef = ref(null);
   // 提交表单
-  const handleEditSubmit = (callback) => {
+  const handleEditSubmit = () => {
     EditModalLoad.value = true;
     // 进行表单校验
-    teacherEditlRef.value
+    editRef.value
       .validate()
       .then(() => {
         // 创建数据
-        const params = editLabForm;
+        const params = editModel;
         // 设置id
         params["id"] = userId;
         // 发起ajax请求
-        httpPost(teacherInfo.EditTeacherList,editLabForm)
+        httpPost(teacherInfo.EditTeacherList,editModel)
           .then(res => {
             console.log(res);
             if (res.code === 200) {
@@ -84,8 +84,10 @@ export const editTeacher = () => {
               // 关闭模态框
               EditLabelVisible.value = false;
               // 清除表单里面的值
-              teacherEditlRef.value.resetFields();
-              callback();
+              editRef.value.resetFields();
+              options.getTacherList(options.pageNum,options.pageSize,() => {
+                options.loadState.value = false;
+              })
             }
           })
           .catch(err => {
@@ -98,15 +100,21 @@ export const editTeacher = () => {
         console.log('error', error);
       });
   }
+  // 表单点击取消时候的事件
+  const handleEditCancel = () => {
+    // 清除表单内容
+    editRef.value.resetFields();
+  }
 
   return {
     EditLabelVisible,
     EditModalLoad,
-    editLabForm,
+    editModel,
     editLabelRule,
-    teacherEditlRef,
+    editRef,
     showEditModal,
-    handleEditSubmit
+    handleEditSubmit,
+    handleEditCancel
   }
 }
 

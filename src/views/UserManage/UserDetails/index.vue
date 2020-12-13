@@ -5,7 +5,7 @@
       :crumbName="[
         { name: '用户管理' },
         { name: '用户列表', route: '/user/user-list' },
-        { name: '详情' }
+        { name: '详情' },
       ]"
     />
     <!-- 面包屑 end -->
@@ -14,7 +14,7 @@
       :style="{
         padding: '20px',
         background: '#fff',
-        minHeight: '93%'
+        minHeight: '93%',
       }"
     >
       <!-- 基础信息 start -->
@@ -63,11 +63,11 @@
         <a-tabs type="card" :animated="true">
           <a-tab-pane key="1" tab="柒加圈">
             <!-- 柒加圈 -->
-            <Topic :userID="userID" />
+            <Topic :userID="id" />
           </a-tab-pane>
           <a-tab-pane key="2" tab="登录日志">
             <!-- 登录日志 -->
-            <Journal :userID="userID" />
+            <Log :userID="id" />
           </a-tab-pane>
         </a-tabs>
       </div>
@@ -85,26 +85,26 @@ import { userDetail } from "./userDetail";
 // 柒加圈组件
 import Topic from "@/components/UserTopic";
 // 登录日志组件
-import Journal from "@/components/LoginJournal";
+import Log from "@/components/LoginLog";
 export default {
   // 获取用户id
-  props: ["userID"],
+  props: ["id"],
   // 使用组件
   components: {
     Crumbs,
     Topic,
-    Journal
+    Log,
   },
   // setup响应api入口
   setup(prop) {
     // 获取基础信息 传id获取对应用户信息
-    const { userDetailData } = userDetail(prop.userID);
+    const { userDetailData } = userDetail(prop.id);
     //#endregion
     return {
       // 用户个人信息
-      userDetailData
+      userDetailData,
     };
-  }
+  },
 };
 </script>
 

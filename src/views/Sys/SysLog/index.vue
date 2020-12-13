@@ -37,14 +37,14 @@
           </a-col>
           <a-col :span="4" :offset="7">
             <a-button style="margin: 0 10px; float: right" @click="resetClick">
-              <SyncOutlined /> 重置
+              重置
             </a-button>
             <a-button
               type="primary"
               style="margin: 0 10px; float: right"
               @click="searchClick"
             >
-              <SearchOutlined /> 查询
+              查询
             </a-button>
           </a-col>
         </a-row>
@@ -101,30 +101,30 @@ import { showLogList } from "./useSysLogList";
 //导入 useSysLogSearch 获取 相应的方法
 import { useSysLogHeader } from "./useSysLogHeader";
 
+//导入 useSysLogColums 获取 相应的列表数据
+import { useSysLogColums } from "./useSysLogColums";
+
 // 引入 钩子函数
 import { onMounted } from "vue";
-
-//导入 图标样式
-import { SearchOutlined, SyncOutlined } from "@ant-design/icons-vue";
 
 export default {
   // 使用组件
   components: {
     Crumbs,
-    SearchOutlined,
-    SyncOutlined,
   },
 
   // setup响应api入口
   setup() {
+    //获取 useSysLogColums 中的 列表
+    let { logTable } = useSysLogColums();
+
     //获取 showLogList 中的 变量
     let {
-      logTable,
       pageInfo,
       pageChange,
       pageSizeChange,
       getLogData,
-    } = showLogList();
+    } = showLogList(logTable);
 
     //获取 useSysLogHeader 中的变量和方法
     let {
@@ -134,7 +134,7 @@ export default {
       dateChangeOk,
       resetClick,
       searchClick,
-    } = useSysLogHeader();
+    } = useSysLogHeader(getLogData);
 
     //在Mounted 获取列表
     onMounted(() => {

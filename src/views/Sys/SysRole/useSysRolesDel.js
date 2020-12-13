@@ -21,10 +21,9 @@ import {
 } from 'ant-design-vue';
 
 //#region 删除模态框 中 删除点击事件
-export const removeSysRoles = () => {
-
+export const removeSysRoles = (getSysRolesData) => {
     //显示删除模态框
-    const showDelConfirm = (roleId,callback) => {
+    const showDelConfirm = (roleId) => {
         Modal.confirm({
             title: '确定删除该操作员?',
             icon: createVNode(ExclamationCircleOutlined),
@@ -36,12 +35,12 @@ export const removeSysRoles = () => {
             cancelText: '取消',
             onOk() {
                 //发起请求 通过 id 删除指定列表项
-                httpDelete(`${role.removeSysRoles}/${roleId}`).then(res => {
+                httpDelete(role.removeSysRoles + "/" + roleId).then(res => {
                     //判断是否删除成功
                     if(res.success){
                         message.success("删除成功");
                         //刷新页面
-                        callback();
+                        getSysRolesData();
                     }else{
                         message.error("删除失败");
                     }

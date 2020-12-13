@@ -1,6 +1,6 @@
 //导入 Delete请求方法
 import {
-    httpDelete
+    httpPost
 } from "@/utils/http";
 
 //导入 API 接口
@@ -21,9 +21,9 @@ import {
 } from 'ant-design-vue';
 
 //#region 显示删除模态框
-export const removeSysUser = () => {
+export const removeSysUser = (getSysUserList) => {
 
-    const showDelConfirm = (userId , callback) => {
+    const showDelConfirm = (userId) => {
         //一次弹窗是否删除
         Modal.confirm({
             title: '确定删除该操作员?',
@@ -47,12 +47,12 @@ export const removeSysUser = () => {
                     cancelText: '取消',
                     onOk() {
                         //发送请求 删除此项
-                        httpDelete(`${sys.removeSysUser}/${userId}`)
+                        httpPost(`${sys.removeSysUser}/${userId}`)
                             .then(res => {
                                 if (res.success) {
                                     message.success("删除成功");
                                     //刷新页面
-                                    callback();
+                                    getSysUserList();
                                 }else{
                                     message.error("删除失败");
                                 }

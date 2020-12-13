@@ -41,14 +41,14 @@
           </a-col>
           <a-col :span="4" :offset="7">
             <a-button style="margin: 0 10px; float: right" @click="resetClick">
-              <SyncOutlined /> 重置
+              重置
             </a-button>
             <a-button
               type="primary"
               style="margin: 0 10px; float: right"
               @click="searchClick"
             >
-              <SearchOutlined /> 查询
+              查询
             </a-button>
           </a-col>
         </a-row>
@@ -142,12 +142,12 @@ import { showFeedbackList } from "./useSubFeedbackList";
 //导入 useSubFeedbackHeader 文件 获取相应的方法
 import { SubFeedbackHeader } from "./useSubFeedbackHeader";
 
+//导入 useSubFeedbackColums 文件 获取相应的列表数据
+import { useSubFeedbackColums } from "./useSubFeedbackColums";
+
 //导入 图标样式
 import {
-  SearchOutlined,
-  SyncOutlined,
   LineOutlined,
-  AlertOutlined,
 } from "@ant-design/icons-vue";
 
 //导入 reactive 对象
@@ -157,23 +157,22 @@ export default {
   // 使用组件
   components: {
     Crumbs,
-    SearchOutlined,
-    SyncOutlined,
     LineOutlined,
-    AlertOutlined,
   },
 
   //setup 编写 主要内容
   setup() {
+    //获取 useSubFeedbackColums 方法中的 参数
+    let { feedbackTable } = useSubFeedbackColums();
+
     //获取 showFeedbackList 方法中的 参数
     let {
-      feedbackTable,
       pageInfo,
       getFeedbackData,
       pageChange,
       pageSizeChange,
       manageClick,
-    } = showFeedbackList();
+    } = showFeedbackList(feedbackTable);
 
     //获取 SubFeedbackHeader 方法中的 参数
     let {
@@ -184,7 +183,7 @@ export default {
       dateChangeOk,
       resetClick,
       searchClick,
-    } = SubFeedbackHeader();
+    } = SubFeedbackHeader(getFeedbackData);
 
     //在Mounted 获取列表
     onMounted(() => {

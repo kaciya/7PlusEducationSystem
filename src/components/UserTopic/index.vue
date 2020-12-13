@@ -2,18 +2,14 @@
   <div class="container-table">
     <a-table
       bordered
-      :columns="userTopicData.topicColumns"
+      :columns="topicColumns"
       :data-source="userTopicData.topicData.records"
       :pagination="false"
-      :row-key="record => record.id"
+      :row-key="(record) => record.id"
     >
       <!-- 序号 -->
       <template #index="{ index }">
         <span>{{ index + 1 }}</span>
-      </template>
-      <!-- 内容 -->
-      <template #content="{ record }">
-        <span class="content" v-html="record.content"></span>
       </template>
       <!-- 相关 -->
       <template #relevant="{ record }">
@@ -48,6 +44,7 @@
 
 <script>
 import { userTopic } from "./userTopic";
+import { userTopicColumns } from "./userTopicColumns";
 export default {
   // 接收用户id
   props: ["userID"],
@@ -56,15 +53,17 @@ export default {
       userTopicData, // 表格数据
       pagination, // 分页数据
       handelTopicSizeChange, // 点击页码跳转事件
-      handleTopicPageChange // 选择每页显示条数事件
+      handleTopicPageChange, // 选择每页显示条数事件
     } = userTopic(prop.userID);
+    const { topicColumns } = userTopicColumns();
     return {
       userTopicData,
       pagination,
+      topicColumns,
       handelTopicSizeChange,
-      handleTopicPageChange
+      handleTopicPageChange,
     };
-  }
+  },
 };
 </script>
 
@@ -79,16 +78,6 @@ export default {
   padding: 16px 30px;
   overflow: hidden;
   border: 1px solid #f0f0f0;
-  // 内容
-  .content {
-    width: 260px;
-    text-align: center;
-    // 内容文字超出隐藏出现省略号
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    display: inline-block;
-  }
   // 显示屏蔽按钮
   .shield {
     margin-left: 20px;

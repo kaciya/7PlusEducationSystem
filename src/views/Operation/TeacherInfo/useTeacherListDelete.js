@@ -15,7 +15,7 @@ import { httpDelete } from "@/utils/http";
 import { teacherInfo } from "@/api/operationAPI";
 
 // 删除教师方法
-export const DeleteTeacher = (id,callback) => {
+export const DeleteTeacher = (id,getTacherList,pageNum,pageSize,loadState) => {
   // 模态框
   Modal.confirm({
     title: '您真的要删除吗?',
@@ -30,16 +30,14 @@ export const DeleteTeacher = (id,callback) => {
             // 提示信息
             message.success(res.message);
             // 执行回调
-            callback();
+            getTacherList(pageNum, pageSize, () => {
+              loadState = false;
+            })
           }
         })
         .catch(err => {
           console.log(err);
         })
-    },
-
-    onCancel() {
-      console.log('Cancel');
     },
     class: 'test',
   });

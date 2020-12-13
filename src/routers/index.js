@@ -51,7 +51,7 @@ const routes = [
       },
       // 用户详情
       {
-        path: "/user/user-details/:userID",
+        path: "/user/details/:id",
         component: () => import(/* webpackChunkName: "UserManage_UserDetails" */ "@/views/UserManage/UserDetails"),
         props: true,
       },
@@ -59,7 +59,7 @@ const routes = [
       //#region 词库管理
       // 词库分类
       {
-        path: "/Word/category",
+        path: "/word/category",
         component: () => import(/* webpackChunkName: "Word_WordCategory" */ "@/views/Word/WordCategory"),
       },
       //#endregion
@@ -74,8 +74,25 @@ const routes = [
         path: "/question/listening",
         component: () => import(/* webpackChunkName: "Question_Listening" */ "@/views/Question/Listening"),
       },
+      // 口语题库
+      {
+        path: "/question/speaking",
+        component: () => import(/* webpackChunkName: "Question_Speaking" */ "@/views/Question/Speaking"),
+      },
       //#endregion
       //#region 柒加圈
+      //柒加圈发布列表
+      {
+        path: "/topic/page",
+        name: "TopicPage",
+        component: () => import(/* webpackChunkName: "SevenPlusCircle" */ "@/views/SevenPlusCircle")
+      },
+      //柒加圈发布详情
+      {
+        path: "/topic/article/:id",
+        name: "TopicArticle",
+        component: () => import(/* webpackChunkName: "SevenPlusCircle_ArticleDetails" */ "@/views/SevenPlusCircle/ArticleDetails")
+      },
       //#endregion
       //#region 用户提交
       //反馈列表
@@ -112,27 +129,35 @@ const routes = [
       {
         // 课程服务
         path: "/operation/course",
-        component: () => import(/* webpackChunkName: "Operation_Course" */ "@/views/Operation/Course")
+        component: () => import(/* webpackChunkName: "Operation_Course" */ "@/views/Operation/Course"),
       },
       {
         // 互动练习
         path: "/operation/exercise",
         component: () => import(/* webpackChunkName: "Operation_Exercise" */ "@/views/Operation/Exercise"),
-        //常见问题
+      },
+      // 备考指南
+      {
+
+        // 文章列表
+        path: "/operation/article",
+        component: () => import(/* webpackChunkName: "Operation_Article" */ "@/views/Operation/Article")
       },
       {
-        path: "/operation/Issues",
-        component: () => import(/* webpackChunkName: "Operation_Issues" */ "@/views/Operation/Issues"),
-      },
-      {
-        // 课程服务
-        path: "/operation/course",
-        component: () => import(/* webpackChunkName: "Operation_Course" */ "@/views/Operation/Course")
+        // 关于PTE
+        path: "/operation/about",
+        component: () => import(/* webpackChunkName: "Operation_AboutPTE" */ "@/views/Operation/AboutPTE")
       },
       {
         // 常见问题
         path: "/operation/problem",
         component: () => import(/* webpackChunkName: "Operation_Problem" */ "@/views/Operation/Problem")
+      },
+
+      {
+        path: "/operation/guide",
+        component: () => import(/* webpackChunkName: "Operation_Guide" */ "@/views/Operation/Guide"),
+
       },
       //#endregion
       //#region 权限管理

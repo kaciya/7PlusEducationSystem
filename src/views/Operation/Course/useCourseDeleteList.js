@@ -12,14 +12,14 @@ import { httpDelete } from "../../../utils/http";
 // 引入api
 import { course } from "../../../api/operationAPI";
 
-export const deleteCourse = () => {
+export const deleteCourse = (getCourse) => {
 
   // 删除数据方法
-  const deleteCourseSubmit = async (id,callback) => {
+  const deleteCourseSubmit = async (id) => {
     let res = await httpDelete(course.deleteCourseList + `/${id}`);
     if (res.code === 200) {
       message.success(res.message);
-      callback();
+      getCourse();
     }
   }
 

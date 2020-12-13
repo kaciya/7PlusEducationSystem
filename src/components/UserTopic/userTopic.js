@@ -3,62 +3,26 @@ import { reactive, onMounted } from "vue";
 import { httpGet } from "@/utils/http";
 // 引入请求接口
 import user from "@/api/userAPI";
-export const userTopic = id => {
+export const userTopic = (id) => {
   // 表格数据
   const userTopicData = reactive({
     // 表格数据
     topicData: [],
-    // 表格标题
-    topicColumns: [
-      {
-        title: "序号",
-        align: "center",
-        slots: { customRender: "index" }
-      },
-      {
-        title: "内容",
-        align: "center",
-        width: 180,
-        slots: { customRender: "content" }
-      },
-      {
-        title: "分类",
-        align: "center",
-        dataIndex: "category"
-      },
-      {
-        title: "发布时间",
-        align: "center",
-        dataIndex: "createTime",
-        // 排序 默认降序
-        defaultSortOrder: "descend",
-        // 排序规则
-        sorter: (a, b) => (a.createTime > b.createTime ? 1 : -1)
-      },
-      {
-        title: "相关",
-        align: "center",
-        slots: { customRender: "relevant" }
-      },
-      {
-        title: "操作",
-        align: "center",
-        slots: { customRender: "operation" }
-      }
-    ]
   });
   // 分页数据
   const pagination = reactive({
     pageNum: 1,
     pageSize: 10,
     pageSizeOptions: ["10"],
-    total: 0
+    total: 0,
   });
   // 获取后台数据
   const getUserTopicData = async () => {
     const res = await httpGet(user.UserTopic + `/${id}`, {
+      // 降序
+      descColumns: "createTime",
       pageNum: pagination.pageNum,
-      pageSize: pagination.pageSize
+      pageSize: pagination.pageSize,
     });
     if (res.code == 200) {
       userTopicData.topicData = res.data;
@@ -86,6 +50,6 @@ export const userTopic = id => {
     userTopicData,
     pagination,
     handelTopicSizeChange,
-    handleTopicPageChange
+    handleTopicPageChange,
   };
 };
