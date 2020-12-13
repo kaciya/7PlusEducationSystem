@@ -14,7 +14,7 @@ import {
 } from "@/utils/http";
 
 //#region 获取 操作日志 数据列表
-export const showLogList = () => {
+export const showLogList = (logTable) => {
   //#region 分页所需数据
   const pageInfo = reactive({
     //列表所在页数
@@ -27,54 +27,6 @@ export const showLogList = () => {
     total: 0,
   });
   //#endregion
-
-  //创建变量 渲染表格项
-  const logTable = reactive({
-    logColums: [{
-        title: "索引",
-        align: "center",
-        key: "index",
-        slots: {
-          customRender: "index"
-        }
-      },
-      {
-        title: "日志时间",
-        align: "center",
-        dataIndex: "createTime",
-        //默认降序排列
-        defaultSortOrder: 'descend',
-        //日期排序
-        sorter: (a, b) => {
-          let aTime = new Date(a.createTime);
-          let bTime = new Date(b.createTime);
-          return aTime - bTime;
-        }
-      },
-      {
-        title: "账号",
-        align: "center",
-        dataIndex: "username"
-      },
-      {
-        title: "操作员名称",
-        align: "center",
-        dataIndex: "realName"
-      },
-      {
-        title: "操作模块",
-        align: "center",
-        dataIndex: "title"
-      },
-      {
-        title: "内容",
-        align: "center",
-        dataIndex: "params"
-      }
-    ],
-    logData: []
-  });
-
 
   //#region 发起请求  获取数据列表
   const getLogData = (getParam) => {
@@ -125,7 +77,6 @@ export const showLogList = () => {
 
   //返回
   return {
-    logTable,
     pageInfo,
     getLogData,
     pageChange,

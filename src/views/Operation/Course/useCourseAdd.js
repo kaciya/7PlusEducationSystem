@@ -6,7 +6,7 @@ import { httpPost } from "../../../utils/http";
 import { course } from "../../../api/operationAPI";
 import { message } from "ant-design-vue";
 
-export const CourseAdd = () => {
+export const CourseAdd = (getCourse) => {
   // 模态框状态
   const addFormVisibility = ref(false);
   // 显示模态框方法
@@ -15,10 +15,10 @@ export const CourseAdd = () => {
   }
 
   // 获取ref
-  const AddFormRef = ref(null);
+  const AddRef = ref(null);
 
   // 创建表单数据
-  const AddForm = reactive({
+  const AddModel = reactive({
     name: '',
     introduce: '',
     fit: '',
@@ -27,29 +27,29 @@ export const CourseAdd = () => {
   })
 
   // 创建规则
-  const addFormRules = {
+  const addRules = {
     name: [
-      {min: 1,required: true,message: '课程名称必须填写',trigger: "change"},
+      {min: 1,required: true,message: '课程名称必须填写',trigger: "blur"},
     ],
     introduce: [
-      {min: 1,required: true,message: '课程介绍必须填写',trigger: 'change'}
+      {min: 1,required: true,message: '课程介绍必须填写',trigger: 'blur'}
     ],
     fit: [
-      {min: 1,required: true,message: '适合人群必须填写',trigger: 'change'}
+      {min: 1,required: true,message: '适合人群必须填写',trigger: 'blur'}
     ],
     trait: [
-      {min: 1,required: true,message: '课程特点必须填写',trigger: 'change'}
+      {min: 1,required: true,message: '课程特点必须填写',trigger: 'blur'}
     ]
   }
 
   // 模态框点击确定的回调
-  const handleAddSubmit = (callback) => {
+  const handleAddSubmit = () => {
     // 进行表单校验
-    AddFormRef.value
+    AddRef.value
       .validate()
       .then(() => {
         // 结构数据
-        let { name,introduce, fit, trait, isShow } = AddForm;
+        let { name,introduce, fit, trait, isShow } = AddModel;
         isShow = Number(isShow);
         // 发送请求
         httpPost(course.addCourseList,{
@@ -66,9 +66,9 @@ export const CourseAdd = () => {
               // 隐藏模态框
               addFormVisibility.value = false;
               // 清空表单数据
-              AddFormRef.value.resetFields();
-              // 执行回调
-              callback();
+              AddRef.value.resetFields();
+              // 重新获取数据
+              getCourse();
             }
           })
           .catch(err => {
@@ -80,12 +80,19 @@ export const CourseAdd = () => {
       })
   }
 
+  // 点击取消时候的回调函数
+  const handelAddCancel = () => {
+    // 清空表单数据
+    AddRef.value.resetFields();
+  }
+
   return {
     addFormVisibility,
-    AddForm,
-    addFormRules,
-    AddFormRef,
+    AddModel,
+    addRules,
+    AddRef,
     showAddForm,
-    handleAddSubmit
+    handleAddSubmit,
+    handelAddCancel
   }
 }

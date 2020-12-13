@@ -9,18 +9,8 @@ import {
     message
 } from 'ant-design-vue';
 
-//导入 useSysContactList 文件 获取相应的方法
-import {
-    showContactList
-} from "./useSubContactList";
-
 //#region 顶部 查询 和 重置 功能
-export const SubContactHeader = () => {
-    //获取 方法中的 参数
-    let {
-        getContactData
-    } = showContactList();
-
+export const SubContactHeader = (getContactData) => {
     //日期选择器发生改变时的 指定日期
     let dateModel = reactive({});
     //日期选择器确定后的 指定日期

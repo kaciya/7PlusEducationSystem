@@ -17,11 +17,13 @@ import {
 } from "@/utils/http";
 
 // 引入提示框
-import { message } from "ant-design-vue";
+import {
+    message
+} from "ant-design-vue";
 
 //#region 定义账号添加表单校验规则
 export const sysUserRules = reactive({
-    realName: [{ 
+    realName: [{
         required: true,
         message: "操作员名称不能为空",
         trigger: "blur"
@@ -66,14 +68,14 @@ export const getUserPermissions = () => {
 
 
 //#region 添加账号
-export const addSysUser = () => {
+export const addSysUser = (getSysUserList) => {
     //显示添加账号模态框
     let addUserVisible = ref(false);
     //模态框确认时加载
     let confirmLoading = ref(false);
 
     //#region 定义表单
-    const addUserForm = ref(null);
+    const addUserFormRef = ref(null);
     //#endregion
 
     //显示添加账号模态框
@@ -90,13 +92,13 @@ export const addSysUser = () => {
     //#endregion
 
     //添加账号确定时的回调
-    const handleAddOk = (callback) => {
+    const handleAddOk = () => {
         //发起请求 添加账号                     
-        addUserForm.value.validate().then(() => {
+        addUserFormRef.value.validate().then(() => {
                 //获取请求需要参数
                 let params = {
                     realName: sysUserForm.realName,
-                    roleIds: sysUserForm.roleIds,
+                    roleIds: [sysUserForm.roleIds],
                     username: sysUserForm.username
                 }
                 //发起请求  添加数据
@@ -111,11 +113,13 @@ export const addSysUser = () => {
                             //关闭加载与弹窗
                             addUserVisible.value = false;
                             confirmLoading.value = false;
+                            //清空表单
+                            addUserFormRef.value.resetFields();
                             //重新刷新页面
-                            callback();
+                            getSysUserList();
                         }, 700);
-                    }else{
-                        message.error("添加失败: "+ res.message);
+                    } else {
+                        message.error("添加失败: " + res.message);
                     }
                 })
             })
@@ -127,7 +131,7 @@ export const addSysUser = () => {
     //添加账号取消时的回调
     const handleAddCancel = () => {
         //清空表单
-        addUserForm.value.resetFields();
+        addUserFormRef.value.resetFields();
         //关闭弹窗
         addUserVisible.value = false;
     }
@@ -136,7 +140,7 @@ export const addSysUser = () => {
     return {
         addUserVisible,
         confirmLoading,
-        addUserForm,
+        addUserFormRef,
         sysUserForm,
         showAddModal,
         handleAddOk,
