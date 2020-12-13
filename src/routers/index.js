@@ -51,7 +51,7 @@ const routes = [
       },
       // 用户详情
       {
-        path: "/user/user-details/:userID",
+        path: "/user/details/:id",
         component: () => import("@/views/UserManage/UserDetails"),
         props: true,
       },
@@ -59,7 +59,7 @@ const routes = [
       //#region 词库管理
       // 词库分类
       {
-        path: "/Word/category",
+        path: "/word/category",
         component: () => import("@/views/Word/WordCategory"),
       },
       //#endregion
@@ -74,8 +74,25 @@ const routes = [
         path: "/question/listening",
         component: () => import("@/views/Question/Listening"),
       },
+      // 口语题库
+      {
+        path: "/question/speaking",
+        component: () => import("@/views/Question/Speaking"),
+      },
       //#endregion
       //#region 柒加圈
+      //柒加圈发布列表
+      {
+        path: "/topic/page",
+        name: "TopicPage",
+        component: () => import("@/views/SevenPlusCircle")
+      },
+      //柒加圈发布详情
+      {
+        path: "/topic/article/:id",
+        name: "TopicArticle",
+        component: () => import("@/views/SevenPlusCircle/ArticleDetails")
+      },
       //#endregion
       //#region 用户提交
       //反馈列表
@@ -112,27 +129,40 @@ const routes = [
       {
         // 课程服务
         path: "/operation/course",
-        component: () => import("@/views/Operation/Course")
+        component: () => import("@/views/Operation/Course"),
       },
       {
         // 互动练习
         path: "/operation/exercise",
         component: () => import("@/views/Operation/Exercise"),
-        //常见问题
-      },
-      {
-        path: "/operation/Issues",
-        component: () => import("@/views/Operation/Issues"),
       },
       {
         // 课程服务
         path: "/operation/course",
-        component: () => import("@/views/Operation/Course")
+        component: () => import("@/views/Operation/Course"),
+      },
+      // 备考指南
+      {
+
+        // 文章列表
+        path: "/operation/article",
+        component: () => import("@/views/Operation/Article")
+      },
+      {
+        // 关于PTE
+        path: "/operation/about",
+        component: () => import("@/views/Operation/AboutPTE")
       },
       {
         // 常见问题
         path: "/operation/problem",
         component: () => import("@/views/Operation/Problem")
+      },
+      
+      {
+        path: "/operation/guide",
+        component: () => import("@/views/Operation/Guide"),
+
       },
       //#endregion
       //#region 权限管理

@@ -42,7 +42,7 @@ export const useGetSideBar = () => {
         {
           id: 121,
           authName: "词库分类",
-          path: "lexicon/sort"
+          path: "word/category"
         },
         {
           id: 122,
@@ -70,7 +70,7 @@ export const useGetSideBar = () => {
         {
           id: 133,
           authName: "口语题库",
-          path: "home"
+          path: "question/speaking"
         },
         {
           id: 134,
@@ -93,7 +93,7 @@ export const useGetSideBar = () => {
         {
           id: 141,
           authName: "发布列表",
-          path: "home"
+          path: "topic/page"
         }
       ]
     },
@@ -162,23 +162,23 @@ export const useGetSideBar = () => {
         {
           id: 176,
           authName: "文章列表(官网)",
-          path: "home"
+          path: "operation/article"
         },
 
         {
           id: 177,
           authName: "关于PTE",
-          path: "home"
+          path: "operation/about"
         },
         {
           id: 178,
           authName: "备考指南(学习中心)",
-          path: "home"
+          path: "operation/guide"
         },
         {
           id: 179,
           authName: "常见问题(学习中心)",
-          path: "operation/problem"
+          path: "operation/issues"
         }
       ]
     },

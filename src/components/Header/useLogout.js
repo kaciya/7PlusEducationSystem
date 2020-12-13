@@ -24,8 +24,6 @@ export const useLogout = () => {
       title: "退出系统确认",
       icon: createVNode(ExclamationCircleOutlined),
       content: "确定要退出登录吗？",
-      okText: "确定",
-      cancelText: "取消",
       autoFocusButton: "cancel", //指定自动获得焦点的按钮
       onOk() {
         return new Promise(resolve => {
@@ -43,7 +41,7 @@ export const useLogout = () => {
           }).catch(err => {
             console.log(err);
           })
-        }).catch(() => console.log("Oops errors!"));
+        }).catch(() => message.error("退出失败", 2));
       },
       onCancel() {
         return;

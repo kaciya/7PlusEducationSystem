@@ -42,10 +42,10 @@
         </template>
         <template #operational="{record}">
           <a-button type="primary" size="small" style="margin-right: 10px" @click="showEditModal(record.id)">
-            <EditOutlined />编辑
+            编辑
           </a-button>
-          <a-button type="danger" size="small" @click="handleDeleteTeacher(record.id)">
-            <DeleteOutlined />删除
+          <a-button type="danger" size="small" @click="DeleteTeacher(record.id,getTacherList,pageNum,pageSize,loadState)">
+            删除
           </a-button>
         </template>
       </a-table>
@@ -71,24 +71,24 @@
       <a-modal
           title="添加成员"
           v-model:visible="addLabelVisible"
-          @ok="handleOk"
           :confirm-loading="confirmLoading"
+          @ok="handleSubmit"
       >
         <a-form
-          ref="addLabelFormRef"
-          :model="addLabelForm"
-          :rules="addLabelRule"
+          :model="addModel"
+          :rules="addRule"
+          ref="addRef"
         >
           <a-row>
             <a-col :span="24">
               <a-form-item has-feedback label="顺序值" name="sort" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
-                <a-input  type="text" autocomplete="off" v-model:value="addLabelForm.sort" />
+                <a-input  type="text" autocomplete="off" v-model:value="addModel.sort" />
               </a-form-item>
               <a-form-item has-feedback label="老师名称" name="name" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
-                <a-input  type="text" autocomplete="off" v-model:value="addLabelForm.name"/>
+                <a-input  type="text" autocomplete="off" v-model:value="addModel.name"/>
               </a-form-item>
               <a-form-item has-feedback label="上传图片" name="photo" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
-                <a-input  type="text" autocomplete="off" v-model:value="addLabelForm.photo"/>
+                <a-input  type="text" autocomplete="off" v-model:value="addModel.photo"/>
               </a-form-item>
 <!--              <a-form-item has-feedback label="上传图片" name="photo" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
                 <a-upload
@@ -99,10 +99,10 @@
                 </a-upload>
               </a-form-item>-->
               <a-form-item label="简介" :labelCol="{ span: 4 }" :wrapperCol="{span: 16}" name="profiles">
-                <a-textarea  placeholder="请输入简介" :rows="5" v-model:value="addLabelForm.profiles" />
+                <a-textarea  placeholder="请输入简介" :rows="5" v-model:value="addModel.profiles" />
               </a-form-item>
               <a-form-item label="具体介绍" :labelCol="{ span: 4 }" :wrapperCol="{span: 16}" name="position">
-                <a-textarea  placeholder="请输入具体介绍" :rows="5" v-model:value="addLabelForm.position" />
+                <a-textarea  placeholder="请输入具体介绍" :rows="5" v-model:value="addModel.position" />
               </a-form-item>
             </a-col>
           </a-row>
@@ -113,25 +113,25 @@
       <a-modal
         title="编辑成员"
         v-model:visible="EditLabelVisible"
-        @ok="handleEditOk"
+        @ok="handleEditSubmit"
+        @cancel="handleEditCancel"
         :confirm-loading="EditModalLoad"
       >
         <a-form
-          ref="teacherEditlRef"
-          :model="editLabForm"
+          :model="editModel"
           :rules="editLabelRule"
-          name="custom-validation"
+          ref="editRef"
         >
           <a-row>
             <a-col :span="24">
               <a-form-item has-feedback label="顺序值" name="sort" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
-                <a-input  type="text" autocomplete="off" v-model:value="editLabForm.sort" />
+                <a-input  type="text" autocomplete="off" v-model:value="editModel.sort" />
               </a-form-item>
               <a-form-item has-feedback label="老师名称" name="name" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
-                <a-input  type="text" autocomplete="off" v-model:value="editLabForm.name"/>
+                <a-input  type="text" autocomplete="off" v-model:value="editModel.name"/>
               </a-form-item>
               <a-form-item has-feedback label="上传图片" name="photo" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
-                <a-input  type="text" autocomplete="off" v-model:value="editLabForm.photo"/>
+                <a-input  type="text" autocomplete="off" v-model:value="editModel.photo"/>
               </a-form-item>
               <!--              <a-form-item has-feedback label="上传图片" name="photo" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
                               <a-upload
@@ -142,10 +142,10 @@
                               </a-upload>
                             </a-form-item>-->
               <a-form-item label="简介" :labelCol="{ span: 4 }" :wrapperCol="{span: 16}" name="profiles">
-                <a-textarea  placeholder="请输入简介" :rows="5" v-model:value="editLabForm.profiles" />
+                <a-textarea  placeholder="请输入简介" :rows="5" v-model:value="editModel.profiles" />
               </a-form-item>
               <a-form-item label="具体介绍" :labelCol="{ span: 4 }" :wrapperCol="{span: 16}" name="position">
-                <a-textarea  placeholder="请输入具体介绍" :rows="5" v-model:value="editLabForm.position" />
+                <a-textarea  placeholder="请输入具体介绍" :rows="5" v-model:value="editModel.position" />
               </a-form-item>
             </a-col>
           </a-row>
@@ -159,8 +159,6 @@
 </template>
 
 <script>
-// 引入图标
-import { EditOutlined, DeleteOutlined,UploadOutlined } from "@ant-design/icons-vue";
 // 引入面包屑组件
 import Crumbs from "@/components/Crumbs";
 // 引入获取教师列表方法和分页方法
@@ -194,40 +192,34 @@ export default {
     });
 
     //#region 删除老师
-    const handleDeleteTeacher = (id) => {
-      DeleteTeacher(id,() => {
-        // 获取数据
-        getTacherList(pageNum.value, pageSize.value, () => {
-          loadState.value = false;
-        });
-      })
-    }
+      
     //#endregion
 
     //#region 添加老师
-    const { addLabelVisible,showModal,addLabelForm,addLabelRule,confirmLoading,addLabelFormRef,handleSubmit } = addTeacher();
-    // 点击ok的回调函数
-    const handleOk = () => {
-      handleSubmit(() => {
-        getTacherList(pageNum.value, pageSize.value, () => {
-          loadState.value = false;
-        })
-      });
+    // 设置参数
+    const AddParams = {
+      pageNum,
+      pageSize,
+      loadState,
+      getTacherList
     }
+    const { addLabelVisible,showModal,addModel,addRule,confirmLoading,addRef,handleSubmit } = addTeacher(AddParams);
     //#endregion
 
     //#region 编辑老师
-    const { EditLabelVisible,editLabForm,editLabelRule,teacherEditlRef,EditModalLoad,showEditModal,handleEditSubmit } = editTeacher();
-    const handleEditOk = () => {
-      handleEditSubmit(() => {
-        getTacherList(pageNum.value, pageSize.value, () => {
-          loadState.value = false;
-        });
-      })
+    // 设置参数
+    const EditParams = {
+      pageNum,
+      pageSize,
+      loadState,
+      getTacherList
     }
+    const { EditLabelVisible,editModel,editLabelRule,editRef,EditModalLoad,showEditModal,handleEditCancel,handleEditSubmit } = editTeacher(EditParams);
     //#endregion
 
     return {
+      // 获取数据方法
+      getTacherList,
       // 列表格式
       columns,
       //#region 获取列表数据以及分页
@@ -240,30 +232,26 @@ export default {
       showSizeChange,
       //#endregion
       // 删除教师
-      handleDeleteTeacher,
+      DeleteTeacher,
       //#region 添加老师
       addLabelVisible,
       showModal,
-      addLabelForm,
-      addLabelRule,
+      addModel,
+      addRule,
       handleSubmit,
-      addLabelFormRef,
+      addRef,
       confirmLoading,
-      handleOk,
       //#endregion
       //#region 编辑老师
       EditLabelVisible,
       EditModalLoad,
-      editLabForm,
+      editModel,
       editLabelRule,
-      teacherEditlRef,
+      editRef,
       showEditModal,
-      handleEditOk,
+      handleEditSubmit,
+      handleEditCancel,
       //#endregion
-      // 导出组件
-      EditOutlined,
-      DeleteOutlined,
-      UploadOutlined
     };
   }
 };
