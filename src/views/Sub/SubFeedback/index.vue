@@ -14,7 +14,7 @@
       <!-- 日期 账号名称 查询内容 -->
       <a-form>
         <a-row>
-          <a-col :span="7" :offset="1">
+          <a-col :span="8" :offset="1">
             <a-form-item label="时间范围">
               <a-range-picker
                 :show-time="{ format: 'HH:mm:ss' }"
@@ -26,7 +26,7 @@
               />
             </a-form-item>
           </a-col>
-          <a-col :span="5">
+          <a-col :span="5" :offset="1">
             <a-form-item label="状态">
               <a-select
                 v-model:value="selectModel"
@@ -39,7 +39,7 @@
               </a-select>
             </a-form-item>
           </a-col>
-          <a-col :span="4" :offset="7">
+          <a-col :span="4" :offset="5">
             <a-button style="margin: 0 10px; float: right" @click="resetClick">
               重置
             </a-button>
