@@ -9,7 +9,7 @@ export const useEditGuide = (getGuideData, guideType) => {
   //表单数据
   const editGuideModel = reactive({
     testRequires: "",
-    grade: "这个选项有问题",
+    grade: "",
     problemsNumber: "",
     examine: "",
     answerTime: "",
@@ -47,7 +47,7 @@ export const useEditGuide = (getGuideData, guideType) => {
       category: category.value,
       type: guideType,
       answerTime: editGuideModel.answerTime,
-      //   grade: editGuideModel.grade,
+      grade: editGuideModel.grade,
       examine: editGuideModel.examine,
       keyPoints: editGuideModel.keyPoints,
       problemsNumber: editGuideModel.problemsNumber,

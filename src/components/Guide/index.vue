@@ -30,11 +30,13 @@
     </a-table>
     <!-- 备考指南表格 end-->
     <!-- 编辑模态框 start -->
+    <!-- maskClosable 点击遮罩模态框不关闭 -->
     <a-modal
       title="内容设置"
       v-model:visible="editVisible"
-      @ok="editGuideOk"
+      :maskClosable="false"
       :afterClose="editGuideEmpty"
+      @ok="editGuideOk"
     >
       <!-- 输入框 -->
       <a-form
