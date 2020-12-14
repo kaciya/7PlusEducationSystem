@@ -6,27 +6,27 @@ import { httpPost } from "@/utils/http";
 import questionLabel from "@/api/questionLabelAPI";
 import { message } from "ant-design-vue";
 
-export function useUpdateLabel(getLabels) {
+export function useEditLabel(getLabels) {
   // 添加标签模态框是否显示
-  const updateLabelVisible = ref(false);
+  const editLabelVisible = ref(false);
 
   // 添加标签表单
-  const updateLabelModel = reactive({
+  const editLabelModel = reactive({
     name: "",
     id: "",
     oldName: ""
   });
 
   // 打开添加标签模态框
-  const showUpdateLabel = (id, name) => {
-    updateLabelVisible.value = true;
+  const showEditLabel = (id, name) => {
+    editLabelVisible.value = true;
     // 记录要修改的id和旧标签名
-    updateLabelModel.id = id;
-    updateLabelModel.oldName = name;
+    editLabelModel.id = id;
+    editLabelModel.oldName = name;
   };
 
   // 添加标签表单校验规则
-  const updateLabelRules = reactive({
+  const editLabelRules = reactive({
     name: [
       { required: true, message: "请输入标签名", trigger: "blur" },
       { max: 5, message: "标签不能超过5个字", trigger: "blur" }
@@ -34,26 +34,26 @@ export function useUpdateLabel(getLabels) {
   });
 
   // 表单
-  const updateFormRef = ref(null);
+  const editFormRef = ref(null);
 
   // 修改标签方法
-  const updateLabel = () => {
+  const editLabel = () => {
     // 校验
-    updateFormRef.value
+    editFormRef.value
       .validate()
       .then(() => {
         // 发起修改请求
-        httpPost(questionLabel.UpdateLabel, {
-          id: updateLabelModel.id,
-          name: updateLabelModel.name
+        httpPost(questionLabel.EditLabel, {
+          id: editLabelModel.id,
+          name: editLabelModel.name
         }).then(res => {
           if (res.success == true) {
             // 提示用户
             message.success("修改标签成功");
             // 重置表单
-            updateFormRef.value.resetFields();
+            editFormRef.value.resetFields();
             // 关闭模态框
-            updateLabelVisible.value = false;
+            editLabelVisible.value = false;
             // 刷新表单
             getLabels();
           } else {
@@ -67,18 +67,18 @@ export function useUpdateLabel(getLabels) {
   };
 
   // 取消添加标签
-  const cancelUpdateLabel = () => {
-    updateFormRef.value.resetFields();
+  const cancelEditLabel = () => {
+    editFormRef.value.resetFields();
   };
 
   return {
-    updateLabelVisible,
-    showUpdateLabel,
-    updateLabelModel,
-    updateLabelRules,
-    updateFormRef,
-    updateLabel,
-    cancelUpdateLabel
+    editLabelVisible,
+    showEditLabel,
+    editLabelModel,
+    editLabelRules,
+    editFormRef,
+    editLabel,
+    cancelEditLabel
   };
 }
 //#endregion
