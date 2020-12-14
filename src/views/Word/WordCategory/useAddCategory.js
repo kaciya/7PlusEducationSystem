@@ -72,7 +72,7 @@ export const AddWordCategory = (getCategoryData) => {
   //#endregion
   //#region 模态框关闭清空文本框
   // 模态框关闭时的回调
-  let addCategoryEmpty = () => {
+  const addCategoryEmpty = () => {
     // 清空文本框
     addRef.value.resetFields();
   };
