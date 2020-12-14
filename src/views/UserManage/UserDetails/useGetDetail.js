@@ -9,7 +9,7 @@ export const useGetDetail = (id) => {
   // 获取后台数据
   const getuserDetailData = async () => {
     const res = await httpGet(user.UserDetail + `/${id}`);
-    if (res.code == 200) {
+    if (res.success) {
       userDetailData.value = res.data;
     }
   };

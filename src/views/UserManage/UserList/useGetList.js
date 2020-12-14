@@ -48,7 +48,7 @@ export const useGetList = () => {
       mobile: userModel.mobile,
       userName: userModel.userName,
     });
-    if (res.code == 200) {
+    if (res.success) {
       // 数据
       userData.data = res.data.records;
       // 数据总数

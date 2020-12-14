@@ -14,7 +14,7 @@ export const useGetCategory = () => {
   const getCategoryData = async () => {
     const res = await httpGet(wordType.WordCategoryList);
     // 数据获取成功
-    if (res.code == 200) {
+    if (res.success) {
       categoryData.data = res.data;
     }
   };

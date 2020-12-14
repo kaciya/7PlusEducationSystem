@@ -3,29 +3,24 @@
     <!-- 备考指南表格 start-->
     <a-table
       bordered
-      :columns="userGuideListData.Columns"
-      :data-source="userGuideListData.Data"
+      :columns="columns"
+      :data-source="guideData.data"
       :pagination="false"
-      :row-key="record => record.id"
+      :row-key="(record) => record.id"
     >
-      <!-- 题型 -->
-      <template #category="{ record }">
-        <!-- 转换为大写 -->
-        {{ record.category.toUpperCase() }}
-      </template>
       <!-- 操作 -->
       <template #operation="{ record }">
-        <!-- 编辑按钮 -->
-        <a-button type="primary" size="small"> 编辑 </a-button>
-        <!-- 删除按钮 传id进行删除-->
-        <a-button
-          type="danger"
-          size="small"
-          class="guide-delete"
-          @click="handleRemoveGuide(record.id)"
-        >
-          删除
+        <!-- 编辑按钮 modify-btn:改变按钮颜色(黄色) -->
+        <a-button type="primary" size="small" class="modify-btn">
+          编辑
         </a-button>
+        <!-- 删除按钮 传id进行删除-->
+        <!-- 气泡确认框 -->
+        <a-popconfirm title="您确定要删除吗？" @confirm="delGuide(record.id)">
+          <a-button type="danger" size="small" class="guide-delete">
+            删除
+          </a-button>
+        </a-popconfirm>
       </template>
     </a-table>
     <!-- 备考指南表格 end-->
@@ -34,44 +29,34 @@
 
 <script>
 // 备考指南列表
-import { userGuideList } from "./userGetGuideList";
+import { useGetGuide } from "./useGetGuide";
 // 删除备考指南
-import { userDelGuide } from "./userDelGuide";
-
+import { useDelGuide } from "./useDelGuide";
+// 表格columns
+import { useGuideColumns } from "./useGuideColumns";
 export default {
   // 接收选择对应的题型Type值
   props: ["guideType"],
   setup(prop) {
     // 备考指南列表
-    let { userGuideListData, getUserGuideList } = userGuideList(prop.guideType);
+    let { guideData, getGuideData } = useGetGuide(prop.guideType);
     // 删除
-    let { handleRemoveGuide } = userDelGuide(getUserGuideList);
+    let { delGuide } = useDelGuide(getGuideData);
+    // 表格columns
+    let { columns } = useGuideColumns();
     return {
-      userGuideListData,
-      getUserGuideList,
-      handleRemoveGuide
+      guideData, // 表格数据
+      columns, //表格columns
+      getGuideData, // 获取后台数据
+      delGuide, //删除
     };
-  }
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-// 表格 start
-
-.container-table {
-  position: relative;
-  top: -17px;
-  height: 1120px;
-  border-top: 0px;
-  padding: 16px 30px;
-  overflow: hidden;
-  border: 1px solid #f0f0f0;
-  .guide-delete {
-    margin-left: 8px;
-  }
+// 删除按钮
+.guide-delete {
+  margin-left: 8px;
 }
-.ant-form .ant-form-item {
-  margin-bottom: 0px !important;
-}
-//表格end
 </style>

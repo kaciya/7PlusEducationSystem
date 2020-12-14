@@ -31,7 +31,7 @@ export const useGetTopic = (id) => {
       pageNum: topicPagination.current,
       pageSize: topicPagination.pageSize,
     });
-    if (res.code == 200) {
+    if (res.success) {
       topicData.data = res.data.records;
       topicPagination.total = res.data.total;
     }
