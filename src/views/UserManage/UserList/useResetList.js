@@ -6,7 +6,7 @@ import { ExclamationCircleOutlined } from "@ant-design/icons-vue";
 // 引入确认框
 import { createVNode } from "vue";
 import { Modal } from "ant-design-vue";
-export const useResetList = (getUserListData) => {
+export const useResetList = (getUserListData, userPagination) => {
   //#region 重置
   // 定义表单数据相当于$ref
   const userRef = ref(null);
@@ -18,6 +18,8 @@ export const useResetList = (getUserListData) => {
       icon: createVNode(ExclamationCircleOutlined),
       // 点击确定事件
       onOk() {
+        // 重置页码回到第一页
+        userPagination.current = 1;
         // 清空文本框
         userRef.value.resetFields();
         // 重置列表

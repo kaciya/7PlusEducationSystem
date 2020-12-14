@@ -24,7 +24,8 @@
       <span> <a-button type="primary"> 查看 </a-button></span>
       <!-- 显示按钮 -->
       <span v-if="record.status == 0" class="shield">
-        <a-button type="primary"> 显示 </a-button>
+        <!-- pass-btn 绿色按钮 -->
+        <a-button type="primary" class="pass-btn"> 显示 </a-button>
       </span>
       <!-- 屏蔽按钮 -->
       <span v-else-if="record.status == 1" class="shield">
