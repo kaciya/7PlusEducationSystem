@@ -2,7 +2,7 @@ import { reactive, ref } from "vue";
 // 引入请求方式
 import { httpPost } from "@/utils/http";
 // 引入请求接口
-import wordType from "@/api/wordType";
+import wordType from "@/api/wordTypeAPI";
 //全局提示
 import { message } from "ant-design-vue";
 export const ModifyWordCategory = (getCategoryData) => {

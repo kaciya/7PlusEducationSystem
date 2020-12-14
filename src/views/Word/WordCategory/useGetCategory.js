@@ -2,7 +2,7 @@ import { reactive, onMounted } from "vue";
 // 引入请求方式
 import { httpGet } from "@/utils/http";
 // 引入请求接口
-import wordType from "@/api/wordType";
+import wordType from "@/api/wordTypeAPI";
 export const useGetCategory = () => {
   // 表格数据
   const categoryData = reactive({
