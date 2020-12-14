@@ -6,7 +6,7 @@
     :data-source="topicData.data"
     :pagination="topicPagination"
     :row-key="(record) => record.id"
-    @change="handleTableChange"
+    @change="onTableChange"
   >
     <!-- 序号 -->
     <template #index="{ index }">
@@ -45,7 +45,7 @@ export default {
     const {
       topicData, // 表格数据
       topicPagination, //分页配置项
-      handleTableChange, //页码改变回调
+      onTableChange, //页码改变回调
     } = useGetTopic(prop.userID);
     // 柒加圈columns
     const { columns } = useTopicColumns();
@@ -53,7 +53,7 @@ export default {
       topicData,
       columns,
       topicPagination,
-      handleTableChange,
+      onTableChange,
     };
   },
 };

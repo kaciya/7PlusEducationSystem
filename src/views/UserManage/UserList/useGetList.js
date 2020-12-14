@@ -58,7 +58,7 @@ export const useGetList = () => {
     }
   };
   // 页码改变回调
-  const handleTableChange = (pagination) => {
+  const onTableChange = (pagination) => {
     userPagination.current = pagination.current;
     userPagination.pageSize = pagination.pageSize;
     getUserListData();
@@ -93,7 +93,7 @@ export const useGetList = () => {
     userData,
     getUserListData,
     getUserList,
-    handleTableChange,
+    onTableChange,
     userPagination,
   };
 };

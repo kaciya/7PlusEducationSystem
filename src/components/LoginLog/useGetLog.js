@@ -39,7 +39,7 @@ export const useGetLog = (id) => {
     }
   };
   // 页码改变回调
-  const handleTableChange = (pagination) => {
+  const onTableChange = (pagination) => {
     logPagination.current = pagination.current;
     logPagination.pageSize = pagination.pageSize;
     getLogData();
@@ -51,6 +51,6 @@ export const useGetLog = (id) => {
   return {
     loglData,
     logPagination,
-    handleTableChange,
+    onTableChange,
   };
 };

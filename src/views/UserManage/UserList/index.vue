@@ -93,7 +93,7 @@
         :data-source="userData.data"
         :pagination="userPagination"
         :row-key="(record) => record.id"
-        @change="handleTableChange"
+        @change="onTableChange"
       >
         <!-- 来源 -->
         <template #channel="{ record }">
@@ -135,7 +135,7 @@ export default {
       userModel, // 表单数据
       getUserList, // 点击查询的回调
       getUserListData, // 获取数据方法
-      handleTableChange, // 页码改变触发事件
+      onTableChange, // 页码改变触发事件
       userPagination, // 表格分页配置项
     } = useGetList();
     // 表格Columns
@@ -157,7 +157,7 @@ export default {
       getUserListData,
       userData,
       columns,
-      handleTableChange,
+      onTableChange,
       userPagination,
     };
   },

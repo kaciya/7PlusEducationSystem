@@ -6,7 +6,7 @@
     :data-source="loglData.data"
     :pagination="logPagination"
     :row-key="(record) => record.ip"
-    @change="handleTableChange"
+    @change="onTableChange"
   >
   </a-table>
 </template>
@@ -23,7 +23,7 @@ export default {
     const {
       loglData, // 表格数据
       logPagination, //分页配置项
-      handleTableChange, //页码改变回调
+      onTableChange, //页码改变回调
     } = useGetLog(prop.userID);
     // 表格columns
     const { columns } = useLogColumns();
@@ -31,7 +31,7 @@ export default {
       loglData,
       columns,
       logPagination,
-      handleTableChange,
+      onTableChange,
     };
   },
 };

@@ -37,7 +37,7 @@ export const useGetTopic = (id) => {
     }
   };
   // 页码改变回调
-  const handleTableChange = (pagination) => {
+  const onTableChange = (pagination) => {
     topicPagination.current = pagination.current;
     topicPagination.pageSize = pagination.pageSize;
     getTopicData();
@@ -49,6 +49,6 @@ export const useGetTopic = (id) => {
   return {
     topicData,
     topicPagination,
-    handleTableChange,
+    onTableChange,
   };
 };
