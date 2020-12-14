@@ -61,14 +61,14 @@
               style="margin-right: 10px"
               @click="showEditLabel(record.id, record.name)"
             >
-              <EditOutlined /> 修改
+              修改
             </a-button>
             <!-- 删除按钮 -->
             <a-popconfirm
               title="您确定要删除这个标签吗？"
               @confirm="delLabel(record.id)"
             >
-              <a-button type="danger"> <DeleteOutlined />删除 </a-button>
+              <a-button type="danger"> 删除 </a-button>
             </a-popconfirm>
           </div>
         </template>
@@ -108,8 +108,6 @@
 <script>
 // 引入面包屑组件
 import Crumbs from "@/components/Crumbs";
-// 引入icon图标
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons-vue";
 // 引入 钩子函数
 import { onMounted } from "vue";
 // 引入 标签管理表单列配置
@@ -211,8 +209,6 @@ export default {
     };
   },
   components: {
-    EditOutlined,
-    DeleteOutlined,
     Crumbs,
   },
 };
