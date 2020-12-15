@@ -42,9 +42,9 @@ const routes = [
         name: "HomeMain",
         component: () => import("@/views/HomeMain"),
         meta: {
-          pathName: "/home/main"
+          pathName: "/home/main",
+          keepAlive: true
         },
-
       },
       //#endregion
       //#region 用户管理
@@ -53,7 +53,8 @@ const routes = [
         path: "/user/user-list",
         component: () => import("@/views/UserManage/UserList"),
         meta: {
-          pathName: "/user/user-list"
+          pathName: "/user/user-list",
+          keepAlive: true
         },
       },
       // 用户详情
@@ -61,7 +62,7 @@ const routes = [
         path: "/user/details/:id",
         component: () => import("@/views/UserManage/UserDetails"),
         meta: {
-          pathName: "/user/user-list"
+          pathName: "/user/user-list",
         },
         props: true,
       },
@@ -109,7 +110,8 @@ const routes = [
         name: "TopicPage",
         component: () => import("@/views/SevenPlusCircle"),
         meta: {
-          pathName: "/topic/page"
+          pathName: "/topic/page",
+          keepAlive: true
         },
       },
       //柒加圈发布详情
@@ -303,8 +305,20 @@ router.beforeEach((to, from, next) => {
       name: "Login",
     });
   } else {
+    const toDepth = to.path.split('/').length;
+    const fromDepth = from.path.split('/').length;
+    // 判断后退时 是否缓存
+    if (toDepth < fromDepth) {
+      // console.log('back...')
+      // 离开页面 不缓存
+      from.meta.keepAlive = false;
+      // 进入页面 缓存
+      to.meta.keepAlive = true;
+    }
     next(); // 否则放行
   }
+
+
 });
 
 router.afterEach(() => {
