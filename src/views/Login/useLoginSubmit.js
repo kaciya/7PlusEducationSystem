@@ -13,37 +13,44 @@ import { useStore } from "vuex";
 
 export const useLoginSubmit = () => {
   // 使用router
-  let router = useRouter();
+  const router = useRouter();
   // 使用共享库
-  let store = useStore();
+  const store = useStore();
   // 登录表单数据
-  let loginData = reactive({
+  const loginModel = reactive({
     username: "",
     password: ""
   });
-  // 声明loginForm
-  let loginForm = ref(null);
+  // 声明loginFormRef
+  const loginFormRef = ref(null);
+  // 正在登录状态
+  const logining = ref(false);
+
 
   // 提交表单
-  let loginSubmit = () => {
+  const loginSubmit = () => {
     // 校验登录表单的数据
-    loginForm.value
+    loginFormRef.value
       .validate()
       .then(() => {
+        // 开启正在登录状态
+        logining.value = true;
         // 准备参数
         let params = {
-          username: loginData.username,
-          password: loginData.password
+          username: loginModel.username,
+          password: loginModel.password
         };
         // 发起登录请求
         httpPost(auth.UserLogin, params).then(res => {
+          // 关闭正在登录状态
+          logining.value = false;
           if (res.success) {
             // 保存token
             window.sessionStorage.setItem("token", res.data.token);
             // 提示用户登录成功
             message.success("登录成功");
-            // 将permissions信息存入共享库
-            store.commit("SET_PERMISSIONS", res.data.permissions);
+            // 将 用户信息 存入共享库
+            store.commit("SET_USERINFOS", res.data);
             // 跳转主页
             router.push("/home");
           } else {
@@ -57,16 +64,11 @@ export const useLoginSubmit = () => {
       });
   };
 
-  // 清除表单密码
-  let clearPassword = () => {
-    loginData.password = "";
-  };
-
   return {
-    loginData,
+    loginModel,
     loginSubmit,
-    loginForm,
-    clearPassword
+    loginFormRef,
+    logining
   };
 };
 //#endregion

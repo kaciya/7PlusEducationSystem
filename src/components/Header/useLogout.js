@@ -1,4 +1,8 @@
 //#region 退出登录
+// 导入请求方法
+import { httpPost } from "@/utils/http";
+// 导入auth接口
+import auth from "@/api/authAPI";
 // 导入对话框
 import { Modal } from "ant-design-vue";
 // 导入创建虚拟DOM
@@ -20,27 +24,24 @@ export const useLogout = () => {
       title: "退出系统确认",
       icon: createVNode(ExclamationCircleOutlined),
       content: "确定要退出登录吗？",
-      okText: "确定",
-      cancelText: "取消",
       autoFocusButton: "cancel", //指定自动获得焦点的按钮
       onOk() {
-        // 开启加载状态
-        // spinning.value = true;
         return new Promise(resolve => {
-          setTimeout(() => {
-            // 结束
-            resolve();
-            // 退出登录 [延时]
-            setTimeout(() => {
+          httpPost(auth.UserLogout).then(res => {
+            if (res.success) {
               // 移除token
               window.sessionStorage.removeItem("token");
               // 调回登录页
               router.push("/login");
               // 提示退出成功
               message.success("退出成功", 2);
-            }, 200);
-          }, 600);
-        }).catch(() => console.log("Oops errors!"));
+              // 结束加载
+              resolve();
+            }
+          }).catch(err => {
+            console.log(err);
+          })
+        }).catch(() => message.error("退出失败", 2));
       },
       onCancel() {
         return;

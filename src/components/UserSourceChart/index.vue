@@ -8,13 +8,10 @@
     </template>
     <div class="user-source">
       <div
-        id="myChart"
-        ref="myCharts"
+        ref="chartRef"
         :style="{
-          width: '500px',
-          height: '100%',
-          left: '14px',
-          top: '-50px'
+          width: '100%',
+          height: '100%'
         }"
       />
     </div>
@@ -22,23 +19,30 @@
 </template>
 
 <script>
-// 导入getCurrentInstance方法等
-import { getCurrentInstance, onMounted } from "vue";
+// 导入vue中的方法
+import { onMounted, inject } from "vue";
+// 导入获取用户来源
+import { useGetUserSource } from "./useGetUserSource";
 export default {
   setup() {
-    // 使用ctx
-    const { ctx } = getCurrentInstance();
+    // 用户来源数据
+    const { chartRef, getUserSource } = useGetUserSource();
+    // 获取$echarts
+    const echarts = inject("$echarts");
+    // 定义echarts实例存储变量
+    let chart = null;
     // 在mounted周期中执行
     onMounted(() => {
+      // 初始化echarts实例
+      chart = echarts.init(chartRef.value);
       // 调用绘图函数
       drawLine();
+      // 初始化图形
+      setUserSource();
     });
 
     //#region 绘图函数
     function drawLine() {
-      // 初始化echarts实例
-      const myCharts = ctx.$echarts.init(ctx.$refs.myCharts);
-
       //#region 指定配置图形参数
       const options = {
         title: {
@@ -87,7 +91,7 @@ export default {
           data: ["PC", "APP", "小程序"],
           x: "center",
           y: "bottom",
-          padding: [0, 0, 2, 0],
+          padding: [0, 0, 40, 0],
           textStyle: {
             color: "#8c8c8c",
             padding: [0, 4]
@@ -107,7 +111,7 @@ export default {
             name: "用户来源",
             type: "pie",
             radius: "57%",
-            center: ["50%", "56%"],
+            center: ["52%", "46%"],
             // 高亮扇区的偏移距离
             hoverOffset: 0,
             // 放大动画效果
@@ -150,12 +154,23 @@ export default {
       //#endregion
 
       // 使用刚指定的配置项和数据显示图表
-      myCharts.setOption(options);
+      chart.setOption(options);
+    }
+    //#endregion
+
+    //#region 设置用户来源数据
+    function setUserSource() {
+      // 开启加载动画
+      chart.showLoading();
+      // 获取数据异步加载
+      getUserSource(chart);
     }
     //#endregion
 
     // 返回
-    return {};
+    return {
+      chartRef
+    };
   }
 };
 </script>
@@ -164,10 +179,10 @@ export default {
 .user-source-page {
   float: left;
   // width: 500px;
+  width: 100%;
   padding: 0;
   padding-top: 16px;
   padding-bottom: 4px;
-  // margin-left: 20px;
 
   .user-source-page-heading {
     padding-left: 24px;
@@ -177,9 +192,10 @@ export default {
 }
 
 .user-source {
-  width: 500px;
+  max-width: 532px;
+  width: 100%;
   height: 470px;
   border-top: 1px solid #e9e9e9;
-  overflow: hidden;
+  // overflow: hidden;
 }
 </style>

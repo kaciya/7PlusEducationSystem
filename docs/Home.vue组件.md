@@ -845,7 +845,6 @@ export const useGetStatistics = () => {
         // 索引自增
         i++;
       }
-      // console.log(numArr.reverse().join(""));
       // 返回处理后的数据
       return numArr.reverse().join("");
     }
