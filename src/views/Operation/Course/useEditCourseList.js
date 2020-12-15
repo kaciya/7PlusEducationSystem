@@ -4,13 +4,13 @@
  * */
 import { reactive, ref } from "vue"
 // 引入api
-import { course } from "../../../api/operationAPI"
-import { httpPost } from "../../../utils/http";
+import { course } from "@/api/operationAPI"
+import { httpPost } from "@/utils/http";
 import { message } from "ant-design-vue";
 
-export const courseEdit = (getCourse) => {
+export const useEditCourseList = (getCourse) => {
   // 设置模态框的状态
-  const Editvisible = ref(false);
+  const editvisible = ref(false);
   // 课程id
   const courseId = ref(null);
 
@@ -24,9 +24,9 @@ export const courseEdit = (getCourse) => {
   })
 
   // 显示模态框
-  const handleShowEdit = (record) => {
+  const showEdit = (record) => {
     courseId.value = record.id;
-    Editvisible.value = true;
+    editvisible.value = true;
   }
 
   // 获取ref
@@ -49,7 +49,7 @@ export const courseEdit = (getCourse) => {
   }
 
   // 点击确定的回调
-  const handleEditSubmit = () => {
+  const editSubmit = () => {
     editRef.value
       .validate()
       .then(async () => {
@@ -57,7 +57,7 @@ export const courseEdit = (getCourse) => {
         let { name,introduce, fit, trait, isShow } = editModel;
         isShow = Number(isShow);
         // 发送请求
-        let res = await httpPost(course.editCourseList,{
+        let res = await httpPost(course.EditCourseList,{
           name,
           introduce,
           fit,
@@ -69,7 +69,7 @@ export const courseEdit = (getCourse) => {
         if (res.code === 200) {
           message.success(res.message);
           // 关闭模态框
-          Editvisible.value = false;
+          editvisible.value = false;
           // 清空表单数据
           editRef.value.resetFields();
           // 执行回调
@@ -82,18 +82,18 @@ export const courseEdit = (getCourse) => {
   }
 
   // 点击取消的回调函数
-  const handleEditCancel =() => {
+  const editCancel =() => {
     // 清空表单数据
     editRef.value.resetFields();
   }
 
   return {
-    Editvisible,
+    editvisible,
     editModel,
     editRules,
     editRef,
-    handleShowEdit,
-    handleEditSubmit,
-    handleEditCancel
+    showEdit,
+    editSubmit,
+    editCancel
   }
 }

@@ -12,7 +12,7 @@ import {
 export const teacherListData = reactive({});
 
 // 获取教师数据
-export const useEditTeacherList = (pageNum ,pageSize,callback) => {
+export const useGetTeacherList = (pageNum ,pageSize,callback) => {
   // 获取数据
   httpGet(teacherInfo.GetTacherList, {
       pageNum,
@@ -52,15 +52,15 @@ export const getPagination = () => {
   const showSizeChange = (current, size) => {
     loadState.value = true;
     // 重新获取数据
-    getTacherList(current, size, () => {
+    useGetTeacherList(current, size, () => {
       loadState.value = false;
     });
   };
   // 页码改变的回调
-  const handleTogglePage = (page, pageSize) => {
+  const togglePage = (page, pageSize) => {
     loadState.value = true;
     // 重新获取分页数据
-    getTacherList(page, pageSize, () => {
+    useGetTeacherList(page, pageSize, () => {
       loadState.value = false;
     });
   };
@@ -77,6 +77,6 @@ export const getPagination = () => {
     // pageSize变化的回调
     showSizeChange,
     // 页码改变的回调
-    handleTogglePage
+    togglePage
   }
 }

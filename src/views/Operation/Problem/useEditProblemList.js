@@ -7,7 +7,7 @@ import { httpPost } from "../../../utils/http";
 import { problem } from "../../../api/operationAPI";
 import { message } from "ant-design-vue";
 
-export const problemEdit = (getProblem) => {
+export const useEditProblemList = (getProblem) => {
   // 编辑模态框状态
   const editFormVisible = ref(false);
 
@@ -39,7 +39,7 @@ export const problemEdit = (getProblem) => {
   }
 
   // 修改数据
-  const handleEidtSbumit = () => {
+  const eidtSbumit = () => {
     // 进行表单校验
     editRef.value
       .validate()
@@ -62,7 +62,7 @@ export const problemEdit = (getProblem) => {
   }
 
   // 点击取消的事件
-  const handleEditCancel = () => {
+  const eEditCancel = () => {
     // 清空表单数据
     editRef.value.resetFields();
   }
@@ -74,7 +74,7 @@ export const problemEdit = (getProblem) => {
     editRule,
     editRef,
     showEditForm,
-    handleEidtSbumit,
-    handleEditCancel
+    eidtSbumit,
+    eEditCancel
   }
 }

@@ -25,14 +25,14 @@
       </a-row>
       <!-- 表格start -->
       <a-table
-      :columns="CourseListData.columns"
-      :data-source="CourseListData.data"
+      :columns="courseListData.columns"
+      :data-source="courseListData.data"
       :pagination="false"
       :row-key="record => record.id"
       bordered
       >
         <template #operational="{ record }">
-          <a-button type="primary" style="margin-right: 45px" @click="handleShowEdit(record)">
+          <a-button type="primary" style="margin-right: 45px" @click="showEdit(record)">
             编辑
           </a-button>
           <a-button type="danger" @click="showDelete(record.id)">
@@ -45,28 +45,28 @@
       <a-modal
         title="添加课程"
         v-model:visible="addFormVisibility"
-        @ok="handleAddSubmit"
-        @cancel="handelAddCancel"
+        @ok="addSubmit"
+        @cancel="addCancel"
       >
         <a-form
-          :model="AddModel"
+          :model="addModel"
           :rules="addRules"
-          ref="AddRef"
+          ref="addRef"
         >
           <a-form-item name="name" label="课程名称" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
-            <a-input v-model:value="AddModel.name" />
+            <a-input v-model:value="addModel.name" />
           </a-form-item>
           <a-form-item name="introduce" label="课程介绍" class="addForm" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
-            <a-textarea v-model:value="AddModel.introduce" />
+            <a-textarea v-model:value="addModel.introduce" />
           </a-form-item>
           <a-form-item name="fit" label="适合人群" class="addForm" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
-            <a-textarea v-model:value="AddModel.fit" />
+            <a-textarea v-model:value="addModel.fit" />
           </a-form-item>
           <a-form-item name="trait" label="课程特点" class="addForm" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
-            <a-textarea v-model:value="AddModel.trait" />
+            <a-textarea v-model:value="addModel.trait" />
           </a-form-item>
           <a-form-item name="isShow" label="首页展示" class="addForm" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
-            <a-switch v-model:checked="AddModel.isShow" />
+            <a-switch v-model:checked="addModel.isShow" />
           </a-form-item>
         </a-form>
       </a-modal>
@@ -74,9 +74,9 @@
       <!-- 课程信息编辑模态框 start -->
       <a-modal
         title="编辑课程"
-        v-model:visible="Editvisible"
-        @ok="handleEditSubmit"
-        @cancel="handleEditCancel"
+        v-model:visible="editvisible"
+        @ok="editSubmit"
+        @cancel="editCancel"
       >
         <a-form
           :model="editModel"
@@ -112,13 +112,13 @@ import Crumbs from "@/components/Crumbs";
 // 引入列表格式
 import { columns } from "./useCourseColumn";
 // 引入获取数据方法
-import { getCourseList } from "./useCourseGetList";
+import { useGetCourseList } from "./useGetCourseList";
 // 引入添加课程方法
-import { CourseAdd } from "./useCourseAdd";
+import { useAddCourseList } from "./useAddCourseList";
 // 引入编辑课程方法
-import { courseEdit } from "./useCourseEditList";
+import { useEditCourseList } from "./useEditCourseList";
 // 引入删除课程方法
-import { deleteCourse } from "./useCourseDeleteList";
+import { useDelCourseList } from "./useDelCourseList";
 
 export default {
   // 使用组件
@@ -127,46 +127,46 @@ export default {
   },
   setup() {
     //#region 获取数据
-    const { CourseListData,getCourse } = getCourseList();
+    const { courseListData,getCourse } = useGetCourseList();
     // 获取表格数据
     getCourse();
     // 设置表格列
-    CourseListData.columns = columns;
+    courseListData.columns = columns;
     //#endregion
 
     //#region 添加数据
-    const { addFormVisibility,AddModel,addRules,AddRef,showAddForm,handleAddSubmit,handelAddCancel } = CourseAdd(getCourse);
+    const { addFormVisibility,addModel,addRules,addRef,showAddForm,addSubmit,addCancel } = useAddCourseList(getCourse);
     //#endregion
 
     //region 编辑课程
-    const { Editvisible,editModel,editRules,editRef,handleShowEdit,handleEditSubmit,handleEditCancel } = courseEdit(getCourse);
+    const { editvisible,editModel,editRules,editRef,showEdit,editSubmit,editCancel } = useEditCourseList(getCourse);
     //endregion
 
     //#region 删除课程
-    const { showDelete } = deleteCourse(getCourse);
+    const { showDelete } = useDelCourseList(getCourse);
     //#endregion
 
     return {
       //#region 获取数据
-      CourseListData,
+      courseListData,
       //#endregion
       //#region 添加课程
       addFormVisibility,
-      AddModel,
+      addModel,
       addRules,
-      AddRef,
+      addRef,
       showAddForm,
-      handleAddSubmit,
-      handelAddCancel,
+      addSubmit,
+      addCancel,
       //#endregion
       //#region 编辑课程
-      Editvisible,
+      editvisible,
       editModel,
       editRules,
       editRef,
-      handleShowEdit,
-      handleEditSubmit,
-      handleEditCancel,
+      showEdit,
+      editSubmit,
+      editCancel,
       //#endregion
       //#region 删除课程
       showDelete

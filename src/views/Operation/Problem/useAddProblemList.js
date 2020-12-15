@@ -9,7 +9,7 @@ import { httpPost } from "@/utils/http";
 import { problem } from "@/api/operationAPI";
 import { message } from "ant-design-vue";
 
-export const problemAddList = (getProblem) => {
+export const useAddProblemList = (getProblem) => {
   // 设置模态框状态
   const addFormVisible = ref(false);
   // 显示模态框
@@ -37,7 +37,7 @@ export const problemAddList = (getProblem) => {
   }
 
   // 添加数据
-  const handleAddSubmit = () => {
+  const addSubmit = () => {
     // 进行表单校验
     addRef.value
       .validate()
@@ -59,7 +59,7 @@ export const problemAddList = (getProblem) => {
   }
 
   // 点击cancel的事件
-  const handleAddCancel = () => {
+  const addCancel = () => {
     // 清除表单数据
     addRef.value.resetFields();
   }
@@ -70,7 +70,7 @@ export const problemAddList = (getProblem) => {
     addRule,
     addRef,
     showAddForm,
-    handleAddSubmit,
-    handleAddCancel
+    addSubmit,
+    addCancel
   }
 }

@@ -31,7 +31,7 @@ import Crumbs from "@/components/Crumbs";
 // 引入表格列
 import { column } from "./useAboutColumn";
 // 引入获取数据方法
-import { getAboutList } from "./useAboutGetList";
+import { useGetAboutList } from "./useGetAboutList";
 
 export default {
   // 使用组件
@@ -41,10 +41,9 @@ export default {
   // setup响应api入口
   setup() {
     //#region 获取数据方法
-    const { aboutList,getAboutData } = getAboutList();
+    const { aboutList,getAboutData } = useGetAboutList();
     // 设置表格列
     aboutList.column = column;
-    getAboutData();
     //#endregion
 
     return {

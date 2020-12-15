@@ -8,7 +8,7 @@ import { message, Modal } from "ant-design-vue";
 import { httpDelete } from "@/utils/http";
 import { problem } from "@/api/operationAPI"
 
-export const problemDelete = (getProblem) => {
+export const useDelProblem = (getProblem) => {
   // 创建模态框
   const showDeleteConfirm = (id) => {
     // 获取问题id
@@ -23,7 +23,7 @@ export const problemDelete = (getProblem) => {
       cancelText: '取消',
       onOk() {
         // 发送请求
-        httpDelete(problem.DeleteProblemList + `/${problemId}`)
+        httpDelete(problem.DelProblemList + `/${problemId}`)
           .then(res => {
             if (res.code === 200) {
               message.success(res.message);

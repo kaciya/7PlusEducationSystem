@@ -15,8 +15,8 @@
       }"
     >
       <a-table
-        :columns="ExerciseData.columns"
-        :data-source="ExerciseData.data"
+        :columns="exerciseData.columns"
+        :data-source="exerciseData.data"
         bordered
         :row-key="record => record.id"
         :pagination="false"
@@ -36,12 +36,12 @@
         title="编辑内容"
         v-model:visible="editVisibility"
         :confirm-loading="confirmLoading"
-        @ok="ExerciseEditSubmit"
+        @ok="exerciseEditSubmit"
       >
         <a-form
           :model="editMode"
           :rules="editRule"
-          ref="ExerciseEditRef"
+          ref="exerciseEditRef"
         >
           <a-row>
             <a-col :span="24">
@@ -67,9 +67,9 @@ import Crumbs from "@/components/Crumbs";
 // 引入列表组件
 import { columns } from "./useExerciseColumns";
 // 引入获取列表方法
-import { getExerciseList } from "./useExerciseGetList";
+import { useGetExerciseList } from "./useGetExerciseList";
 // 引入编辑功能方法
-import { ExerciseEdit } from "./useExerciseEdit";
+import { useEditExercise } from "./useEditExercise";
 
 export default {
   components: {
@@ -78,7 +78,7 @@ export default {
   // setup响应api入口
   setup() {
     //#region 获取数据
-    const { ExerciseData, getExercise } = getExerciseList();
+    const { exerciseData, getExercise } = useGetExerciseList();
     getExercise();
     //#endregion
 
@@ -87,25 +87,25 @@ export default {
       editVisibility,
       editMode,
       editRule,
-      ExerciseEditRef,
+      exerciseEditRef,
       confirmLoading,
       editShow,
-      ExerciseEditSubmit
-    } = ExerciseEdit(getExercise);
+      exerciseEditSubmit
+    } = useEditExercise(getExercise);
     //#endregion
 
     return {
       //#region  获取数据
       columns,
-      ExerciseData,
+      exerciseData,
       //#endregion
       //#region 编辑功能
       editVisibility,
       editMode,
       editRule,
-      ExerciseEditRef,
+      exerciseEditRef,
       confirmLoading,
-      ExerciseEditSubmit,
+      exerciseEditSubmit,
       editShow,
       //#endregion
     };

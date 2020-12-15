@@ -32,9 +32,9 @@
         :columns="teacherListData.columns"
         :data-source="teacherListData.data"
         :row-key="record => record.id"
-        bordered
         :pagination="false"
         :loading="loadState"
+        bordered
       >
         <template #index="{ index }">{{index + 1}}</template>
         <template #photo="{ record }">
@@ -44,7 +44,7 @@
           <a-button type="primary" size="small" style="margin-right: 10px" @click="showEditModal(record.id)">
             编辑
           </a-button>
-          <a-button type="danger" size="small" @click="DeleteTeacher(record.id,getTacherList,pageNum,pageSize,loadState)">
+          <a-button type="danger" size="small" @click="useDelTeacherList(record.id,useGetTeacherList,pageNum,pageSize,loadState)">
             删除
           </a-button>
         </template>
@@ -55,13 +55,13 @@
       <a-row>
         <a-col :span="24">
           <a-pagination
+            style="margin-top: 15px;float: right"
             show-size-changer
             v-model:current="pageNum"
             v-model:pageSize="pageSize"
             :total="teacherListData.total"
-            style="margin-top: 15px;float: right"
-            @change="handleTogglePage"
             :page-size-options="pageSizeOptions"
+            @change="togglePage"
             @show-size-change="showSizeChange"
           />
         </a-col>
@@ -112,10 +112,10 @@
       <!-- 编辑用户信息模态框 start -->
       <a-modal
         title="编辑成员"
-        v-model:visible="EditLabelVisible"
-        @ok="handleEditSubmit"
-        @cancel="handleEditCancel"
-        :confirm-loading="EditModalLoad"
+        v-model:visible="editLabelVisible"
+        @ok="editSubmit"
+        @cancel="editCancel"
+        :confirm-loading="editModalLoad"
       >
         <a-form
           :model="editModel"
@@ -162,17 +162,17 @@
 // 引入面包屑组件
 import Crumbs from "@/components/Crumbs";
 // 引入获取教师列表方法和分页方法
-import { getTacherList,getPagination } from "./useTeacherList";
+import { useGetTeacherList,getPagination } from "./useGetTeacherList";
 // 引入添加教师方法
-import { addTeacher } from "./useTeacherListAdd"
+import { useAddTeacherList } from "./useAddTeacherList"
 // 引入删除教师方法
-import { DeleteTeacher } from "./useTeacherListDelete";
+import { useDelTeacherList } from "./useDelTeacherList";
 // 引入编辑老师方法
-import { editTeacher } from "./useTeacherListEdit"
+import { useEditTeacherList } from "./useEditTeacherList"
 // 引入表格列
-import { columns } from "./useTeacherColumns";
+import { useTeacherColumns } from "./useTeacherColumns";
 // 引入表格数据
-import { teacherListData } from "./useTeacherList";
+import { teacherListData } from "./useGetTeacherList";
 
 export default {
   // 使用组件
@@ -182,12 +182,12 @@ export default {
   // setup响应api入口
   setup() {
     // 设置表格列
-    teacherListData.columns = columns;
+    teacherListData.columns = useTeacherColumns;
     // 分页
-    const { pageNum,pageSize,loadState,pageSizeOptions,handleTogglePage,showSizeChange } = getPagination();
+    const { pageNum,pageSize,loadState,pageSizeOptions,togglePage,showSizeChange } = getPagination();
 
     // 获取数据
-    getTacherList(pageNum.value, pageSize.value, () => {
+    useGetTeacherList(pageNum.value, pageSize.value, () => {
       loadState.value = false;
     });
 
@@ -197,42 +197,41 @@ export default {
 
     //#region 添加老师
     // 设置参数
-    const AddParams = {
+    const addParams = {
       pageNum,
       pageSize,
       loadState,
-      getTacherList
+      useGetTeacherList
     }
-    const { addLabelVisible,showModal,addModel,addRule,confirmLoading,addRef,handleSubmit } = addTeacher(AddParams);
+    const { addLabelVisible,showModal,addModel,addRule,confirmLoading,addRef,handleSubmit } = useAddTeacherList(addParams);
     //#endregion
 
     //#region 编辑老师
     // 设置参数
-    const EditParams = {
+    const editParams = {
       pageNum,
       pageSize,
       loadState,
-      getTacherList
+      useGetTeacherList
     }
-    const { EditLabelVisible,editModel,editLabelRule,editRef,EditModalLoad,showEditModal,handleEditCancel,handleEditSubmit } = editTeacher(EditParams);
+    const { editLabelVisible,editModel,editLabelRule,editRef,editModalLoad,showEditModal,editCancel,editSubmit } = useEditTeacherList(editParams);
     //#endregion
 
     return {
       // 获取数据方法
-      getTacherList,
+      useGetTeacherList,
       // 列表格式
-      columns,
       //#region 获取列表数据以及分页
       teacherListData,
       loadState,
       pageNum,
       pageSize,
       pageSizeOptions,
-      handleTogglePage,
+      togglePage,
       showSizeChange,
       //#endregion
       // 删除教师
-      DeleteTeacher,
+      useDelTeacherList,
       //#region 添加老师
       addLabelVisible,
       showModal,
@@ -243,14 +242,14 @@ export default {
       confirmLoading,
       //#endregion
       //#region 编辑老师
-      EditLabelVisible,
-      EditModalLoad,
+      editLabelVisible,
+      editModalLoad,
       editModel,
       editLabelRule,
       editRef,
       showEditModal,
-      handleEditSubmit,
-      handleEditCancel,
+      editSubmit,
+      editCancel,
       //#endregion
     };
   }
