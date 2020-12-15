@@ -12,7 +12,7 @@ import {
 export const teacherListData = reactive({});
 
 // 获取教师数据
-export const getTacherList = (pageNum ,pageSize,callback) => {
+export const useEditTeacherList = (pageNum ,pageSize,callback) => {
   // 获取数据
   httpGet(teacherInfo.GetTacherList, {
       pageNum,
