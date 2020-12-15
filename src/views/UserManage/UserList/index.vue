@@ -4,13 +4,7 @@
     <Crumbs :crumbName="[{ name: '用户管理' }, { name: '用户列表' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
-    <div
-      :style="{
-        padding: '20px',
-        background: '#fff',
-        minHeight: '93%',
-      }"
-    >
+    <a-card style="min-height: 93%">
       <!-- 查询输入框 start -->
       <div class="query-box">
         <a-form :model="userModel" ref="userRef">
@@ -18,7 +12,7 @@
             <!-- 用户名称 start -->
             <a-col :span="5" :offset="1">
               <a-row>
-                <a-col :span="7" class="query-box-title">
+                <a-col :span="7">
                   <span>用户名称：</span>
                 </a-col>
                 <a-col :span="17">
@@ -35,7 +29,7 @@
             <!-- 手机号 start -->
             <a-col :span="5" :offset="1">
               <a-row>
-                <a-col :span="6" class="query-box-title">
+                <a-col :span="6">
                   <span>手机号：</span>
                 </a-col>
                 <a-col :span="17">
@@ -52,7 +46,7 @@
             <!-- ID start -->
             <a-col :span="5" :offset="1">
               <a-row>
-                <a-col :span="4" class="query-box-title">
+                <a-col :span="4">
                   <span>ID：</span>
                 </a-col>
                 <a-col :span="17">
@@ -70,7 +64,7 @@
               <a-row>
                 <!-- 查询按钮 start -->
                 <a-col :span="12">
-                  <a-button type="primary" @click="queryUserList">
+                  <a-button type="primary" @click="getUserList">
                     查询
                   </a-button>
                 </a-col>
@@ -87,34 +81,34 @@
       </div>
       <!-- 查询输入框 end -->
       <!-- 数据列表 start -->
-      <div class="user-table">
-        <div class="user-table-title">
-          <span>用户列表</span>
-        </div>
-        <a-table
-          bordered
-          :columns="listColumns"
-          :data-source="userTableData.tableData.records"
-          :pagination="userTablePagination"
-          :row-key="(record) => record.id"
-          @change="handleTableChange"
-        >
-          <!-- 来源 -->
-          <template #channel="{ record }">
-            <span class="user-table-source">{{ record.channel }}</span>
-          </template>
-          <!-- 操作 -->
-          <template #operation="{ record }">
-            <!-- 跳转到用户详情页面并传id -->
-            <a-button type="primary">
-              <router-link :to="'/user/details/' + record.id">查看</router-link>
-            </a-button>
-          </template>
-        </a-table>
-        <!-- 分页end -->
-      </div>
+      <!-- 页头 -->
+      <a-page-header
+        style="border: 1px solid rgb(235, 237, 240)"
+        title="用户列表"
+      />
+      <!-- 表格 -->
+      <a-table
+        bordered
+        :columns="columns"
+        :data-source="userData.data"
+        :pagination="userPagination"
+        :row-key="(record) => record.id"
+        @change="onTableChange"
+      >
+        <!-- 来源 -->
+        <template #channel="{ record }">
+          <span class="user-table-source">{{ record.channel }}</span>
+        </template>
+        <!-- 操作 -->
+        <template #operation="{ record }">
+          <!-- 跳转到用户详情页面并传id -->
+          <a-button type="primary">
+            <router-link :to="'/user/details/' + record.id">查看</router-link>
+          </a-button>
+        </template>
+      </a-table>
       <!-- 数据列表 end -->
-    </div>
+    </a-card>
     <!-- 主体Main end -->
   </a-layout-content>
 </template>
@@ -123,10 +117,11 @@
 // 引入面包屑组件
 import Crumbs from "@/components/Crumbs";
 // 引入获取数据文件
-import { userTable } from "./userTable";
-import { userListColumns } from "./userTableColumns";
+import { useGetList } from "./useGetList";
+// 表格Columns
+import { useColumns } from "./useColumns";
 // 引入重置方法文件
-import { userReset } from "./userReset";
+import { useResetList } from "./useResetList";
 export default {
   // 使用组件
   components: {
@@ -136,40 +131,37 @@ export default {
   setup() {
     //#region 获取（查询）数据
     let {
-      pagination, // 分页数据
-      userTableData, // 表格数据
+      userData, // 表格数据
       userModel, // 表单数据
-      queryUserList, // 点击查询的回调
-      handlePageChange, // 点击页码事件
-      onShowSizeChange, // 选择每页数据条数事件
-      getUserTabelData, // 获取数据方法
-      handleTableChange, // 页码改变触发事件
-      userTablePagination, // 表格分页配置项
-    } = userTable();
-
-    let { listColumns } = userListColumns();
+      getUserList, // 点击查询的回调
+      getUserListData, // 获取数据方法
+      onTableChange, // 页码改变触发事件
+      userPagination, // 表格分页配置项
+    } = useGetList();
+    // 表格Columns
+    let { columns } = useColumns();
     //#endregion
     //#region 重置事件
     /**
      * userForm:表单ref
      * handelReset:点击重置的回调
      */
-    let { userRef, resetUserList } = userReset(getUserTabelData);
+    let { userRef, resetUserList } = useResetList(
+      getUserListData,
+      userPagination
+    );
     //#endregion
     // 导出数据
     return {
-      pagination,
       userModel,
       userRef,
-      queryUserList,
+      getUserList,
       resetUserList,
-      handlePageChange,
-      onShowSizeChange,
-      getUserTabelData,
-      userTableData,
-      listColumns,
-      handleTableChange,
-      userTablePagination,
+      getUserListData,
+      userData,
+      columns,
+      onTableChange,
+      userPagination,
     };
   },
 };
@@ -178,51 +170,19 @@ export default {
 <style lang="scss" scoped>
 // 查询输入框样式 start
 .query-box {
-  height: 100px;
   margin-bottom: 15px;
   border: 1px solid #ddd;
 
-  & .ant-form > .ant-row {
-    line-height: 40px;
+  .ant-form > .ant-row {
     margin-top: 30px;
-  }
-  .ant-btn {
-    width: 70px;
-  }
-  .query-box-title {
-    font-weight: 400;
-    font-size: 14px;
-    font-style: normal;
-    text-align: right;
-    color: #333333;
+    line-height: 40px;
   }
 }
 // 查询输入框样式 end
 // 表格样式 start
-.user-table {
-  overflow: hidden;
-  border: 1px solid #ddd;
-  .user-table-title {
-    height: 50px;
-    border-bottom: 1px solid #ddd;
-    span {
-      line-height: 50px;
-      font-weight: 700;
-      color: #333;
-      margin-left: 11px;
-    }
-  }
-  .user-table-source {
-    color: #16a085;
-  }
-  .ant-table-wrapper {
-    padding: 16px;
-  }
-  .ant-pagination {
-    float: right;
-    padding-right: 8px;
-    padding-bottom: 16px;
-  }
+// 来源
+.user-table-source {
+  color: #16a085;
 }
 // 表格样式 end
 </style>
