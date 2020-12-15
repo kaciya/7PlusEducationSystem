@@ -13,7 +13,11 @@
         <a-avatar
           size="small"
           src="https://img2.woyaogexing.com/2020/12/09/cbfae31998fb4c50ae3981274a7551d8!400x400.jpeg"
-        />
+        >
+          <template #icon>
+            <UserOutlined />
+          </template>
+        </a-avatar>
         <span class="user-name">Admin</span>
       </div>
       <!-- 下拉menu -->
@@ -34,12 +38,17 @@ import { useLogout } from "./useLogout";
 // 导入用户信息
 import { useGetUserInfo } from "./useGetUserInfo";
 // 引入图标icons
-import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons-vue";
+import {
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+  UserOutlined,
+} from "@ant-design/icons-vue";
 export default {
   // 导入组件
   components: {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
+    UserOutlined,
   },
   // setup响应api入口
   setup() {
@@ -123,6 +132,23 @@ export default {
     &:active {
       background: #cf9236;
       border-color: #cf9236;
+    }
+  }
+}
+// 状态操作 开/关
+.pass-btn {
+  &.ant-btn-primary {
+    background-color: #67c23a;
+    border-color: #67c23a;
+
+    &:hover,
+    &:focus {
+      background: #85ce61;
+      border-color: #85ce61;
+    }
+    &:active {
+      background: #5daf34;
+      border-color: #5daf34;
     }
   }
 }

@@ -1,11 +1,13 @@
 <template>
-  <div class="container-table">
+  <div>
+    <!-- 表格 -->
     <a-table
       bordered
-      :columns="topicColumns"
-      :data-source="userTopicData.topicData.records"
-      :pagination="false"
+      :columns="columns"
+      :data-source="topicData.data"
+      :pagination="topicPagination"
       :row-key="(record) => record.id"
+      @change="onTableChange"
     >
       <!-- 序号 -->
       <template #index="{ index }">
@@ -19,74 +21,100 @@
       </template>
       <!-- 操作 -->
       <template #operation="{ record }">
-        <span> <a-button type="primary"> 查看 </a-button></span>
-        <span v-if="record.status == 0" class="shield">
-          <a-button type="danger"> 显示 </a-button>
+        <!-- 查看按钮 -->
+        <span>
+          <a-button type="primary">
+            <router-link :to="'/topic/article/' + record.id">查看</router-link>
+          </a-button>
         </span>
+        <!-- 显示按钮 -->
+        <span v-if="record.status == 0" class="shield">
+          <!-- pass-btn 绿色按钮 -->
+          <a-button
+            type="primary"
+            class="pass-btn"
+            @click="topicShow(record.id)"
+          >
+            显示
+          </a-button>
+        </span>
+        <!-- 屏蔽按钮 -->
         <span v-else-if="record.status == 1" class="shield">
-          <a-button type="danger"> 屏蔽 </a-button>
+          <a-button type="danger" @click="topicShield(record.id)">
+            屏蔽
+          </a-button>
         </span>
       </template>
     </a-table>
-    <!-- 分页 -->
-    <a-pagination
-      show-size-changer
-      v-model:current="pagination.pageNum"
-      v-model:pageSize="pagination.pageSize"
-      @change="handleTopicPageChange"
-      @showSizeChange="handelTopicSizeChange"
-      :page-size-options="pagination.pageSizeOptions"
-      :total="pagination.total"
+    <!-- 屏蔽模态框 start -->
+    <a-modal
+      v-model:visible="topicShieldVisible"
+      title="屏蔽"
+      @ok="confirmShieldModal(pageNum)"
+      @cancel="cancelShieldModal"
     >
-    </a-pagination>
+      <a-row>
+        <a-col :span="24">
+          <span> 请输入屏蔽理由 </span>
+        </a-col>
+      </a-row>
+      <a-row :style="{ marginTop: '15px' }">
+        <a-col :span="24">
+          <a-input v-model:value="shielFrameValue"></a-input>
+        </a-col>
+      </a-row>
+    </a-modal>
+    <!-- 屏蔽模态框 end  -->
   </div>
 </template>
-
 <script>
-import { userTopic } from "./userTopic";
-import { userTopicColumns } from "./userTopicColumns";
+// 柒加圈数据
+import { useGetTopic } from "./useGetTopic";
+// 柒加圈columns
+import { useTopicColumns } from "./useTopicColumns";
+// 引入屏蔽显示功能
+import { useTopicShieldShow } from "@/views/SevenPlusCircle/useTopicShieldShow";
 export default {
   // 接收用户id
   props: ["userID"],
   setup(prop) {
     const {
-      userTopicData, // 表格数据
-      pagination, // 分页数据
-      handelTopicSizeChange, // 点击页码跳转事件
-      handleTopicPageChange, // 选择每页显示条数事件
-    } = userTopic(prop.userID);
-    const { topicColumns } = userTopicColumns();
+      topicData, // 表格数据
+      topicPagination, //分页配置项
+      onTableChange, //页码改变回调
+      getTopicData,
+    } = useGetTopic(prop.userID);
+    // 柒加圈columns
+    const { columns } = useTopicColumns();
+    // 屏蔽显示
+    const {
+      topicShieldVisible, // 屏蔽模态框
+      topicShield, // 显示屏蔽模态框
+      shielFrameValue, // 双向绑定屏蔽理由输入框
+      confirmShieldModal, // 屏蔽框确认
+      topicShow, // 显示框
+      cancelShieldModal, // 关闭模态框清空并提示
+    } = useTopicShieldShow(getTopicData);
     return {
-      userTopicData,
-      pagination,
-      topicColumns,
-      handelTopicSizeChange,
-      handleTopicPageChange,
+      topicData,
+      columns,
+      topicPagination,
+      onTableChange,
+      getTopicData,
+      topicShieldVisible, // 屏蔽模态框
+      topicShield, // 显示屏蔽模态框
+      shielFrameValue, // 双向绑定屏蔽理由输入框
+      confirmShieldModal, // 屏蔽框确认
+      topicShow, // 显示框
+      cancelShieldModal, // 关闭模态框清空并提示
     };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-// 表格 start
-
-.container-table {
-  position: relative;
-  top: -17px;
-  height: 1120px;
-  border-top: 0px;
-  padding: 16px 30px;
-  overflow: hidden;
-  border: 1px solid #f0f0f0;
-  // 显示屏蔽按钮
-  .shield {
-    margin-left: 20px;
-  }
-  // 分页
-  .ant-pagination {
-    float: right;
-    padding-top: 16px;
-  }
+// 显示屏蔽按钮
+.shield {
+  margin-left: 20px;
 }
-//表格end
 </style>
