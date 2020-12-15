@@ -7,5 +7,5 @@ export default {
   // 删除标签
   DelLabel: "/question/label/delete",
   // 修改标签
-  UpdateLabel: "/question/label/update"
+  EditLabel: "/question/label/update"
 };
