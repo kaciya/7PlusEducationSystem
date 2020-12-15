@@ -9,7 +9,7 @@
       <Header />
       <!-- 顶部栏 end -->
       <!-- 主体 start -->
-      <router-view class="router-view" v-slot="{ Component }">
+      <router-view v-slot="{ Component }" style="padding: 0 10px">
         <!-- 动态缓存页面 -->
         <keep-alive>
           <component
@@ -51,9 +51,5 @@ export default {
 <style lang="scss" scoped>
 .home-page {
   height: 100%;
-}
-
-.router-view {
-  padding: 0 10px;
 }
 </style>

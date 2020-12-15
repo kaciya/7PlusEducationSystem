@@ -286,6 +286,10 @@ const routes = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+  // 跳转路由回到顶部
+  scrollBehavior() {
+    return { x: 0, y: 0 }
+  }
 });
 
 // 添加路由前置守卫
@@ -315,7 +319,8 @@ router.beforeEach((to, from, next) => {
       // 进入页面 缓存
       to.meta.keepAlive = true;
     }
-    next(); // 否则放行
+    // 放行
+    next();
   }
 
 
