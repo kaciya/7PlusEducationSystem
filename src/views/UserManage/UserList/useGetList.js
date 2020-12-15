@@ -73,6 +73,8 @@ export const useGetList = () => {
   //#region 查询
   // 点击查询事件
   const getUserList = () => {
+    // 点击查询跳转第一页
+    userPagination.current = 1;
     // 判断id是为数字
     if (isNaN(userModel.id)) {
       message.warning("ID为数字");

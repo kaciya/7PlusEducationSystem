@@ -46,6 +46,7 @@
         title="添加分类"
         v-model:visible="addVisible"
         :afterClose="addCategoryEmpty"
+        :maskClosable="false"
         @ok="addCategoryOk"
       >
         <a-form :model="addModel" :rules="addRules" ref="addRef">
@@ -70,8 +71,9 @@
       <a-modal
         title="修改分类"
         v-model:visible="editVisible"
-        @ok="editCategoryOk"
+        :maskClosable="false"
         :afterClose="editCategoryEmpty"
+        @ok="editCategoryOk"
       >
         <a-form :model="editModel" :rules="editRules" ref="editRef">
           <a-form-item
