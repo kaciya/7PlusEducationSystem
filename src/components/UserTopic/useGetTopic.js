@@ -50,5 +50,6 @@ export const useGetTopic = (id) => {
     topicData,
     topicPagination,
     onTableChange,
+    getTopicData,
   };
 };
