@@ -146,7 +146,10 @@ export default {
      * userForm:表单ref
      * handelReset:点击重置的回调
      */
-    let { userRef, resetUserList } = useResetList(getUserListData);
+    let { userRef, resetUserList } = useResetList(
+      getUserListData,
+      userPagination
+    );
     //#endregion
     // 导出数据
     return {

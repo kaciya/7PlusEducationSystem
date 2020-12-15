@@ -2,7 +2,7 @@ import { reactive, ref } from "vue";
 // 引入请求方式
 import { httpPost } from "@/utils/http";
 // 引入请求接口
-import wordType from "@/api/wordType";
+import wordType from "@/api/wordTypeAPI";
 //全局提示
 import { message } from "ant-design-vue";
 export const AddWordCategory = (getCategoryData) => {
@@ -72,7 +72,7 @@ export const AddWordCategory = (getCategoryData) => {
   //#endregion
   //#region 模态框关闭清空文本框
   // 模态框关闭时的回调
-  let addCategoryEmpty = () => {
+  const addCategoryEmpty = () => {
     // 清空文本框
     addRef.value.resetFields();
   };
