@@ -1,7 +1,7 @@
 import { reactive } from "vue";
 
-export const userLogColumns = () => {
-  const logColumns = reactive([
+export const useLogColumns = () => {
+  const columns = reactive([
     {
       title: "时间",
       align: "center",
@@ -20,6 +20,6 @@ export const userLogColumns = () => {
   ]);
 
   return {
-    logColumns,
+    columns,
   };
 };

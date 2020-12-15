@@ -21,7 +21,7 @@ const routes = [
   // 404
   {
     path: "/404",
-    component: () => import("@/views/404"),
+    component: () => import(/* webpackChunkName: "404" */ "@/views/404"),
     hidden: true,
   },
   // 主页

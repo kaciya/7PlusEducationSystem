@@ -1,7 +1,7 @@
 import { reactive } from "vue";
-
-export const userTopicColumns = () => {
-  const topicColumns = reactive([
+// 柒加圈columns
+export const useTopicColumns = () => {
+  const columns = reactive([
     {
       title: "序号",
       align: "center",
@@ -38,6 +38,6 @@ export const userTopicColumns = () => {
   ]);
 
   return {
-    topicColumns,
+    columns,
   };
 };
