@@ -2,11 +2,11 @@
  * 添加课程
  * */
 import { reactive, ref } from "vue";
-import { httpPost } from "../../../utils/http";
-import { course } from "../../../api/operationAPI";
+import { httpPost } from "@/utils/http";
+import { course } from "@/api/operationAPI";
 import { message } from "ant-design-vue";
 
-export const CourseAdd = (getCourse) => {
+export const useAddCourseList = (getCourse) => {
   // 模态框状态
   const addFormVisibility = ref(false);
   // 显示模态框方法
@@ -15,10 +15,10 @@ export const CourseAdd = (getCourse) => {
   }
 
   // 获取ref
-  const AddRef = ref(null);
+  const addRef = ref(null);
 
   // 创建表单数据
-  const AddModel = reactive({
+  const addModel = reactive({
     name: '',
     introduce: '',
     fit: '',
@@ -43,16 +43,16 @@ export const CourseAdd = (getCourse) => {
   }
 
   // 模态框点击确定的回调
-  const handleAddSubmit = () => {
+  const addSubmit = () => {
     // 进行表单校验
-    AddRef.value
+    addRef.value
       .validate()
       .then(() => {
         // 结构数据
-        let { name,introduce, fit, trait, isShow } = AddModel;
+        let { name,introduce, fit, trait, isShow } = addModel;
         isShow = Number(isShow);
         // 发送请求
-        httpPost(course.addCourseList,{
+        httpPost(course.AddCourseList,{
           name,
           introduce,
           fit,
@@ -66,7 +66,7 @@ export const CourseAdd = (getCourse) => {
               // 隐藏模态框
               addFormVisibility.value = false;
               // 清空表单数据
-              AddRef.value.resetFields();
+              addRef.value.resetFields();
               // 重新获取数据
               getCourse();
             }
@@ -81,18 +81,18 @@ export const CourseAdd = (getCourse) => {
   }
 
   // 点击取消时候的回调函数
-  const handelAddCancel = () => {
+  const addCancel = () => {
     // 清空表单数据
-    AddRef.value.resetFields();
+    addRef.value.resetFields();
   }
 
   return {
     addFormVisibility,
-    AddModel,
+    addModel,
     addRules,
-    AddRef,
+    addRef,
     showAddForm,
-    handleAddSubmit,
-    handelAddCancel
+    addSubmit,
+    addCancel
   }
 }

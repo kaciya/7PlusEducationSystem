@@ -11,16 +11,16 @@ import { reactive } from "vue";
 import { columns } from "./useExerciseColumns"
 
 // 获取表格数据
-export const getExerciseList = () => {
+export const useGetExerciseList = () => {
   // 储存请求数据
-  const ExerciseData = reactive({columns});
+  const exerciseData = reactive({columns});
   // 发送请求
   const getExercise = () => {
     httpGet(exercise.GetExerciseList)
       .then(res => {
         console.log(res);
         if (res.code === 200) {
-          ExerciseData.data = res.data;
+          exerciseData.data = res.data;
         }
       })
       .catch(err => {
@@ -30,7 +30,7 @@ export const getExerciseList = () => {
 
   // 导出数据
   return {
-    ExerciseData,
+    exerciseData,
     getExercise
   }
 }

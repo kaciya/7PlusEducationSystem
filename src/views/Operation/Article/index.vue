@@ -3,9 +3,8 @@
     <!-- 面包屑 start -->
     <Crumbs
       :crumbName="[
-        { name: '用户管理' },
-        { name: '用户列表', route: '#' },
-        { name: '详情' }
+        { name: '运营管理' },
+        { name: '文章列表(官网)', route: '#' },
       ]"
     />
     <!-- 面包屑 end -->
@@ -19,8 +18,8 @@
     >
       <!-- 数据列表 start -->
       <a-table
-      :columns="ArticlList.column"
-      :data-source="ArticlList.data"
+      :columns="articlList.column"
+      :data-source="articlList.data"
       :row-key="record => record.id"
       bordered
       >
@@ -51,9 +50,9 @@ import Crumbs from "@/components/Crumbs";
 // 引入列表格式
 import { column } from "./useArticleColumn";
 // 引入获取数据方法
-import { getArticleList } from "./useArticleGetList";
+import { useGetArticleList } from "./useGetArticleList";
 // 引入设置文章状态
-import { setArticleState } from "./useArticleState";
+import { useStateArticle } from "./useStateArticle";
 
 export default {
   // 使用组件
@@ -63,22 +62,22 @@ export default {
   // setup响应api入口
   setup() {
     //#region 获取数据列表方法
-    const { ArticlList,getArticl } = getArticleList();
+    const { articlList,getArticl } = useGetArticleList();
     // 设置表格列
-    ArticlList.column = column;
+    articlList.column = column;
     // 获取数据
     getArticl();
     //#endregion
 
     //#region 设置文章状态
-    const { stateClick } = setArticleState(getArticl);
+    const { stateClick } = useStateArticle(getArticl);
     // 开关点击回调函数
     
     //#endregion
 
     return {
       //#region 获取列表数据方法
-      ArticlList,
+      articlList,
       //#endregion
 
       //#region 设置文章状态

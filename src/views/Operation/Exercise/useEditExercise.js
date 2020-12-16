@@ -6,7 +6,7 @@ import { reactive, ref } from "vue";
 import { exercise } from "@/api/operationAPI";;
 import { httpPost } from "@/utils/http";
 
-export const ExerciseEdit = (getExercise) => {
+export const useEditExercise = (getExercise) => {
 
   // 获取用户id
   const userId = ref(null);
@@ -32,7 +32,7 @@ export const ExerciseEdit = (getExercise) => {
   })
 
   // 获取ref
-  let ExerciseEditRef = ref(null);
+  let exerciseEditRef = ref(null);
   // 创建自定义校验规则
   let validateContent = async (rule,value) => {
     // 判断用户是否输入了内容
@@ -48,10 +48,10 @@ export const ExerciseEdit = (getExercise) => {
   }
 
   // 更改数据
-  const ExerciseEditSubmit = () => {
+  const exerciseEditSubmit = () => {
     confirmLoading.value = true;
     // 进行表单校验
-    ExerciseEditRef.value
+    exerciseEditRef.value
       .validate()
       .then(() => {
         // 发送ajax请求
@@ -83,9 +83,9 @@ export const ExerciseEdit = (getExercise) => {
     editVisibility,
     editMode,
     editRule,
-    ExerciseEditRef,
+    exerciseEditRef,
     confirmLoading,
     editShow,
-    ExerciseEditSubmit
+    exerciseEditSubmit
   }
 }

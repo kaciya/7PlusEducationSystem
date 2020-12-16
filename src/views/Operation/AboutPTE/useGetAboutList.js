@@ -2,12 +2,12 @@
  * @author Lemon
  * 获取数据列表
  * */
-import { reactive } from "vue";
+import { onMounted, reactive } from "vue";
 import { httpGet } from "@/utils/http";
-import { about } from "../../../api/operationAPI";
+import { about } from "@/api/operationAPI";
 // 引入api
 
-export const getAboutList = () => {
+export const useGetAboutList = () => {
   // 存储列表数据
   const aboutList = reactive({});
 
@@ -18,6 +18,9 @@ export const getAboutList = () => {
     aboutList.data = res.data.records;
   }
 
+  onMounted(() => {
+    getAboutData();
+  })
   return {
     aboutList,
     getAboutData

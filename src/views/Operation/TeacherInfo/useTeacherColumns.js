@@ -1,7 +1,7 @@
 import { reactive } from "vue";
 
 // 创建表格格式
-export const columns = reactive([{
+export const useTeacherColumns = reactive([{
     title: '序号',
     width: 80,
     slots: { customRender: 'index' }

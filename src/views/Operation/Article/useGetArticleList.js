@@ -6,9 +6,9 @@ import { reactive } from "vue";
 import { httpGet } from "@/utils/http";
 import { article } from "@/api/operationAPI";
 
-export const getArticleList = () => {
+export const useGetArticleList = () => {
   // 存储数据
-  const ArticlList = reactive({});
+  const articlList = reactive({});
 
   // 获取数据
   const getArticl = async () => {
@@ -20,15 +20,15 @@ export const getArticleList = () => {
     if (res.code === 200) {
       console.log(res);
       // 设置数据
-      ArticlList["pageNum"] = current;
-      ArticlList["pageSize"] = size;
-      ArticlList["total"] = total;
-      ArticlList["data"] = records;
+      articlList["pageNum"] = current;
+      articlList["pageSize"] = size;
+      articlList["total"] = total;
+      articlList["data"] = records;
     }
   }
 
   return {
-    ArticlList,
+    articlList,
     getArticl
   }
 }

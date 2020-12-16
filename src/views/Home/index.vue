@@ -9,7 +9,18 @@
       <Header />
       <!-- 顶部栏 end -->
       <!-- 主体 start -->
-      <router-view class="router-view" />
+      <router-view v-slot="{ Component }" style="padding: 0 10px">
+        <!-- 动态缓存页面 -->
+        <keep-alive>
+          <component
+            :is="Component"
+            :key="$route.path"
+            v-if="$route.meta.keepAlive"
+          />
+        </keep-alive>
+        <!-- 非缓存页面 -->
+        <component :is="Component" v-if="!$route.meta.keepAlive" />
+      </router-view>
       <!-- 主体 end -->
     </a-layout>
     <!-- 展示栏 end -->
@@ -21,22 +32,24 @@
 import SideBar from "@/components/SideBar";
 // 导入顶部栏组件
 import Header from "@/components/Header";
+//
+import { onDeactivated } from "vue";
 
 export default {
   components: {
     SideBar, //侧边栏
     Header, //顶部栏
   },
-  setup() {},
+  setup() {
+    onDeactivated(() => {
+      console.log("remove");
+    });
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .home-page {
   height: 100%;
-}
-
-.router-view {
-  padding: 0 10px;
 }
 </style>

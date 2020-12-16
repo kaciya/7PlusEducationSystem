@@ -6,7 +6,7 @@ import { httpPost } from "@/utils/http";
 import { message } from 'ant-design-vue';
 
 // 添加老师
-export const addTeacher = (options) => {
+export const useAddTeacherList = (options) => {
 
   // 模态框状态
   const addLabelVisible = ref(false);
@@ -77,7 +77,7 @@ export const addTeacher = (options) => {
               // 清除表单里面的值
               addRef.value.resetFields();
               // 重新获取数据
-              options.getTacherList(options.pageNum,options.pageSize,() => {
+              options.useGetTeacherList(options.pageNum,options.pageSize,() => {
                 options.loadState.value = false;
               })
             }
