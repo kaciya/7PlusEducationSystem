@@ -3,9 +3,8 @@
     <!-- 面包屑 start -->
     <Crumbs
       :crumbName="[
-        { name: '用户管理' },
-        { name: '用户列表', route: '#' },
-        { name: '详情' }
+        { name: '运营管理' },
+        { name: '常见问题(学习中心)', route: '#' },
       ]"
     />
     <!-- 面包屑 end -->
@@ -26,8 +25,8 @@
       </a-row>
       <!-- 问题列表 start -->
       <a-table
-      :columns="ProblemList.columns"
-      :data-source="ProblemList.data"
+      :columns="problemList.columns"
+      :data-source="problemList.data"
       :row-key="record => record.id"
       :pagination="false"
       bordered
@@ -46,8 +45,8 @@
       <a-modal
         title="添加问题"
         v-model:visible="addFormVisible"
-        @ok="handleAddSubmit"
-        @cancel="handleAddCancel"
+        @ok="addSubmit"
+        @cancel="addCancel"
       >
         <a-form
           :model="addForm"
@@ -67,8 +66,8 @@
       <a-modal
         title="编辑问题"
         v-model:visible="editFormVisible"
-        @ok="handleEidtSbumit"
-        @cancel="handleEditCancel"
+        @ok="eidtSbumit"
+        @cancel="eEditCancel"
       >
         <a-form
           :model="editModel"
@@ -95,13 +94,13 @@ import Crumbs from "@/components/Crumbs";
 // 引入列表
 import { columns } from "./useProblemColumn";
 // 引入获取列表方法
-import { getProblemGetList } from "./useProblemGetList";
+import { useGetProblemList } from "./useGetProblemList";
 // 引入添加问题方法
-import { problemAddList } from "./useProblemAddList";
+import { useAddProblemList } from "./useAddProblemList";
 // 引入编辑问题方法
-import { problemEdit } from "./useProblemEditList";
+import { useEditProblemList } from "./useEditProblemList";
 // 引入删除问题方法
-import { problemDelete } from "./useProblemDelete";
+import { useDelProblem } from "./useDelProblem";
 
 export default {
   // 使用组件
@@ -111,28 +110,28 @@ export default {
   // setup响应api入口
   setup() {
     //#region 获取列表数据
-    const { ProblemList,getProblem } = getProblemGetList();
+    const { problemList,getProblem } = useGetProblemList();
     // 获取数据
     getProblem();
     // 设置列表格式
-    ProblemList["columns"] = columns;
+    problemList["columns"] = columns;
     //#endregion
 
     //#region 添加问题方法
-    const { addFormVisible,addForm,addRule,addRef,showAddForm,handleAddSubmit,handleAddCancel } = problemAddList(getProblem);
+    const { addFormVisible,addForm,addRule,addRef,showAddForm,addSubmit,addCancel } = useAddProblemList(getProblem);
     //#endregion
 
     //#region 编辑问题方法
-    const { editFormVisible,editModel,editRule,editRef,showEditForm,handleEidtSbumit,handleEditCancel } = problemEdit(getProblem);
+    const { editFormVisible,editModel,editRule,editRef,showEditForm,eidtSbumit,eEditCancel } = useEditProblemList(getProblem);
     //#endregion
 
     //#region 删除问题方法
-    const { showDeleteConfirm } = problemDelete();
+    const { showDeleteConfirm } = useDelProblem(getProblem);
     //#endregion
 
     return {
       //#region 获取列表数据
-      ProblemList,
+      problemList,
       //#endregion
       //#region 添加问题方法
       addFormVisible,
@@ -140,8 +139,8 @@ export default {
       addRule,
       addRef,
       showAddForm,
-      handleAddSubmit,
-      handleAddCancel,
+      addSubmit,
+      addCancel,
       //#endregion
       //#region 编辑问题方法
       editFormVisible,
@@ -149,8 +148,8 @@ export default {
       editRule,
       editRef,
       showEditForm,
-      handleEidtSbumit,
-      handleEditCancel,
+      eidtSbumit,
+      eEditCancel,
       //#endregion
       //#reigon 删除问题方法
       showDeleteConfirm

@@ -5,21 +5,21 @@ import { httpGet } from "@/utils/http";
 import { course } from "@/api/operationAPI";
 
 // 获取数据
-export const getCourseList = () => {
+export const useGetCourseList = () => {
   // 创建变量存储数据
-  const CourseListData = reactive({});
+  const courseListData = reactive({});
   // 发送请求
   const getCourse = async () => {
-    let res = await httpGet(course.getCourseList);
+    let res = await httpGet(course.GetCourseList);
     // 判断是否获取成功
     if (res.code === 200) {
       // 设置数据
-      CourseListData.data = res.data;
+      courseListData.data = res.data;
     }
   }
 
   return {
-    CourseListData,
+    courseListData,
     getCourse
   }
 }

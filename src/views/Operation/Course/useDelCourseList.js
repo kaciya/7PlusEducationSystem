@@ -8,15 +8,15 @@ import { createVNode } from 'vue';
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
 import { message, Modal } from "ant-design-vue";
 // 引入http库
-import { httpDelete } from "../../../utils/http";
+import { httpDelete } from "@/utils/http";
 // 引入api
-import { course } from "../../../api/operationAPI";
+import { course } from "@/api/operationAPI";
 
-export const deleteCourse = (getCourse) => {
+export const useDelCourseList = (getCourse) => {
 
   // 删除数据方法
   const deleteCourseSubmit = async (id) => {
-    let res = await httpDelete(course.deleteCourseList + `/${id}`);
+    let res = await httpDelete(course.DelCourseList + `/${id}`);
     if (res.code === 200) {
       message.success(res.message);
       getCourse();
@@ -24,7 +24,7 @@ export const deleteCourse = (getCourse) => {
   }
 
   // 弹出模态框
-  const showDelete = (id,callback) => {
+  const showDelete = (id,getCourse) => {
     Modal.confirm({
       title: '您真的要删除吗?',
       icon: createVNode(ExclamationCircleOutlined),
@@ -33,7 +33,7 @@ export const deleteCourse = (getCourse) => {
       okType: 'danger',
       cancelText: '取消',
       onOk() {
-        deleteCourseSubmit(id,callback);
+        deleteCourseSubmit(id,getCourse);
       },
       onCancel() {
         message.info("用户取消了操作");

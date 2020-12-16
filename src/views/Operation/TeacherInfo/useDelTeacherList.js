@@ -15,7 +15,7 @@ import { httpDelete } from "@/utils/http";
 import { teacherInfo } from "@/api/operationAPI";
 
 // 删除教师方法
-export const DeleteTeacher = (id,getTacherList,pageNum,pageSize,loadState) => {
+export const useDelTeacherList = (id,getTacherList,pageNum,pageSize,loadState) => {
   // 模态框
   Modal.confirm({
     title: '您真的要删除吗?',
@@ -23,7 +23,7 @@ export const DeleteTeacher = (id,getTacherList,pageNum,pageSize,loadState) => {
     content: createVNode('div', { style: 'color:red;' }, '这将会永久删除'),
     onOk() {
       // 发送请求
-      httpDelete(teacherInfo.DeleteTeacherList + `/${id}`)
+      httpDelete(teacherInfo.DelTeacherList + `/${id}`)
         .then(res => {
           // 判断是否删除成功
           if (res.code === 200) {

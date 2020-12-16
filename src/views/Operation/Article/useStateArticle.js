@@ -6,7 +6,7 @@ import { httpPost } from "@/utils/http";
 import { article } from "@/api/operationAPI";
 import { message } from "ant-design-vue";
 
-export const setArticleState = (getArticl) => {
+export const useStateArticle = (getArticl) => {
 
   // 点击开关的回调函数
   const stateClick = (record) => {
