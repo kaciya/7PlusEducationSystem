@@ -4,9 +4,9 @@ import { computed } from "vue";
 import { useStore } from "vuex";
 
 export const useGetUserInfo = () => {
-    const store = useStore();
-    const userInfos = computed(() => store.state.AuthStore.userInfos);
-    // console.log(userInfos.value);
-    // 返回
-    return { userInfos }
-}
+  const store = useStore();
+  const userInfos = computed(() => store.state.AuthStore.userInfos);
+  // console.log(userInfos.value);
+  // 返回
+  return { userInfos };
+};

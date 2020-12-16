@@ -5,7 +5,7 @@ import { message } from "ant-design-vue";
 import { reactive } from "vue";
 // 引入post请求
 // import { httpPost } from "@/utils/http";
-// 引入 axios 
+// 引入 axios
 import axios from "axios";
 // 引入接口配置
 import { listen } from "@/api/questionListenAPI";
@@ -15,7 +15,7 @@ export function useBulkUpload() {
   const bulkUpload = reactive({
     visible: false,
     fileList: []
-  })
+  });
 
   // 显示批量上传模态框
   function showBulkUpload() {
@@ -41,32 +41,40 @@ export function useBulkUpload() {
     // 如果用户没有选择文件
     if (bulkUpload.fileList.length == 0) {
       // 提示用户选择文件
-      message.error("请选择文件")
-    }
-    else {
+      message.error("请选择文件");
+    } else {
       // 判断文件格式是否是xls、xlsx
-      let isXlsOrXlsx = bulkUpload.fileList[0].type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || bulkUpload.fileList[0].type == "application/vnd.ms-excel"
+      let isXlsOrXlsx =
+        bulkUpload.fileList[0].type ==
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+        bulkUpload.fileList[0].type == "application/vnd.ms-excel";
       if (isXlsOrXlsx) {
         // 创建formdata
         const formData = new FormData();
-        formData.append("files", bulkUpload.fileList[0])
+        formData.append("files", bulkUpload.fileList[0]);
         // 提交表单
-        axios.post("http://pte.admin.api.banyuge.com/admin" + listen.BulkUpload("sst"), formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            "Token": window.sessionStorage.getItem("token")
-          }
-        }).then((res) => {
-          console.log(res);
-        }).catch((err) => {
-          console.log(err);
-        })
+        axios
+          .post(
+            "http://pte.admin.api.banyuge.com/admin" + listen.BulkUpload("sst"),
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Token: window.sessionStorage.getItem("token")
+              }
+            }
+          )
+          .then(res => {
+            console.log(res);
+          })
+          .catch(err => {
+            console.log(err);
+          });
         // 清空
         bulkUpload.fileList = [];
-      }
-      else {
+      } else {
         // 提示用户文件格式须是xls、xlsx
-        message.error('文件格式必须是xls、xlsx');
+        message.error("文件格式必须是xls、xlsx");
       }
     }
   }
@@ -78,7 +86,6 @@ export function useBulkUpload() {
     message.warning("已取消上传");
   }
 
-
   return {
     bulkUpload,
     showBulkUpload,
@@ -86,6 +93,6 @@ export function useBulkUpload() {
     beforeBulkUpload,
     clickBulkUpload,
     cancelBulkUpload
-  }
+  };
 }
 //#endregion

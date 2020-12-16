@@ -8,7 +8,7 @@
       :style="{
         padding: '20px',
         background: '#fff',
-        minHeight: '93%',
+        minHeight: '93%'
       }"
     >
       <!-- 页头 start -->
@@ -139,7 +139,7 @@ export default {
       addLabelModel,
       addLabelRules,
       addLabelRef,
-      cancelAddLabel,
+      cancelAddLabel
     } = useAddLabel(getLabels);
 
     // 删除标签功能
@@ -153,7 +153,7 @@ export default {
       updateLabelRules,
       updateFormRef,
       updateLabel,
-      cancelUpdateLabel,
+      cancelUpdateLabel
     } = useUpdateLabel(getLabels);
 
     // 在mounted时候
@@ -206,15 +206,15 @@ export default {
       // 修改标签
       updateLabel,
       // 取消修改标签
-      cancelUpdateLabel,
+      cancelUpdateLabel
       //#endregion
     };
   },
   components: {
     EditOutlined,
     DeleteOutlined,
-    Crumbs,
-  },
+    Crumbs
+  }
 };
 </script>
 

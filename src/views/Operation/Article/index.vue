@@ -19,25 +19,26 @@
     >
       <!-- 数据列表 start -->
       <a-table
-      :columns="ArticlList.column"
-      :data-source="ArticlList.data"
-      :row-key="record => record.id"
-      bordered
+        :columns="ArticlList.column"
+        :data-source="ArticlList.data"
+        :row-key="record => record.id"
+        bordered
       >
         <template #cover="{ record }">
-          <span v-if="record.picUrl === '' ">
+          <span v-if="record.picUrl === ''">
             <p>没有图片</p>
           </span>
           <span v-else>
-            <img :src="record.picUrl" style="width:100px;heigth:100px">
+            <img :src="record.picUrl" style="width:100px;heigth:100px" />
           </span>
         </template>
         <template #state="{ record }">
-          <a-switch :checked="Boolean(record.state)" @click="stateClick(record)"/>
+          <a-switch
+            :checked="Boolean(record.state)"
+            @click="stateClick(record)"
+          />
         </template>
-        <template #operational>
-
-        </template>
+        <template #operational> </template>
       </a-table>
       <!-- 数据列表 end -->
     </div>
@@ -63,7 +64,7 @@ export default {
   // setup响应api入口
   setup() {
     //#region 获取数据列表方法
-    const { ArticlList,getArticl } = getArticleList();
+    const { ArticlList, getArticl } = getArticleList();
     // 设置表格列
     ArticlList.column = column;
     // 获取数据
@@ -73,7 +74,7 @@ export default {
     //#region 设置文章状态
     const { stateClick } = setArticleState(getArticl);
     // 开关点击回调函数
-    
+
     //#endregion
 
     return {
@@ -84,7 +85,7 @@ export default {
       //#region 设置文章状态
       stateClick
       //#endregion
-    }
+    };
   }
 };
 </script>

@@ -15,10 +15,7 @@
     <a-menu :inlineIndent="30" theme="light" mode="inline">
       <!-- 首页 -->
       <a-menu-item class="menu-pri menu-home" :key="sideBarKeys[0]">
-        <router-link
-          to="/home/main"
-          class="menu-link home-link"
-        >
+        <router-link to="/home/main" class="menu-link home-link">
           <HomeOutlined />
           <span class="home-text">首页</span>
         </router-link>
@@ -78,7 +75,7 @@ export default {
       // 侧边栏keys
       sideBarKeys,
       // 侧边栏伸缩状态
-      collapsed,
+      collapsed
     };
   }
 };

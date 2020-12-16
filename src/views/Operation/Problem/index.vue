@@ -19,21 +19,30 @@
     >
       <a-row>
         <a-col :span="24" style="margin-bottom: 15px">
-          <a-button type="primary" size="large" style="float: right" @click="showAddForm">
+          <a-button
+            type="primary"
+            size="large"
+            style="float: right"
+            @click="showAddForm"
+          >
             添加问题
           </a-button>
         </a-col>
       </a-row>
       <!-- 问题列表 start -->
       <a-table
-      :columns="ProblemList.columns"
-      :data-source="ProblemList.data"
-      :row-key="record => record.id"
-      :pagination="false"
-      bordered
+        :columns="ProblemList.columns"
+        :data-source="ProblemList.data"
+        :row-key="record => record.id"
+        :pagination="false"
+        bordered
       >
         <template #operational="{ record }">
-          <a-button type="primary" style="margin-right: 10px" @click="showEditForm(record)">
+          <a-button
+            type="primary"
+            style="margin-right: 10px"
+            @click="showEditForm(record)"
+          >
             编辑
           </a-button>
           <a-button type="danger" @click="showDeleteConfirm(record.id)">
@@ -49,16 +58,29 @@
         @ok="handleAddSubmit"
         @cancel="handleAddCancel"
       >
-        <a-form
-          :model="addForm"
-          :rules="addRule"
-          ref="addRef"
-        >
-          <a-form-item label="问题名称" :labelCol="{span: 4}" :wrapperCol="{span: 16}" name="question">
-            <a-input placeholder="请输入问题名称" v-model:value="addForm.question"></a-input>
+        <a-form :model="addForm" :rules="addRule" ref="addRef">
+          <a-form-item
+            label="问题名称"
+            :labelCol="{ span: 4 }"
+            :wrapperCol="{ span: 16 }"
+            name="question"
+          >
+            <a-input
+              placeholder="请输入问题名称"
+              v-model:value="addForm.question"
+            ></a-input>
           </a-form-item>
-          <a-form-item class="addForm" label="内容" :labelCol="{span: 4}" :wrapperCol="{span: 16}" name="answer">
-            <a-textarea placeholder="请输入内容" v-model:value="addForm.answer"></a-textarea>
+          <a-form-item
+            class="addForm"
+            label="内容"
+            :labelCol="{ span: 4 }"
+            :wrapperCol="{ span: 16 }"
+            name="answer"
+          >
+            <a-textarea
+              placeholder="请输入内容"
+              v-model:value="addForm.answer"
+            ></a-textarea>
           </a-form-item>
         </a-form>
       </a-modal>
@@ -70,16 +92,29 @@
         @ok="handleEidtSbumit"
         @cancel="handleEditCancel"
       >
-        <a-form
-          :model="editModel"
-          :rules="editRule"
-          ref="editRef"
-        >
-          <a-form-item label="问题名称" :labelCol="{span: 4}" :wrapperCol="{span: 16}" name="question">
-            <a-input placeholder="请输入问题名称" v-model:value="editModel.question"></a-input>
+        <a-form :model="editModel" :rules="editRule" ref="editRef">
+          <a-form-item
+            label="问题名称"
+            :labelCol="{ span: 4 }"
+            :wrapperCol="{ span: 16 }"
+            name="question"
+          >
+            <a-input
+              placeholder="请输入问题名称"
+              v-model:value="editModel.question"
+            ></a-input>
           </a-form-item>
-          <a-form-item class="addForm" label="内容" :labelCol="{span: 4}" :wrapperCol="{span: 16}" name="answer">
-            <a-textarea placeholder="请输入内容" v-model:value="editModel.answer"></a-textarea>
+          <a-form-item
+            class="addForm"
+            label="内容"
+            :labelCol="{ span: 4 }"
+            :wrapperCol="{ span: 16 }"
+            name="answer"
+          >
+            <a-textarea
+              placeholder="请输入内容"
+              v-model:value="editModel.answer"
+            ></a-textarea>
           </a-form-item>
         </a-form>
       </a-modal>
@@ -106,12 +141,12 @@ import { problemDelete } from "./useProblemDelete";
 export default {
   // 使用组件
   components: {
-    Crumbs,
+    Crumbs
   },
   // setup响应api入口
   setup() {
     //#region 获取列表数据
-    const { ProblemList,getProblem } = getProblemGetList();
+    const { ProblemList, getProblem } = getProblemGetList();
     // 获取数据
     getProblem();
     // 设置列表格式
@@ -119,11 +154,27 @@ export default {
     //#endregion
 
     //#region 添加问题方法
-    const { addFormVisible,addForm,addRule,addRef,showAddForm,handleAddSubmit,handleAddCancel } = problemAddList(getProblem);
+    const {
+      addFormVisible,
+      addForm,
+      addRule,
+      addRef,
+      showAddForm,
+      handleAddSubmit,
+      handleAddCancel
+    } = problemAddList(getProblem);
     //#endregion
 
     //#region 编辑问题方法
-    const { editFormVisible,editModel,editRule,editRef,showEditForm,handleEidtSbumit,handleEditCancel } = problemEdit(getProblem);
+    const {
+      editFormVisible,
+      editModel,
+      editRule,
+      editRef,
+      showEditForm,
+      handleEidtSbumit,
+      handleEditCancel
+    } = problemEdit(getProblem);
     //#endregion
 
     //#region 删除问题方法
@@ -155,7 +206,7 @@ export default {
       //#reigon 删除问题方法
       showDeleteConfirm
       //endregion
-    }
+    };
   }
 };
 </script>

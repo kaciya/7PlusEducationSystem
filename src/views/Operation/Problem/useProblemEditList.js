@@ -7,23 +7,23 @@ import { httpPost } from "../../../utils/http";
 import { problem } from "../../../api/operationAPI";
 import { message } from "ant-design-vue";
 
-export const problemEdit = (getProblem) => {
+export const problemEdit = getProblem => {
   // 编辑模态框状态
   const editFormVisible = ref(false);
 
   // 获取表单数据
   const editModel = reactive({
-    question: '',
-    answer: '',
-    id: ''
-  })
+    question: "",
+    answer: "",
+    id: ""
+  });
 
   // 显示模态框
-  const showEditForm = (record) => {
+  const showEditForm = record => {
     editFormVisible.value = true;
     // 设置id
     editModel.id = record.id;
-  }
+  };
 
   // 获取ref
   const editRef = ref(null);
@@ -31,12 +31,10 @@ export const problemEdit = (getProblem) => {
   // 创建表单校验规则
   const editRule = {
     question: [
-      {required: true,message: '问题名称必须填写',trigger: "blur"}
+      { required: true, message: "问题名称必须填写", trigger: "blur" }
     ],
-    answer: [
-      {required: true,message: '内容必须填写',tigger: "blur"}
-    ]
-  }
+    answer: [{ required: true, message: "内容必须填写", tigger: "blur" }]
+  };
 
   // 修改数据
   const handleEidtSbumit = () => {
@@ -45,9 +43,9 @@ export const problemEdit = (getProblem) => {
       .validate()
       .then(async () => {
         // 发送请求
-        const res = await httpPost(problem.EditProblemList,editModel);
+        const res = await httpPost(problem.EditProblemList, editModel);
         if (res.code === 200) {
-         message.success(res.message);
+          message.success(res.message);
           // 关闭模态框
           editFormVisible.value = false;
           // 清空表单
@@ -58,15 +56,14 @@ export const problemEdit = (getProblem) => {
       })
       .catch(err => {
         console.log(err);
-      })
-  }
+      });
+  };
 
   // 点击取消的事件
   const handleEditCancel = () => {
     // 清空表单数据
     editRef.value.resetFields();
-  }
-
+  };
 
   return {
     editFormVisible,
@@ -76,5 +73,5 @@ export const problemEdit = (getProblem) => {
     showEditForm,
     handleEidtSbumit,
     handleEditCancel
-  }
-}
+  };
+};

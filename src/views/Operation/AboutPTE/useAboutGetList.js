@@ -16,10 +16,10 @@ export const getAboutList = () => {
     const res = await httpGet(about.GetAboutList);
     // 设置表格数据
     aboutList.data = res.data.records;
-  }
+  };
 
   return {
     aboutList,
     getAboutData
-  }
-}
+  };
+};

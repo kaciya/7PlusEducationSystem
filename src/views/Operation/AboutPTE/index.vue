@@ -2,10 +2,7 @@
   <a-layout-content>
     <!-- 面包屑 start -->
     <Crumbs
-      :crumbName="[
-        { name: '运营管理' },
-        { name: '关于PTE', route: '#' },
-      ]"
+      :crumbName="[{ name: '运营管理' }, { name: '关于PTE', route: '#' }]"
     />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
@@ -16,10 +13,10 @@
         minHeight: '93%'
       }"
     >
-    <a-table
-      :columns="aboutList.column"
-      :data-source="aboutList.data"
-    ></a-table>
+      <a-table
+        :columns="aboutList.column"
+        :data-source="aboutList.data"
+      ></a-table>
     </div>
     <!-- 主体Main end -->
   </a-layout-content>
@@ -41,7 +38,7 @@ export default {
   // setup响应api入口
   setup() {
     //#region 获取数据方法
-    const { aboutList,getAboutData } = getAboutList();
+    const { aboutList, getAboutData } = getAboutList();
     // 设置表格列
     aboutList.column = column;
     getAboutData();
@@ -51,7 +48,7 @@ export default {
       //#region 获取数据方法
       aboutList
       //#endregion
-    }
+    };
   }
 };
 </script>

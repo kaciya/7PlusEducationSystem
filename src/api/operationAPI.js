@@ -1,14 +1,14 @@
 // 师资管理
 export const teacherInfo = {
-    // 师资列表
-    GetTacherList: "teacher/page",
-    // 删除老师
-    DeleteTeacherList: "teacher",
-    // 添加老师
-    AddTeacherList: "teacher/add",
-    // 修改老师
-    EditTeacherList: "teacher/update"
-}
+  // 师资列表
+  GetTacherList: "teacher/page",
+  // 删除老师
+  DeleteTeacherList: "teacher",
+  // 添加老师
+  AddTeacherList: "teacher/add",
+  // 修改老师
+  EditTeacherList: "teacher/update"
+};
 
 // 课程服务
 export const course = {
@@ -20,15 +20,15 @@ export const course = {
   editCourseList: "course/update",
   // 删除课程
   deleteCourseList: "course"
-}
+};
 
 // 互动练习
 export const exercise = {
-    // 互动练习列表
+  // 互动练习列表
   GetExerciseList: "interactive/list",
   // 更新互动练习内容
-  UpdateExerciseContent: 'interactive/update',
-}
+  UpdateExerciseContent: "interactive/update"
+};
 
 // 文章列表
 export const article = {
@@ -36,13 +36,13 @@ export const article = {
   GetArticleList: "article/page",
   // 开启/关闭文章
   SetArticleState: "article/status"
-}
+};
 
 // 关于PTE
 export const about = {
   // 获取数据列表
   GetAboutList: "about/page"
-}
+};
 
 // 常见问题
 export const problem = {
@@ -54,4 +54,4 @@ export const problem = {
   EditProblemList: "issue/update",
   // 删除常见问题
   DeleteProblemList: "issue"
-}
+};

@@ -47,7 +47,7 @@ export const useGetSideBar = () => {
         {
           id: 122,
           authName: "词库",
-          path: "home"
+          path: "word/page"
         }
       ]
     },

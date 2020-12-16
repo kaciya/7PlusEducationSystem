@@ -3,10 +3,10 @@ export function useClearPassword(loginModel) {
   // 清除密码
   const clearPassword = () => {
     loginModel.password = "";
-  }
+  };
 
   return {
     clearPassword
-  }
+  };
 }
 //#endregion

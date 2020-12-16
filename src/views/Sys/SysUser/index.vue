@@ -8,7 +8,7 @@
       :style="{
         padding: '20px',
         background: '#fff',
-        minHeight: '93%',
+        minHeight: '93%'
       }"
     >
       <!-- 权限管理列表上标题 -->
@@ -18,7 +18,7 @@
         </a-col>
         <a-col :span="2" offset="20">
           <a-button type="primary" @click="showAddModal">
-              添加账号
+            添加账号
           </a-button>
         </a-col>
       </a-row>
@@ -33,7 +33,9 @@
       >
         <!-- 自定义 页脚 -->
         <template #footer>
-          <span style="float:left; margin-top:5px;color:#c5c5c5;">创建子账号时默认密码为：QJ123.</span>
+          <span style="float:left; margin-top:5px;color:#c5c5c5;"
+            >创建子账号时默认密码为：QJ123.</span
+          >
           <a-button key="back" @click="handleAddCancel"> 取消 </a-button>
           <a-button
             key="submit"
@@ -102,7 +104,7 @@
       <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
         <!-- 账号列表 -->
         <a-table
-          :rowKey="(record) => record.userId"
+          :rowKey="record => record.userId"
           :columns="sysUsersTable.sysUsersColums"
           :data-source="sysUsersTable.sysUsersData"
           :pagination="false"
@@ -119,7 +121,11 @@
           </template>
           <template #operation="{ record }">
             <!-- 密码重置 -->
-            <a-button type="primary" style="margin: 0 5px" @click="handleResetPwd(record.userId)">
+            <a-button
+              type="primary"
+              style="margin: 0 5px"
+              @click="handleResetPwd(record.userId)"
+            >
               密码重置
             </a-button>
             <!-- 密码重置 end -->
@@ -186,7 +192,7 @@ import { onMounted } from "vue";
 
 export default {
   components: {
-    Crumbs,
+    Crumbs
   },
 
   setup() {
@@ -198,7 +204,7 @@ export default {
       getSysUserList,
       pageInfo,
       pageChange,
-      pageSizeChange,
+      pageSizeChange
     } = showSysUserList(sysUsersTable);
 
     //通过updateUserStatus方法更改账号启用状态
@@ -221,7 +227,7 @@ export default {
       showAddModal,
       handleAddOk,
       handleAddCancel,
-      addUserFormRef,
+      addUserFormRef
     } = addSysUser(getSysUserList);
 
     //在Mounted 获取列表
@@ -266,9 +272,9 @@ export default {
       //添加账号取消时回调
       handleAddCancel,
       //重置账号密码回调
-      handleResetPwd,
+      handleResetPwd
     };
-  },
+  }
 };
 </script>
 

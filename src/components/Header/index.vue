@@ -39,7 +39,7 @@ export default {
   // 导入组件
   components: {
     MenuUnfoldOutlined,
-    MenuFoldOutlined,
+    MenuFoldOutlined
   },
   // setup响应api入口
   setup() {
@@ -63,9 +63,9 @@ export default {
       collapsed, //侧边栏状态
       setCollapsed, //操作侧边栏状态
       dropdownClick, //下拉菜单点击
-      handleLogout, //退出登录
+      handleLogout //退出登录
     };
-  },
+  }
 };
 </script>
 

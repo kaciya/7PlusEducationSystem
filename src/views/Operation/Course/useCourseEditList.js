@@ -2,13 +2,13 @@
  * @author Lemon
  * 课程编辑
  * */
-import { reactive, ref } from "vue"
+import { reactive, ref } from "vue";
 // 引入api
-import { course } from "../../../api/operationAPI"
+import { course } from "../../../api/operationAPI";
 import { httpPost } from "../../../utils/http";
 import { message } from "ant-design-vue";
 
-export const courseEdit = (getCourse) => {
+export const courseEdit = getCourse => {
   // 设置模态框的状态
   const Editvisible = ref(false);
   // 课程id
@@ -16,18 +16,18 @@ export const courseEdit = (getCourse) => {
 
   // 创建表单数据
   const editModel = reactive({
-    name: '',
-    introduce: '',
-    fit: '',
-    trait: '',
+    name: "",
+    introduce: "",
+    fit: "",
+    trait: "",
     isShow: false
-  })
+  });
 
   // 显示模态框
-  const handleShowEdit = (record) => {
+  const handleShowEdit = record => {
     courseId.value = record.id;
     Editvisible.value = true;
-  }
+  };
 
   // 获取ref
   const editRef = ref(null);
@@ -35,18 +35,18 @@ export const courseEdit = (getCourse) => {
   // 创建规则
   const editRules = {
     name: [
-      {min: 1,required: true,message: '课程名称必须填写',trigger: "change"},
+      { min: 1, required: true, message: "课程名称必须填写", trigger: "change" }
     ],
     introduce: [
-      {min: 1,required: true,message: '课程介绍必须填写',trigger: 'change'}
+      { min: 1, required: true, message: "课程介绍必须填写", trigger: "change" }
     ],
     fit: [
-      {min: 1,required: true,message: '适合人群必须填写',trigger: 'change'}
+      { min: 1, required: true, message: "适合人群必须填写", trigger: "change" }
     ],
     trait: [
-      {min: 1,required: true,message: '课程特点必须填写',trigger: 'change'}
+      { min: 1, required: true, message: "课程特点必须填写", trigger: "change" }
     ]
-  }
+  };
 
   // 点击确定的回调
   const handleEditSubmit = () => {
@@ -54,16 +54,16 @@ export const courseEdit = (getCourse) => {
       .validate()
       .then(async () => {
         // 结构数据
-        let { name,introduce, fit, trait, isShow } = editModel;
+        let { name, introduce, fit, trait, isShow } = editModel;
         isShow = Number(isShow);
         // 发送请求
-        let res = await httpPost(course.editCourseList,{
+        let res = await httpPost(course.editCourseList, {
           name,
           introduce,
           fit,
           trait,
           isShow,
-          id:courseId.value
+          id: courseId.value
         });
         // 判断是否操作成功
         if (res.code === 200) {
@@ -78,14 +78,14 @@ export const courseEdit = (getCourse) => {
       })
       .catch(err => {
         console.log(err);
-      })
-  }
+      });
+  };
 
   // 点击取消的回调函数
-  const handleEditCancel =() => {
+  const handleEditCancel = () => {
     // 清空表单数据
     editRef.value.resetFields();
-  }
+  };
 
   return {
     Editvisible,
@@ -95,5 +95,5 @@ export const courseEdit = (getCourse) => {
     handleShowEdit,
     handleEditSubmit,
     handleEditCancel
-  }
-}
+  };
+};

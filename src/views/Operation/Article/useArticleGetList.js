@@ -15,7 +15,7 @@ export const getArticleList = () => {
     // 发起ajax请求
     const res = await httpGet(article.GetArticleList);
     // 结构数据
-    let { current,size,total,records } = res.data;
+    let { current, size, total, records } = res.data;
     // 判断数据是否获取成功
     if (res.code === 200) {
       console.log(res);
@@ -25,10 +25,10 @@ export const getArticleList = () => {
       ArticlList["total"] = total;
       ArticlList["data"] = records;
     }
-  }
+  };
 
   return {
     ArticlList,
     getArticl
-  }
-}
+  };
+};

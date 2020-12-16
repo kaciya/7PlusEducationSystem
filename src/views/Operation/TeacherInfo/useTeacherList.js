@@ -1,29 +1,23 @@
 // 引入http
-import {
-  httpGet
-} from "@/utils/http";
+import { httpGet } from "@/utils/http";
 // 引入api
 import { teacherInfo } from "@/api/operationAPI";
-import {
-  reactive, ref
-} from "vue";
+import { reactive, ref } from "vue";
 
 // 创建表格数据
 export const teacherListData = reactive({});
 
 // 获取教师数据
-export const getTacherList = (pageNum ,pageSize,callback) => {
+export const getTacherList = (pageNum, pageSize, callback) => {
   // 获取数据
   httpGet(teacherInfo.GetTacherList, {
-      pageNum,
-      pageSize
-    })
+    pageNum,
+    pageSize
+  })
     .then(res => {
       // 判断数据是否获取成功
       if (res.code === 200) {
-        let {
-          data
-        } = res;
+        let { data } = res;
         // 将数据设置到teacherListData上
         teacherListData.data = data.records;
         teacherListData.total = data.total;
@@ -34,8 +28,8 @@ export const getTacherList = (pageNum ,pageSize,callback) => {
     })
     .catch(err => {
       console.log(err);
-    })
-}
+    });
+};
 
 // 分页功能
 export const getPagination = () => {
@@ -78,5 +72,5 @@ export const getPagination = () => {
     showSizeChange,
     // 页码改变的回调
     handleTogglePage
-  }
-}
+  };
+};

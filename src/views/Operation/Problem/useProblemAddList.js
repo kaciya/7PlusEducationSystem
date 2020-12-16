@@ -9,19 +9,19 @@ import { httpPost } from "@/utils/http";
 import { problem } from "@/api/operationAPI";
 import { message } from "ant-design-vue";
 
-export const problemAddList = (getProblem) => {
+export const problemAddList = getProblem => {
   // 设置模态框状态
   const addFormVisible = ref(false);
   // 显示模态框
   const showAddForm = () => {
     addFormVisible.value = true;
-  }
+  };
 
   // 获取表单数据
   const addForm = reactive({
-    question: '',
-    answer: ''
-  })
+    question: "",
+    answer: ""
+  });
 
   // 获取ref
   const addRef = ref(null);
@@ -29,12 +29,10 @@ export const problemAddList = (getProblem) => {
   // 创建表单校验规则
   const addRule = {
     question: [
-      {required: true,message: '问题名称必须填写',trigger: "blur"}
+      { required: true, message: "问题名称必须填写", trigger: "blur" }
     ],
-    answer: [
-      {required: true,message: '内容必须填写',tigger: "blur"}
-    ]
-  }
+    answer: [{ required: true, message: "内容必须填写", tigger: "blur" }]
+  };
 
   // 添加数据
   const handleAddSubmit = () => {
@@ -43,8 +41,8 @@ export const problemAddList = (getProblem) => {
       .validate()
       .then(async () => {
         // 发起请求
-        const res = await httpPost(problem.AddProblemList,addForm);
-        if(res.code === 200) {
+        const res = await httpPost(problem.AddProblemList, addForm);
+        if (res.code === 200) {
           message.success(res.message);
           // 清空表单
           addRef.value.resetFields();
@@ -55,14 +53,14 @@ export const problemAddList = (getProblem) => {
       })
       .catch(err => {
         console.log(err);
-      })
-  }
+      });
+  };
 
   // 点击cancel的事件
   const handleAddCancel = () => {
     // 清除表单数据
     addRef.value.resetFields();
-  }
+  };
 
   return {
     addFormVisible,
@@ -72,5 +70,5 @@ export const problemAddList = (getProblem) => {
     showAddForm,
     handleAddSubmit,
     handleAddCancel
-  }
-}
+  };
+};
