@@ -1,10 +1,9 @@
 <template>
   <a-layout-content>
     <!-- 面包屑 start -->
-    <Crumbs :crumbName="[
-        { name: '官网管理' },
-        { name: '互动练习', route: '#' },
-      ]" />
+    <Crumbs
+      :crumbName="[{ name: '官网管理' }, { name: '互动练习', route: '#' }]"
+    />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
     <div
@@ -25,7 +24,7 @@
           <a-button
             type="primary"
             style="margin-left: 40px"
-            @click="editShow(record.id,record.name)"
+            @click="editShow(record.id, record.name)"
           >
             编辑
           </a-button>
@@ -38,14 +37,14 @@
         :confirm-loading="confirmLoading"
         @ok="exerciseEditSubmit"
       >
-        <a-form
-          :model="editMode"
-          :rules="editRule"
-          ref="exerciseEditRef"
-        >
+        <a-form :model="editMode" :rules="editRule" ref="exerciseEditRef">
           <a-row>
             <a-col :span="24">
-              <a-form-item label="新内容" :wrapperCol="{span: 24}" name="content">
+              <a-form-item
+                label="新内容"
+                :wrapperCol="{ span: 24 }"
+                name="content"
+              >
                 <a-textarea
                   v-model:value="editMode.content"
                   placeholder="请输入新内容"
@@ -73,7 +72,7 @@ import { useEditExercise } from "./useEditExercise";
 
 export default {
   components: {
-    Crumbs,
+    Crumbs
   },
   // setup响应api入口
   setup() {
@@ -106,7 +105,7 @@ export default {
       exerciseEditRef,
       confirmLoading,
       exerciseEditSubmit,
-      editShow,
+      editShow
       //#endregion
     };
   }

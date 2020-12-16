@@ -8,23 +8,23 @@ import { reactive } from "vue";
 export const columns = reactive([
   {
     title: "问题",
-    dataIndex: 'question',
-    key: 'question',
+    dataIndex: "question",
+    key: "question"
   },
   {
     title: "内容",
-    dataIndex: 'answer',
-    key: 'answer'
+    dataIndex: "answer",
+    key: "answer"
   },
   {
     title: "发布时间",
-    dataIndex: 'createTime',
-    key: 'createTime',
+    dataIndex: "createTime",
+    key: "createTime",
     width: "10%"
   },
   {
     title: "操作",
     width: "15%",
-    slots: { customRender: 'operational' }
+    slots: { customRender: "operational" }
   }
 ]);

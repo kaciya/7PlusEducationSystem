@@ -5,11 +5,11 @@ import { httpPost } from "@/utils/http";
 import wordType from "@/api/wordTypeAPI";
 //全局提示
 import { message } from "ant-design-vue";
-export const AddWordCategory = (getCategoryData) => {
+export const AddWordCategory = getCategoryData => {
   //#region 表单校验
   // 输入框数据
   const addModel = reactive({
-    name: "",
+    name: ""
   });
   // 表单校验
   const addRules = reactive({
@@ -20,9 +20,9 @@ export const AddWordCategory = (getCategoryData) => {
         message: "分类名称不能为空",
         trigger: "blur",
         // 不能为空格
-        whitespace: true,
-      },
-    ],
+        whitespace: true
+      }
+    ]
   });
   //#endregion 表单校验
   //#region 显示添加模态框
@@ -45,9 +45,9 @@ export const AddWordCategory = (getCategoryData) => {
         // 表单验证通过
         // 发送请求添加数据
         httpPost(wordType.AddWordCategory, {
-          name: addModel.name,
+          name: addModel.name
         })
-          .then((res) => {
+          .then(res => {
             // 判断是否添加成功
             if (res.success) {
               // 更新数据
@@ -59,12 +59,12 @@ export const AddWordCategory = (getCategoryData) => {
               message.error(res.message);
             }
           })
-          .catch((err) => {
+          .catch(err => {
             // 请求失败是的回调
             console.log(err);
           });
       })
-      .catch((error) => {
+      .catch(error => {
         // 表单校验失败回调;
         console.log("error", error);
       });
@@ -84,6 +84,6 @@ export const AddWordCategory = (getCategoryData) => {
     addRef,
     addCategory,
     addCategoryOk,
-    addCategoryEmpty,
+    addCategoryEmpty
   };
 };

@@ -5,21 +5,21 @@ export const useLogColumns = () => {
     {
       title: "时间",
       align: "center",
-      dataIndex: "createTime",
+      dataIndex: "createTime"
     },
     {
       title: "IP",
       align: "center",
-      dataIndex: "ip",
+      dataIndex: "ip"
     },
     {
       title: "登录方式",
       align: "center",
-      dataIndex: "channel",
-    },
+      dataIndex: "channel"
+    }
   ]);
 
   return {
-    columns,
+    columns
   };
 };

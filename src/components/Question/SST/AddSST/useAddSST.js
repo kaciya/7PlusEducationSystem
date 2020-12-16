@@ -1,12 +1,12 @@
 //#region 添加SST题型
 // 引入响应式API
-import { reactive, ref } from "vue"
+import { reactive, ref } from "vue";
 
 export function useAddSST(closeAddSST) {
   // 表单数据 校验规则
   let addSST = reactive({
     model: {},
-    rules: {},
+    rules: {}
   });
 
   // 表单ref
@@ -22,6 +22,6 @@ export function useAddSST(closeAddSST) {
     addSST,
     addSSTRef,
     confirmAddSST
-  }
+  };
 }
 //#endregion

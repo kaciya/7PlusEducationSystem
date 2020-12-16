@@ -9,10 +9,10 @@ export function useUploadAudio() {
    */
   let uploadAudio = (id, audioUrl) => {
     console.log(id, audioUrl);
-  }
+  };
 
   return {
     uploadAudio
-  }
+  };
 }
 //#endregion

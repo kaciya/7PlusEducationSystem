@@ -6,12 +6,12 @@
       :crumbName="[
         {
           route: '',
-          name: '平台管理',
+          name: '平台管理'
         },
         {
           route: '',
-          name: '公告管理',
-        },
+          name: '公告管理'
+        }
       ]"
     ></Crumbs>
     <!-- 面包屑 end -->
@@ -19,7 +19,7 @@
       :style="{
         padding: '20px',
         background: '#fff',
-        minHeight: '93%',
+        minHeight: '93%'
       }"
     >
       <!-- 查询 start -->
@@ -131,7 +131,7 @@
           bordered
           :columns="columns"
           :data-source="noticeData"
-          :row-key="(record) => record.id"
+          :row-key="record => record.id"
           :pagination="false"
         >
           <template #status="{ text }">
@@ -267,7 +267,7 @@ export default {
       noticeObj, // 发布人员对象
       pageNum, // 当前页
       noticeReset, // 重置
-      noticeRead, // 查询
+      noticeRead // 查询
     } = useNoticeQuery(noticeGetData);
 
     // 添加公告
@@ -278,7 +278,7 @@ export default {
       addRules, // 校验规则
       cancelAddModal, // 关闭模态框
       confirmAddModal, // 确认添加
-      addForm, // 表单ref
+      addForm // 表单ref
     } = useNoticeAdd();
 
     // 编辑公告
@@ -289,11 +289,11 @@ export default {
       updateRules, // 校验规则
       handleCancelUpdateModal, // 关闭模态框
       handleConfirmUpdateModal, // 确认编辑
-      updateForm, // 表单ref
+      updateForm // 表单ref
     } = useNoticeModify();
 
     // 日期选择设置
-    const DisabledDate = (current) => {
+    const DisabledDate = current => {
       // 不能选择今天和今天之前的日期
       return current && current < moment().endOf("day");
     };
@@ -338,13 +338,13 @@ export default {
       // 删除
       delOneNotice,
       // 富文本编辑器
-      editor,
+      editor
     };
   },
   // 使用组件
   components: {
-    Crumbs,
-  },
+    Crumbs
+  }
 };
 </script>
 

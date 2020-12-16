@@ -12,13 +12,15 @@ export function useGetLabels() {
 
   // 获取所有标签
   const getLabels = () => {
-    httpGet(questionLabel.GetLabels).then(res => {
-      if (res.success == true) {
-        labelList.value = res.data;
-      }
-    }).catch((err) => {
-      console.log(err);
-    });
+    httpGet(questionLabel.GetLabels)
+      .then(res => {
+        if (res.success == true) {
+          labelList.value = res.data;
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   // 初始化时

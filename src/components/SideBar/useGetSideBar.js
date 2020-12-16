@@ -28,7 +28,7 @@ export const useGetSideBar = () => {
         {
           id: 111,
           authName: "用户列表",
-          path: "user/user-list",
+          path: "user/user-list"
         }
       ]
     },
@@ -232,7 +232,7 @@ export const useGetSideBar = () => {
   // 返回数据
   return {
     sideBarList, //侧边栏列表
-    sideBarKeys, //侧边栏keys
+    sideBarKeys //侧边栏keys
   };
 };
 //#endregion

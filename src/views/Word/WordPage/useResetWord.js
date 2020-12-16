@@ -6,12 +6,12 @@ import { ExclamationCircleOutlined } from "@ant-design/icons-vue";
 // 引入确认框
 import { createVNode } from "vue";
 import { Modal } from "ant-design-vue";
-export const useResetList = (getUserListData, userPagination) => {
+export const useResetWord = (getWordData, wordPagination) => {
   //#region 重置
   // 定义表单数据相当于$ref
-  const userRef = ref(null);
+  const wordRef = ref(null);
   // 点击重置事件
-  const resetUserList = () => {
+  const resetWord = () => {
     // 重置二次确定模态框
     Modal.confirm({
       title: "您确定要重置吗？",
@@ -19,11 +19,11 @@ export const useResetList = (getUserListData, userPagination) => {
       // 点击确定事件
       onOk() {
         // 重置页码回到第一页
-        userPagination.current = 1;
+        wordPagination.current = 1;
         // 清空文本框
-        userRef.value.resetFields();
+        wordRef.value.resetFields();
         // 重置列表
-        getUserListData();
+        getWordData();
         // 全局提示
         message.success("重置成功");
       },
@@ -36,7 +36,7 @@ export const useResetList = (getUserListData, userPagination) => {
   //#endregion
 
   return {
-    userRef,
-    resetUserList
+    wordRef,
+    resetWord
   };
 };

@@ -8,7 +8,7 @@
       :style="{
         padding: '20px',
         background: '#fff',
-        minHeight: '93%',
+        minHeight: '93%'
       }"
     >
       <!-- 日期 账号名称 查询内容 -->
@@ -65,7 +65,7 @@
 
       <!-- 数据列表 -->
       <a-table
-        :rowKey="(record) => record.id"
+        :rowKey="record => record.id"
         :columns="contactTable.contactColums"
         :data-source="contactTable.contactData"
         :pagination="false"
@@ -140,15 +140,13 @@ import { SubContactHeader } from "./useSubContactHeader";
 import { useSubContactColums } from "./useSubContactColums";
 
 //导入 图标样式
-import {
-  LineOutlined,
-} from "@ant-design/icons-vue";
+import { LineOutlined } from "@ant-design/icons-vue";
 
 export default {
   // 使用组件
   components: {
     Crumbs,
-    LineOutlined,
+    LineOutlined
   },
 
   setup() {
@@ -160,7 +158,7 @@ export default {
       getContactData,
       pageChange,
       manageClick,
-      pageSizeChange,
+      pageSizeChange
     } = showContactList(contactTable);
 
     let {
@@ -170,7 +168,7 @@ export default {
       dateChange,
       selectChange,
       resetClick,
-      searchClick,
+      searchClick
     } = SubContactHeader(getContactData);
 
     //在Mounted 获取列表
@@ -205,9 +203,9 @@ export default {
       //查询 日期范围 和状态匹配列表项方法
       searchClick,
       //点击操作中的处理方法
-      manageClick,
+      manageClick
     };
-  },
+  }
 };
 </script>
 

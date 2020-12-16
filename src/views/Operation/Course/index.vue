@@ -2,10 +2,7 @@
   <a-layout-content>
     <!-- 面包屑 start -->
     <Crumbs
-      :crumbName="[
-        { name: '运营管理' },
-        { name: '课程服务', route: '#' },
-      ]"
+      :crumbName="[{ name: '运营管理' }, { name: '课程服务', route: '#' }]"
     />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
@@ -18,21 +15,30 @@
     >
       <a-row>
         <a-col :span="24" style="margin-bottom: 10px">
-          <a-button type="primary" size="large" style="float: right" @click="showAddForm">
+          <a-button
+            type="primary"
+            size="large"
+            style="float: right"
+            @click="showAddForm"
+          >
             添加课程
           </a-button>
         </a-col>
       </a-row>
       <!-- 表格start -->
       <a-table
-      :columns="courseListData.columns"
-      :data-source="courseListData.data"
-      :pagination="false"
-      :row-key="record => record.id"
-      bordered
+        :columns="courseListData.columns"
+        :data-source="courseListData.data"
+        :pagination="false"
+        :row-key="record => record.id"
+        bordered
       >
         <template #operational="{ record }">
-          <a-button type="primary" style="margin-right: 45px" @click="showEdit(record)">
+          <a-button
+            type="primary"
+            style="margin-right: 45px"
+            @click="showEdit(record)"
+          >
             编辑
           </a-button>
           <a-button type="danger" @click="showDelete(record.id)">
@@ -48,24 +54,49 @@
         @ok="addSubmit"
         @cancel="addCancel"
       >
-        <a-form
-          :model="addModel"
-          :rules="addRules"
-          ref="addRef"
-        >
-          <a-form-item name="name" label="课程名称" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
+        <a-form :model="addModel" :rules="addRules" ref="addRef">
+          <a-form-item
+            name="name"
+            label="课程名称"
+            :labelCol="{ span: 4 }"
+            :wrapperCol="{ span: 20 }"
+          >
             <a-input v-model:value="addModel.name" />
           </a-form-item>
-          <a-form-item name="introduce" label="课程介绍" class="addForm" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
+          <a-form-item
+            name="introduce"
+            label="课程介绍"
+            class="addForm"
+            :labelCol="{ span: 4 }"
+            :wrapperCol="{ span: 20 }"
+          >
             <a-textarea v-model:value="addModel.introduce" />
           </a-form-item>
-          <a-form-item name="fit" label="适合人群" class="addForm" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
+          <a-form-item
+            name="fit"
+            label="适合人群"
+            class="addForm"
+            :labelCol="{ span: 4 }"
+            :wrapperCol="{ span: 20 }"
+          >
             <a-textarea v-model:value="addModel.fit" />
           </a-form-item>
-          <a-form-item name="trait" label="课程特点" class="addForm" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
+          <a-form-item
+            name="trait"
+            label="课程特点"
+            class="addForm"
+            :labelCol="{ span: 4 }"
+            :wrapperCol="{ span: 20 }"
+          >
             <a-textarea v-model:value="addModel.trait" />
           </a-form-item>
-          <a-form-item name="isShow" label="首页展示" class="addForm" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
+          <a-form-item
+            name="isShow"
+            label="首页展示"
+            class="addForm"
+            :labelCol="{ span: 4 }"
+            :wrapperCol="{ span: 20 }"
+          >
             <a-switch v-model:checked="addModel.isShow" />
           </a-form-item>
         </a-form>
@@ -78,24 +109,49 @@
         @ok="editSubmit"
         @cancel="editCancel"
       >
-        <a-form
-          :model="editModel"
-          :rules="editRules"
-          ref="editRef"
-        >
-          <a-form-item name="name" label="课程名称" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
+        <a-form :model="editModel" :rules="editRules" ref="editRef">
+          <a-form-item
+            name="name"
+            label="课程名称"
+            :labelCol="{ span: 4 }"
+            :wrapperCol="{ span: 20 }"
+          >
             <a-input v-model:value="editModel.name" />
           </a-form-item>
-          <a-form-item name="introduce" label="课程介绍" class="addForm" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
+          <a-form-item
+            name="introduce"
+            label="课程介绍"
+            class="addForm"
+            :labelCol="{ span: 4 }"
+            :wrapperCol="{ span: 20 }"
+          >
             <a-textarea v-model:value="editModel.introduce" />
           </a-form-item>
-          <a-form-item name="fit" label="适合人群" class="addForm" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
+          <a-form-item
+            name="fit"
+            label="适合人群"
+            class="addForm"
+            :labelCol="{ span: 4 }"
+            :wrapperCol="{ span: 20 }"
+          >
             <a-textarea v-model:value="editModel.fit" />
           </a-form-item>
-          <a-form-item name="trait" label="课程特点" class="addForm" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
+          <a-form-item
+            name="trait"
+            label="课程特点"
+            class="addForm"
+            :labelCol="{ span: 4 }"
+            :wrapperCol="{ span: 20 }"
+          >
             <a-textarea v-model:value="editModel.trait" />
           </a-form-item>
-          <a-form-item name="isShow" label="首页展示" class="addForm" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
+          <a-form-item
+            name="isShow"
+            label="首页展示"
+            class="addForm"
+            :labelCol="{ span: 4 }"
+            :wrapperCol="{ span: 20 }"
+          >
             <a-switch v-model:checked="editModel.isShow" />
           </a-form-item>
         </a-form>
@@ -123,11 +179,11 @@ import { useDelCourseList } from "./useDelCourseList";
 export default {
   // 使用组件
   components: {
-    Crumbs,
+    Crumbs
   },
   setup() {
     //#region 获取数据
-    const { courseListData,getCourse } = useGetCourseList();
+    const { courseListData, getCourse } = useGetCourseList();
     // 获取表格数据
     getCourse();
     // 设置表格列
@@ -135,11 +191,27 @@ export default {
     //#endregion
 
     //#region 添加数据
-    const { addFormVisibility,addModel,addRules,addRef,showAddForm,addSubmit,addCancel } = useAddCourseList(getCourse);
+    const {
+      addFormVisibility,
+      addModel,
+      addRules,
+      addRef,
+      showAddForm,
+      addSubmit,
+      addCancel
+    } = useAddCourseList(getCourse);
     //#endregion
 
     //region 编辑课程
-    const { editvisible,editModel,editRules,editRef,showEdit,editSubmit,editCancel } = useEditCourseList(getCourse);
+    const {
+      editvisible,
+      editModel,
+      editRules,
+      editRef,
+      showEdit,
+      editSubmit,
+      editCancel
+    } = useEditCourseList(getCourse);
     //endregion
 
     //#region 删除课程
@@ -171,7 +243,7 @@ export default {
       //#region 删除课程
       showDelete
       //#endregion
-    }
+    };
   }
 };
 </script>
