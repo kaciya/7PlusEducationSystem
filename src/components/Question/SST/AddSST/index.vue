@@ -56,11 +56,10 @@ export default {
       // 添加题目表单
       addSSTRef,
       // 添加sst题目
-      confirmAddSST,
+      confirmAddSST
     };
-  },
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

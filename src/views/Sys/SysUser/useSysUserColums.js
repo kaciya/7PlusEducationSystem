@@ -1,11 +1,9 @@
 //导入 reactive 对象
-import {
-    reactive
-} from "vue";
+import { reactive } from "vue";
 
 //#region 创建变量  获取表格项
 export const useSysuserColums = () => {
-      //定义 表格项
+  //定义 表格项
   const sysUsersTable = reactive({
     sysUsersColums: [
       // 列表索引
@@ -59,8 +57,8 @@ export const useSysuserColums = () => {
   });
 
   //返回列表
-  return{
+  return {
     sysUsersTable
-  }
-}
+  };
+};
 //#endregion

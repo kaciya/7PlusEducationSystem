@@ -41,22 +41,21 @@ export default {
   // 使用组件
   components: {
     Crumbs,
-    Guide,
+    Guide
   },
   // setup响应api入口
   setup() {
     // 每种题型对应的Type默认为听力题型介绍
     let type = ref(1);
     // tabs切换事件
-    let tabsChange = (key) => {
+    let tabsChange = key => {
       // 每个tabs切换项的key和题型Type相对应
       type.value = key;
     };
     return {
       type,
-      tabsChange,
+      tabsChange
     };
-  },
+  }
 };
 </script>
-

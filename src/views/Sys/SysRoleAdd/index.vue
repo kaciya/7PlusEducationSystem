@@ -16,9 +16,7 @@
         backgroundColor: '#fff',
         minHeight: '93%'
       }"
-    >
-     
-    </div>
+    ></div>
     <!-- 主体Main end -->
   </a-layout-content>
 </template>
@@ -36,9 +34,7 @@ export default {
     Crumbs
   },
   // setup响应api入口
-  setup() {
-      
-  }
+  setup() {}
 };
 </script>
 

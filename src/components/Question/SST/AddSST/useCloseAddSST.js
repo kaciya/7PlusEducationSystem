@@ -1,4 +1,4 @@
-// 引入共享库 
+// 引入共享库
 import { useStore } from "vuex";
 // 引入computed计算属性
 import { computed } from "vue";
@@ -17,11 +17,11 @@ export function useCloseAddSST() {
       type: "sst",
       visible: false
     });
-  }
+  };
 
   // 返回
   return {
     addSSTVisible,
     closeAddSST
-  }
+  };
 }

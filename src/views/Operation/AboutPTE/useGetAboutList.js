@@ -16,13 +16,13 @@ export const useGetAboutList = () => {
     const res = await httpGet(about.GetAboutList);
     // 设置表格数据
     aboutList.data = res.data.records;
-  }
+  };
 
   onMounted(() => {
     getAboutData();
-  })
+  });
   return {
     aboutList,
     getAboutData
-  }
-}
+  };
+};

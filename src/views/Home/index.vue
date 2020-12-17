@@ -38,13 +38,13 @@ import { onDeactivated } from "vue";
 export default {
   components: {
     SideBar, //侧边栏
-    Header, //顶部栏
+    Header //顶部栏
   },
   setup() {
     onDeactivated(() => {
       console.log("remove");
     });
-  },
+  }
 };
 </script>
 
