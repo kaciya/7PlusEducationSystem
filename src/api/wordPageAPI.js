@@ -1,9 +1,11 @@
 // 词库接口
 export default {
   // 词库列表
-  WordPage: "/word/page",
+  GetWord: "/word/page",
   // 添加单词
-  WordAdd: "/word/add",
+  AddWord: "/word/add",
   //删除
-  WordDel: "/word/delete"
+  DelWord: "/word/delete",
+  //修改
+  EditWord: "word/update"
 };

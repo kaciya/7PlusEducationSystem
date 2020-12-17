@@ -12,7 +12,7 @@ export const useGetGuide = Type => {
 
   // 获取后台数据
   const getGuideData = async () => {
-    const res = await httpGet(guide.GuideList + `${Type}`);
+    const res = await httpGet(guide.GetGuide + `${Type}`);
     if (res.success) {
       guideData.data = res.data;
     }

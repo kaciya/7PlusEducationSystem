@@ -42,7 +42,7 @@ export const useEditGuide = (getGuideData, guideType) => {
   // 点击确定的回调
   const editGuideOk = () => {
     // 发送请求修改数据
-    httpPost(guide.UpdateGuide, {
+    httpPost(guide.EditGuide, {
       id: id.value,
       category: category.value,
       type: guideType,

@@ -37,7 +37,7 @@ export const useGetWord = () => {
   let isSuccess = ref(false);
   // 获取后台数据
   const getWordData = async () => {
-    const res = await httpGet(word.WordPage, {
+    const res = await httpGet(word.GetWord, {
       key: wordModel.wordKey,
       pageNum: wordPagination.current,
       pageSize: wordPagination.pageSize

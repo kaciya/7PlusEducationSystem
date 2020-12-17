@@ -13,7 +13,7 @@ export const useDelWord = getWordData => {
   let delWord = id => {
     id = Array.isArray(id) ? id : [id];
     // 发送请求
-    httpPost(word.WordDel, {
+    httpPost(word.DelWord, {
       ids: id
     })
       .then(res => {
