@@ -6,7 +6,7 @@
       :columns="columns"
       :data-source="topicData.data"
       :pagination="topicPagination"
-      :row-key="(record) => record.id"
+      :row-key="record => record.id"
       @change="onTableChange"
     >
       <!-- 序号 -->
@@ -82,7 +82,7 @@ export default {
       topicData, // 表格数据
       topicPagination, //分页配置项
       onTableChange, //页码改变回调
-      getTopicData,
+      getTopicData
     } = useGetTopic(prop.userID);
     // 柒加圈columns
     const { columns } = useTopicColumns();
@@ -93,7 +93,7 @@ export default {
       shielFrameValue, // 双向绑定屏蔽理由输入框
       confirmShieldModal, // 屏蔽框确认
       topicShow, // 显示框
-      cancelShieldModal, // 关闭模态框清空并提示
+      cancelShieldModal // 关闭模态框清空并提示
     } = useTopicShieldShow(getTopicData);
     return {
       topicData,
@@ -106,9 +106,9 @@ export default {
       shielFrameValue, // 双向绑定屏蔽理由输入框
       confirmShieldModal, // 屏蔽框确认
       topicShow, // 显示框
-      cancelShieldModal, // 关闭模态框清空并提示
+      cancelShieldModal // 关闭模态框清空并提示
     };
-  },
+  }
 };
 </script>
 

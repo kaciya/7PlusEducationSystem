@@ -43,7 +43,7 @@ const routes = [
         component: () => import("@/views/HomeMain"),
         meta: {
           pathName: "/home/main",
-          keepAlive: true
+          keepAlive: true,
         },
       },
       //#endregion
@@ -54,7 +54,7 @@ const routes = [
         component: () => import("@/views/UserManage/UserList"),
         meta: {
           pathName: "/user/user-list",
-          keepAlive: true
+          keepAlive: true,
         },
       },
       // 用户详情
@@ -73,7 +73,15 @@ const routes = [
         path: "/word/category",
         component: () => import("@/views/Word/WordCategory"),
         meta: {
-          pathName: "/word/category"
+          pathName: "/word/category",
+        },
+      },
+      // 词库
+      {
+        path: "/word/page",
+        component: () => import("@/views/Word/WordPage"),
+        meta: {
+          pathName: "/word/page",
         },
       },
       //#endregion
@@ -83,7 +91,7 @@ const routes = [
         path: "/question/label",
         component: () => import("@/views/Question/QuestionLabel"),
         meta: {
-          pathName: "/question/label"
+          pathName: "/question/label",
         },
       },
       // 听力题库
@@ -91,7 +99,7 @@ const routes = [
         path: "/question/listening",
         component: () => import("@/views/Question/Listening"),
         meta: {
-          pathName: "/question/listening"
+          pathName: "/question/listening",
         },
       },
       // 口语题库
@@ -99,7 +107,7 @@ const routes = [
         path: "/question/speaking",
         component: () => import("@/views/Question/Speaking"),
         meta: {
-          pathName: "/question/speaking"
+          pathName: "/question/speaking",
         },
       },
       //#endregion
@@ -111,7 +119,7 @@ const routes = [
         component: () => import("@/views/SevenPlusCircle"),
         meta: {
           pathName: "/topic/page",
-          keepAlive: true
+          keepAlive: true,
         },
       },
       //柒加圈发布详情
@@ -120,7 +128,7 @@ const routes = [
         name: "TopicArticle",
         component: () => import("@/views/SevenPlusCircle/ArticleDetails"),
         meta: {
-          pathName: "/topic/page"
+          pathName: "/topic/page",
         },
       },
       //#endregion
@@ -131,7 +139,7 @@ const routes = [
         name: "SubFeedback",
         component: () => import("@/views/Sub/SubFeedback"),
         meta: {
-          pathName: "/sub/feedback"
+          pathName: "/sub/feedback",
         },
       },
       //联系记录
@@ -140,7 +148,7 @@ const routes = [
         name: "SubContact",
         component: () => import("@/views/Sub/SubContact"),
         meta: {
-          pathName: "/sub/contact"
+          pathName: "/sub/contact",
         },
       },
       //#endregion
@@ -150,7 +158,7 @@ const routes = [
         path: "/platform/notice",
         component: () => import("@/views/PlatFormManage"),
         meta: {
-          pathName: "/platform/notice"
+          pathName: "/platform/notice",
         },
       },
       //#endregion
@@ -160,7 +168,7 @@ const routes = [
         path: "/operation/param",
         component: () => import("@/views/Operation/Parameter"),
         meta: {
-          pathName: "/operation/param"
+          pathName: "/operation/param",
         },
       },
       {
@@ -168,7 +176,7 @@ const routes = [
         path: "/operation/teacher",
         component: () => import("@/views/Operation/TeacherInfo"),
         meta: {
-          pathName: "/operation/teacher"
+          pathName: "/operation/teacher",
         },
       },
       {
@@ -176,7 +184,7 @@ const routes = [
         path: "/operation/course",
         component: () => import("@/views/Operation/Course"),
         meta: {
-          pathName: "/operation/course"
+          pathName: "/operation/course",
         },
       },
       {
@@ -184,7 +192,7 @@ const routes = [
         path: "/operation/exercise",
         component: () => import("@/views/Operation/Exercise"),
         meta: {
-          pathName: "/operation/exercise"
+          pathName: "/operation/exercise",
         },
       },
       {
@@ -192,17 +200,16 @@ const routes = [
         path: "/operation/course",
         component: () => import("@/views/Operation/Course"),
         meta: {
-          pathName: "/operation/course"
+          pathName: "/operation/course",
         },
       },
       // 备考指南
       {
-
         // 文章列表
         path: "/operation/article",
         component: () => import("@/views/Operation/Article"),
         meta: {
-          pathName: "/operation/article"
+          pathName: "/operation/article",
         },
       },
       {
@@ -210,7 +217,7 @@ const routes = [
         path: "/operation/about",
         component: () => import("@/views/Operation/AboutPTE"),
         meta: {
-          pathName: "/operation/about"
+          pathName: "/operation/about",
         },
       },
       {
@@ -218,7 +225,7 @@ const routes = [
         path: "/operation/problem",
         component: () => import("@/views/Operation/Problem"),
         meta: {
-          pathName: "/operation/problem"
+          pathName: "/operation/problem",
         },
       },
 
@@ -226,7 +233,7 @@ const routes = [
         path: "/operation/guide",
         component: () => import("@/views/Operation/Guide"),
         meta: {
-          pathName: "/operation/guide"
+          pathName: "/operation/guide",
         },
       },
       //#endregion
@@ -237,7 +244,7 @@ const routes = [
         name: "SysRole",
         component: () => import("@/views/Sys/SysRole"),
         meta: {
-          pathName: "/sys/role"
+          pathName: "/sys/role",
         },
       },
       //权限组添加
@@ -246,7 +253,7 @@ const routes = [
         name: "SysRoleAdd",
         component: () => import("@/views/Sys/SysRoleAdd"),
         meta: {
-          pathName: "/sys/role"
+          pathName: "/sys/role",
         },
       },
       //权限组编辑
@@ -255,7 +262,7 @@ const routes = [
         name: "SysRoleEdit",
         component: () => import("@/views/Sys/SysRoleEdit"),
         meta: {
-          pathName: "/sys/role"
+          pathName: "/sys/role",
         },
       },
       //账号管理
@@ -264,7 +271,7 @@ const routes = [
         name: "SysUser",
         component: () => import("@/views/Sys/SysUser"),
         meta: {
-          pathName: "/sys/user"
+          pathName: "/sys/user",
         },
       },
       //操作日志
@@ -273,7 +280,7 @@ const routes = [
         name: "SysLog",
         component: () => import("@/views/Sys/SysLog"),
         meta: {
-          pathName: "/sys/log"
+          pathName: "/sys/log",
         },
       },
       //#endregion
@@ -288,8 +295,8 @@ const router = createRouter({
   routes,
   // 跳转路由回到顶部
   scrollBehavior() {
-    return { x: 0, y: 0 }
-  }
+    return { x: 0, y: 0 };
+  },
 });
 
 // 添加路由前置守卫
@@ -309,8 +316,8 @@ router.beforeEach((to, from, next) => {
       name: "Login",
     });
   } else {
-    const toDepth = to.path.split('/').length;
-    const fromDepth = from.path.split('/').length;
+    const toDepth = to.path.split("/").length;
+    const fromDepth = from.path.split("/").length;
     // 判断后退时 是否缓存
     if (toDepth < fromDepth) {
       // console.log('back...')
@@ -322,8 +329,6 @@ router.beforeEach((to, from, next) => {
     // 放行
     next();
   }
-
-
 });
 
 router.afterEach(() => {

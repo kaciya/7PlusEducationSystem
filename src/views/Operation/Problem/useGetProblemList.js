@@ -7,7 +7,6 @@ import { problem } from "@/api/operationAPI";
 import { reactive } from "vue";
 
 export const useGetProblemList = () => {
-
   // 储存数据
   const problemList = reactive({});
 
@@ -20,10 +19,10 @@ export const useGetProblemList = () => {
       // 设置数据
       problemList.data = res.data;
     }
-  }
+  };
 
   return {
     problemList,
     getProblem
-  }
-}
+  };
+};

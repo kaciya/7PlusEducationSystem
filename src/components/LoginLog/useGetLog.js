@@ -3,11 +3,11 @@ import { reactive, onMounted } from "vue";
 import { httpGet } from "@/utils/http";
 // 引入请求接口
 import user from "@/api/userAPI";
-export const useGetLog = (id) => {
+export const useGetLog = id => {
   // 表格数据
   const loglData = reactive({
     // 表格数据
-    data: [],
+    data: []
   });
   //#region 分页配置项
   const logPagination = reactive({
@@ -20,7 +20,7 @@ export const useGetLog = (id) => {
     // 总数
     total: 0,
     // 允许改变每页条数
-    showSizeChanger: true,
+    showSizeChanger: true
   });
   //#endregion 分页配置项
   // 获取后台数据
@@ -29,7 +29,7 @@ export const useGetLog = (id) => {
       // 降序
       descColumns: "createTime",
       pageNum: logPagination.current,
-      pageSize: logPagination.pageSize,
+      pageSize: logPagination.pageSize
     });
     if (res.code == 200) {
       // 数据
@@ -39,7 +39,7 @@ export const useGetLog = (id) => {
     }
   };
   // 页码改变回调
-  const onTableChange = (pagination) => {
+  const onTableChange = pagination => {
     logPagination.current = pagination.current;
     logPagination.pageSize = pagination.pageSize;
     getLogData();
@@ -51,6 +51,6 @@ export const useGetLog = (id) => {
   return {
     loglData,
     logPagination,
-    onTableChange,
+    onTableChange
   };
 };
