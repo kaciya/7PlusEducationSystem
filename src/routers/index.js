@@ -62,7 +62,8 @@ const routes = [
         path: "/user/details/:id",
         component: () => import("@/views/UserManage/UserDetails"),
         meta: {
-          pathName: "/user/user-list"
+          pathName: "/user/user-list",
+          keepAlive: true
         },
         props: true
       },

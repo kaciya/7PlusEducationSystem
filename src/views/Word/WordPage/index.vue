@@ -72,8 +72,13 @@
         <!-- 操作 -->
         <template #operation="{ record }">
           <!-- 编辑按钮 modify-btn:改变按钮颜色(黄色) -->
-          <a-button type="primary" size="small" class="modify-btn">
-            编辑
+          <a-button
+            type="primary"
+            size="small"
+            class="modify-btn"
+            @click="editWord(record)"
+          >
+            修改
           </a-button>
           <!-- 删除按钮 传id进行删除-->
           <!-- 气泡确认框 -->
@@ -95,6 +100,7 @@
       v-model:visible="addVisible"
       @ok="addOK"
       :maskClosable="false"
+      :afterClose="addEmpty"
     >
       <a-form
         :model="addModel"
@@ -132,6 +138,53 @@
       </a-form>
     </a-modal>
     <!-- 添加模态框end -->
+    <!-- 修改模态框start -->
+    <a-modal
+      title="修改单词"
+      v-model:visible="editVisible"
+      :afterClose="editEmpty"
+      @ok="editOk"
+      :maskClosable="false"
+    >
+      <a-form
+        :model="editModel"
+        :rules="addRules"
+        ref="editRef"
+        :label-col="{ span: 4 }"
+      >
+        <!-- 所属类目 -->
+        <a-form-item
+          label="所属类目"
+          required
+          :wrapper-col="{ span: 18 }"
+          name="wordCategory"
+        >
+          <!-- 下拉选择器 -->
+          <a-select v-model:value="editModel.wordCategory">
+            <a-select-option
+              v-for="item in categoryData.data"
+              :value="item.id"
+              :key="item.id"
+            >
+              {{ item.name }}
+            </a-select-option>
+          </a-select>
+        </a-form-item>
+        <!-- 单词 -->
+        <a-form-item
+          label="单词"
+          required
+          :wrapper-col="{ span: 18 }"
+          name="wordName"
+        >
+          <a-input
+            v-model:value="editModel.wordName"
+            placeholder="请输入单词"
+          />
+        </a-form-item>
+      </a-form>
+    </a-modal>
+    <!-- 修改模态框end -->
   </a-layout-content>
 </template>
 
@@ -150,6 +203,8 @@ import { useAddWord } from "./useAddWord";
 import { useGetCategory } from "../WordCategory/useGetCategory";
 // 删除
 import { useDelWord } from "./useDelWord";
+// 修改
+import { useEditWord } from "./useEditWord";
 export default {
   // 使用组件
   components: {
@@ -177,7 +232,8 @@ export default {
       addModel, //表单model
       addOK, //点击确定事件
       addRules, //表单rules
-      addRef //表单ref
+      addRef, //表单ref
+      addEmpty // 模态框关闭事件
     } = useAddWord(getWordData);
     // 添加所属类目数据
     const { categoryData } = useGetCategory();
@@ -188,7 +244,15 @@ export default {
       onSelectChange, //多选触发事件
       delWords //批量删除
     } = useDelWord(getWordData);
-
+    // 编辑
+    const {
+      editVisible, //控制修改框显示隐藏
+      editWord, // 点击修改事件
+      editModel, //输入框model
+      editRef, // 输入框ref
+      editOk, //点击确定事件
+      editEmpty // 模态框关闭事件
+    } = useEditWord(getWordData);
     return {
       wordRef,
       wordModel,
@@ -208,8 +272,15 @@ export default {
       addRules,
       categoryData,
       addRef,
+      addEmpty,
       delWord,
-      delWords
+      delWords,
+      editVisible,
+      editWord,
+      editModel,
+      editRef,
+      editOk,
+      editEmpty
     };
   }
 };

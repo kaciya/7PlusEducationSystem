@@ -58,8 +58,6 @@ export const useAddWord = getWordData => {
               message.success(res.message);
               // 关闭模态框
               addVisible.value = false;
-              // 清空文本框
-              addRef.value.resetFields();
             } else {
               message.error(res.message);
             }
@@ -75,12 +73,18 @@ export const useAddWord = getWordData => {
       });
   };
 
+  // 模态框关闭时的回调
+  let addEmpty = () => {
+    // 清空文本框
+    addRef.value.resetFields();
+  };
   return {
     addVisible,
     addWord,
     addModel,
     addOK,
     addRules,
-    addRef
+    addRef,
+    addEmpty
   };
 };
