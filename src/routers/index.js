@@ -10,19 +10,19 @@ const routes = [
   // 默认重定向到登录页
   {
     path: "/",
-    redirect: "/login"
+    redirect: "/login",
   },
   // 登录页
   {
     path: "/login",
     name: "Login",
-    component: Login
+    component: Login,
   },
   // 404
   {
     path: "/404",
     component: () => import(/* webpackChunkName: "404" */ "@/views/404"),
-    hidden: true
+    hidden: true,
   },
   // 主页
   {
@@ -34,7 +34,7 @@ const routes = [
       // 默认重定向首页主体
       {
         path: "/home",
-        redirect: "/home/main"
+        redirect: "/home/main",
       },
       //#region 首页主体
       {
@@ -43,8 +43,8 @@ const routes = [
         component: () => import("@/views/HomeMain"),
         meta: {
           pathName: "/home/main",
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       //#endregion
       //#region 用户管理
@@ -54,17 +54,17 @@ const routes = [
         component: () => import("@/views/UserManage/UserList"),
         meta: {
           pathName: "/user/user-list",
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       // 用户详情
       {
         path: "/user/details/:id",
         component: () => import("@/views/UserManage/UserDetails"),
         meta: {
-          pathName: "/user/user-list"
+          pathName: "/user/user-list",
         },
-        props: true
+        props: true,
       },
       //#endregion
       //#region 词库管理
@@ -73,8 +73,16 @@ const routes = [
         path: "/word/category",
         component: () => import("@/views/Word/WordCategory"),
         meta: {
-          pathName: "/word/category"
-        }
+          pathName: "/word/category",
+        },
+      },
+      // 词库
+      {
+        path: "/word/page",
+        component: () => import("@/views/Word/WordPage"),
+        meta: {
+          pathName: "/word/page",
+        },
       },
       //#endregion
       //#region 题库管理
@@ -83,24 +91,24 @@ const routes = [
         path: "/question/label",
         component: () => import("@/views/Question/QuestionLabel"),
         meta: {
-          pathName: "/question/label"
-        }
+          pathName: "/question/label",
+        },
       },
       // 听力题库
       {
         path: "/question/listening",
         component: () => import("@/views/Question/Listening"),
         meta: {
-          pathName: "/question/listening"
-        }
+          pathName: "/question/listening",
+        },
       },
       // 口语题库
       {
         path: "/question/speaking",
         component: () => import("@/views/Question/Speaking"),
         meta: {
-          pathName: "/question/speaking"
-        }
+          pathName: "/question/speaking",
+        },
       },
       //#endregion
       //#region 柒加圈
@@ -111,8 +119,8 @@ const routes = [
         component: () => import("@/views/SevenPlusCircle"),
         meta: {
           pathName: "/topic/page",
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       //柒加圈发布详情
       {
@@ -120,8 +128,8 @@ const routes = [
         name: "TopicArticle",
         component: () => import("@/views/SevenPlusCircle/ArticleDetails"),
         meta: {
-          pathName: "/topic/page"
-        }
+          pathName: "/topic/page",
+        },
       },
       //#endregion
       //#region 用户提交
@@ -131,8 +139,8 @@ const routes = [
         name: "SubFeedback",
         component: () => import("@/views/Sub/SubFeedback"),
         meta: {
-          pathName: "/sub/feedback"
-        }
+          pathName: "/sub/feedback",
+        },
       },
       //联系记录
       {
@@ -140,8 +148,8 @@ const routes = [
         name: "SubContact",
         component: () => import("@/views/Sub/SubContact"),
         meta: {
-          pathName: "/sub/contact"
-        }
+          pathName: "/sub/contact",
+        },
       },
       //#endregion
       //#region 平台管理
@@ -150,8 +158,8 @@ const routes = [
         path: "/platform/notice",
         component: () => import("@/views/PlatFormManage"),
         meta: {
-          pathName: "/platform/notice"
-        }
+          pathName: "/platform/notice",
+        },
       },
       //#endregion
       //#region 运营管理
@@ -160,40 +168,40 @@ const routes = [
         path: "/operation/param",
         component: () => import("@/views/Operation/Parameter"),
         meta: {
-          pathName: "/operation/param"
-        }
+          pathName: "/operation/param",
+        },
       },
       {
         // 师咨信息
         path: "/operation/teacher",
         component: () => import("@/views/Operation/TeacherInfo"),
         meta: {
-          pathName: "/operation/teacher"
-        }
+          pathName: "/operation/teacher",
+        },
       },
       {
         // 课程服务
         path: "/operation/course",
         component: () => import("@/views/Operation/Course"),
         meta: {
-          pathName: "/operation/course"
-        }
+          pathName: "/operation/course",
+        },
       },
       {
         // 互动练习
         path: "/operation/exercise",
         component: () => import("@/views/Operation/Exercise"),
         meta: {
-          pathName: "/operation/exercise"
-        }
+          pathName: "/operation/exercise",
+        },
       },
       {
         // 课程服务
         path: "/operation/course",
         component: () => import("@/views/Operation/Course"),
         meta: {
-          pathName: "/operation/course"
-        }
+          pathName: "/operation/course",
+        },
       },
       // 备考指南
       {
@@ -201,32 +209,32 @@ const routes = [
         path: "/operation/article",
         component: () => import("@/views/Operation/Article"),
         meta: {
-          pathName: "/operation/article"
-        }
+          pathName: "/operation/article",
+        },
       },
       {
         // 关于PTE
         path: "/operation/about",
         component: () => import("@/views/Operation/AboutPTE"),
         meta: {
-          pathName: "/operation/about"
-        }
+          pathName: "/operation/about",
+        },
       },
       {
         // 常见问题
         path: "/operation/problem",
         component: () => import("@/views/Operation/Problem"),
         meta: {
-          pathName: "/operation/problem"
-        }
+          pathName: "/operation/problem",
+        },
       },
 
       {
         path: "/operation/guide",
         component: () => import("@/views/Operation/Guide"),
         meta: {
-          pathName: "/operation/guide"
-        }
+          pathName: "/operation/guide",
+        },
       },
       //#endregion
       //#region 权限管理
@@ -236,8 +244,8 @@ const routes = [
         name: "SysRole",
         component: () => import("@/views/Sys/SysRole"),
         meta: {
-          pathName: "/sys/role"
-        }
+          pathName: "/sys/role",
+        },
       },
       //权限组添加
       {
@@ -245,8 +253,8 @@ const routes = [
         name: "SysRoleAdd",
         component: () => import("@/views/Sys/SysRoleAdd"),
         meta: {
-          pathName: "/sys/role"
-        }
+          pathName: "/sys/role",
+        },
       },
       //权限组编辑
       {
@@ -254,8 +262,8 @@ const routes = [
         name: "SysRoleEdit",
         component: () => import("@/views/Sys/SysRoleEdit"),
         meta: {
-          pathName: "/sys/role"
-        }
+          pathName: "/sys/role",
+        },
       },
       //账号管理
       {
@@ -263,8 +271,8 @@ const routes = [
         name: "SysUser",
         component: () => import("@/views/Sys/SysUser"),
         meta: {
-          pathName: "/sys/user"
-        }
+          pathName: "/sys/user",
+        },
       },
       //操作日志
       {
@@ -272,14 +280,14 @@ const routes = [
         name: "SysLog",
         component: () => import("@/views/Sys/SysLog"),
         meta: {
-          pathName: "/sys/log"
-        }
-      }
+          pathName: "/sys/log",
+        },
+      },
       //#endregion
-    ]
+    ],
   },
   // The 404 page must be placed at the end
-  { path: "/:catchAll(.*)", redirect: "/404", hidden: true }
+  { path: "/:catchAll(.*)", redirect: "/404", hidden: true },
 ];
 
 const router = createRouter({
@@ -288,7 +296,7 @@ const router = createRouter({
   // 跳转路由回到顶部
   scrollBehavior() {
     return { x: 0, y: 0 };
-  }
+  },
 });
 
 // 添加路由前置守卫
@@ -305,7 +313,7 @@ router.beforeEach((to, from, next) => {
   if (to.name !== "Login" && !isAuthenticated) {
     // 强制转到login
     next({
-      name: "Login"
+      name: "Login",
     });
   } else {
     const toDepth = to.path.split("/").length;

@@ -8,7 +8,7 @@
       :style="{
         padding: '20px',
         background: '#fff',
-        minHeight: '93%'
+        minHeight: '93%',
       }"
     >
       <!-- 题型选择 start -->
@@ -223,7 +223,7 @@ export default {
       bulkUploadChange,
       beforeBulkUpload,
       clickBulkUpload,
-      cancelBulkUpload
+      cancelBulkUpload,
     } = useBulkUpload();
 
     // 模板下载功能
@@ -280,7 +280,7 @@ export default {
       //#endregion
 
       //#region 上传音频功能
-      uploadAudio
+      uploadAudio,
       //#endregion
 
       //#region 显示添加模态框功能
