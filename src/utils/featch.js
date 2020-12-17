@@ -27,7 +27,7 @@ instance.interceptors.request.use(
   config => {
     // 在headers头上添加参数
     config.headers["Content-Type"] = "application/json;charset=UTF-8";
-    const token = window.sessionStorage.getItem("token");
+    const token = window.localStorage.getItem("token");
     // 判断是否有token令牌
     if (token) {
       config.headers["Token"] = token;
@@ -97,14 +97,14 @@ instance.interceptors.response.use(
     // 计算重试次数
     config.__retryCount += 1;
     // 创建一个新的Promise 来处理 exponential backoff
-    let backoff = new Promise(function(resolve) {
-      setTimeout(function() {
+    let backoff = new Promise(function (resolve) {
+      setTimeout(function () {
         resolve();
       }, config.retryDelay || 1);
     });
 
     // return the promise in which  recalls axios to retry the request
-    return backoff.then(function() {
+    return backoff.then(function () {
       return instance(config);
     });
   }

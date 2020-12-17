@@ -54,7 +54,7 @@ export function useBulkUpload() {
         axios.post("http://pte.admin.api.banyuge.com/admin" + listen.BulkUpload("sst"), formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
-            "Token": window.sessionStorage.getItem("token")
+            "Token": window.localStorage.getItem("token")
           }
         }).then((res) => {
           console.log(res);
