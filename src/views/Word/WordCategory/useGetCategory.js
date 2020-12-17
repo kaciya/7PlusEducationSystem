@@ -7,12 +7,12 @@ export const useGetCategory = () => {
   // 表格数据
   const categoryData = reactive({
     // 表格数据
-    data: []
+    data: [],
   });
 
   // 获取后台数据
   const getCategoryData = async () => {
-    const res = await httpGet(wordType.WordCategoryList);
+    const res = await httpGet(wordType.GetWordCategory);
     // 数据获取成功
     if (res.success) {
       categoryData.data = res.data;
@@ -25,6 +25,6 @@ export const useGetCategory = () => {
   });
   return {
     getCategoryData,
-    categoryData
+    categoryData,
   };
 };

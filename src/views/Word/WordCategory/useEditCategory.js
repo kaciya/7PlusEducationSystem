@@ -5,10 +5,10 @@ import { httpPost } from "@/utils/http";
 import wordType from "@/api/wordTypeAPI";
 //全局提示
 import { message } from "ant-design-vue";
-export const ModifyWordCategory = getCategoryData => {
+export const ModifyWordCategory = (getCategoryData) => {
   // 输入框数据
   const editModel = reactive({
-    name: ""
+    name: "",
   });
   // 表单校验
   const editRules = reactive({
@@ -19,16 +19,16 @@ export const ModifyWordCategory = getCategoryData => {
         message: "词库名称不能为空",
         trigger: "blur",
         // 不能为空格
-        whitespace: true
-      }
-    ]
+        whitespace: true,
+      },
+    ],
   });
   // 控制添加模态框显示隐藏
   let editVisible = ref(false);
   // 词库名称ID
   let categoryId = ref(null);
   // 点击修改显示模态框
-  const editCategory = record => {
+  const editCategory = (record) => {
     editVisible.value = true;
     // 存储词库名称ID
     categoryId.value = record.id;
@@ -45,11 +45,11 @@ export const ModifyWordCategory = getCategoryData => {
       .then(() => {
         // 表单验证通过
         // 发送请求添加数据
-        httpPost(wordType.UpdateWordCategory, {
+        httpPost(wordType.EditWordCategory, {
           name: editModel.name,
-          id: categoryId.value
+          id: categoryId.value,
         })
-          .then(res => {
+          .then((res) => {
             // 判断是否添加成功
             if (res.success) {
               // 更新数据
@@ -61,12 +61,12 @@ export const ModifyWordCategory = getCategoryData => {
               message.error(res.message);
             }
           })
-          .catch(err => {
+          .catch((err) => {
             // 请求失败是的回调
             console.log(err);
           });
       })
-      .catch(error => {
+      .catch((error) => {
         // 表单校验失败回调;
         console.log("error", error);
       });
@@ -83,6 +83,6 @@ export const ModifyWordCategory = getCategoryData => {
     editVisible,
     editCategoryOk,
     editCategory,
-    editCategoryEmpty
+    editCategoryEmpty,
   };
 };

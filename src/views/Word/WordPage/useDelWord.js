@@ -8,15 +8,15 @@ import { ref } from "vue";
 import { ExclamationCircleOutlined } from "@ant-design/icons-vue";
 import { createVNode } from "vue";
 import { Modal } from "ant-design-vue";
-export const useDelWord = getWordData => {
+export const useDelWord = (getWordData) => {
   // 点击删除触发的事件
-  let delWord = id => {
+  let delWord = (id) => {
     id = Array.isArray(id) ? id : [id];
     // 发送请求
-    httpPost(word.WordDel, {
-      ids: id
+    httpPost(word.DelWord, {
+      ids: id,
     })
-      .then(res => {
+      .then((res) => {
         // 判断请求是否成功
         if (res.success) {
           // 刷新列表
@@ -26,7 +26,7 @@ export const useDelWord = getWordData => {
           message.error(res.message);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         // 请求失败的回调
         console.log(err);
       });
@@ -34,7 +34,7 @@ export const useDelWord = getWordData => {
   // 多选数据
   let wordKeys = ref([]);
   //多选触发事件
-  const onSelectChange = selectedRowKeys => {
+  const onSelectChange = (selectedRowKeys) => {
     wordKeys.value = selectedRowKeys;
   };
   // 删除事件
@@ -56,7 +56,7 @@ export const useDelWord = getWordData => {
         // 取消事件
         onCancel() {
           message.info("您已取消删除");
-        }
+        },
       });
     }
   };
@@ -64,6 +64,6 @@ export const useDelWord = getWordData => {
     delWord,
     wordKeys,
     onSelectChange,
-    delWords
+    delWords,
   };
 };

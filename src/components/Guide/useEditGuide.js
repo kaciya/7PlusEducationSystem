@@ -13,7 +13,7 @@ export const useEditGuide = (getGuideData, guideType) => {
     problemsNumber: "",
     examine: "",
     answerTime: "",
-    keyPoints: ""
+    keyPoints: "",
   });
   // 控制模态框显示隐藏
   const editVisible = ref(false);
@@ -24,7 +24,7 @@ export const useEditGuide = (getGuideData, guideType) => {
   // 用户category
   const category = ref();
   // 点击编辑触发的事件
-  const editGuide = record => {
+  const editGuide = (record) => {
     // 显示模态框
     editVisible.value = true;
     // 获取用户id
@@ -42,7 +42,7 @@ export const useEditGuide = (getGuideData, guideType) => {
   // 点击确定的回调
   const editGuideOk = () => {
     // 发送请求修改数据
-    httpPost(guide.UpdateGuide, {
+    httpPost(guide.EditGuide, {
       id: id.value,
       category: category.value,
       type: guideType,
@@ -51,9 +51,9 @@ export const useEditGuide = (getGuideData, guideType) => {
       examine: editGuideModel.examine,
       keyPoints: editGuideModel.keyPoints,
       problemsNumber: editGuideModel.problemsNumber,
-      testRequires: editGuideModel.testRequires
+      testRequires: editGuideModel.testRequires,
     })
-      .then(res => {
+      .then((res) => {
         // 判断请求是否成功
         if (res.success) {
           // 刷新页面
@@ -65,7 +65,7 @@ export const useEditGuide = (getGuideData, guideType) => {
           message.error(res.message);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   };
@@ -80,6 +80,6 @@ export const useEditGuide = (getGuideData, guideType) => {
     editGuideRef,
     editGuide,
     editGuideOk,
-    editGuideEmpty
+    editGuideEmpty,
   };
 };
