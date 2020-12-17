@@ -881,6 +881,16 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
+"@ckeditor/ckeditor5-build-classic@^23.1.0":
+  version "23.1.0"
+  resolved "https://registry.npm.taobao.org/@ckeditor/ckeditor5-build-classic/download/@ckeditor/ckeditor5-build-classic-23.1.0.tgz#b358bd9c266727cd1504d16fb069ada43694e2e5"
+  integrity sha1-s1i9nCZnJ80VBNFvsGmtpDaU4uU=
+
+"@ckeditor/ckeditor5-vue@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.npm.taobao.org/@ckeditor/ckeditor5-vue/download/@ckeditor/ckeditor5-vue-2.0.1.tgz#f187cce9a4b116592a4e6feab09d8a6c991831d6"
+  integrity sha1-8YfM6aSxFlkqTm/qsJ2KbJkYMdY=
+
 "@ctrl/tinycolor@^3.1.6":
   version "3.2.0"
   resolved "https://registry.npm.taobao.org/@ctrl/tinycolor/download/@ctrl/tinycolor-3.2.0.tgz?cache=0&sync_timestamp=1606349968472&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40ctrl%2Ftinycolor%2Fdownload%2F%40ctrl%2Ftinycolor-3.2.0.tgz#77a8a33edb2fdc02318c828be78f6fb3d6c65eb2"

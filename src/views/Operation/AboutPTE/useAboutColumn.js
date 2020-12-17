@@ -9,17 +9,22 @@ export const column = [
     dataIndex: "title",
     key: "title"
   },
-  // {
-  //   title: "发布时间",
-  //   dataIndex: ""
-  // },
-  // {
-  //   title: "发布人"
-  // },
   {
-    title: "开启/关闭"
+    title: "发布时间",
+    dataIndex: "createTime",
+    key: "createTime"
   },
   {
-    title: "操作"
+    title: "发布人",
+    dataIndex: "username",
+    key: "username"
+  },
+  {
+    title: "开启/关闭",
+    slots: { customRender: 'state' }
+  },
+  {
+    title: "操作",
+    slots: { customRender: 'operational' }
   }
 ]
