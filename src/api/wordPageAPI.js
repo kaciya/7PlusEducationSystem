@@ -5,5 +5,5 @@ export default {
   // 添加单词
   AddWord: "/word/add",
   //删除
-  DelWord: "/word/delete",
+  DelWord: "/word/delete"
 };

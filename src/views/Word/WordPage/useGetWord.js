@@ -10,7 +10,7 @@ export const useGetWord = () => {
   // #region 表格
   const wordData = reactive({
     // 表格数据
-    data: [],
+    data: []
   });
   //  分页配置项
   const wordPagination = reactive({
@@ -23,12 +23,12 @@ export const useGetWord = () => {
     // 总数
     total: 0,
     // 允许改变每页条数
-    showSizeChanger: true,
+    showSizeChanger: true
   });
   //#endregion 表格
   //#region 输入框数据
   const wordModel = reactive({
-    wordKey: "",
+    wordKey: ""
   });
   //#endregion 输入框数据
 
@@ -40,7 +40,7 @@ export const useGetWord = () => {
     const res = await httpGet(word.GetWord, {
       key: wordModel.wordKey,
       pageNum: wordPagination.current,
-      pageSize: wordPagination.pageSize,
+      pageSize: wordPagination.pageSize
     });
     if (res.success) {
       // 数据
@@ -62,7 +62,7 @@ export const useGetWord = () => {
   };
   //#endregion
   // 页码改变回调
-  const onTableChange = (pagination) => {
+  const onTableChange = pagination => {
     wordPagination.current = pagination.current;
     wordPagination.pageSize = pagination.pageSize;
     getWordData();
@@ -92,6 +92,6 @@ export const useGetWord = () => {
     wordPagination,
     onTableChange,
     getWordData,
-    getWord,
+    getWord
   };
 };

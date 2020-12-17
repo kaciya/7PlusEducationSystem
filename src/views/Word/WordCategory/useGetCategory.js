@@ -7,7 +7,7 @@ export const useGetCategory = () => {
   // 表格数据
   const categoryData = reactive({
     // 表格数据
-    data: [],
+    data: []
   });
 
   // 获取后台数据
@@ -25,6 +25,6 @@ export const useGetCategory = () => {
   });
   return {
     getCategoryData,
-    categoryData,
+    categoryData
   };
 };

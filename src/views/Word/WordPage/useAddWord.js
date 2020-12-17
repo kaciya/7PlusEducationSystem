@@ -5,7 +5,7 @@ import { httpPost } from "@/utils/http";
 import word from "@/api/wordPageAPI";
 //全局提示
 import { message } from "ant-design-vue";
-export const useAddWord = (getWordData) => {
+export const useAddWord = getWordData => {
   // 控制模态框显示隐藏
   const addVisible = ref(false);
   // 点击导入单词事件
@@ -15,7 +15,7 @@ export const useAddWord = (getWordData) => {
   //输入框内容
   const addModel = reactive({
     wordName: "",
-    wordCategory: "",
+    wordCategory: ""
   });
   //输入框校验
   const addRules = reactive({
@@ -24,17 +24,17 @@ export const useAddWord = (getWordData) => {
         required: true,
         whitespace: true,
         message: "请输入单词",
-        trigger: "blur",
-      },
+        trigger: "blur"
+      }
     ],
     wordCategory: [
       {
         required: true,
         message: "请选择所属类目",
         trigger: "blur",
-        type: "number",
-      },
-    ],
+        type: "number"
+      }
+    ]
   });
   //   表单ref
   const addRef = ref(null);
@@ -47,9 +47,9 @@ export const useAddWord = (getWordData) => {
         // 发送请求添加数据
         httpPost(word.AddWord, {
           typeId: addModel.wordCategory,
-          word: addModel.wordName,
+          word: addModel.wordName
         })
-          .then((res) => {
+          .then(res => {
             // 判断是否添加成功
             if (res.success) {
               // 刷新页面
@@ -64,12 +64,12 @@ export const useAddWord = (getWordData) => {
               message.error(res.message);
             }
           })
-          .catch((err) => {
+          .catch(err => {
             // 请求失败的回调
             console.log(err);
           });
       })
-      .catch((error) => {
+      .catch(error => {
         // 表单校验失败回调
         console.log("error", error);
       });
@@ -81,6 +81,6 @@ export const useAddWord = (getWordData) => {
     addModel,
     addOK,
     addRules,
-    addRef,
+    addRef
   };
 };

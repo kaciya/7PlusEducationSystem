@@ -3,11 +3,11 @@ import { reactive, onMounted } from "vue";
 import { httpGet } from "@/utils/http";
 // 引入请求接口
 import guide from "@/api/guideAPI";
-export const useGetGuide = (Type) => {
+export const useGetGuide = Type => {
   // 表格数据
   const guideData = reactive({
     // 表格数据
-    data: [],
+    data: []
   });
 
   // 获取后台数据
@@ -24,6 +24,6 @@ export const useGetGuide = (Type) => {
   });
   return {
     getGuideData,
-    guideData,
+    guideData
   };
 };
