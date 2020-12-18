@@ -56,7 +56,9 @@
             >批量上传</a-button
           >
           <!-- 添加题目按钮 -->
-          <a-button type="primary">添加</a-button>
+          <a-button type="primary" @click="showAddModal">添加</a-button>
+          <!-- 添加题目模态框 -->
+          <AddSSTModal></AddSSTModal>
         </template>
         <!-- 操作区域 end -->
       </a-page-header>
@@ -80,15 +82,16 @@
           <a-button> <upload-outlined /> 选择文件 </a-button>
         </a-upload>
         <!-- 说明提示 -->
-        <a-alert type="info" show-icon>
+        <a-alert type="info" show-icon style="margin-top: 10px">
           <template #message>
-            <p style="margin: 0px">说明：</p>
-            <p style="margin: 0px">1. 文件格式必须是xls、xlsx</p>
-            <p style="margin: 0px">2. 单词字段对应列数据不能为空</p>
+            <p style="margin: 0px">
+              说明：<br />1. 文件格式必须是xls、xlsx <br />2.
+              单词字段对应列数据不能为空
+            </p>
           </template>
         </a-alert>
         <!-- 模板下载 -->
-        <p>
+        <p style="margin-top: 5px">
           模版下载：
           <a-button type="link">
             <a :href="downloadTemplateUrl">题库SST.xlsx</a>
@@ -100,12 +103,20 @@
       <!-- 题目列表 start -->
       <a-table
         bordered
-        :columns="questionColumns"
+        :columns="category == 'DI' ? questionColumns2 : questionColumns"
         :data-source="questionList"
         row-key="id"
         :loading="isLoading"
-        :pagination="false"
+        :pagination="{
+          total: total,
+          showSizeChanger: true,
+          showQuickJumper: true,
+        }"
+        @change="changePagenum"
       >
+        <template #pics="{ record }">
+          <img :src="item" v-for="(item, index) in record.pics" :key="index" />
+        </template>
         <!-- 题目标签选择器 start -->
         <template #labels="{ record }">
           <!-- 设置标签时，将 题目id和选中标签 传给功能函数 -->
@@ -115,9 +126,7 @@
             style="width: 100%"
             placeholder="请选择标签，最多可以选择3项"
             option-label-prop="label"
-            @change="
-              setLabels(record.id, record.category, record.labels, labelList)
-            "
+            @change="setLabels(record.id, record.category, record.labels)"
           >
             <!-- 渲染所有标签 -->
             <a-select-option
@@ -134,29 +143,23 @@
 
         <!-- 题目操作区 start -->
         <template #operation="{ record }">
-          <a-button type="primary">查看</a-button>
+          <a-button type="primary" @click="showGetModal(record.id)">查看</a-button>
           <a-button
             type="primary"
             style="margin-left: 10px"
             @click="uploadAudio(record.id, 'audioUrl')"
             >上传音频</a-button
           >
-          <a-button type="primary" style="margin-left: 10px">编辑</a-button>
+          <a-button type="primary" class="modify-btn" style="margin-left: 10px"
+            >编辑</a-button
+          >
           <a-button type="danger" style="margin-left: 10px">删除</a-button>
         </template>
         <!-- 题目操作区 end -->
+        <!-- 题目列表 end -->
       </a-table>
-      <!-- 题目列表 end -->
-
-      <!-- 分页器 start -->
-      <a-pagination
-        :total="total"
-        show-size-changer
-        show-quick-jumper
-        @change="changePagenum"
-        @showSizeChange="showSizeChange"
-      />
-      <!-- 分页器 end -->
+      <!-- 查看模态框 -->
+      <GetRAModal />
     </a-card>
     <!-- 主体Main end -->
   </a-layout-content>
@@ -167,6 +170,11 @@
 import Crumbs from "@/components/Crumbs";
 // 引入icons图标
 import { UploadOutlined } from "@ant-design/icons-vue";
+
+// 引入 查看ra题目模态框
+import GetRAModal from "@/components/Question/RA/GetRA";
+// 引入 添加sst题目模态框
+import AddSSTModal from "@/components/Question/SST/AddSST";
 
 // 导入 题目列表 列配置
 import { useQuestionColumns } from "./useQuestionColumns";
@@ -182,6 +190,10 @@ import { useBulkUpload } from "./useBulkUpload";
 import { useDownloadTemplate } from "./useDownloadTemplate";
 // 导入 上传音频功能
 import { useUploadAudio } from "./useUploadAudio";
+// 导入 显示查看题目模态框 功能
+import { useShowGetModal } from "./useShowGetModal";
+// 导入 显示添加题目模态框 功能
+import { useShowAddModal } from "./useShowAddModal";
 
 export default {
   // setup响应api入口
@@ -195,17 +207,16 @@ export default {
       isLoading,
       total,
       changePagenum,
-      showSizeChange,
     } = useGetQuestion();
 
     // 获取全部标签类型
     let { labelList } = useGetLabels();
 
     // 题目列表 列配置
-    let { questionColumns } = useQuestionColumns();
+    let { questionColumns, questionColumns2 } = useQuestionColumns();
 
     // 设置 题目标签
-    let { setLabels } = useSetLabels();
+    let { setLabels } = useSetLabels(labelList);
 
     // 批量上传 功能
     let {
@@ -223,6 +234,12 @@ export default {
     // 上传音频功能
     let { uploadAudio } = useUploadAudio();
 
+    // 显示查看模态框 功能
+    let { showGetModal } = useShowGetModal(category);
+
+    // 显示添加模态框 功能
+    let { showAddModal } = useShowAddModal(category);
+
     // 返回
     return {
       //#region 渲染表格
@@ -234,6 +251,7 @@ export default {
       labelList,
       // 题目列配置
       questionColumns,
+      questionColumns2,
       // 获取题目列表
       getQuestion,
       // 题目列表
@@ -244,8 +262,6 @@ export default {
       total,
       // 跳转页码时
       changePagenum,
-      // 修改每页多少条
-      showSizeChange,
       // 设置题目标签
       setLabels,
       //#endregion
@@ -272,12 +288,26 @@ export default {
       //#region 上传音频功能
       uploadAudio,
       //#endregion
+
+      //#region 显示查看模态框功能
+      showGetModal,
+      //#endregion
+
+      //#region 显示添加模态框功能
+      showAddModal,
+      //#endregion
     };
   },
   // 使用组件
   components: {
+    // 面包屑
     Crumbs,
+    // 上传图标
     UploadOutlined,
+    // 查看RA题目模态框
+    GetRAModal,
+    // 添加SST题目模态框
+    AddSSTModal,
   },
 };
 </script>

@@ -8,7 +8,7 @@ import { reactive } from "vue";
 // 引入 axios 
 import axios from "axios";
 // 引入接口配置
-import { listen } from "@/api/questionListenAPI";
+import { speak } from "@/api/questionSpeakAPI";
 
 export function useBulkUpload() {
   // 批量上传模态框的显示与隐藏
@@ -51,7 +51,7 @@ export function useBulkUpload() {
         const formData = new FormData();
         formData.append("files", bulkUpload.fileList[0])
         // 提交表单
-        axios.post("http://pte.admin.api.banyuge.com/admin" + listen.BulkUpload("sst"), formData, {
+        axios.post("http://pte.admin.api.banyuge.com/admin" + speak.BulkUpload("ra"), formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
             "Token": window.sessionStorage.getItem("token")

@@ -41,7 +41,7 @@ export function useGetQuestion() {
       pageNum: pagenum.value,
       // 分页大小
       pageSize: pagesize.value,
-      // 类型  2.说
+      // 类型  2.口语
       type: 2,
     }).then((res) => {
       let { success, data } = res;
@@ -61,18 +61,10 @@ export function useGetQuestion() {
   };
 
   // 跳转页码时
-  function changePagenum(page, pageSize) {
-    // 根据分页器的 page, size 刷新页面
-    pagenum.value = page;
-    pagesize.value = pageSize;
-    getQuestion();
-  }
-
-  // 修改每页多少条
-  function showSizeChange(current, size) {
+  function changePagenum({ current, pageSize }) {
     // 根据分页器的 page, size 刷新页面
     pagenum.value = current;
-    pagesize.value = size;
+    pagesize.value = pageSize;
     getQuestion();
   }
 
@@ -90,7 +82,6 @@ export function useGetQuestion() {
     isLoading,
     total,
     changePagenum,
-    showSizeChange
   }
 }
 //#endregion
