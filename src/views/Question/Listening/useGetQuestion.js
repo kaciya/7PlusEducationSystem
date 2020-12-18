@@ -26,9 +26,14 @@ export function useGetQuestion() {
   const pagenum = ref(1);
   const pagesize = ref(10);
 
-
-  // 获取题目
-  const getQuestion = () => {
+  /**
+   * 获取题目
+   * @param {*} goFirstPage 是否前往第一页
+   */
+  const getQuestion = (goFirstPage) => {
+    if (goFirstPage) {
+      pagenum.value = 1;
+    }
     // 开启加载状态
     isLoading.value = true;
     // 发起数据请求
@@ -52,6 +57,11 @@ export function useGetQuestion() {
         console.log(data);
         // 记录数据库中的数据总数
         total.value = data.total;
+        // 判断是否超出最后一页，如果超出，重新请求
+        if (data.current > data.pages) {
+          pagenum.value = data.pages;
+          getQuestion();
+        }
         // 关闭加载状态
         isLoading.value = false;
       }
@@ -61,7 +71,7 @@ export function useGetQuestion() {
   };
 
   // 跳转页码时
-  function changePagenum({ current, pageSize }) {
+  const changePagenum = ({ current, pageSize }) => {
     // 根据分页器的 page, size 刷新页面
     pagenum.value = current;
     pagesize.value = pageSize;
@@ -75,6 +85,7 @@ export function useGetQuestion() {
   });
 
   return {
+    pagenum,
     category,
     labelId,
     getQuestion,
