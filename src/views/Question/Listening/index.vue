@@ -8,7 +8,7 @@
       :style="{
         padding: '20px',
         background: '#fff',
-        minHeight: '93%',
+        minHeight: '93%'
       }"
     >
       <!-- 题型选择 start -->
@@ -65,7 +65,9 @@
             >批量上传</a-button
           >
           <!-- 添加题目按钮 -->
-          <a-button type="primary">添加</a-button>
+          <a-button type="primary" @click="showAddModal">添加</a-button>
+          <!-- 添加题目模态框 -->
+          <AddSSTModal></AddSSTModal>
         </template>
         <!-- 操作区域 end -->
       </a-page-header>
@@ -89,15 +91,16 @@
           <a-button> <upload-outlined /> 选择文件 </a-button>
         </a-upload>
         <!-- 说明提示 -->
-        <a-alert type="info" show-icon>
+        <a-alert type="info" show-icon style="margin-top: 10px">
           <template #message>
-            <p style="margin: 0px">说明：</p>
-            <p style="margin: 0px">1. 文件格式必须是xls、xlsx</p>
-            <p style="margin: 0px">2. 单词字段对应列数据不能为空</p>
+            <p style="margin: 0px">
+              说明：<br />1. 文件格式必须是xls、xlsx <br />2.
+              单词字段对应列数据不能为空
+            </p>
           </template>
         </a-alert>
         <!-- 模板下载 -->
-        <p>
+        <p style="margin-top: 5px">
           模版下载：
           <a-button type="link">
             <a :href="downloadTemplateUrl">题库SST.xlsx</a>
@@ -113,7 +116,12 @@
         :data-source="questionList"
         row-key="id"
         :loading="isLoading"
-        :pagination="false"
+        :pagination="{
+          total: total,
+          showSizeChanger: true,
+          showQuickJumper: true
+        }"
+        @change="changePagenum"
       >
         <!-- 题目标签选择器 start -->
         <template #labels="{ record }">
@@ -124,9 +132,7 @@
             style="width: 100%"
             placeholder="请选择标签，最多可以选择3项"
             option-label-prop="label"
-            @change="
-              setLabels(record.id, record.category, record.labels, labelList)
-            "
+            @change="setLabels(record.id, record.category, record.labels)"
           >
             <!-- 渲染所有标签 -->
             <a-select-option
@@ -156,16 +162,6 @@
         <!-- 题目操作区 end -->
       </a-table>
       <!-- 题目列表 end -->
-
-      <!-- 分页器 start -->
-      <a-pagination
-        :total="total"
-        show-size-changer
-        show-quick-jumper
-        @change="changePagenum"
-        @showSizeChange="showSizeChange"
-      />
-      <!-- 分页器 end -->
     </div>
     <!-- 主体Main end -->
   </a-layout-content>
@@ -176,6 +172,9 @@
 import Crumbs from "@/components/Crumbs";
 // 引入icons图标
 import { UploadOutlined } from "@ant-design/icons-vue";
+
+// 引入 添加sst题目模态框
+import AddSSTModal from "@/components/Question/SST/AddSST";
 
 // 导入 题目列表 列配置
 import { useQuestionColumns } from "./useQuestionColumns";
@@ -191,6 +190,8 @@ import { useBulkUpload } from "./useBulkUpload";
 import { useDownloadTemplate } from "./useDownloadTemplate";
 // 导入 上传音频功能
 import { useUploadAudio } from "./useUploadAudio";
+// 导入 显示添加题目模态框 功能
+import { useShowAddModal } from "./useShowAddModal";
 
 export default {
   // setup响应api入口
@@ -203,8 +204,7 @@ export default {
       questionList,
       isLoading,
       total,
-      changePagenum,
-      showSizeChange,
+      changePagenum
     } = useGetQuestion();
 
     // 获取全部标签类型
@@ -214,7 +214,7 @@ export default {
     let { questionColumns } = useQuestionColumns();
 
     // 设置 题目标签
-    let { setLabels } = useSetLabels();
+    let { setLabels } = useSetLabels(labelList);
 
     // 批量上传 功能
     let {
@@ -223,7 +223,7 @@ export default {
       bulkUploadChange,
       beforeBulkUpload,
       clickBulkUpload,
-      cancelBulkUpload,
+      cancelBulkUpload
     } = useBulkUpload();
 
     // 模板下载功能
@@ -231,6 +231,9 @@ export default {
 
     // 上传音频功能
     let { uploadAudio } = useUploadAudio();
+
+    // 显示添加模态框 功能
+    let { showAddModal } = useShowAddModal(category);
 
     // 返回
     return {
@@ -253,8 +256,6 @@ export default {
       total,
       // 跳转页码时
       changePagenum,
-      // 修改每页多少条
-      showSizeChange,
       // 设置题目标签
       setLabels,
       //#endregion
@@ -281,15 +282,22 @@ export default {
       //#region 上传音频功能
       uploadAudio,
       //#endregion
+
+      //#region 显示添加模态框功能
+      showAddModal
+      //#endregion
     };
   },
   // 使用组件
   components: {
+    // 面包屑
     Crumbs,
+    // 上传图标
     UploadOutlined,
-  },
+    // 添加SST题目模态框
+    AddSSTModal
+  }
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

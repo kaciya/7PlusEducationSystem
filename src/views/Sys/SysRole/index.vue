@@ -8,7 +8,7 @@
       :style="{
         padding: '20px',
         background: '#fff',
-        minHeight: '93%',
+        minHeight: '93%'
       }"
     >
       <!-- 权限组列表上标题 -->
@@ -16,8 +16,8 @@
         <a-col :span="2">
           <h3 style="font-weight: 600">标签列表</h3>
         </a-col>
-        <a-col :span="2" offset="20">
-          <a-button type="primary" @click="handleAddRouter"> <PlusOutlined />添加 </a-button>
+        <a-col :span="1" offset="20">
+          <a-button type="primary" @click="handleAddRouter"> 添加 </a-button>
         </a-col>
       </a-row>
       <!-- 权限组列表上标题 end -->
@@ -26,7 +26,7 @@
       <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
         <!-- 标签列表 -->
         <a-table
-          :rowKey="(record) => record.roleId"
+          :rowKey="record => record.roleId"
           :columns="rolesTable.rolesColums"
           :data-source="rolesTable.rolesData"
           :pagination="false"
@@ -41,18 +41,28 @@
           <!-- 配置 status 用户状态 -->
           <template #status="{ record }">
             <div>
-              <a-switch :checked="record.status == 1 ? true : false" @click="statusChange(record.roleId,getSysRolesData)"/>
+              <a-switch
+                :checked="record.status == 1 ? true : false"
+                @click="statusChange(record.roleId)"
+              />
             </div>
           </template>
           <!-- 配置 用户状态 end -->
 
           <!-- 配置 operation 操作 -->
           <template #operation="{ record }">
-            <a-button type="primary" style="margin: 0 5px" @click="handleEditRouter(record.roleId)">
-              <EditOutlined /> 编辑
+            <a-button
+              type="primary"
+              style="margin: 0 5px"
+              @click="handleEditRouter(record.roleId)"
+            >
+              编辑
             </a-button>
-            <a-button type="danger" style="margin: 0 5px" @click="showDelConfirm(record.roleId,getSysRolesData)"
-              ><DeleteOutlined /> 删除
+            <a-button
+              type="danger"
+              style="margin: 0 5px"
+              @click="showDelConfirm(record.roleId)"
+              >删除
             </a-button>
           </template>
           <!-- 配置 operation 操作 end -->
@@ -101,35 +111,34 @@ import { removeSysRoles } from "./useSysRolesDel";
 //导入rolesStatus中返回的数据
 import { updateRoleStatus } from "./useSysRoleStatusEdit";
 
-//导入图标
-import { PlusOutlined } from "@ant-design/icons-vue";
+//导入useSysRolesColums中返回的列表数据
+import { useSysRolesColums } from "./useSysRolesColums";
 
 export default {
   // 组件
   components: {
-    Crumbs,
-    PlusOutlined,
-    EditOutlined,
-    DeleteOutlined,
+    Crumbs
   },
 
   setup() {
-    //通过showRoleList方法获取 列表项和数据
+    //通过useSysRolesColums方法获取 列表数据
+    let { rolesTable } = useSysRolesColums();
+
+    //通过showRoleList方法 渲染列表和分页数据
     let {
-      rolesTable,
       pageInfo,
       pageChange,
       getSysRolesData,
       pageSizeChange,
       handleAddRouter,
-      handleEditRouter,
-    } = showRoleList();
+      handleEditRouter
+    } = showRoleList(rolesTable);
 
     //通过removeSysRoles获取删除模态框
-    let { showDelConfirm } = removeSysRoles();
+    let { showDelConfirm } = removeSysRoles(getSysRolesData);
 
     //通过updateRoleStatus获取更改权限组启用状态方法
-    let { statusChange } = updateRoleStatus();
+    let { statusChange } = updateRoleStatus(getSysRolesData);
 
     //在Mounted 获取列表
     onMounted(() => {
@@ -155,14 +164,14 @@ export default {
       //权限组添加路由跳转
       handleAddRouter,
       //权限组编辑路由跳转
-      handleEditRouter,
+      handleEditRouter
     };
-  },
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-.ant-btn{
+.ant-btn {
   width: auto;
 }
 </style>

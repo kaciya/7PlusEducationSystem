@@ -1,8 +1,6 @@
 //#region 获取侧边栏功能
 // 导入响应api
 import { reactive } from "vue";
-// 导入vue-router
-// import { useRouter } from "vue-router";
 
 // 定义功能函数
 export const useGetSideBar = () => {
@@ -11,13 +9,14 @@ export const useGetSideBar = () => {
   // 声明侧边栏key(id)列表
   const sideBarKeys = reactive([]);
 
-  // 模拟data
+  //#region 模拟data
   const sideBarListData = [
     // 首页
     {
       id: 100,
+      name: "Home",
       authName: "首页",
-      path: "home",
+      path: "home/main",
       children: []
     },
     // 用户管理
@@ -37,17 +36,17 @@ export const useGetSideBar = () => {
     {
       id: 120,
       authName: "词库管理",
-      path: "lexicon",
+      path: "word",
       children: [
         {
           id: 121,
           authName: "词库分类",
-          path: "lexicon/sort"
+          path: "word/category"
         },
         {
           id: 122,
           authName: "词库",
-          path: "home"
+          path: "word/page"
         }
       ]
     },
@@ -70,17 +69,17 @@ export const useGetSideBar = () => {
         {
           id: 133,
           authName: "口语题库",
-          path: "home"
+          path: "question/speaking"
         },
         {
           id: 134,
           authName: "阅读题库",
-          path: "home"
+          path: "ydtk"
         },
         {
           id: 135,
           authName: "写作题库",
-          path: "home"
+          path: "xztk"
         }
       ]
     },
@@ -88,12 +87,12 @@ export const useGetSideBar = () => {
     {
       id: 140,
       authName: "柒加圈",
-      path: "ckgl",
+      path: "topic",
       children: [
         {
           id: 141,
           authName: "发布列表",
-          path: "home"
+          path: "topic/page"
         }
       ]
     },
@@ -157,23 +156,23 @@ export const useGetSideBar = () => {
         {
           id: 175,
           authName: "校区管理(官网)",
-          path: "home"
+          path: "xqgl"
         },
         {
           id: 176,
           authName: "文章列表(官网)",
-          path: "home"
+          path: "operation/article"
         },
 
         {
           id: 177,
           authName: "关于PTE",
-          path: "home"
+          path: "operation/about"
         },
         {
           id: 178,
           authName: "备考指南(学习中心)",
-          path: "home"
+          path: "operation/guide"
         },
         {
           id: 179,
@@ -186,6 +185,7 @@ export const useGetSideBar = () => {
     {
       id: 180,
       authName: "权限管理",
+      path: "sys",
       children: [
         {
           id: 181,
@@ -205,6 +205,7 @@ export const useGetSideBar = () => {
       ]
     }
   ];
+  //#endregion
 
   // 调用获取侧边栏数据方法
   getSideBarList();
@@ -222,16 +223,16 @@ export const useGetSideBar = () => {
    */
   function storeSideBarData(data) {
     data.forEach(item => {
-      sideBarKeys.push(item.id); //存储菜单栏id
-      if (item.path == "home") return; //不存储home栏
+      sideBarKeys.push(item.path); //存储菜单栏id
+      if (item.name == "Home") return; //不存储home栏
       sideBarList.push(item); //存储菜单栏
     });
   }
 
   // 返回数据
   return {
-    sideBarList,
-    sideBarKeys
+    sideBarList, //侧边栏列表
+    sideBarKeys //侧边栏keys
   };
 };
 //#endregion

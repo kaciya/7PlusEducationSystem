@@ -17,28 +17,27 @@ export const useLoginSubmit = () => {
   // 使用共享库
   const store = useStore();
   // 登录表单数据
-  const loginData = reactive({
+  const loginModel = reactive({
     username: "",
     password: ""
   });
-  // 声明loginForm
-  const loginForm = ref(null);
+  // 声明loginFormRef
+  const loginFormRef = ref(null);
   // 正在登录状态
   const logining = ref(false);
-
 
   // 提交表单
   const loginSubmit = () => {
     // 校验登录表单的数据
-    loginForm.value
+    loginFormRef.value
       .validate()
       .then(() => {
         // 开启正在登录状态
         logining.value = true;
         // 准备参数
         let params = {
-          username: loginData.username,
-          password: loginData.password
+          username: loginModel.username,
+          password: loginModel.password
         };
         // 发起登录请求
         httpPost(auth.UserLogin, params).then(res => {
@@ -65,9 +64,9 @@ export const useLoginSubmit = () => {
   };
 
   return {
-    loginData,
+    loginModel,
     loginSubmit,
-    loginForm,
+    loginFormRef,
     logining
   };
 };

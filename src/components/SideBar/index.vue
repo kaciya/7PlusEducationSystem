@@ -1,6 +1,6 @@
 <template>
   <a-layout-sider
-    id="side-bar"
+    class="side-bar"
     theme="light"
     v-model:collapsed="collapsed"
     :trigger="null"
@@ -12,21 +12,24 @@
       <span class="title">柒加教育</span>
     </div>
     <!-- 菜单栏 -->
-    <a-menu :inlineIndent="30" theme="light" mode="inline">
+    <a-menu
+      :inlineIndent="30"
+      theme="light"
+      mode="inline"
+      :open-keys="sideBarUnfoldKeys.openKeys"
+      :selectedKeys="sideBarUnfoldKeys.selectKeys"
+      @openChange="onOpenChange"
+    >
       <!-- 首页 -->
-      <a-menu-item class="menu-pri menu-home" :key="sideBarKeys[0]">
-        <router-link
-          to="/home/main"
-          @click="reloadHome"
-          class="menu-link home-link"
-        >
+      <a-menu-item class="menu-pri menu-home" :key="'/' + sideBarKeys[0]">
+        <router-link to="/home/main" class="menu-link home-link">
           <HomeOutlined />
           <span class="home-text">首页</span>
         </router-link>
       </a-menu-item>
       <!-- 其他menu -->
-      <a-sub-menu class="menu-pri" v-for="item in sideBarList" :key="item.id">
-        <template #title v-if="item.path == 'users'">
+      <a-sub-menu class="menu-pri" v-for="item in sideBarList" :key="item.path">
+        <template #title v-if="item.path == 'user'">
           <span>
             <UserOutlined />
             <span>{{ item.authName }} </span>
@@ -41,7 +44,7 @@
         <a-menu-item
           class="menu-sec"
           v-for="subitem in item.children"
-          :key="subitem.id"
+          :key="'/' + subitem.path"
         >
           <router-link :to="'/' + subitem.path" class="menu-link">
             <span>{{ subitem.authName }}</span>
@@ -53,8 +56,10 @@
 </template>
 
 <script>
-// 导入侧边栏方法
+// 导入获取侧边栏方法
 import { useGetSideBar } from "./useGetSideBar";
+// 导入设置侧边栏方法
+import { useSetSideBar } from "./useSetSideBar";
 // 导入共享collapsed方法
 import { useSetCollapsed } from "../Header/useSetCollapsed";
 // 导入图标icons
@@ -68,13 +73,12 @@ export default {
   // setup响应api入口
   setup() {
     // 获取侧边栏数据
-    let { sideBarList, sideBarKeys } = useGetSideBar();
+    const { sideBarList, sideBarKeys } = useGetSideBar();
     // 侧边栏伸缩状态
-    let { collapsed } = useSetCollapsed();
-    function reloadHome() {
-      // location.href = "#/home/main";
-      // location.reload();
-    }
+    const { collapsed } = useSetCollapsed();
+    // 设置侧边栏导航
+    const { sideBarUnfoldKeys, onOpenChange } = useSetSideBar();
+
     // 返回
     return {
       // 侧边栏列表
@@ -83,15 +87,17 @@ export default {
       sideBarKeys,
       // 侧边栏伸缩状态
       collapsed,
-      // 重载首页
-      reloadHome
+      // 侧边栏的展开keys
+      sideBarUnfoldKeys,
+      // 只展开当前父菜单栏
+      onOpenChange
     };
   }
 };
 </script>
 
 <style lang="scss" scoped>
-#side-bar {
+.side-bar {
   overflow-x: hidden;
   overflow-y: auto;
   transition: all 0.1s;
@@ -191,13 +197,13 @@ export default {
 </style>
 <style scoped>
 /* 样式穿透 */
-#side-bar ::v-deep(.ant-menu-vertical-left .ant-menu-item),
-#side-bar ::v-deep(.ant-menu-vertical-right .ant-menu-item),
-#side-bar ::v-deep(.ant-menu-inline .ant-menu-item),
-#side-bar ::v-deep(.ant-menu-vertical .ant-menu-submenu-title),
-#side-bar ::v-deep(.ant-menu-vertical-left .ant-menu-submenu-title),
-#side-bar ::v-deep(.ant-menu-vertical-right .ant-menu-submenu-title),
-#side-bar ::v-deep(.ant-menu-inline .ant-menu-submenu-title) {
+.side-bar ::v-deep(.ant-menu-vertical-left .ant-menu-item),
+.side-bar ::v-deep(.ant-menu-vertical-right .ant-menu-item),
+.side-bar ::v-deep(.ant-menu-inline .ant-menu-item),
+.side-bar ::v-deep(.ant-menu-vertical .ant-menu-submenu-title),
+.side-bar ::v-deep(.ant-menu-vertical-left .ant-menu-submenu-title),
+.side-bar ::v-deep(.ant-menu-vertical-right .ant-menu-submenu-title),
+.side-bar ::v-deep(.ant-menu-inline .ant-menu-submenu-title) {
   height: 51px;
   line-height: 51px;
   margin-top: 0;
@@ -205,10 +211,10 @@ export default {
   border-bottom: 1px solid #f2f2f2;
 }
 
-#side-bar ::v-deep(.ant-menu-vertical .ant-menu-item:not(:last-child)),
-#side-bar ::v-deep(.ant-menu-vertical-left .ant-menu-item:not(:last-child)),
-#side-bar ::v-deep(.ant-menu-vertical-right .ant-menu-item:not(:last-child)),
-#side-bar ::v-deep(.ant-menu-inline .ant-menu-item:not(:last-child)) {
+.side-bar ::v-deep(.ant-menu-vertical .ant-menu-item:not(:last-child)),
+.side-bar ::v-deep(.ant-menu-vertical-left .ant-menu-item:not(:last-child)),
+.side-bar ::v-deep(.ant-menu-vertical-right .ant-menu-item:not(:last-child)),
+.side-bar ::v-deep(.ant-menu-inline .ant-menu-item:not(:last-child)) {
   margin-bottom: 0px;
   border-bottom: 1px solid #f2f2f2;
 }

@@ -1,10 +1,9 @@
 <template>
   <a-layout-content>
     <!-- 面包屑 start -->
-    <Crumbs :crumbName="[
-        { name: '官网管理' },
-        { name: '互动练习', route: '#' },
-      ]" />
+    <Crumbs
+      :crumbName="[{ name: '官网管理' }, { name: '互动练习', route: '#' }]"
+    />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
     <div
@@ -15,18 +14,19 @@
       }"
     >
       <a-table
-        :columns="ExerciseData.columns"
-        :data-source="ExerciseData.data"
+        :columns="exerciseData.columns"
+        :data-source="exerciseData.data"
         bordered
         :row-key="record => record.id"
+        :pagination="false"
       >
         <template #action="{record}">
           <a-button
             type="primary"
             style="margin-left: 40px"
-            @click="editShow(record.id,record.name)"
+            @click="editShow(record.id, record.name)"
           >
-            <EditOutlined />编辑
+            编辑
           </a-button>
         </template>
       </a-table>
@@ -35,19 +35,18 @@
         title="编辑内容"
         v-model:visible="editVisibility"
         :confirm-loading="confirmLoading"
-        @ok="handleClickEdit"
+        @ok="exerciseEditSubmit"
       >
-        <a-form
-          :model="editLabForm"
-          :rules="editLabFormRule"
-          ref="ExerciseEditRef"
-          name="custom-validation"
-        >
+        <a-form :model="editMode" :rules="editRule" ref="exerciseEditRef">
           <a-row>
             <a-col :span="24">
-              <a-form-item label="新内容" :wrapperCol="{span: 24}" name="content">
+              <a-form-item
+                label="新内容"
+                :wrapperCol="{ span: 24 }"
+                name="content"
+              >
                 <a-textarea
-                  v-model:value="editLabForm.content"
+                  v-model:value="editMode.content"
                   placeholder="请输入新内容"
                   :rows="5"
                 />
@@ -62,60 +61,52 @@
 </template>
 
 <script>
-// 引入图标
-import { EditOutlined } from "@ant-design/icons-vue";
 // 引入面包屑组件
 import Crumbs from "@/components/Crumbs";
 // 引入列表组件
 import { columns } from "./useExerciseColumns";
 // 引入获取列表方法
-import { getExerciseList } from "./useExerciseGetList";
+import { useGetExerciseList } from "./useGetExerciseList";
 // 引入编辑功能方法
-import { ExerciseEdit } from "./useExerciseEdit";
+import { useEditExercise } from "./useEditExercise";
 
 export default {
+  components: {
+    Crumbs
+  },
   // setup响应api入口
   setup() {
     //#region 获取数据
-    const { ExerciseData, getExercise } = getExerciseList();
+    const { exerciseData, getExercise } = useGetExerciseList();
     getExercise();
     //#endregion
 
     //#region 编辑功能
     const {
       editVisibility,
-      editLabForm,
-      editLabFormRule,
-      ExerciseEditRef,
+      editMode,
+      editRule,
+      exerciseEditRef,
       confirmLoading,
       editShow,
-      ExerciseEditSubmit
-    } = ExerciseEdit();
-    // 模态框点击确定的回调函数
-    const handleClickEdit = () => {
-      ExerciseEditSubmit(() => {
-        getExercise();
-      });
-    };
+      exerciseEditSubmit
+    } = useEditExercise(getExercise);
     //#endregion
 
     return {
       //#region  获取数据
       columns,
-      ExerciseData,
+      exerciseData,
       //#endregion
       //#region 编辑功能
       editVisibility,
-      editLabForm,
-      editLabFormRule,
-      ExerciseEditRef,
+      editMode,
+      editRule,
+      exerciseEditRef,
       confirmLoading,
-      editShow,
-      handleClickEdit,
+      exerciseEditSubmit,
+      editShow
       //#endregion
-      // 导出组件
-      Crumbs,
-      EditOutlined
     };
   }
 };

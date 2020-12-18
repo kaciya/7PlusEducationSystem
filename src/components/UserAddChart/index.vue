@@ -7,11 +7,19 @@
       <div class="user-growth-page-heading">用户增长趋势</div>
     </template>
     <template #extra>
-      <a-radio-group class="daysGroup" v-model:value="daysValueModel">
+      <a-radio-group
+        class="daysGroup"
+        v-model:value="daysValueModel"
+        button-style="solid"
+      >
         <a-radio-button value="n7d" @click="setUserAddForDays(7)">
           近七天
         </a-radio-button>
-        <a-radio-button value="n30d" @click="setUserAddForDays(30)">
+        <a-radio-button
+          value="n30d"
+          @click="setUserAddForDays(30)"
+          style="margin-left: 6px"
+        >
           近30天
         </a-radio-button>
       </a-radio-group>
@@ -28,8 +36,7 @@
     </template>
     <div class="user-growth">
       <div
-        id="myChart"
-        ref="chart"
+        ref="chartRef"
         :style="{
           width: '100%',
           height: '100%'
@@ -49,19 +56,23 @@ import moment from "moment";
 export default {
   setup() {
     // 用户增长数据
-    const { chart, getUserAddForDays, getUserAddStartToEnd } = useGetUserAdd();
+    const {
+      chartRef,
+      getUserAddForDays,
+      getUserAddStartToEnd
+    } = useGetUserAdd();
     // 获取$echarts
     const echarts = inject("$echarts");
     // 定义echarts实例存储变量
-    let myCharts = null;
+    let chart = null;
     // 在mounted周期中执行
     onMounted(() => {
       // 初始化echarts实例
-      myCharts = echarts.init(chart.value);
+      chart = echarts.init(chartRef.value);
       // 调用绘图函数
       drawLine();
       // 初始化图形
-      // setUserAddForDays(7);
+      setUserAddForDays(7);
     });
 
     //#region 绘图函数
@@ -267,16 +278,16 @@ export default {
       };
       //#endregion
       // 使用刚指定的配置项和数据显示图表
-      myCharts.setOption(options);
+      chart.setOption(options);
     }
     //#endregion
 
     //#region 设置近几日用户增长数据（默认近7天）
     function setUserAddForDays(d = 7) {
       // 开启加载动画
-      myCharts.showLoading();
+      chart.showLoading();
       // 获取数据异步加载
-      getUserAddForDays(myCharts, d);
+      getUserAddForDays(chart, d);
     }
     //#endregion
 
@@ -297,10 +308,12 @@ export default {
 
     //#region 设置日期用户增长数据（开始结束日期）
     function setUserAddStartToEnd() {
+      // 取消近几日按钮选中状态
+      daysValueModel.value = "";
       // 开启加载动画
-      myCharts.showLoading();
+      chart.showLoading();
       // 获取数据异步加载
-      getUserAddStartToEnd(myCharts, dateSTE.start, dateSTE.end);
+      getUserAddStartToEnd(chart, dateSTE.start, dateSTE.end);
     }
     //#endregion
 
@@ -326,7 +339,7 @@ export default {
     return {
       daysValueModel,
       dateRangeChange,
-      chart,
+      chartRef,
       setUserAddForDays, //设置用户增长数据（近几日）
       getUserAddStartToEnd, //获取用户增长数据（选择日期）
       setUserAddStartToEnd, //设置用户增长数据（选择日期）

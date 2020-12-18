@@ -8,7 +8,7 @@
       :style="{
         padding: '20px',
         background: '#fff',
-        minHeight: '93%',
+        minHeight: '93%'
       }"
     >
       <!-- 日期 账号名称 查询内容 -->
@@ -41,14 +41,14 @@
           </a-col>
           <a-col :span="4" :offset="7">
             <a-button style="margin: 0 10px; float: right" @click="resetClick">
-              <SyncOutlined /> 重置
+              重置
             </a-button>
             <a-button
               type="primary"
               style="margin: 0 10px; float: right"
               @click="searchClick"
             >
-              <SearchOutlined /> 查询
+              查询
             </a-button>
           </a-col>
         </a-row>
@@ -65,7 +65,7 @@
 
       <!-- 数据列表 -->
       <a-table
-        :rowKey="(record) => record.id"
+        :rowKey="record => record.id"
         :columns="feedbackTable.feedbackColums"
         :data-source="feedbackTable.feedbackData"
         :pagination="false"
@@ -142,13 +142,11 @@ import { showFeedbackList } from "./useSubFeedbackList";
 //导入 useSubFeedbackHeader 文件 获取相应的方法
 import { SubFeedbackHeader } from "./useSubFeedbackHeader";
 
+//导入 useSubFeedbackColums 文件 获取相应的列表数据
+import { useSubFeedbackColums } from "./useSubFeedbackColums";
+
 //导入 图标样式
-import {
-  SearchOutlined,
-  SyncOutlined,
-  LineOutlined,
-  AlertOutlined,
-} from "@ant-design/icons-vue";
+import { LineOutlined } from "@ant-design/icons-vue";
 
 //导入 reactive 对象
 import { reactive, ref } from "vue";
@@ -157,23 +155,22 @@ export default {
   // 使用组件
   components: {
     Crumbs,
-    SearchOutlined,
-    SyncOutlined,
-    LineOutlined,
-    AlertOutlined,
+    LineOutlined
   },
 
   //setup 编写 主要内容
   setup() {
+    //获取 useSubFeedbackColums 方法中的 参数
+    let { feedbackTable } = useSubFeedbackColums();
+
     //获取 showFeedbackList 方法中的 参数
     let {
-      feedbackTable,
       pageInfo,
       getFeedbackData,
       pageChange,
       pageSizeChange,
-      manageClick,
-    } = showFeedbackList();
+      manageClick
+    } = showFeedbackList(feedbackTable);
 
     //获取 SubFeedbackHeader 方法中的 参数
     let {
@@ -183,8 +180,8 @@ export default {
       dateChange,
       dateChangeOk,
       resetClick,
-      searchClick,
-    } = SubFeedbackHeader();
+      searchClick
+    } = SubFeedbackHeader(getFeedbackData);
 
     //在Mounted 获取列表
     onMounted(() => {
@@ -216,9 +213,9 @@ export default {
       //重置状态 和 时间范围
       resetClick,
       //查询列表
-      searchClick,
+      searchClick
     };
-  },
+  }
 };
 </script>
 

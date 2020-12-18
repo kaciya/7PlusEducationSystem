@@ -19,9 +19,9 @@ export const useGetStatistics = () => {
         // 处理数据
         for (const key in statistics.data) {
           // 调用处理数字数据
-          // statistics.data[key] = statistics.data[key];
-          if (key == "userCount") statistics.data[key] = 2805763;
-          else statistics.data[key] = 12345;
+          statistics.data[key] = statistics.data[key];
+          // if (key == "userCount") statistics.data[key] = 2805763;
+          // else statistics.data[key] = 12345;
         }
       }
     })
