@@ -14,17 +14,17 @@ import {
 } from 'ant-design-vue';
 
 //#region 更改权限组启用状态
-export const updateRoleStatus = (getSysRolesData) => {
+export const useEditRoleStatus = (getSysRolesData) => {
     //发起请求  更改启用状态
     const statusChange = (roleId) => {
         //发起请求  更改用户状态
-        httpPost(`${role.changeSysRolesStatus}/${roleId}`).then(res => {
+        httpPost(role.EditRolesStatus +'/' + roleId).then(res => {
                 if (res.success) {
-                    message.success("状态改变成功");
+                    message.success(res.message);
                     //刷新页面
                     getSysRolesData();
                 }else{
-                    message.error("状态改变失败");
+                    message.error(res.message);
                 }
             })
             .catch(error => {

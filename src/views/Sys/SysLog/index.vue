@@ -4,25 +4,19 @@
     <Crumbs :crumbName="[{ name: '权限管理' }, { name: '操作日志' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
-    <div
-      :style="{
-        padding: '20px',
-        background: '#fff',
-        minHeight: '93%',
-      }"
-    >
+    <a-card style="min-height: 93%">
       <!-- 日期 账号名称 查询内容 -->
       <a-form>
         <a-row>
-          <a-col :span="8" :offset="1">
+          <a-col :span="9" :offset="1">
             <a-form-item label="时间范围" name="date">
               <a-range-picker
                 :show-time="{ format: 'HH:mm:ss' }"
                 format="YYYY-MM-DD HH:mm:ss"
-                v-model:value="dateModel.date"
+                v-model:value="headerData.dateModel"
                 :placeholder="['开始日期', '结束日期']"
-                @change="dateChange"
-                @ok="dateChangeOk"
+                @change="changeDate"
+                @ok="changeDateConfirm"
               />
             </a-form-item>
           </a-col>
@@ -31,17 +25,17 @@
               <a-input
                 placeholder="账号名称"
                 style="width: 150px"
-                v-model:value="usernameModel"
+                v-model:value="headerData.usernameModel"
               />
             </a-form-item>
           </a-col>
-          <a-col :span="4" :offset="5">
-            <a-button style="margin: 0 10px; float: right" @click="resetClick">
+          <a-col :span="4" :offset="4">
+            <a-button class="header-btn" @click="resetClick">
               重置
             </a-button>
             <a-button
               type="primary"
-              style="margin: 0 10px; float: right"
+              class="header-btn"
               @click="searchClick"
             >
               查询
@@ -51,42 +45,21 @@
       </a-form>
       <!-- 日期 账号名称 查询内容 end-->
 
-      <!-- 权限组列表上标题 -->
-      <a-row>
-        <a-col :span="2">
-          <h3 style="font-weight: 600">标签列表</h3>
-        </a-col>
-      </a-row>
-      <!-- 权限组列表上标题 end -->
+      <!-- 权限组列表card-->
+      <a-card title="标签列表">
 
       <!-- 数据列表 -->
       <a-table
-        :rowKey="(record) => record.id"
-        :columns="logTable.logColums"
-        :data-source="logTable.logData"
-        :pagination="false"
+        :columns="logTable.colums"
+        :data-source="logTable.data"
+        row-Key="id"
         bordered
       >
       </a-table>
       <!-- 数据列表 end -->
-      <!-- 分页 -->
-      <a-row>
-        <a-col :span="24">
-          <a-pagination
-            show-size-changer
-            v-model:current="pageInfo.pageNum"
-            v-model:pageSize="pageInfo.pageSize"
-            :page-size-options="pageInfo.pageSizeOptions"
-            :defaultPageSize="10"
-            :total="pageInfo.total"
-            @change="pageChange"
-            @showSizeChange="pageSizeChange"
-            style="float: right; margin: 10px 0"
-          />
-        </a-col>
-      </a-row>
-      <!-- 分页 end -->
-    </div>
+      </a-card>
+      <!-- 权限组列表card end-->
+    </a-card>
     <!-- 主体Main end -->
   </a-layout-content>
 </template>
@@ -95,14 +68,20 @@
 // 引入面包屑组件
 import Crumbs from "@/components/Crumbs";
 
-//导入 useSysLogList 文件 获取相应的方法
-import { showLogList } from "./useSysLogList";
+// 获取 操作日志 后台请求的 列表数据
+import { useGetLogList } from "./useGetLogList";
 
-//导入 useSysLogSearch 获取 相应的方法
-import { useSysLogHeader } from "./useSysLogHeader";
+// 获取 操作日志 顶部 日期 和 选择器 方法
+import { useLogHeader } from "./useLogHeader";
 
-//导入 useSysLogColums 获取 相应的列表数据
-import { useSysLogColums } from "./useSysLogColums";
+// 定义 操作日志 列表项
+import { useLogColums } from "./useLogColums";
+
+// 获取 操作日志 查询方法
+import { useSearchLog } from "./useSearchLog";
+
+// 获取 操作日志 重置方法
+import { useResetLog } from "./useResetLog";
 
 // 引入 钩子函数
 import { onMounted } from "vue";
@@ -115,57 +94,47 @@ export default {
 
   // setup响应api入口
   setup() {
-    //获取 useSysLogColums 中的 列表
-    let { logTable } = useSysLogColums();
+    //#region 获取 导入方法中返回的 子方法和参数
+    const { logTable } = useLogColums();
 
-    //获取 showLogList 中的 变量
-    let {
-      pageInfo,
-      pageChange,
-      pageSizeChange,
+    const {
       getLogData,
-    } = showLogList(logTable);
+    } = useGetLogList(logTable);
 
-    //获取 useSysLogHeader 中的变量和方法
-    let {
-      usernameModel,
-      dateModel,
-      dateChange,
-      dateChangeOk,
-      resetClick,
-      searchClick,
-    } = useSysLogHeader(getLogData);
+    const {
+      headerData,
+      changeDate,
+      changeDateConfirm,
+    } = useLogHeader();
+
+    const { searchClick } = useSearchLog(getLogData, headerData);
+
+    const { resetClick } = useResetLog(getLogData , headerData);
+    //#endregion
 
     //在Mounted 获取列表
     onMounted(() => {
-      getLogData({});
+      getLogData();
     });
 
-    //返回参数
+    //#region 返回参数
     return {
-      //日期值
-      dateModel,
+      //顶部 日期 与 状态 绑定数据对象
+      headerData,
       //日期选择器改变方法
-      dateChange,
+      changeDate,
       //日期范围确定
-      dateChangeOk,
-      //账号名称
-      usernameModel,
+      changeDateConfirm,
       //操作日志列表
       logTable,
-      //分页数据对象
-      pageInfo,
       //渲染操作日志列表
       getLogData,
-      //点击下一页方法
-      pageChange,
-      //每页显示多少条数据的方法
-      pageSizeChange,
       //重置 时间范围 和 账号名称方法
       resetClick,
       //根据 时间范围 和 账号名称 查询方法
       searchClick,
     };
+    //#endregion
   },
 };
 </script>
@@ -173,5 +142,10 @@ export default {
 <style lang="scss" scoped>
 .ant-btn {
   width: auto;
+}
+
+.header-btn{
+  margin: 3px 10px;
+  float: right
 }
 </style>

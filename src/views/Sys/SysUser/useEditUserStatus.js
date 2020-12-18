@@ -14,19 +14,19 @@ import {
 } from 'ant-design-vue';
 
 //#region 更改账号启用状态
-export const updateUserStatus = (getSysUserList) => {
+export const useEditUserStatus = (getSysUserList) => {
     //发起请求  更改账号启用状态
-    const statusChange = (userId) => {
+    const changeStatus = (userId) => {
         //发起请求  更改列的启用状态
-        httpPost(sys.changeSysUserStatus + "/" + userId).then(res => {
+        httpPost(sys.EditUserStatus + "/" + userId).then(res => {
                 //判断是否改变成功
                 if (res.success) {
                     //全局提示
-                    message.success("状态改变成功");
+                    message.success(res.message);
                     //刷新页面
                     getSysUserList();
                 }else{
-                    message.error("状态改变失败");
+                    message.error(res.message);
                 }
             })
             .catch(error => {
@@ -36,7 +36,7 @@ export const updateUserStatus = (getSysUserList) => {
 
     //返回方法
     return{
-        statusChange
+        changeStatus
     }
 }
 //#endregion

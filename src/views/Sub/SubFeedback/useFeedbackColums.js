@@ -4,31 +4,26 @@ import {
 } from "vue";
 
 //#region 创建变量  获取表格项
-export const useSubFeedbackColums = () => {
+export const useFeedbackColums = () => {
     //创建列表所需数据
     const feedbackTable = reactive({
-        feedbackColums: [{
-                title: "索引",
-                align: "center",
+        colums: [{
+                title: "序号",
                 key: "index",
                 slots: {
                     customRender: "index"
                 },
-                align: "center"
             },
             {
                 title: "内容",
-                align: "center",
                 dataIndex: "content"
             },
             {
                 title: "联系方式",
-                align: "center",
                 dataIndex: "mobile"
             },
             {
                 title: "图片",
-                align: "center",
                 key: "picUrls",
                 slots: {
                     customRender: "picUrls"
@@ -36,7 +31,6 @@ export const useSubFeedbackColums = () => {
             },
             {
                 title: "提交时间",
-                align: "center",
                 dataIndex: "createTime",
                 //默认降序排列
                 defaultSortOrder: 'descend',
@@ -49,12 +43,10 @@ export const useSubFeedbackColums = () => {
             },
             {
                 title: "处理时间",
-                align: "center",
                 dataIndex: "updateTime"
             },
             {
                 title: "状态",
-                align: "center",
                 key: "status",
                 slots: {
                     customRender: "status"
@@ -62,7 +54,6 @@ export const useSubFeedbackColums = () => {
             },
             {
                 title: "操作",
-                align: "center",
                 key: "operation",
                 slots: {
                     customRender: "operation"
@@ -70,7 +61,7 @@ export const useSubFeedbackColums = () => {
             }
         ],
         //列表数据
-        feedbackData: []
+        data: []
     });
 
     //返回数据
