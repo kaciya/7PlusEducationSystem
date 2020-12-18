@@ -14,10 +14,11 @@ export const useGetAboutList = () => {
   // 获取数据
   const getAboutData = async () => {
     const res = await httpGet(about.GetAboutList);
-    // 设置表格数据
-    aboutList.data = res.data.records;
-  };
-
+    if (res.code === 200) {
+      // 设置表格数据
+      aboutList.data = res.data.records;
+    }
+  }
   onMounted(() => {
     getAboutData();
   });

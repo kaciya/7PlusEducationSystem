@@ -41,8 +41,14 @@ export const article = {
 // 关于PTE
 export const about = {
   // 获取数据列表
-  GetAboutList: "about/page"
-};
+  GetAboutList: "about/page",
+  // 发布
+  AddAboutList: "about/add",
+  // 修改数据列表
+  EditAboutList: "about/update",
+  // 删除数据列表
+  DelAboutList: (id) => `about/${id}`
+}
 
 // 常见问题
 export const problem = {
