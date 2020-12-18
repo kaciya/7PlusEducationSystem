@@ -1,7 +1,5 @@
 //导入 reactive 对象
-import {
-    reactive
-} from "vue";
+import { reactive } from "vue";
 
 //#region 创建变量  获取表格项
 export const useLogColums = () => {
@@ -18,7 +16,7 @@ export const useLogColums = () => {
         title: "日志时间",
         dataIndex: "createTime",
         //默认降序排列
-        defaultSortOrder: 'descend',
+        defaultSortOrder: "descend",
         //日期排序
         sorter: (a, b) => {
           let aTime = new Date(a.createTime);
@@ -49,8 +47,8 @@ export const useLogColums = () => {
   });
 
   //返回数据
-  return{
+  return {
     logTable
-  }
-}
+  };
+};
 //#endregion

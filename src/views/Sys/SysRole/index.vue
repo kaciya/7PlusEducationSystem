@@ -14,10 +14,12 @@
         <!-- 权限组card 右侧内容 end -->
         <!-- 标签列表 -->
         <a-table
+          bordered
           :columns="rolesTable.colums"
           :data-source="rolesTable.data"
           row-Key="roleId"
-          bordered
+          :pagination="rolePagination"
+          @change="pageChange"
         >
           <!-- 配置 # index 索引 -->
           <template #index="{ index }">
@@ -84,7 +86,7 @@ import { useRolesColums } from "./useRolesColums";
 export default {
   // 组件
   components: {
-    Crumbs,
+    Crumbs
   },
 
   // setup响应api入口
@@ -93,7 +95,9 @@ export default {
     const { rolesTable } = useRolesColums();
 
     const {
+      rolePagination,
       getSysRolesData,
+      pageChange,
       addRouter,
       editRouter,
     } = useGetRolesList(rolesTable);
@@ -112,6 +116,8 @@ export default {
     return {
       //权限组列表
       rolesTable,
+      //分页参数
+      rolePagination,
       //渲染权限组列表方法
       getSysRolesData,
       //显示删除模态框方法
@@ -122,6 +128,8 @@ export default {
       addRouter,
       //权限组编辑路由跳转
       editRouter,
+      //点击下一页方法
+      pageChange,
     };
     //#endregion
   },

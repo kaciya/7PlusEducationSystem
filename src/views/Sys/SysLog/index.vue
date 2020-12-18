@@ -50,10 +50,12 @@
 
       <!-- 数据列表 -->
       <a-table
+        bordered
         :columns="logTable.colums"
         :data-source="logTable.data"
         row-Key="id"
-        bordered
+        :pagination="logPagination"
+        @change="pageChange"
       >
       </a-table>
       <!-- 数据列表 end -->
@@ -89,7 +91,7 @@ import { onMounted } from "vue";
 export default {
   // 使用组件
   components: {
-    Crumbs,
+    Crumbs
   },
 
   // setup响应api入口
@@ -98,7 +100,9 @@ export default {
     const { logTable } = useLogColums();
 
     const {
+      logPagination,
       getLogData,
+      pageChange
     } = useGetLogList(logTable);
 
     const {
@@ -121,6 +125,8 @@ export default {
     return {
       //顶部 日期 与 状态 绑定数据对象
       headerData,
+      //分页参数
+      logPagination,
       //日期选择器改变方法
       changeDate,
       //日期范围确定
@@ -133,11 +139,13 @@ export default {
       resetClick,
       //根据 时间范围 和 账号名称 查询方法
       searchClick,
+      //点击下一页方法
+      pageChange
     };
     //#endregion
   },
 };
-</script>
+</script> 
 
 <style lang="scss" scoped>
 .ant-btn {

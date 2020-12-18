@@ -93,10 +93,12 @@
         <!-- 添加账号 模态框表单 end -->
         <!-- 账号列表 -->
         <a-table
+          bordered
           :columns="sysUsersTable.colums"
           :data-source="sysUsersTable.data"
           row-Key="userId"
-          bordered
+          :pagination="userPagination"
+          @change="pageChange"
         >
           <template #index="{ index }">
             {{ index + 1 }}
@@ -166,7 +168,7 @@ import { useGetUserPermissions } from "./useGetUserPermissions";
 
 export default {
   components: {
-    Crumbs,
+    Crumbs
   },
 
   // setup响应api入口
@@ -174,7 +176,7 @@ export default {
     //#region 获取 导入方法中返回的 子方法和参数
     const { sysUsersTable } = useUserColums();
 
-    const { getUserList } = useGetUserList(sysUsersTable);
+    const { getUserList , userPagination , pageChange } = useGetUserList(sysUsersTable);
 
     const { changeStatus } = useEditUserStatus(getUserList);
 
@@ -218,6 +220,8 @@ export default {
       sysUserRules,
       //渲染表格
       getUserList,
+      //分页参数
+      userPagination,
       //显示删除模态框方法
       showDelConfirm,
       //改变启用状态方法
@@ -234,6 +238,8 @@ export default {
       addUserCancel,
       //重置账号密码回调
       resetUserPwd,
+      //点击下一页方法
+      pageChange
     };
     //#endregion
   },

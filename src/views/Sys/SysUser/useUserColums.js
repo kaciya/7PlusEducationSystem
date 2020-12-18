@@ -1,7 +1,5 @@
 //导入 reactive 对象
-import {
-    reactive
-} from "vue";
+import { reactive } from "vue";
 
 //#region 创建变量  获取表格项
 export const useUserColums = () => {
@@ -53,8 +51,8 @@ export const useUserColums = () => {
   });
 
   //返回列表
-  return{
+  return {
     sysUsersTable
-  }
-}
+  };
+};
 //#endregion

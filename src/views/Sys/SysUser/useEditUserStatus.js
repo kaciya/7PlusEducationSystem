@@ -1,17 +1,11 @@
 //导入 API 接口
-import {
-    sys
-} from "@/api/sysUserAPI";
+import { sys } from "@/api/sysUserAPI";
 
 //导入 GET请求方法
-import {
-    httpPost
-} from "@/utils/http";
+import { httpPost } from "@/utils/http";
 
 //导入 全局提示信息
-import {
-    message
-} from 'ant-design-vue';
+import { message } from "ant-design-vue";
 
 //#region 更改账号启用状态
 export const useEditUserStatus = (getSysUserList) => {

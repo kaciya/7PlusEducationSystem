@@ -1,7 +1,5 @@
 //导入 reactive 对象
-import {
-    reactive
-} from "vue";
+import { reactive } from "vue";
 
 //#region 创建变量  获取表格项
 export const useRolesColums = () => {
@@ -47,8 +45,8 @@ export const useRolesColums = () => {
   });
 
   //返回列表数据
-  return{
+  return {
     rolesTable
-  }
-}
+  };
+};
 //#endregion

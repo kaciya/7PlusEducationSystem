@@ -22,4 +22,4 @@ export const column = [
   {
     title: "操作"
   }
-]
+];

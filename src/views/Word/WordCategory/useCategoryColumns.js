@@ -4,15 +4,15 @@ export const useCategoryColumns = () => {
   const columns = reactive([
     {
       title: "词库名称",
-      dataIndex: "name",
+      dataIndex: "name"
     },
     {
       title: "操作",
-      slots: { customRender: "operation" },
-    },
+      slots: { customRender: "operation" }
+    }
   ]);
 
   return {
-    columns,
+    columns
   };
 };

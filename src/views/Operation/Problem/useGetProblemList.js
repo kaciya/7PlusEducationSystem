@@ -6,10 +6,9 @@ import { httpGet } from "@/utils/http";
 import { problem } from "@/api/operationAPI";
 import { reactive } from "vue";
 
-export const getProblemGetList = () => {
-
+export const useGetProblemList = () => {
   // 储存数据
-  const ProblemList = reactive({});
+  const problemList = reactive({});
 
   // 获取数据方法
   const getProblem = async () => {
@@ -18,12 +17,12 @@ export const getProblemGetList = () => {
     // 判断数据是否获取成功
     if (res.code === 200) {
       // 设置数据
-      ProblemList.data = res.data;
+      problemList.data = res.data;
     }
-  }
+  };
 
   return {
-    ProblemList,
+    problemList,
     getProblem
-  }
-}
+  };
+};

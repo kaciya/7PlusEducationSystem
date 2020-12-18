@@ -6,18 +6,16 @@ import { httpPost } from "@/utils/http";
 import { article } from "@/api/operationAPI";
 import { message } from "ant-design-vue";
 
-export const setArticleState = (getArticl) => {
-
+export const useStateArticle = getArticl => {
   // 点击开关的回调函数
-  const stateClick = (record) => {
+  const stateClick = record => {
     // 获取id和状态
     const { id } = record;
-    handleToggleArticlState(id)
-  }
+    handleToggleArticlState(id);
+  };
 
   // 设置文章状态
-  const handleToggleArticlState = async (id) => {
-
+  const handleToggleArticlState = async id => {
     // 更新文章状态
     const res = await httpPost(article.SetArticleState + `/${id}`);
     if (res.code === 200) {
@@ -25,9 +23,9 @@ export const setArticleState = (getArticl) => {
       // 获取数据
       getArticl();
     }
-  }
+  };
 
   return {
     stateClick
-  }
-}
+  };
+};

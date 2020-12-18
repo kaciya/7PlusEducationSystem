@@ -9,11 +9,18 @@ import {
 } from "@/utils/http";
 
 //导入模态框所需图标样式
-import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
-import { createVNode } from 'vue';
+import {
+    ExclamationCircleOutlined
+} from "@ant-design/icons-vue";
+import {
+    createVNode
+} from "vue";
 
 //导入 全局提示信息
-import { Modal , message } from 'ant-design-vue';
+import {
+    Modal,
+    message
+} from "ant-design-vue";
 
 //#region 重置用户账号密码
 export const useResetUserPwd = () => {
@@ -28,21 +35,21 @@ export const useResetUserPwd = () => {
             onOk() {
                 //发起请求  重置该密码
                 httpPost(sys.ResetUser + "/" + userId).then(res => {
-                    if(res.success){
-                        message.success(res.message);
-                    }else{
-                        message.error(res.message);
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+                        if (res.success) {
+                            message.success(res.message);
+                        } else {
+                            message.error(res.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
             }
-        });
+        })
     }
 
     //返回方法
-    return{
+    return {
         resetUserPwd
     }
 }

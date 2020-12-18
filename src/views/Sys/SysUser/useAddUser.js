@@ -1,8 +1,5 @@
 //导入 reactive 对象
-import {
-    reactive,
-    ref
-} from "vue";
+import { reactive, ref } from "vue";
 
 //导入 API 接口
 import {
@@ -15,9 +12,7 @@ import {
 } from "@/utils/http";
 
 // 引入提示框
-import {
-    message
-} from "ant-design-vue";
+import { message } from "ant-design-vue";
 
 
 //#region 添加账号
@@ -50,9 +45,9 @@ export const useAddUser = (getUserList) => {
     //模态框确认时加载
     const confirmLoading = ref(false);
 
-    //#region 定义表单
-    const addUserFormRef = ref(null);
-    //#endregion
+  //#region 定义表单
+  const addUserFormRef = ref(null);
+  //#endregion
 
     //显示添加账号模态框
     const showAddModal = () => {

@@ -1,17 +1,11 @@
 //导入 API接口
-import {
-    role
-} from "@/api/sysUserAPI";
+import { role } from "@/api/sysUserAPI";
 
 //导入 Post请求方法
-import {
-    httpPost
-} from "@/utils/http";
+import { httpPost } from "@/utils/http";
 
 //导入全局提示
-import {
-    message
-} from 'ant-design-vue';
+import { message } from "ant-design-vue";
 
 //#region 更改权限组启用状态
 export const useEditRoleStatus = (getSysRolesData) => {
@@ -32,9 +26,9 @@ export const useEditRoleStatus = (getSysRolesData) => {
             });
     }
 
-    //返回方法
-    return{
-        statusChange
-    }
-}
+  //返回方法
+  return {
+    statusChange
+  };
+};
 //#endregion

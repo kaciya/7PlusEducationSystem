@@ -53,10 +53,12 @@
       <a-card title="数据列表">
       <!-- 数据列表 -->
       <a-table
+        bordered
         :columns="feedbackTable.colums"
         :data-source="feedbackTable.data"
         row-Key="id"
-        bordered
+        :pagination="feedbackPagination"
+        @change="pageChange"
       >
         <!-- 列表索引 -->
         <template #index="{ index }">
@@ -133,7 +135,7 @@ export default {
   // 使用组件
   components: {
     Crumbs,
-    LineOutlined,
+    LineOutlined
   },
 
   // setup响应api入口
@@ -142,7 +144,9 @@ export default {
     const { feedbackTable } = useFeedbackColums();
 
     const {
+      feedbackPagination,
       getFeedbackData,
+      pageChange
     } = useGetFeedbackList(feedbackTable);
 
     const {
@@ -170,6 +174,8 @@ export default {
       feedbackTable,
       //顶部 日期 与 状态 绑定数据对象
       headerData,
+      //分页参数
+      feedbackPagination,
       //日期选择器改变方法
       changeDate,
       //日期范围确定
@@ -184,6 +190,8 @@ export default {
       searchClick,
       //点击操作中的处理方法
       editManage,
+      //点击下一页方法
+      pageChange,
     };
     //#endregion
   },

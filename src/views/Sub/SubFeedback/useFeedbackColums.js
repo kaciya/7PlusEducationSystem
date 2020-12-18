@@ -1,7 +1,5 @@
 //导入 reactive 对象
-import {
-    reactive
-} from "vue";
+import { reactive } from "vue";
 
 //#region 创建变量  获取表格项
 export const useFeedbackColums = () => {
@@ -64,9 +62,9 @@ export const useFeedbackColums = () => {
         data: []
     });
 
-    //返回数据
-    return{
-        feedbackTable
-    }
-}
+  //返回数据
+  return {
+    feedbackTable
+  };
+};
 //#endregion
