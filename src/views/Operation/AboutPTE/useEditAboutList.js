@@ -22,7 +22,7 @@ export const useEditAboutList = (getAboutData) => {
   // 模态框状态
   const editVisible = ref(false);
   // 显示模态框
-  const showEdit = (id) => {
+  const showModify = (id) => {
     editVisible.value = true;
     editModel.id = id;
   }
@@ -86,7 +86,7 @@ export const useEditAboutList = (getAboutData) => {
     // 表单校验规则,
     editRules,
     // 显示模态框
-    showEdit,
+    showModify,
     // 提交编辑
     editSubmit,
     // 点击取消后的回调函数

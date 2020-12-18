@@ -17,11 +17,13 @@
       }"
     >
       <!-- 发布文章 start -->
-      <a-row style="margin-bottom: 20px">
-        <a-col :span="24">
-          <a-button type="primary" size="large" style="float: right" @click="showAdd">发布</a-button>
-        </a-col>
-      </a-row>
+      <a-page-header style="padding-top: 0">
+        <a-row>
+          <a-col :span="24">
+            <a-button type="primary" size="large" style="float: right" @click="showAdd">发布</a-button>
+          </a-col>
+        </a-row>
+      </a-page-header>
       <!-- 发布文章 end -->
     <!-- 表格 start -->
     <a-table
@@ -34,20 +36,14 @@
         <a-switch :checked="Boolean(record.state)"/>
       </template>
       <template #operational="{ record }">
-        <a-row>
-          <a-col :span="12" :push="6">
-            <a-button type="primary" style="margin-right: 15px" @click="showEdit(record.id)">
-              编辑
-            </a-button>
-              <a-popconfirm placement="topRight" title="您真的要删除该项么?" @confirm="delSubmit(record.id)" @cancel="delCancel">
-                <template #title>
-                </template>
-                <a-button type="danger">
+        <a-button type="primary" style="margin-right: 15px" @click="showModify(record.id)">
+          编辑
+        </a-button>
+        <a-popconfirm placement="topRight" title="您真的要删除该项么?" @confirm="delSubmit(record.id)" @cancel="delCancel">
+          <a-button type="danger">
                   删除
-                </a-button>
-              </a-popconfirm>
-          </a-col>
-        </a-row>
+          </a-button>
+        </a-popconfirm>
       </template>
     </a-table>
     <!-- 表格 end -->
@@ -119,21 +115,21 @@ export default {
   },
   // setup响应api入口
   setup() {
-    //#region 获取数据方法
+    //#region 获取PTE数据方法
     const { aboutList,getAboutData } = useGetAboutList();
     // 设置表格列
     aboutList.column = column;
     //#endregion
 
-    //#region 添加数据方法
+    //#region 添加PTE数据方法
     const { addVisible,addRef,addModel,addRules,showAdd,addSubmit,addCancel } = useAddAboutList(getAboutData);
     //#endregion
 
-    //#region 编辑数据方法
-    const { editVisible,editRef,editModel,editRules,showEdit,editSubmit,editCancel } = useEditAboutList(getAboutData);
+    //#region 编辑PTE数据方法
+    const { editVisible,editRef,editModel,editRules,showModify,editSubmit,editCancel } = useEditAboutList(getAboutData);
     //#endregion
 
-    //#region 删除数据方法
+    //#region 删除PTE数据方法
     const { delSubmit,delCancel } = useDelAboutList(getAboutData);
     //#endregion
 
@@ -155,7 +151,7 @@ export default {
       editRef,
       editModel,
       editRules,
-      showEdit,
+      showModify,
       editSubmit,
       editCancel,
       //#endregion
