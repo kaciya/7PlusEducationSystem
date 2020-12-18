@@ -2,10 +2,7 @@
   <a-layout-content>
     <!-- 面包屑 start -->
     <Crumbs
-      :crumbName="[
-        { name: '运营管理' },
-        { name: '关于PTE', route: '#' },
-      ]"
+      :crumbName="[{ name: '运营管理' }, { name: '关于PTE', route: '#' }]"
     />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
@@ -115,8 +112,10 @@ export default {
   },
   // setup响应api入口
   setup() {
+  
     //#region 获取PTE数据方法
     const { aboutList,getAboutData } = useGetAboutList();
+
     // 设置表格列
     aboutList.column = column;
     //#endregion
@@ -159,7 +158,7 @@ export default {
       delSubmit,
       delCancel
       //#endregion
-    }
+    };
   }
 };
 </script>

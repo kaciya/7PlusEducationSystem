@@ -19,12 +19,11 @@ export const useGetAboutList = () => {
       aboutList.data = res.data.records;
     }
   }
-
   onMounted(() => {
     getAboutData();
-  })
+  });
   return {
     aboutList,
     getAboutData
-  }
-}
+  };
+};

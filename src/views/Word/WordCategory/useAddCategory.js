@@ -2,11 +2,13 @@ import { reactive, ref } from "vue";
 // 引入请求方式
 import { httpPost } from "@/utils/http";
 // 引入请求接口
-import wordType from "@/api/wordType";
-export const AddWordCategory = getWordCategoryData => {
+import wordType from "@/api/wordTypeAPI";
+//全局提示
+import { message } from "ant-design-vue";
+export const AddWordCategory = getCategoryData => {
   //#region 表单校验
   // 输入框数据
-  const addForm = reactive({
+  const addModel = reactive({
     name: ""
   });
   // 表单校验
@@ -16,7 +18,9 @@ export const AddWordCategory = getWordCategoryData => {
       {
         required: true,
         message: "分类名称不能为空",
-        trigger: "blur"
+        trigger: "blur",
+        // 不能为空格
+        whitespace: true
       }
     ]
   });
@@ -31,25 +35,28 @@ export const AddWordCategory = getWordCategoryData => {
   //#endregion 显示添加模态框
   //#region  发送请求添加数据
   // 表格ref相当于$refs
-  let addRuleForm = ref(null);
+  let addRef = ref(null);
   // 点击确定触发事件
-  const handleAddOk = () => {
+  const addCategoryOk = () => {
     // 表单校验
-    addRuleForm.value
+    addRef.value
       .validate()
       .then(() => {
         // 表单验证通过
         // 发送请求添加数据
         httpPost(wordType.AddWordCategory, {
-          name: addForm.name
+          name: addModel.name
         })
           .then(res => {
             // 判断是否添加成功
-            if (res.code == 200) {
+            if (res.success) {
               // 更新数据
-              getWordCategoryData();
+              getCategoryData();
+              message.success(res.message);
               // 关闭模态框
               addVisible.value = false;
+            } else {
+              message.error(res.message);
             }
           })
           .catch(err => {
@@ -65,18 +72,18 @@ export const AddWordCategory = getWordCategoryData => {
   //#endregion
   //#region 模态框关闭清空文本框
   // 模态框关闭时的回调
-  let handleAddEmpty = () => {
+  const addCategoryEmpty = () => {
     // 清空文本框
-    addRuleForm.value.resetFields();
+    addRef.value.resetFields();
   };
   //#endregion
   return {
-    handleAddOk,
-    addCategory,
     addVisible,
-    addForm,
+    addModel,
     addRules,
-    addRuleForm,
-    handleAddEmpty
+    addRef,
+    addCategory,
+    addCategoryOk,
+    addCategoryEmpty
   };
 };

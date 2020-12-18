@@ -6,68 +6,73 @@ import user from "@/api/userAPI";
 // 引入全局提示插件
 import { message } from "ant-design-vue";
 
-export const userTable = () => {
+export const useGetList = () => {
   // #region 表单数据
-  const userTableData = reactive({
+  const userData = reactive({
     // 表格数据
-    tableData: [],
+    data: []
   });
   // #endregion 表单数据
   //#region 分页配置项
-  const userTablePagination = reactive({
+  const userPagination = reactive({
+    // 第几页
     current: 1,
-    pageSize: 20,
-    pageSizeOptions: ["20"],
+    // 每页显示多少条
+    pageSize: 10,
+    // 每页允许显示多少条
+    pageSizeOptions: ["10"],
+    // 总数
     total: 0,
-    showSizeChanger: true,
+    // 允许改变每页条数
+    showSizeChanger: true
   });
-
-  //#endregion 分页数据
+  //#endregion 分页配置项
   //#region 输入框数据
   const userModel = reactive({
     userName: "",
     mobile: "",
-    id: "",
+    id: ""
   });
   //#endregion 输入框数据
   //#region 获取（查询）数据
   // 记录请求是否发送成功 默认false
   let isSuccess = ref(false);
   // 获取后台数据
-  const getUserTabelData = async () => {
+  const getUserListData = async () => {
     const res = await httpGet(user.UserPage, {
       // 降序
       descColumns: "createTime",
-      pageNum: userTablePagination.current,
-      pageSize: userTablePagination.pageSize,
+      pageNum: userPagination.current,
+      pageSize: userPagination.pageSize,
       id: userModel.id,
       mobile: userModel.mobile,
-      userName: userModel.userName,
+      userName: userModel.userName
     });
-    if (res.code == 200) {
+    if (res.success) {
       // 数据
-      userTableData.tableData = res.data;
+      userData.data = res.data.records;
       // 数据总数
-      userTablePagination.total = res.data.total;
+      userPagination.total = res.data.total;
       // 查询成功 把状态设置为true
       isSuccess.value = true;
     }
   };
-  let handleTableChange = (pagination) => {
-    userTablePagination.current = pagination.current;
-    userTablePagination.pageSize = pagination.pageSize;
-    getUserTabelData();
+  // 页码改变回调
+  const onTableChange = pagination => {
+    userPagination.current = pagination.current;
+    userPagination.pageSize = pagination.pageSize;
+    getUserListData();
   };
   // 初始化
   onMounted(() => {
-    getUserTabelData();
+    getUserListData();
   });
 
   //#endregion
 
   //#region 查询
   // 点击查询事件
-  const queryUserList = () => {
+  const getUserList = () => {
     // 判断id是为数字
     if (isNaN(userModel.id)) {
       message.warning("ID为数字");
@@ -75,21 +80,23 @@ export const userTable = () => {
     }
     // 判断请求是否发送成功
     if (isSuccess.value) {
+      // 点击查询跳转第一页
+      userPagination.current = 1;
+      // 刷新页面
+      getUserListData();
       // 全局提示
       message.success("查询成功");
       // 改为默认状态
       isSuccess.value = false;
     }
-    getUserTabelData();
   };
   //#endregion
   return {
     userModel,
-    isSuccess,
-    userTableData,
-    getUserTabelData,
-    queryUserList,
-    handleTableChange,
-    userTablePagination,
+    userData,
+    getUserListData,
+    getUserList,
+    onTableChange,
+    userPagination
   };
 };

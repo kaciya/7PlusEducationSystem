@@ -12,20 +12,24 @@
       <span class="title">柒加教育</span>
     </div>
     <!-- 菜单栏 -->
-    <a-menu :inlineIndent="30" theme="light" mode="inline">
+    <a-menu
+      :inlineIndent="30"
+      theme="light"
+      mode="inline"
+      :open-keys="sideBarUnfoldKeys.openKeys"
+      :selectedKeys="sideBarUnfoldKeys.selectKeys"
+      @openChange="onOpenChange"
+    >
       <!-- 首页 -->
-      <a-menu-item class="menu-pri menu-home" :key="sideBarKeys[0]">
-        <router-link
-          to="/home/main"
-          class="menu-link home-link"
-        >
+      <a-menu-item class="menu-pri menu-home" :key="'/' + sideBarKeys[0]">
+        <router-link to="/home/main" class="menu-link home-link">
           <HomeOutlined />
           <span class="home-text">首页</span>
         </router-link>
       </a-menu-item>
       <!-- 其他menu -->
-      <a-sub-menu class="menu-pri" v-for="item in sideBarList" :key="item.id">
-        <template #title v-if="item.path == 'users'">
+      <a-sub-menu class="menu-pri" v-for="item in sideBarList" :key="item.path">
+        <template #title v-if="item.path == 'user'">
           <span>
             <UserOutlined />
             <span>{{ item.authName }} </span>
@@ -40,7 +44,7 @@
         <a-menu-item
           class="menu-sec"
           v-for="subitem in item.children"
-          :key="subitem.id"
+          :key="'/' + subitem.path"
         >
           <router-link :to="'/' + subitem.path" class="menu-link">
             <span>{{ subitem.authName }}</span>
@@ -52,8 +56,10 @@
 </template>
 
 <script>
-// 导入侧边栏方法
+// 导入获取侧边栏方法
 import { useGetSideBar } from "./useGetSideBar";
+// 导入设置侧边栏方法
+import { useSetSideBar } from "./useSetSideBar";
 // 导入共享collapsed方法
 import { useSetCollapsed } from "../Header/useSetCollapsed";
 // 导入图标icons
@@ -70,6 +76,8 @@ export default {
     const { sideBarList, sideBarKeys } = useGetSideBar();
     // 侧边栏伸缩状态
     const { collapsed } = useSetCollapsed();
+    // 设置侧边栏导航
+    const { sideBarUnfoldKeys, onOpenChange } = useSetSideBar();
 
     // 返回
     return {
@@ -79,6 +87,10 @@ export default {
       sideBarKeys,
       // 侧边栏伸缩状态
       collapsed,
+      // 侧边栏的展开keys
+      sideBarUnfoldKeys,
+      // 只展开当前父菜单栏
+      onOpenChange
     };
   }
 };

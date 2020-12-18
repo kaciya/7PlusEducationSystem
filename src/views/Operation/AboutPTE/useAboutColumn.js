@@ -28,4 +28,4 @@ export const column = [
     align: "center",
     slots: { customRender: 'operational' }
   }
-]
+];

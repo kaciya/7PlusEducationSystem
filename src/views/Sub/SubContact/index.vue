@@ -8,7 +8,7 @@
       :style="{
         padding: '20px',
         background: '#fff',
-        minHeight: '93%',
+        minHeight: '93%'
       }"
     >
       <!-- 日期 账号名称 查询内容 -->
@@ -41,14 +41,14 @@
           </a-col>
           <a-col :span="4" :offset="7">
             <a-button style="margin: 0 10px; float: right" @click="resetClick">
-              <SyncOutlined /> 重置
+              重置
             </a-button>
             <a-button
               type="primary"
               style="margin: 0 10px; float: right"
               @click="searchClick"
             >
-              <SearchOutlined /> 查询
+              查询
             </a-button>
           </a-col>
         </a-row>
@@ -65,7 +65,7 @@
 
       <!-- 数据列表 -->
       <a-table
-        :rowKey="(record) => record.id"
+        :rowKey="record => record.id"
         :columns="contactTable.contactColums"
         :data-source="contactTable.contactData"
         :pagination="false"
@@ -136,34 +136,30 @@ import { showContactList } from "./useSubContactList";
 //导入 useSysContactHeader 文件 获取相应方法
 import { SubContactHeader } from "./useSubContactHeader";
 
+//导入 useSysContactColumns 文件 获取相应的列表项
+import { useSubContactColums } from "./useSubContactColums";
+
 //导入 图标样式
-import {
-  SearchOutlined,
-  SyncOutlined,
-  LineOutlined,
-  AlertOutlined,
-} from "@ant-design/icons-vue";
+import { LineOutlined } from "@ant-design/icons-vue";
 
 export default {
   // 使用组件
   components: {
     Crumbs,
-    SearchOutlined,
-    SyncOutlined,
-    LineOutlined,
-    AlertOutlined,
+    LineOutlined
   },
 
   setup() {
     //获取 方法中的 参数
+    let { contactTable } = useSubContactColums();
+
     let {
-      contactTable,
       pageInfo,
       getContactData,
       pageChange,
       manageClick,
-      pageSizeChange,
-    } = showContactList();
+      pageSizeChange
+    } = showContactList(contactTable);
 
     let {
       dateModel,
@@ -172,8 +168,8 @@ export default {
       dateChange,
       selectChange,
       resetClick,
-      searchClick,
-    } = SubContactHeader();
+      searchClick
+    } = SubContactHeader(getContactData);
 
     //在Mounted 获取列表
     onMounted(() => {
@@ -207,9 +203,9 @@ export default {
       //查询 日期范围 和状态匹配列表项方法
       searchClick,
       //点击操作中的处理方法
-      manageClick,
+      manageClick
     };
-  },
+  }
 };
 </script>
 

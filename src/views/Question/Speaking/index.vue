@@ -195,7 +195,7 @@ export default {
       isLoading,
       total,
       changePagenum,
-      showSizeChange,
+      showSizeChange
     } = useGetQuestion();
 
     // 获取全部标签类型
@@ -214,7 +214,7 @@ export default {
       bulkUploadChange,
       beforeBulkUpload,
       clickBulkUpload,
-      cancelBulkUpload,
+      cancelBulkUpload
     } = useBulkUpload();
 
     // 模板下载功能
@@ -270,17 +270,16 @@ export default {
       //#endregion
 
       //#region 上传音频功能
-      uploadAudio,
+      uploadAudio
       //#endregion
     };
   },
   // 使用组件
   components: {
     Crumbs,
-    UploadOutlined,
-  },
+    UploadOutlined
+  }
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

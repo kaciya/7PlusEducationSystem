@@ -4,10 +4,12 @@ import { listen } from "@/api/questionListenAPI";
 // 导出
 export function useDownloadTemplate(category) {
   // 下载模板地址
-  const downloadTemplateUrl = 'http://pte.admin.api.banyuge.com/admin' + listen.DownloadTemplate(category.value.toLowerCase());
+  const downloadTemplateUrl =
+    "http://pte.admin.api.banyuge.com/admin" +
+    listen.DownloadTemplate(category.value.toLowerCase());
 
   return {
     downloadTemplateUrl
-  }
+  };
 }
 //#endregion
