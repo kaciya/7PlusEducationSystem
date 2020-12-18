@@ -286,7 +286,7 @@ export default {
       //#endregion
 
       //#region 上传音频功能
-      uploadAudio
+      uploadAudio,
       //#endregion
 
       //#region 显示查看模态框功能
