@@ -5,14 +5,14 @@
 
 export const column = [
   {
-    title: '标题',
+    title: "标题",
     dataIndex: "title",
     key: "title"
   },
   {
     title: "封面",
-    slots: { customRender: 'cover' },
-    width: "20%",
+    slots: { customRender: "cover" },
+    width: "20%"
   },
   {
     title: "发布时间",
@@ -25,10 +25,10 @@ export const column = [
   },
   {
     title: "开启/关闭",
-    slots: { customRender: 'state' },
+    slots: { customRender: "state" }
   },
   {
     title: "操作",
-    slots: { customRender: 'operational' },
+    slots: { customRender: "operational" }
   }
-]
+];

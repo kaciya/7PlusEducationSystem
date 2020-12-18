@@ -8,6 +8,6 @@ export function useDownloadTemplate(category) {
 
   return {
     downloadTemplateUrl
-  }
+  };
 }
 //#endregion

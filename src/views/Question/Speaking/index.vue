@@ -225,7 +225,7 @@ export default {
       bulkUploadChange,
       beforeBulkUpload,
       clickBulkUpload,
-      cancelBulkUpload,
+      cancelBulkUpload
     } = useBulkUpload();
 
     // 模板下载功能
@@ -286,7 +286,7 @@ export default {
       //#endregion
 
       //#region 上传音频功能
-      uploadAudio,
+      uploadAudio
       //#endregion
 
       //#region 显示查看模态框功能
@@ -312,5 +312,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

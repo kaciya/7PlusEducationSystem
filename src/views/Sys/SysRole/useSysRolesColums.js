@@ -1,14 +1,13 @@
 //导入 reactive 对象
-import {
-    reactive
-} from "vue";
+import { reactive } from "vue";
 
 //#region 创建变量  获取表格项
 export const useSysRolesColums = () => {
-      //定义 表格项
+  //定义 表格项
   const rolesTable = reactive({
     //表格列
-    rolesColums: [{
+    rolesColums: [
+      {
         title: "索引",
         align: "center",
         key: "index",
@@ -31,7 +30,7 @@ export const useSysRolesColums = () => {
         align: "center",
         dataIndex: "updateTime",
         //默认降序排列
-        defaultSortOrder: 'descend',
+        defaultSortOrder: "descend",
         //日期排序
         sorter: (a, b) => {
           let aTime = new Date(a.createTime);
@@ -61,8 +60,8 @@ export const useSysRolesColums = () => {
   });
 
   //返回列表数据
-  return{
+  return {
     rolesTable
-  }
-}
+  };
+};
 //#endregion

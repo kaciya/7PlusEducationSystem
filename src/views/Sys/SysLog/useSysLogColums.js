@@ -1,13 +1,12 @@
 //导入 reactive 对象
-import {
-    reactive
-} from "vue";
+import { reactive } from "vue";
 
 //#region 创建变量  获取表格项
 export const useSysLogColums = () => {
-      //创建变量 渲染表格项
+  //创建变量 渲染表格项
   const logTable = reactive({
-    logColums: [{
+    logColums: [
+      {
         title: "索引",
         align: "center",
         key: "index",
@@ -20,7 +19,7 @@ export const useSysLogColums = () => {
         align: "center",
         dataIndex: "createTime",
         //默认降序排列
-        defaultSortOrder: 'descend',
+        defaultSortOrder: "descend",
         //日期排序
         sorter: (a, b) => {
           let aTime = new Date(a.createTime);
@@ -55,8 +54,8 @@ export const useSysLogColums = () => {
   });
 
   //返回数据
-  return{
+  return {
     logTable
-  }
-}
+  };
+};
 //#endregion

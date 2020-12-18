@@ -8,7 +8,7 @@
       :style="{
         padding: '20px',
         background: '#fff',
-        minHeight: '93%',
+        minHeight: '93%'
       }"
     >
       <!-- 题型选择 start -->
@@ -119,7 +119,7 @@
         :pagination="{
           total: total,
           showSizeChanger: true,
-          showQuickJumper: true,
+          showQuickJumper: true
         }"
         @change="changePagenum"
       >
@@ -204,7 +204,7 @@ export default {
       questionList,
       isLoading,
       total,
-      changePagenum,
+      changePagenum
     } = useGetQuestion();
 
     // 获取全部标签类型
@@ -223,7 +223,7 @@ export default {
       bulkUploadChange,
       beforeBulkUpload,
       clickBulkUpload,
-      cancelBulkUpload,
+      cancelBulkUpload
     } = useBulkUpload();
 
     // 模板下载功能
@@ -284,7 +284,7 @@ export default {
       //#endregion
 
       //#region 显示添加模态框功能
-      showAddModal,
+      showAddModal
       //#endregion
     };
   },
@@ -295,10 +295,9 @@ export default {
     // 上传图标
     UploadOutlined,
     // 添加SST题目模态框
-    AddSSTModal,
-  },
+    AddSSTModal
+  }
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

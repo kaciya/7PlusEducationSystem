@@ -5,7 +5,7 @@
       :crumbName="[
         { name: '用户管理' },
         { name: '用户列表', route: '/user/user-list' },
-        { name: '详情' },
+        { name: '详情' }
       ]"
     />
     <!-- 面包屑 end -->
@@ -85,7 +85,7 @@ export default {
   components: {
     Crumbs,
     Topic,
-    Log,
+    Log
   },
   // setup响应api入口
   setup(prop) {
@@ -100,9 +100,9 @@ export default {
       // 用户个人信息
       userDetailData,
       userTitle,
-      userContent,
+      userContent
     };
-  },
+  }
 };
 </script>
 

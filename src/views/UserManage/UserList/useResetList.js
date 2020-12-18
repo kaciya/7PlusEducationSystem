@@ -30,13 +30,13 @@ export const useResetList = (getUserListData, userPagination) => {
       // 点击取消事件
       onCancel() {
         message.info("您已经取消重置");
-      },
+      }
     });
   };
   //#endregion
 
   return {
     userRef,
-    resetUserList,
+    resetUserList
   };
 };

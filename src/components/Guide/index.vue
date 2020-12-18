@@ -6,7 +6,7 @@
       :columns="columns"
       :data-source="guideData.data"
       :pagination="false"
-      :row-key="(record) => record.id"
+      :row-key="record => record.id"
     >
       <!-- 操作 -->
       <template #operation="{ record }">
@@ -151,7 +151,7 @@ export default {
       editVisible,
       editGuideRef,
       editGuideOk,
-      editGuideEmpty,
+      editGuideEmpty
     } = useEditGuide(getGuideData, prop.guideType);
     return {
       guideData, // 表格数据
@@ -163,9 +163,9 @@ export default {
       editVisible, //控制模态框显示隐藏
       editGuideRef, // 表格ref
       editGuideOk, //点击确定回调
-      editGuideEmpty, // 模态框关闭的回调
+      editGuideEmpty // 模态框关闭的回调
     };
-  },
+  }
 };
 </script>
 

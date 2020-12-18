@@ -16,10 +16,10 @@ export const useGetCourseList = () => {
       // 设置数据
       courseListData.data = res.data;
     }
-  }
+  };
 
   return {
     courseListData,
     getCourse
-  }
-}
+  };
+};

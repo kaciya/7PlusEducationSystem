@@ -1,20 +1,14 @@
 //导入 reactive 对象
-import {
-  reactive
-} from "vue";
+import { reactive } from "vue";
 
 //导入 API 接口
-import {
-  sys
-} from "@/api/sysUserAPI";
+import { sys } from "@/api/sysUserAPI";
 
 //导入 GET请求方法
-import {
-  httpGet
-} from "@/utils/http";
+import { httpGet } from "@/utils/http";
 
 //#region 定义方法  获取账号列表
-export const showSysUserList = (sysUsersTable) => {
+export const showSysUserList = sysUsersTable => {
   //#region 分页所需数据
   const pageInfo = reactive({
     //列表所在页数
@@ -22,9 +16,9 @@ export const showSysUserList = (sysUsersTable) => {
     //现在一页显示多少条数据
     pageSize: 10,
     //指定每页可以显示多少条
-    pageSizeOptions: ['10', '20', '30', '40', '50'],
+    pageSizeOptions: ["10", "20", "30", "40", "50"],
     //一共多少条数据
-    total: 0,
+    total: 0
   });
   //#endregion
 
@@ -43,7 +37,7 @@ export const showSysUserList = (sysUsersTable) => {
       .catch(error => {
         console.log(error);
       });
-  }
+  };
   //#endregion
 
   //#region 点击下一页方法
@@ -51,7 +45,7 @@ export const showSysUserList = (sysUsersTable) => {
     pageInfo.pageNum = page;
     pageInfo.pageSize = pageSize;
     getSysRolesData();
-  }
+  };
   //#endregion
 
   //#region 设置每页显示多少条数据
@@ -59,7 +53,7 @@ export const showSysUserList = (sysUsersTable) => {
     pageInfo.pageNum = current;
     pageInfo.pageSize = pageSize;
     getSysRolesData();
-  }
+  };
   //#endregion
 
   //返回数据
@@ -67,7 +61,7 @@ export const showSysUserList = (sysUsersTable) => {
     pageInfo,
     getSysUserList,
     pageChange,
-    pageSizeChange,
+    pageSizeChange
   };
 };
 //#endregion

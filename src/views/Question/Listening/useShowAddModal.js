@@ -1,5 +1,5 @@
 // 引入共享库
-import { useStore } from "vuex"
+import { useStore } from "vuex";
 // 导出
 /**
  * @param {*} category 当前题型分类
@@ -15,10 +15,10 @@ export function useShowAddModal(category) {
       type: category.value,
       visible: true
     });
-  }
+  };
 
   // 返回
   return {
     showAddModal
-  }
+  };
 }

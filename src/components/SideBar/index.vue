@@ -68,7 +68,7 @@ export default {
   // 导入组件
   components: {
     HomeOutlined,
-    UserOutlined,
+    UserOutlined
   },
   // setup响应api入口
   setup() {
@@ -90,9 +90,9 @@ export default {
       // 侧边栏的展开keys
       sideBarUnfoldKeys,
       // 只展开当前父菜单栏
-      onOpenChange,
+      onOpenChange
     };
-  },
+  }
 };
 </script>
 

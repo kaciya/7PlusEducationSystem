@@ -8,7 +8,7 @@
       :style="{
         padding: '20px',
         background: '#fff',
-        minHeight: '93%',
+        minHeight: '93%'
       }"
     >
       <!-- 日期 账号名称 查询内容 -->
@@ -61,7 +61,7 @@
 
       <!-- 数据列表 -->
       <a-table
-        :rowKey="(record) => record.id"
+        :rowKey="record => record.id"
         :columns="logTable.logColums"
         :data-source="logTable.logData"
         :pagination="false"
@@ -110,7 +110,7 @@ import { onMounted } from "vue";
 export default {
   // 使用组件
   components: {
-    Crumbs,
+    Crumbs
   },
 
   // setup响应api入口
@@ -119,12 +119,9 @@ export default {
     let { logTable } = useSysLogColums();
 
     //获取 showLogList 中的 变量
-    let {
-      pageInfo,
-      pageChange,
-      pageSizeChange,
-      getLogData,
-    } = showLogList(logTable);
+    let { pageInfo, pageChange, pageSizeChange, getLogData } = showLogList(
+      logTable
+    );
 
     //获取 useSysLogHeader 中的变量和方法
     let {
@@ -133,7 +130,7 @@ export default {
       dateChange,
       dateChangeOk,
       resetClick,
-      searchClick,
+      searchClick
     } = useSysLogHeader(getLogData);
 
     //在Mounted 获取列表
@@ -164,9 +161,9 @@ export default {
       //重置 时间范围 和 账号名称方法
       resetClick,
       //根据 时间范围 和 账号名称 查询方法
-      searchClick,
+      searchClick
     };
-  },
+  }
 };
 </script>
 

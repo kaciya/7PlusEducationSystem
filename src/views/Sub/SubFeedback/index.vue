@@ -8,7 +8,7 @@
       :style="{
         padding: '20px',
         background: '#fff',
-        minHeight: '93%',
+        minHeight: '93%'
       }"
     >
       <!-- 日期 账号名称 查询内容 -->
@@ -65,7 +65,7 @@
 
       <!-- 数据列表 -->
       <a-table
-        :rowKey="(record) => record.id"
+        :rowKey="record => record.id"
         :columns="feedbackTable.feedbackColums"
         :data-source="feedbackTable.feedbackData"
         :pagination="false"
@@ -146,9 +146,7 @@ import { SubFeedbackHeader } from "./useSubFeedbackHeader";
 import { useSubFeedbackColums } from "./useSubFeedbackColums";
 
 //导入 图标样式
-import {
-  LineOutlined,
-} from "@ant-design/icons-vue";
+import { LineOutlined } from "@ant-design/icons-vue";
 
 //导入 reactive 对象
 import { reactive, ref } from "vue";
@@ -157,7 +155,7 @@ export default {
   // 使用组件
   components: {
     Crumbs,
-    LineOutlined,
+    LineOutlined
   },
 
   //setup 编写 主要内容
@@ -171,7 +169,7 @@ export default {
       getFeedbackData,
       pageChange,
       pageSizeChange,
-      manageClick,
+      manageClick
     } = showFeedbackList(feedbackTable);
 
     //获取 SubFeedbackHeader 方法中的 参数
@@ -182,7 +180,7 @@ export default {
       dateChange,
       dateChangeOk,
       resetClick,
-      searchClick,
+      searchClick
     } = SubFeedbackHeader(getFeedbackData);
 
     //在Mounted 获取列表
@@ -215,9 +213,9 @@ export default {
       //重置状态 和 时间范围
       resetClick,
       //查询列表
-      searchClick,
+      searchClick
     };
-  },
+  }
 };
 </script>
 
