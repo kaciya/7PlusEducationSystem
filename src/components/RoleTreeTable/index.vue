@@ -8,12 +8,9 @@
     <!-- 渲染权限类型 -->
     <template #permissionType="{ record }">
       <!-- 一级渲染 -->
-      <a-checkbox-group v-model:value="checkedData.checkedFatherList">
-        <a-checkbox value="{ record.permissionId }" @change="getCheckedChild">
+        <a-checkbox  :value="record.permissionId" @change="getCheckedChild($event,record)">
           {{ record.name }}
         </a-checkbox>
-      </a-checkbox-group>
-
       <!-- 一级渲染 end -->
     </template>
     <!-- 渲染权限类型 end -->

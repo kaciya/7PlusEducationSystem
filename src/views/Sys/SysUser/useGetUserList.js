@@ -15,7 +15,7 @@ import {
 
 //#region 定义方法  获取账号列表
 export const useGetUserList = (sysUsersTable) => {
-  
+
   //#region 分页参数 
   const userPagination = reactive({
     //列表所在页数
@@ -49,9 +49,11 @@ export const useGetUserList = (sysUsersTable) => {
 
   //#region 点击下一页方法
   const pageChange = pagination => {
-    contactPagination.current = pagination.current;
-    contactPagination.pageSize = pagination.pageSize;
-    getSysRolesData();
+    //点击下一页后 将分页参数中的 当前页 和 一页显示的数据改变 
+    userPagination.current = pagination.current;
+    userPagination.pageSize = pagination.pageSize;
+    //刷新列表
+    getUserList();
   }
   //#endregion
 

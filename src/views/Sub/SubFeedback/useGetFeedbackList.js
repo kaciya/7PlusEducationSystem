@@ -48,6 +48,8 @@ export const useGetFeedbackList = (feedbackTable) => {
           });
           //将获取到的数据列表存入变量中
           feedbackTable.data = res.data.records;
+          //获取分页总数量
+          feedbackPagination.total = res.data.total;
         }
       })
       .catch(error => {
@@ -58,9 +60,11 @@ export const useGetFeedbackList = (feedbackTable) => {
 
   //#region 点击下一页方法
   const pageChange = pagination => {
-    contactPagination.current = pagination.current;
-    contactPagination.pageSize = pagination.pageSize;
-    getSysRolesData();
+    //点击下一页后 将分页参数中的 当前页 和 一页显示的数据改变 
+    feedbackPagination.current = pagination.current;
+    feedbackPagination.pageSize = pagination.pageSize;
+    //刷新列表
+    getFeedbackData();
   }
   //#endregion
 

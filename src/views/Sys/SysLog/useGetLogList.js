@@ -53,6 +53,8 @@ export const useGetLogList = (logTable) => {
         if (res.success == true) {
           //获取操作日志数据
           logTable.logData = res.data.records;
+          //获取分页总数量
+          logPagination.total = res.data.total;
         }
       })
       .catch(error => {
@@ -63,9 +65,11 @@ export const useGetLogList = (logTable) => {
 
   //#region 点击下一页方法
   const pageChange = pagination => {
+    //点击下一页后 将分页参数中的 当前页 和 一页显示的数据改变 
     logPagination.current = pagination.current;
     logPagination.pageSize = pagination.pageSize;
-    getSysRolesData();
+    //刷新列表
+    getLogData();
   }
   //#endregion
 

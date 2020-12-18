@@ -96,20 +96,20 @@ export default {
 
     const {
       rolePagination,
-      getSysRolesData,
+      getRolesData,
       pageChange,
       addRouter,
       editRouter,
     } = useGetRolesList(rolesTable);
 
-    const { showDelConfirm } = useDelRoles(getSysRolesData);
+    const { showDelConfirm } = useDelRoles(getRolesData);
 
-    const { statusChange } = useEditRoleStatus(getSysRolesData);
+    const { statusChange } = useEditRoleStatus(getRolesData);
     //#endregion
 
     //在Mounted 获取列表
     onMounted(() => {
-      getSysRolesData();
+      getRolesData();
     });
 
     //#region 返回参数
@@ -119,7 +119,7 @@ export default {
       //分页参数
       rolePagination,
       //渲染权限组列表方法
-      getSysRolesData,
+      getRolesData,
       //显示删除模态框方法
       showDelConfirm,
       //更改用户状态方法

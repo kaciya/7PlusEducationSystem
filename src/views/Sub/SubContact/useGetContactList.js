@@ -40,6 +40,8 @@ export const useGetContactList = (contactTable) => {
         if (res.success) {
           //获取列表数据
           contactTable.data = res.data.records;
+          //获取分页总数量
+          contactPagination.total = res.data.total;
         }
       })
       .catch(error => {
@@ -50,9 +52,11 @@ export const useGetContactList = (contactTable) => {
 
   //#region 点击下一页方法
   const pageChange = pagination => {
+    //点击下一页后 将分页参数中的 当前页 和 一页显示的数据改变 
     contactPagination.current = pagination.current;
     contactPagination.pageSize = pagination.pageSize;
-    getSysRolesData();
+    //刷新列表
+    getContactData();
   }
   //#endregion
 

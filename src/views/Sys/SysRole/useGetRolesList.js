@@ -39,7 +39,7 @@ export const useGetRolesList = (rolesTable) => {
   //#endregion
 
   //#region 根据后台接口地址发送请求获取权限组数据
-  const getSysRolesData = () => {
+  const getRolesData = () => {
     //请求地址 /admin/role/list
     httpGet(role.GetRolesList)
       .then(res => {
@@ -68,16 +68,18 @@ export const useGetRolesList = (rolesTable) => {
 
   //#region 点击下一页方法
   const pageChange = pagination => {
+    //点击下一页后 将分页参数中的 当前页 和 一页显示的数据改变 
     rolePagination.current = pagination.current;
     rolePagination.pageSize = pagination.pageSize;
-    getSysRolesData();
+    //刷新列表
+    getRolesData();
   }
   //#endregion
 
   //返回
   return {
     rolePagination,
-    getSysRolesData,
+    getRolesData,
     addRouter,
     editRouter,
     pageChange,
