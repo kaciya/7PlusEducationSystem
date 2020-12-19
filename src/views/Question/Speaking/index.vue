@@ -9,7 +9,7 @@
       <a-radio-group
         v-model:value="category"
         button-style="solid"
-        @change="getQuestion"
+        @change="getQuestion(true)"
       >
         <a-radio-button value="RA">RA（朗读橘子）</a-radio-button>
         <a-radio-button value="RS">RS（重复橘子）</a-radio-button>
@@ -33,7 +33,7 @@
             size="small"
             v-model:value="labelId"
             style="min-width: 90px"
-            @change="getQuestion"
+            @change="getQuestion(true)"
           >
             <a-select-option value=""> 全部 </a-select-option>
             <a-select-option
@@ -58,7 +58,7 @@
           <!-- 添加题目按钮 -->
           <a-button type="primary" @click="showAddModal">添加</a-button>
           <!-- 添加题目模态框 -->
-          <AddSSTModal></AddSSTModal>
+          <!-- <AddSSTModal></AddSSTModal> -->
         </template>
         <!-- 操作区域 end -->
       </a-page-header>
@@ -143,19 +143,26 @@
 
         <!-- 题目操作区 start -->
         <template #operation="{ record }">
-          <a-button type="primary" @click="showGetModal(record.id)"
+          <a-button type="primary" size="small" @click="showGetModal(record.id)"
             >查看</a-button
           >
           <a-button
             type="primary"
+            size="small"
             style="margin-left: 10px"
             @click="uploadAudio(record.id, 'audioUrl')"
             >上传音频</a-button
           >
-          <a-button type="primary" class="modify-btn" style="margin-left: 10px"
+          <a-button
+            type="primary"
+            size="small"
+            class="modify-btn"
+            style="margin-left: 10px"
             >编辑</a-button
           >
-          <a-button type="danger" style="margin-left: 10px">删除</a-button>
+          <a-button type="danger" size="small" style="margin-left: 10px"
+            >删除</a-button
+          >
         </template>
         <!-- 题目操作区 end -->
         <!-- 题目列表 end -->
@@ -227,7 +234,7 @@ export default {
       bulkUploadChange,
       beforeBulkUpload,
       clickBulkUpload,
-      cancelBulkUpload
+      cancelBulkUpload,
     } = useBulkUpload();
 
     // 模板下载功能

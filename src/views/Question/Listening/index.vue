@@ -4,13 +4,7 @@
     <Crumbs :crumbName="[{ name: '题库管理' }, { name: '听力题库' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
-    <div
-      :style="{
-        padding: '20px',
-        background: '#fff',
-        minHeight: '93%'
-      }"
-    >
+    <a-card style="min-height: 93%">
       <!-- 题型选择 start -->
       <a-radio-group
         v-model:value="category"
@@ -154,26 +148,35 @@
 
         <!-- 题目操作区 start -->
         <template #operation="{ record }">
-          <a-button type="primary">查看</a-button>
+          <a-button type="primary" size="small">查看</a-button>
           <a-button
             type="primary"
             style="margin-left: 10px"
             @click="uploadAudio(record.id, 'audioUrl')"
+            size="small"
             >上传音频</a-button
           >
-          <a-button type="primary" style="margin-left: 10px">编辑</a-button>
+          <a-button
+            type="primary"
+            style="margin-left: 10px"
+            class="modify-btn"
+            size="small"
+            >编辑</a-button
+          >
           <a-popconfirm
             title="确定删除这个题目吗？"
             @confirm="delQuestion(record.id)"
             @cancel="cancelDelQuestion"
           >
-            <a-button type="danger" style="margin-left: 10px">删除</a-button>
+            <a-button type="danger" style="margin-left: 10px" size="small"
+              >删除</a-button
+            >
           </a-popconfirm>
         </template>
         <!-- 题目操作区 end -->
       </a-table>
       <!-- 题目列表 end -->
-    </div>
+    </a-card>
     <!-- 主体Main end -->
   </a-layout-content>
 </template>
