@@ -15,7 +15,7 @@
       :label-col="{ span: 4 }"
       :wrapper-col="{ span: 18 }"
     >
-      <a-form-item label="编号" name="no">
+      <a-form-item label="编号" name="no" hasFeedback>
         <a-input v-model:value="addSST.model.no" />
       </a-form-item>
       <a-form-item label="题目" name="title">

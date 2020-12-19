@@ -16,6 +16,7 @@
               <a-form-item
                 :wrapperCol="{ span: 20, offset: 2 }"
                 name="username"
+                hasFeedback
               >
                 <a-input
                   placeholder="请输入登录账号"
@@ -40,6 +41,7 @@
                   size="large"
                   v-model:value="loginModel.password"
                   @keyup.enter="loginSubmit"
+                  allow-clear
                 >
                   <template #prefix>
                     <LockOutlined style="color: rgba(0, 0, 0, 0.25)" />
