@@ -9,11 +9,11 @@ export const useDownload = () => {
       url: "/api" + url,
       // headers里面设置token
       headers: {
-        Token: window.sessionStorage.getItem("token")
+        Token: window.localStorage.getItem("token"),
       },
       // 二进制流文件，一定要设置成blob，默认是json
-      responseType: "blob"
-    }).then(res => {
+      responseType: "blob",
+    }).then((res) => {
       //创建应该a标签
       const link = document.createElement("a");
       const blob = new Blob([res.data], { type: "application/vnd.ms-excel" });

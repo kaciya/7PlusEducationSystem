@@ -23,7 +23,7 @@
       <template #operation="{ record }">
         <!-- 查看按钮 -->
         <span>
-          <a-button type="primary">
+          <a-button type="primary" size="small">
             <router-link :to="'/topic/article/' + record.id">查看</router-link>
           </a-button>
         </span>
@@ -31,6 +31,7 @@
         <span v-if="record.status == 0" class="shield">
           <!-- pass-btn 绿色按钮 -->
           <a-button
+            size="small"
             type="primary"
             class="pass-btn"
             @click="topicShowModal(record.id)"
@@ -40,7 +41,11 @@
         </span>
         <!-- 屏蔽按钮 -->
         <span v-else-if="record.status == 1" class="shield">
-          <a-button type="danger" @click="topicShieldModal(record.id)">
+          <a-button
+            type="danger"
+            @click="topicShieldModal(record.id)"
+            size="small"
+          >
             屏蔽
           </a-button>
         </span>
