@@ -67,7 +67,7 @@ export const useEditNotice = getNoticeData => {
   const editFormRef = ref(null);
 
   // 关闭编辑模态框
-  const editCancelModal = () => {
+  const editCloselModal = () => {
     editFormRef.value.resetFields();
   };
 
@@ -91,7 +91,6 @@ export const useEditNotice = getNoticeData => {
           .then(res => {
             if (res.code == 200) {
               message.success("编辑成功");
-              editFormRef.value.resetFields();
               editVisible.value = false;
               // 重新渲染
               getNoticeData();
@@ -111,7 +110,7 @@ export const useEditNotice = getNoticeData => {
     editShowModal,
     editModel,
     editRules,
-    editCancelModal,
+    editCloselModal,
     editConfirmModal,
     editFormRef
   };

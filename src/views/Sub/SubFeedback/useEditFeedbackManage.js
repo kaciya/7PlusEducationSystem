@@ -1,12 +1,8 @@
 //导入 API接口
-import {
-    feedback
-} from "@/api/subUserAPI";
+import { feedback } from "@/api/subUserAPI";
 
 //导入 GET请求方法
-import {
-    httpPost
-} from "@/utils/http";
+import { httpPost } from "@/utils/http";
 
 //导入 对话框 图标 提示
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
@@ -47,9 +43,9 @@ export const useEditFeedbackManage = () => {
         });
     }
 
-    //返回 操作处理事件
-    return {
-        editManage
-    }
-}
+  //返回 操作处理事件
+  return {
+    editManage
+  };
+};
 //#endregion

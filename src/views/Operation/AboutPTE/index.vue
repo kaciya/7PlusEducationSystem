@@ -34,47 +34,70 @@
           <a-button type="danger" size="small">
                   删除
           </a-button>
-        </a-popconfirm>
-      </template>
-    </a-table>
-    <!-- 表格 end -->
-    <!-- 添加模态框 start -->
+          <a-popconfirm
+            placement="topRight"
+            title="您真的要删除该项么?"
+            @confirm="delSubmit(record.id)"
+            @cancel="delCancel"
+          >
+            <a-button type="danger">
+              删除
+            </a-button>
+          </a-popconfirm>
+        </template>
+      </a-table>
+      <!-- 表格 end -->
+      <!-- 添加模态框 start -->
       <a-modal
         title="发布"
         v-model:visible="addVisible"
         @ok="addSubmit"
         @cancel="addCancel"
       >
-        <a-form
-          ref="addRef"
-          :model="addModel"
-          :rules="addRules"
-        >
-          <a-form-item label="标题" :labelCol="{span: 4}" :wrapperCol="{span: 16}" name="title">
+        <a-form ref="addRef" :model="addModel" :rules="addRules">
+          <a-form-item
+            label="标题"
+            :labelCol="{ span: 4 }"
+            :wrapperCol="{ span: 16 }"
+            name="title"
+          >
             <a-input v-model:value="addModel.title"></a-input>
           </a-form-item>
-          <a-form-item label="内容" :labelCol="{span: 4}" :wrapperCol="{span: 16}" name="content" class="editForm">
+          <a-form-item
+            label="内容"
+            :labelCol="{ span: 4 }"
+            :wrapperCol="{ span: 16 }"
+            name="content"
+            class="editForm"
+          >
             <a-textarea v-model:value="addModel.content"></a-textarea>
           </a-form-item>
         </a-form>
       </a-modal>
-    <!-- 添加模态框 end -->
-    <!-- 编辑模态框 start -->
+      <!-- 添加模态框 end -->
+      <!-- 编辑模态框 start -->
       <a-modal
         title="编辑文章"
         v-model:visible="editVisible"
         @ok="editSubmit"
         @cancel="editCancel"
       >
-        <a-form
-          ref="editRef"
-          :model="editModel"
-          :rules="editRules"
-        >
-          <a-form-item label="标题" :labelCol="{span: 4}" :wrapperCol="{span: 16}" name="title">
+        <a-form ref="editRef" :model="editModel" :rules="editRules">
+          <a-form-item
+            label="标题"
+            :labelCol="{ span: 4 }"
+            :wrapperCol="{ span: 16 }"
+            name="title"
+          >
             <a-input v-model:value="editModel.title"></a-input>
           </a-form-item>
-          <a-form-item label="内容" :labelCol="{span: 4}" :wrapperCol="{span: 16}" name="content" class="editForm">
+          <a-form-item
+            label="内容"
+            :labelCol="{ span: 4 }"
+            :wrapperCol="{ span: 16 }"
+            name="content"
+            class="editForm"
+          >
             <a-textarea v-model:value="editModel.content"></a-textarea>
           </a-form-item>
         </a-form>
@@ -108,20 +131,35 @@ export default {
   },
   // setup响应api入口
   setup() {
-  
     //#region 获取PTE数据方法
-    const { aboutList,getAboutData } = useGetAboutList();
+    const { aboutList, getAboutData } = useGetAboutList();
 
     // 设置表格列
     aboutList.column = column;
     //#endregion
 
     //#region 添加PTE数据方法
-    const { addVisible,addRef,addModel,addRules,showAdd,addSubmit,addCancel } = useAddAboutList(getAboutData);
+    const {
+      addVisible,
+      addRef,
+      addModel,
+      addRules,
+      showAdd,
+      addSubmit,
+      addCancel
+    } = useAddAboutList(getAboutData);
     //#endregion
 
     //#region 编辑PTE数据方法
-    const { editVisible,editRef,editModel,editRules,showModify,editSubmit,editCancel } = useEditAboutList(getAboutData);
+    const {
+      editVisible,
+      editRef,
+      editModel,
+      editRules,
+      showModify,
+      editSubmit,
+      editCancel
+    } = useEditAboutList(getAboutData);
     //#endregion
 
     //#region 更改PTE状态方法
@@ -129,7 +167,7 @@ export default {
     //#endregion
 
     //#region 删除PTE数据方法
-    const { delSubmit,delCancel } = useDelAboutList(getAboutData);
+    const { delSubmit, delCancel } = useDelAboutList(getAboutData);
     //#endregion
 
     return {

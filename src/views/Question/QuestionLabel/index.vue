@@ -4,13 +4,7 @@
     <Crumbs :crumbName="[{ name: '题库管理' }, { name: '标签管理' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
-    <div
-      :style="{
-        padding: '20px',
-        background: '#fff',
-        minHeight: '93%'
-      }"
-    >
+    <a-card style="min-height: 93%">
       <!-- 页头 start -->
       <!-- backIcon为false，不渲染返回按钮 -->
       <a-page-header
@@ -34,7 +28,7 @@
       >
         <!-- 添加标签 表单 start -->
         <a-form :model="addLabelModel" :rules="addLabelRules" ref="addLabelRef">
-          <a-form-item label="标签名称" name="name">
+          <a-form-item label="标签名称" name="name" hasFeedback>
             <!-- 标签名输入框 -->
             <a-input v-model:value="addLabelModel.name"> </a-input>
           </a-form-item>
@@ -59,7 +53,9 @@
             <a-button
               type="primary"
               style="margin-right: 10px"
+              class="modify-btn"
               @click="showEditLabel(record.id, record.name)"
+              size="small"
             >
               修改
             </a-button>
@@ -68,7 +64,7 @@
               title="您确定要删除这个标签吗？"
               @confirm="delLabel(record.id)"
             >
-              <a-button type="danger"> 删除 </a-button>
+              <a-button type="danger" size="small"> 删除 </a-button>
             </a-popconfirm>
           </div>
         </template>
@@ -100,7 +96,7 @@
         <!-- 修改标签 表单 end -->
       </a-modal>
       <!-- 修改标签模态框 end -->
-    </div>
+    </a-card>
     <!-- 主体Main end -->
   </a-layout-content>
 </template>
@@ -135,7 +131,7 @@ export default {
       addLabelModel,
       addLabelRules,
       addLabelRef,
-      cancelAddLabel
+      cancelAddLabel,
     } = useAddLabel(getLabels);
 
     // 删除标签功能
@@ -149,7 +145,7 @@ export default {
       editLabelRules,
       editFormRef,
       editLabel,
-      cancelEditLabel
+      cancelEditLabel,
     } = useEditLabel(getLabels);
 
     return {
@@ -196,13 +192,13 @@ export default {
       // 修改标签
       editLabel,
       // 取消修改标签
-      cancelEditLabel
+      cancelEditLabel,
       //#endregion
     };
   },
   components: {
-    Crumbs
-  }
+    Crumbs,
+  },
 };
 </script>
 

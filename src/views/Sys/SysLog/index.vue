@@ -47,18 +47,17 @@
 
       <!-- 权限组列表card-->
       <a-card title="标签列表">
-
-      <!-- 数据列表 -->
-      <a-table
-        bordered
-        :columns="logTable.colums"
-        :data-source="logTable.data"
-        row-Key="id"
-        :pagination="logPagination"
-        @change="pageChange"
-      >
-      </a-table>
-      <!-- 数据列表 end -->
+        <!-- 数据列表 -->
+        <a-table
+          bordered
+          :columns="logTable.colums"
+          :data-source="logTable.data"
+          row-Key="id"
+          :pagination="logPagination"
+          @change="pageChange"
+        >
+        </a-table>
+        <!-- 数据列表 end -->
       </a-card>
       <!-- 权限组列表card end-->
     </a-card>
@@ -162,17 +161,17 @@ export default {
       pageChange
     };
     //#endregion
-  },
+  }
 };
-</script> 
+</script>
 
 <style lang="scss" scoped>
 .ant-btn {
   width: auto;
 }
 
-.header-btn{
+.header-btn {
   margin: 3px 10px;
-  float: right
+  float: right;
 }
 </style>

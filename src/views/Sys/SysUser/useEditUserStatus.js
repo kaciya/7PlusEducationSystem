@@ -28,9 +28,9 @@ export const useEditUserStatus = (getSysUserList) => {
             });
     }
 
-    //返回方法
-    return{
-        changeStatus
-    }
-}
+  //返回方法
+  return {
+    changeStatus
+  };
+};
 //#endregion

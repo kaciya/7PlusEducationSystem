@@ -5,12 +5,12 @@
       :crumbName="[
         {
           route: '',
-          name: '平台管理'
+          name: '平台管理',
         },
         {
           route: '',
-          name: '公告管理'
-        }
+          name: '公告管理',
+        },
       ]"
     ></Crumbs>
     <!-- 面包屑 end -->
@@ -75,7 +75,7 @@
               v-model:visible="addVisible"
               title="发布公告"
               width="950px"
-              @cancel="addCancelModal"
+              :afterClose="addCloselModal"
               @ok="addConfirmModal"
             >
               <a-form :model="addModel" :rules="addRules" ref="addFormRef">
@@ -100,7 +100,7 @@
                     format="YYYY-MM-DD HH:mm:ss"
                     :disabled-date="disabledDate"
                     :show-time="{
-                      defaultValue: moment('00:00:00', 'HH:mm:ss')
+                      defaultValue: moment('00:00:00', 'HH:mm:ss'),
                     }"
                     v-model:value="addModel.endDate"
                   />
@@ -126,7 +126,7 @@
           bordered
           :columns="columns"
           :data-source="noticeData"
-          :row-key="record => record.id"
+          row-key="id"
           :pagination="tablePagination"
           @change="tablePageChange"
         >
@@ -172,7 +172,7 @@
           v-model:visible="editVisible"
           title="编辑公告"
           width="950px"
-          @cancel="editCancelModal"
+          :afterClose="editCloselModal"
           @ok="editConfirmModal"
         >
           <a-form :model="editModel" :rules="editRules" ref="editFormRef">
@@ -197,7 +197,7 @@
                 format="YYYY-MM-DD HH:mm:ss"
                 :disabled-date="disabledDate"
                 :show-time="{
-                  defaultValue: moment('00:00:00', 'HH:mm:ss')
+                  defaultValue: moment('00:00:00', 'HH:mm:ss'),
                 }"
                 v-model:value="editModel.endDate"
               />
@@ -265,11 +265,11 @@ export default {
       noticeUserName, // 发布人员对象
       noticeReset, // 重置
       noticeRead, // 查询
-      noticeModel // 查询存下的输入框内容
+      noticeModel, // 查询存下的输入框内容
     } = useGetNoticeList(getNoticeData, tablePagination);
 
     // 点击切换页面
-    const tablePageChange = pagination => {
+    const tablePageChange = (pagination) => {
       tablePagination.current = pagination.current;
       tablePagination.pageSize = pagination.pageSize;
       // 重新渲染
@@ -286,9 +286,9 @@ export default {
       addShowModal, // 显示添加模态框
       addModel, // 表单内容
       addRules, // 校验规则
-      addCancelModal, // 关闭模态框
+      addCloselModal, // 关闭模态框
       addConfirmModal, // 确认添加
-      addFormRef // 表单ref
+      addFormRef, // 表单ref
     } = useAddNotice(getNoticeData);
 
     // 编辑公告
@@ -297,13 +297,13 @@ export default {
       editShowModal, // 显示编辑模态框
       editModel, // 表单内容
       editRules, // 校验规则
-      editCancelModal, // 关闭模态框
+      editCloselModal, // 关闭模态框
       editConfirmModal, // 确认编辑
-      editFormRef // 表单ref
+      editFormRef, // 表单ref
     } = useEditNotice(getNoticeData);
 
     // 日期选择设置
-    const disabledDate = current => {
+    const disabledDate = (current) => {
       // 不能选择今天和今天之前的日期
       return current && current < moment().endOf("day");
     };
@@ -317,7 +317,7 @@ export default {
 
     // 中文化富文本
     const editorConfig = ref({
-      language: "zh-cn"
+      language: "zh-cn",
     });
 
     // const onReady = (editor) => {
@@ -345,7 +345,7 @@ export default {
       addShowModal,
       addModel,
       addRules,
-      addCancelModal,
+      addCloselModal,
       addConfirmModal,
       addFormRef,
       // 编辑
@@ -353,7 +353,7 @@ export default {
       editShowModal,
       editModel,
       editRules,
-      editCancelModal,
+      editCloselModal,
       editConfirmModal,
       editFormRef,
       // 日期选择设置
@@ -366,14 +366,14 @@ export default {
       // 富文本编辑器
       editor,
       // 中文化富文本
-      editorConfig
+      editorConfig,
       // onReady,
     };
   },
   // 使用组件
   components: {
-    Crumbs
-  }
+    Crumbs,
+  },
 };
 </script>
 

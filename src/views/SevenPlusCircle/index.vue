@@ -5,12 +5,12 @@
       :crumbName="[
         {
           route: '',
-          name: '柒加圈',
+          name: '柒加圈'
         },
         {
           route: '',
-          name: '发布列表',
-        },
+          name: '发布列表'
+        }
       ]"
     ></Crumbs>
     <!-- 面包屑 end -->
@@ -68,7 +68,7 @@
           bordered
           :columns="columns"
           :data-source="topicData"
-          :row-key="(record) => record.id"
+          row-key="id"
           :pagination="tablePagination"
           @change="tablePageChange"
         >
@@ -171,11 +171,11 @@ export default {
       topicSortStatus, // 分类双向绑定
       topicReset, // 重置
       topicRead, // 查询
-      topicModel, // 查询存下的输入框内容
+      topicModel // 查询存下的输入框内容
     } = useGetTopicList(getTopicData, tablePagination);
 
     // 点击切换页面
-    const tablePageChange = (pagination) => {
+    const tablePageChange = pagination => {
       tablePagination.current = pagination.current;
       tablePagination.pageSize = pagination.pageSize;
       // 重新渲染
@@ -189,7 +189,7 @@ export default {
       shielFrameValue, // 双向绑定屏蔽理由输入框
       confirmShieldModal, // 屏蔽框确认
       topicShowModal, // 显示框
-      cancelShieldModal, // 关闭模态框清空并提示
+      cancelShieldModal // 关闭模态框清空并提示
     } = useSetTopicShieldShow(getTopicData);
 
     // getCategory：获取分类下拉列表
@@ -200,7 +200,7 @@ export default {
     const router = useRouter();
 
     // 点击查看跳转页面
-    const checkArticle = (id) => {
+    const checkArticle = id => {
       // 跳转
       router.push("/topic/article/" + id);
     };
@@ -229,13 +229,13 @@ export default {
       getCategory,
       categoryList,
       // 点击查看跳转页面
-      checkArticle,
+      checkArticle
     };
   },
   // 使用组件
   components: {
-    Crumbs,
-  },
+    Crumbs
+  }
 };
 </script>
 

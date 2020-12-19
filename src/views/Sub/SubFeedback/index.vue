@@ -37,11 +37,7 @@
             <a-button class="header-btn" @click="resetClick">
               重置
             </a-button>
-            <a-button
-              type="primary"
-              class="header-btn"
-              @click="searchClick"
-            >
+            <a-button type="primary" class="header-btn" @click="searchClick">
               查询
             </a-button>
           </a-col>
@@ -168,7 +164,7 @@ export default {
       headerData,
       changeStatus,
       changeDate,
-      changeDateConfirm,
+      changeDateConfirm
     } = useFeedbackHeader();
 
     /**
@@ -215,10 +211,10 @@ export default {
       //点击操作中的处理方法
       editManage,
       //点击下一页方法
-      pageChange,
+      pageChange
     };
     //#endregion
-  },
+  }
 };
 </script>
 
@@ -227,8 +223,8 @@ export default {
   width: auto;
 }
 
-.header-btn{
+.header-btn {
   margin: 3px 10px;
-  float: right
+  float: right;
 }
 </style>

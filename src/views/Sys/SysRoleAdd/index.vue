@@ -5,7 +5,7 @@
       :crumbName="[
         { name: '权限管理' },
         { name: '权限组', route: '/sys/role' },
-        { name: '添加' },
+        { name: '添加' }
       ]"
     />
     <!-- 面包屑 end -->
@@ -88,10 +88,10 @@ export default {
       //添加表单校验规则
       addRoleRules,
       //表单数据模型对象
-      addRoleForm,
+      addRoleForm
     };
     //#endregion
-  },
+  }
 };
 </script>
 

@@ -12,31 +12,27 @@ import { message } from "ant-design-vue";
  *
  * @param {function} getAboutData 获取文章列表
  */
-export const useEditAboutList = (getAboutData) => {
+export const useEditAboutList = getAboutData => {
   // 设置表单数据
   const editModel = reactive({
     title: "",
     content: "",
-    id: ''
-  })
+    id: ""
+  });
   // 模态框状态
   const editVisible = ref(false);
   // 显示模态框
-  const showModify = (id) => {
+  const showModify = id => {
     editVisible.value = true;
     editModel.id = id;
-  }
+  };
   // 获取ref
   const editRef = ref(null);
   // 创建表单校验规则
   const editRules = {
-    title: [
-      {required: true,message: "标题必须填写",trigger: 'blur'},
-    ],
-    content: [
-      {required: true,message: "内容必须填写",trigger: 'blur'}
-    ],
-  }
+    title: [{ required: true, message: "标题必须填写", trigger: "blur" }],
+    content: [{ required: true, message: "内容必须填写", trigger: "blur" }]
+  };
 
   // 提交编辑
   const editSubmit = () => {
@@ -45,7 +41,7 @@ export const useEditAboutList = (getAboutData) => {
       .validate()
       .then(() => {
         // 发送ajax请求
-        httpPost(about.EditAboutList,editModel)
+        httpPost(about.EditAboutList, editModel)
           .then(res => {
             // 判断是否成功
             if (res.code === 200) {
@@ -74,7 +70,7 @@ export const useEditAboutList = (getAboutData) => {
   const editCancel = () => {
     // 清空表单数据
     editRef.value.resetFields();
-  }
+  };
 
   return {
     // 模态框状态
@@ -91,5 +87,5 @@ export const useEditAboutList = (getAboutData) => {
     editSubmit,
     // 点击取消后的回调函数
     editCancel
-  }
-}
+  };
+};

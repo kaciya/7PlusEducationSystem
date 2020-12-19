@@ -1,8 +1,5 @@
 //导入 reactive 对象
-import {
-    reactive
-} from "vue";
-
+import { reactive } from "vue";
 
 //#region 查询列表
 export const useSearchLog = (getLogData , headerData) => {
@@ -27,9 +24,9 @@ export const useSearchLog = (getLogData , headerData) => {
         getLogData(params);
     }
 
-    //返回 查询方法
-    return{
-        searchClick
-    }
-}
+  //返回 查询方法
+  return {
+    searchClick
+  };
+};
 //#endregion

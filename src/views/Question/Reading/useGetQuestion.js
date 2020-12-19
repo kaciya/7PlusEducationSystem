@@ -25,21 +25,20 @@ export function useGetQuestion() {
     // 当前页
     current: 1,
     // 每页显示条数
-    pageSize: 2,
+    pageSize: 10,
     showSizeChanger: true,
-    pageSizeOptions: ["2"]
   });
   // 获取题目
-  const getQuestion = flag => {
+  const getQuestion = goFirstPage => {
     // console.log(category);
     // console.log(labelId);
     // 开启加载状态
     isLoading.value = true;
-    if (flag) {
+    if (goFirstPage) {
       configPage.current = 1;
     }
     // 发起数据请求
-    httpGet(question.GetQuestion,{
+    httpGet(question.GetQuestion, {
       // 二级分类
       category: category.value,
       // 标签

@@ -1,8 +1,5 @@
 //导入 reactive 对象
-import {
-    reactive
-} from "vue";
-
+import { reactive } from "vue";
 
 //#region 复选框选中方法
 export const useGetTreeChecked = () => {
@@ -39,12 +36,12 @@ export const useGetTreeChecked = () => {
     // }
     // //#endregion
 
-    //返回参数
-    return{
-        //复选框所需数据
-        checkedData,
-        //递归实现 对子数据选中方法
-        getCheckedChild,
-    }
-}
+  //返回参数
+  return {
+    //复选框所需数据
+    checkedData,
+    //递归实现 对子数据选中方法
+    getCheckedChild
+  };
+};
 //#endregion

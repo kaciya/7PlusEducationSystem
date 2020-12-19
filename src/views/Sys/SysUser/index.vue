@@ -224,7 +224,7 @@ export default {
       showAddModal,
       addUserConfirm,
       addUserCancel,
-      addUserFormRef,
+      addUserFormRef
     } = useAddUser(getUserList);
 
     /**
@@ -278,7 +278,7 @@ export default {
       pageChange,
     };
     //#endregion
-  },
+  }
 };
 </script>
 

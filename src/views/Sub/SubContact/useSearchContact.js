@@ -1,7 +1,5 @@
 //导入 reactive 对象
-import {
-    reactive
-} from "vue";
+import { reactive } from "vue";
 
 //#region 查询列表
 export const useSearchContact = (getContactData , headerData) => {
@@ -26,9 +24,9 @@ export const useSearchContact = (getContactData , headerData) => {
         getContactData(params);
     }
 
-    //返回方法
-    return{
-        searchClick
-    }
-}
+  //返回方法
+  return {
+    searchClick
+  }
+};
 //#endregion

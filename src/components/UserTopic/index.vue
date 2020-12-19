@@ -6,7 +6,7 @@
       :columns="columns"
       :data-source="topicData.data"
       :pagination="topicPagination"
-      :row-key="(record) => record.id"
+      :row-key="record => record.id"
       @change="onTableChange"
     >
       <!-- 序号 -->
@@ -23,7 +23,7 @@
       <template #operation="{ record }">
         <!-- 查看按钮 -->
         <span>
-          <a-button type="primary">
+          <a-button type="primary" size="small">
             <router-link :to="'/topic/article/' + record.id">查看</router-link>
           </a-button>
         </span>
@@ -31,6 +31,7 @@
         <span v-if="record.status == 0" class="shield">
           <!-- pass-btn 绿色按钮 -->
           <a-button
+            size="small"
             type="primary"
             class="pass-btn"
             @click="topicShowModal(record.id)"
@@ -40,7 +41,11 @@
         </span>
         <!-- 屏蔽按钮 -->
         <span v-else-if="record.status == 1" class="shield">
-          <a-button type="danger" @click="topicShieldModal(record.id)">
+          <a-button
+            type="danger"
+            @click="topicShieldModal(record.id)"
+            size="small"
+          >
             屏蔽
           </a-button>
         </span>
@@ -82,7 +87,7 @@ export default {
       topicData, // 表格数据
       topicPagination, //分页配置项
       onTableChange, //页码改变回调
-      getTopicData,
+      getTopicData
     } = useGetTopic(prop.userID);
     // 柒加圈columns
     const { columns } = useTopicColumns();
@@ -93,7 +98,7 @@ export default {
       shielFrameValue, // 双向绑定屏蔽理由输入框
       confirmShieldModal, // 屏蔽框确认
       topicShowModal, // 显示框
-      cancelShieldModal, // 关闭模态框清空并提示
+      cancelShieldModal // 关闭模态框清空并提示
     } = useSetTopicShieldShow(getTopicData);
     return {
       topicData,
@@ -106,9 +111,9 @@ export default {
       shielFrameValue, // 双向绑定屏蔽理由输入框
       confirmShieldModal, // 屏蔽框确认
       topicShowModal, // 显示框
-      cancelShieldModal, // 关闭模态框清空并提示
+      cancelShieldModal // 关闭模态框清空并提示
     };
-  },
+  }
 };
 </script>
 

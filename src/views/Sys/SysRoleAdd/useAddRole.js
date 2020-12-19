@@ -1,12 +1,8 @@
 //导入 reactive 对象
-import {
-    reactive
-} from "vue";
+import { reactive } from "vue";
 
 //导入 API 接口
-import {
-    role
-} from "@/api/sysUserAPI";
+import { role } from "@/api/sysUserAPI";
 
 //#region 权限组添加 功能
 export const useAddRole = () => {
@@ -37,4 +33,3 @@ export const useAddRole = () => {
     }
 }
 //#endregion
-

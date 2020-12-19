@@ -112,7 +112,7 @@ export default {
       getRolesData,
       pageChange,
       addRouter,
-      editRouter,
+      editRouter
     } = useGetRolesList(rolesTable);
 
     /**
@@ -148,10 +148,10 @@ export default {
       //权限组编辑路由跳转
       editRouter,
       //点击下一页方法
-      pageChange,
+      pageChange
     };
     //#endregion
-  },
+  }
 };
 </script>
 

@@ -56,7 +56,7 @@ export const useAddNotice = getNoticeData => {
   const addFormRef = ref(null);
 
   // 关闭添加模态框
-  const addCancelModal = () => {
+  const addCloselModal = () => {
     addFormRef.value.resetFields();
   };
 
@@ -80,7 +80,6 @@ export const useAddNotice = getNoticeData => {
           .then(res => {
             if (res.code == 200) {
               message.success("添加成功");
-              addFormRef.value.resetFields();
               addVisible.value = false;
               // 重新渲染
               getNoticeData();
@@ -100,7 +99,7 @@ export const useAddNotice = getNoticeData => {
     addShowModal,
     addModel,
     addRules,
-    addCancelModal,
+    addCloselModal,
     addConfirmModal,
     addFormRef
   };
