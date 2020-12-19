@@ -110,7 +110,7 @@
         :pagination="{
           total: total,
           showSizeChanger: true,
-          showQuickJumper: true,
+          showQuickJumper: true
         }"
         @change="changePagenum"
       >
@@ -143,7 +143,9 @@
 
         <!-- 题目操作区 start -->
         <template #operation="{ record }">
-          <a-button type="primary" @click="showGetModal(record.id)">查看</a-button>
+          <a-button type="primary" @click="showGetModal(record.id)"
+            >查看</a-button
+          >
           <a-button
             type="primary"
             style="margin-left: 10px"
@@ -206,7 +208,7 @@ export default {
       questionList,
       isLoading,
       total,
-      changePagenum,
+      changePagenum
     } = useGetQuestion();
 
     // 获取全部标签类型
@@ -294,7 +296,7 @@ export default {
       //#endregion
 
       //#region 显示添加模态框功能
-      showAddModal,
+      showAddModal
       //#endregion
     };
   },
@@ -307,8 +309,8 @@ export default {
     // 查看RA题目模态框
     GetRAModal,
     // 添加SST题目模态框
-    AddSSTModal,
-  },
+    AddSSTModal
+  }
 };
 </script>
 

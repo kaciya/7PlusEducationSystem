@@ -8,13 +8,13 @@ const app = createApp(App);
 // 使用Ant Design Vue
 import Antd from "ant-design-vue";
 import "ant-design-vue/dist/antd.css";
-import '@/assets/styles/index.scss' // global css
+import "@/assets/styles/index.scss"; // global css
 
 // 全局配置message.config
 import { message } from "ant-design-vue";
 message.config({
   duration: 2,
-  maxCount: 2,
+  maxCount: 2
 });
 
 // 使用富文本编辑器

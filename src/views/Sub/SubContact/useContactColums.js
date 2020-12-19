@@ -1,18 +1,17 @@
 //导入 reactive 对象
-import {
-  reactive
-} from "vue";
+import { reactive } from "vue";
 
 //#region 列表参数
 export const useContactColums = () => {
   //创建表格项
   const contactTable = reactive({
-    colums: [{
+    colums: [
+      {
         title: "序号",
         key: "index",
         slots: {
           customRender: "index"
-        },
+        }
       },
       {
         title: "姓名",
@@ -38,7 +37,7 @@ export const useContactColums = () => {
         title: "提交时间",
         dataIndex: "createTime",
         //默认降序排列
-        defaultSortOrder: 'descend',
+        defaultSortOrder: "descend",
         //日期排序
         sorter: (a, b) => {
           let aTime = new Date(a.createTime);

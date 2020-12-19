@@ -123,7 +123,7 @@ export default {
   // 使用组件
   components: {
     Crumbs,
-    LineOutlined,
+    LineOutlined
   },
 
   // setup响应api入口
@@ -139,7 +139,7 @@ export default {
       headerData,
       changeDateConfirm,
       changeDate,
-      changeStatus,
+      changeStatus
     } = useContactHeader();
 
     const { searchClick } = useSearchContact(getContactData, headerData);
@@ -178,10 +178,10 @@ export default {
       //点击操作中的处理方法
       editManage,
       //点击下一页方法
-      pageChange,
+      pageChange
     };
     //#endregion
-  },
+  }
 };
 </script>
 

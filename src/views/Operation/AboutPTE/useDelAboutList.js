@@ -12,9 +12,9 @@ import { message } from "ant-design-vue";
  * @param {function} getAboutData 获取数据
  * @returns {{delSubmit: delSubmit}}
  */
-export const useDelAboutList = (getAboutData) => {
+export const useDelAboutList = getAboutData => {
   // 确定删除
-  const delSubmit = (id) => {
+  const delSubmit = id => {
     // 发起ajax请求
     httpDelete(about.DelAboutList(id))
       .then(res => {
@@ -28,18 +28,18 @@ export const useDelAboutList = (getAboutData) => {
       })
       .catch(err => {
         console.log(err);
-      })
-  }
+      });
+  };
 
   // 点击取消的回调函数
   const delCancel = () => {
     message.info("用户取消操作");
-  }
+  };
 
   return {
     // 确定删除
     delSubmit,
     // 点击取消的回调函数
-    delCancel,
-  }
-}
+    delCancel
+  };
+};

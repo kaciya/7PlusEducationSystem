@@ -63,7 +63,7 @@ export const ModifyWordCategory = getCategoryData => {
           })
           .catch(err => {
             // 请求失败是的回调
-            console.log(err);
+            throw new Error(err);
           });
       })
       .catch(error => {

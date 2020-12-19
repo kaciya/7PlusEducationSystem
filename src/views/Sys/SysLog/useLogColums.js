@@ -3,9 +3,10 @@ import { reactive } from "vue";
 
 //#region 创建变量  获取表格项
 export const useLogColums = () => {
-      //创建变量 渲染表格项
+  //创建变量 渲染表格项
   const logTable = reactive({
-    colums: [{
+    colums: [
+      {
         title: "序号",
         key: "index",
         slots: {

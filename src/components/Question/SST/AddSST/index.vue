@@ -91,7 +91,7 @@ export default {
       addSSTRef,
       changeLabels,
       confirmAddSST,
-      cancelAddSST,
+      cancelAddSST
     } = useAddSST(addModalVisible, emit);
 
     // 上传音频功能
@@ -117,12 +117,12 @@ export default {
       // 添加sst题目
       confirmAddSST,
       // 取消添加sst题目
-      cancelAddSST,
+      cancelAddSST
     };
   },
   components: {
-    CheckCircleTwoTone,
-  },
+    CheckCircleTwoTone
+  }
 };
 </script>
 

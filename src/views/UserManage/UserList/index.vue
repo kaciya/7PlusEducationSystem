@@ -92,7 +92,7 @@
         :columns="columns"
         :data-source="userData.data"
         :pagination="userPagination"
-        :row-key="(record) => record.id"
+        :row-key="record => record.id"
         @change="onTableChange"
       >
         <!-- 来源 -->
@@ -125,7 +125,7 @@ import { useResetList } from "./useResetList";
 export default {
   // 使用组件
   components: {
-    Crumbs,
+    Crumbs
   },
   // setup响应api入口
   setup() {
@@ -136,7 +136,7 @@ export default {
       getUserList, // 点击查询的回调
       getUserListData, // 获取数据方法
       onTableChange, // 页码改变触发事件
-      userPagination, // 表格分页配置项
+      userPagination // 表格分页配置项
     } = useGetList();
     // 表格Columns
     let { columns } = useColumns();
@@ -161,9 +161,9 @@ export default {
       userData,
       columns,
       onTableChange,
-      userPagination,
+      userPagination
     };
-  },
+  }
 };
 </script>
 

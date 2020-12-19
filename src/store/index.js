@@ -17,6 +17,6 @@ export default createStore({
     // 听力题库共享库
     ListeningStore,
     // 口语题库共享库
-    SpeakingStore,
+    SpeakingStore
   }
 });

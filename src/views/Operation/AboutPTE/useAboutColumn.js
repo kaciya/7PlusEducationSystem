@@ -21,11 +21,11 @@ export const column = [
   },
   {
     title: "开启/关闭",
-    slots: { customRender: 'state' }
+    slots: { customRender: "state" }
   },
   {
     title: "操作",
     align: "center",
-    slots: { customRender: 'operational' }
+    slots: { customRender: "operational" }
   }
 ];

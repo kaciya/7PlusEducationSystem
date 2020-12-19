@@ -7,7 +7,7 @@ export const role = {
   //更改启用状态
   EditRolesStatus: "/role/status",
   //渲染权限列表
-  GetRolesPermissions: "/role/permissions",
+  GetRolesPermissions: "/role/permissions"
 };
 
 //关于 账号管理 接口
@@ -17,7 +17,7 @@ export const sys = {
   //删除账号
   DelUser: "/sys/user/delete",
   //更改启用状态
-  EditUserStatus : "/sys/user/status",
+  EditUserStatus: "/sys/user/status",
   //添加账号
   AddUser: "/sys/user/add",
   //重置账号密码

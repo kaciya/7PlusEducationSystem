@@ -28,7 +28,7 @@ export const useDelWord = getWordData => {
       })
       .catch(err => {
         // 请求失败的回调
-        console.log(err);
+        throw new Error(err);
       });
   };
   // 多选数据

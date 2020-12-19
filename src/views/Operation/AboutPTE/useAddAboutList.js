@@ -14,29 +14,25 @@ import { about } from "@/api/operationAPI";
  *
  * @param {function} getAboutData
  */
-export const useAddAboutList = (getAboutData) => {
+export const useAddAboutList = getAboutData => {
   // 发布模态框状态
   const addVisible = ref(false);
   // 显示模态框
   const showAdd = () => {
     addVisible.value = true;
-  }
+  };
   // 获取ref
   const addRef = ref(null);
   // 创建表单数据
   const addModel = reactive({
     title: "",
     content: ""
-  })
+  });
   // 创建表单校验规则
   const addRules = {
-    title: [
-      {required: true,message: "标题必须填写",trigger: 'blur'},
-    ],
-    content: [
-      {required: true,message: "内容必须填写",trigger: 'blur'}
-    ],
-  }
+    title: [{ required: true, message: "标题必须填写", trigger: "blur" }],
+    content: [{ required: true, message: "内容必须填写", trigger: "blur" }]
+  };
   // 发布文章
   const addSubmit = () => {
     // 进行表单校验
@@ -44,7 +40,7 @@ export const useAddAboutList = (getAboutData) => {
       .validate()
       .then(() => {
         // 发送ajax请求
-        httpPost(about.AddAboutList,addModel)
+        httpPost(about.AddAboutList, addModel)
           .then(res => {
             if (res.code === 200) {
               // 提示用户
@@ -61,18 +57,18 @@ export const useAddAboutList = (getAboutData) => {
           })
           .catch(err => {
             console.log(err);
-          })
+          });
       })
       .catch(err => {
         console.log(err);
-      })
-  }
+      });
+  };
 
   // 点击取消的回调函数
   const addCancel = () => {
     // 重置表单
     addRef.value.resetFields();
-  }
+  };
 
   return {
     // 模态框状态
@@ -89,5 +85,5 @@ export const useAddAboutList = (getAboutData) => {
     addSubmit,
     // 点击取消的回调函数
     addCancel
-  }
-}
+  };
+};
