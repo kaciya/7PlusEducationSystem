@@ -110,7 +110,7 @@
         :pagination="{
           total: total,
           showSizeChanger: true,
-          showQuickJumper: true,
+          showQuickJumper: true
         }"
         @change="changePagenum"
       >
@@ -215,7 +215,7 @@ export default {
       questionList,
       isLoading,
       total,
-      changePagenum,
+      changePagenum
     } = useGetQuestion();
 
     // 获取全部标签类型
@@ -303,7 +303,7 @@ export default {
       //#endregion
 
       //#region 显示添加模态框功能
-      showAddModal,
+      showAddModal
       //#endregion
     };
   },
@@ -316,8 +316,8 @@ export default {
     // 查看RA题目模态框
     GetRAModal,
     // 添加SST题目模态框
-    AddSSTModal,
-  },
+    AddSSTModal
+  }
 };
 </script>
 

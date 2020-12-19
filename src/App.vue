@@ -11,8 +11,8 @@ export default {
   setup() {
     let locale = reactive(zhCN);
     return {
-      locale,
+      locale
     };
-  },
+  }
 };
 </script>

@@ -33,11 +33,7 @@
             <a-button class="header-btn" @click="resetClick">
               重置
             </a-button>
-            <a-button
-              type="primary"
-              class="header-btn"
-              @click="searchClick"
-            >
+            <a-button type="primary" class="header-btn" @click="searchClick">
               查询
             </a-button>
           </a-col>
@@ -47,18 +43,17 @@
 
       <!-- 权限组列表card-->
       <a-card title="标签列表">
-
-      <!-- 数据列表 -->
-      <a-table
-        bordered
-        :columns="logTable.colums"
-        :data-source="logTable.data"
-        row-Key="id"
-        :pagination="logPagination"
-        @change="pageChange"
-      >
-      </a-table>
-      <!-- 数据列表 end -->
+        <!-- 数据列表 -->
+        <a-table
+          bordered
+          :columns="logTable.colums"
+          :data-source="logTable.data"
+          row-Key="id"
+          :pagination="logPagination"
+          @change="pageChange"
+        >
+        </a-table>
+        <!-- 数据列表 end -->
       </a-card>
       <!-- 权限组列表card end-->
     </a-card>
@@ -99,21 +94,13 @@ export default {
     //#region 获取 导入方法中返回的 子方法和参数
     const { logTable } = useLogColums();
 
-    const {
-      logPagination,
-      getLogData,
-      pageChange
-    } = useGetLogList(logTable);
+    const { logPagination, getLogData, pageChange } = useGetLogList(logTable);
 
-    const {
-      headerData,
-      changeDate,
-      changeDateConfirm,
-    } = useLogHeader();
+    const { headerData, changeDate, changeDateConfirm } = useLogHeader();
 
     const { searchClick } = useSearchLog(getLogData, headerData);
 
-    const { resetClick } = useResetLog(getLogData , headerData);
+    const { resetClick } = useResetLog(getLogData, headerData);
     //#endregion
 
     //在Mounted 获取列表
@@ -143,17 +130,17 @@ export default {
       pageChange
     };
     //#endregion
-  },
+  }
 };
-</script> 
+</script>
 
 <style lang="scss" scoped>
 .ant-btn {
   width: auto;
 }
 
-.header-btn{
+.header-btn {
   margin: 3px 10px;
-  float: right
+  float: right;
 }
 </style>

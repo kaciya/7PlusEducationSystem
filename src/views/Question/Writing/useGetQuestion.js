@@ -38,7 +38,7 @@ export function useGetQuestion() {
       configPage.current = 1;
     }
     // 发起数据请求
-    httpGet(question.GetQuestion,{
+    httpGet(question.GetQuestion, {
       // 二级分类
       category: category.value,
       // 标签

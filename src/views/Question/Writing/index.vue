@@ -6,7 +6,7 @@
     <!-- 主体Main start -->
     <a-card
       :style="{
-        minHeight: '93%',
+        minHeight: '93%'
       }"
     >
       <!-- 题型选择 start -->
@@ -168,10 +168,9 @@ export default {
   // 使用组件
   components: {
     // 面包屑
-    Crumbs,
-  },
+    Crumbs
+  }
 };
 </script>
 
 <style lang="scss" scoped></style>
-

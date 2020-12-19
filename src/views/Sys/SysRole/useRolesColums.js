@@ -6,7 +6,8 @@ export const useRolesColums = () => {
   //定义 表格项
   const rolesTable = reactive({
     //表格列
-    colums: [{
+    colums: [
+      {
         title: "序号",
         key: "index",
         slots: {
@@ -23,7 +24,7 @@ export const useRolesColums = () => {
       },
       {
         title: "更新时间",
-        dataIndex: "updateTime",
+        dataIndex: "updateTime"
       },
       {
         title: "启用",

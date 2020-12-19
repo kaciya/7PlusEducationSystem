@@ -176,7 +176,9 @@ export default {
     //#region 获取 导入方法中返回的 子方法和参数
     const { sysUsersTable } = useUserColums();
 
-    const { getUserList , userPagination , pageChange } = useGetUserList(sysUsersTable);
+    const { getUserList, userPagination, pageChange } = useGetUserList(
+      sysUsersTable
+    );
 
     const { changeStatus } = useEditUserStatus(getUserList);
 
@@ -192,7 +194,7 @@ export default {
       showAddModal,
       addUserConfirm,
       addUserCancel,
-      addUserFormRef,
+      addUserFormRef
     } = useAddUser(getUserList);
 
     const { rolesPermissionsList, getPermissions } = useGetUserPermissions();
@@ -242,7 +244,7 @@ export default {
       pageChange
     };
     //#endregion
-  },
+  }
 };
 </script>
 
