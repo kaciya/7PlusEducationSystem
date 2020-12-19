@@ -12,12 +12,12 @@
         v-model:value="daysValueModel"
         button-style="solid"
       >
-        <a-radio-button value="n7d" @click="setUserAddForDays(7)">
+        <a-radio-button value="n7d" @click.stop="setUserAddForDays(7)">
           近七天
         </a-radio-button>
         <a-radio-button
           value="n30d"
-          @click="setUserAddForDays(30)"
+          @click.stop="setUserAddForDays(30)"
           style="margin-left: 6px"
         >
           近30天
@@ -298,8 +298,6 @@ export default {
     const dateSTE = reactive({});
     // 侦听日期选择范围变化
     function dateRangeChange(date, dateString) {
-      // 取消近几日按钮选中状态
-      daysValueModel.value = "";
       // 存储选择日期范围[start-end]
       dateSTE.start = dateString[0];
       dateSTE.end = dateString[1];
