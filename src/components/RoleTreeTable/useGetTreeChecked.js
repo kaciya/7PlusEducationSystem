@@ -12,14 +12,14 @@ export const useGetTreeChecked = () => {
         permissionChecked : false
     });
 
-    // //#region 递归实现 对子数据的选中方法
-    // const getCheckedChild = (e,record) => {
-    //     //如果选中复选框
-    //     if(e.target.checked){
-    //         getTreeRecursion(record,defKeys);
-    //     }
-    // }
-    // //#endregion
+    //#region 递归实现 对子数据的选中方法
+    const getCheckedChild = (e,record) => {
+        //如果选中复选框
+        if(e.target.checked){
+            console.log(record);
+        }
+    }
+    //#endregion
 
     // //#region 递归获取子选择 
     // const getTreeRecursion = (node,arr) => {

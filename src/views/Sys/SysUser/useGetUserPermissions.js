@@ -27,22 +27,6 @@ export const useGetUserPermissions = () => {
     }
     //#endregion
 
-  //#region 获取权限组列表
-  const getPermissions = () => {
-    //发起请求  获取权限列表
-    httpGet(role.GetRolesList)
-      .then(res => {
-        if (res.success) {
-          //获取权限列表数据
-          rolesPermissionsList.data = res.data;
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-  //#endregion
-
   //返回
   return {
     rolesPermissionsList,

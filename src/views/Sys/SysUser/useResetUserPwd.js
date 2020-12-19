@@ -35,9 +35,6 @@ export const useResetUserPwd = () => {
                     });
             }
           })
-          .catch(error => {
-            console.log(error);
-          });
       }
 
   //返回方法
