@@ -47,7 +47,7 @@
       </a-form-item>
       <a-form-item label="题目原文" name="titleText">
         <a-textarea v-model:value="addSST.model.titleText" :rows="4" />
-        <a-button type="primary">转换为音频</a-button>
+        <a-button type="primary" @click="audioSynthetic">转换为音频</a-button>
       </a-form-item>
       <a-form-item label="答案参考" name="answer">
         <a-textarea v-model:value="addSST.model.answer" :rows="3" />
@@ -73,6 +73,8 @@ import { addSST, useAddSST } from "./useAddSST";
 import { useUploadAudio } from "./useUploadAudio";
 // 引入 标签列表 功能
 import { useGetLabels } from "@/views/Question/QuestionLabel/useGetLables";
+// 引入 音频合成 功能
+import { useAudioSynthetic } from "./useAudioSynthetic";
 
 export default {
   // 发送事件
@@ -99,15 +101,21 @@ export default {
       addSST
     );
 
+    // 音频合成功能
+    const { audioSynthetic } = useAudioSynthetic(addSST, uploadAudioList);
+
     // 返回
     return {
       // 标签列表
       labelList,
+      // 上传音频功能
       uploadAudio,
       // 上传音频列表
       uploadAudioList,
       // 改变上传音频
       changeUploadAudio,
+      // 音频合成功能
+      audioSynthetic,
       // 添加题目的表单数据和校验规则
       addSST,
       // 添加题目表单

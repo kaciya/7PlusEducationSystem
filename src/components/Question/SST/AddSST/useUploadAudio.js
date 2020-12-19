@@ -10,7 +10,7 @@ export function useUploadAudio(addSST) {
   // 上传音频
   const uploadAudio = reactive({
     // 地址
-    url: '/api' + questionAPI.uploadAudio,
+    url: '/api' + questionAPI.UploadAudio,
     // 请求头
     headers: { Token: window.localStorage.getItem("token") }
   })
@@ -24,8 +24,8 @@ export function useUploadAudio(addSST) {
     // 限制上传音频数量为 1
     fileList = fileList.slice(-1);
     uploadAudioList.value = fileList;
+    // 上传音频完成且成功
     if (info.file.status == "done" && info.file.response.success) {
-      console.log(info.file);
       // 提示用户
       message.success("音频上传成功");
       // 保存音频路径
