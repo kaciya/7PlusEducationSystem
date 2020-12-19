@@ -8,7 +8,7 @@ export const useGetDetail = id => {
   const userDetailData = ref([]);
   // 获取后台数据
   const getuserDetailData = async () => {
-    const res = await httpGet(user.UserDetail + `/${id}`);
+    const res = await httpGet(user.GetUserDetail + `/${id}`);
     if (res.success) {
       userDetailData.value = res.data;
     }

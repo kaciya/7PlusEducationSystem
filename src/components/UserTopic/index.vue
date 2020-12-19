@@ -6,7 +6,7 @@
       :columns="columns"
       :data-source="topicData.data"
       :pagination="topicPagination"
-      :row-key="record => record.id"
+      :row-key="(record) => record.id"
       @change="onTableChange"
     >
       <!-- 序号 -->
@@ -33,14 +33,14 @@
           <a-button
             type="primary"
             class="pass-btn"
-            @click="topicShow(record.id)"
+            @click="topicShowModal(record.id)"
           >
             显示
           </a-button>
         </span>
         <!-- 屏蔽按钮 -->
         <span v-else-if="record.status == 1" class="shield">
-          <a-button type="danger" @click="topicShield(record.id)">
+          <a-button type="danger" @click="topicShieldModal(record.id)">
             屏蔽
           </a-button>
         </span>
@@ -73,7 +73,7 @@ import { useGetTopic } from "./useGetTopic";
 // 柒加圈columns
 import { useTopicColumns } from "./useTopicColumns";
 // 引入屏蔽显示功能
-import { useTopicShieldShow } from "@/views/SevenPlusCircle/useTopicShieldShow";
+import { useSetTopicShieldShow } from "@/views/SevenPlusCircle/useSetTopicShieldShow";
 export default {
   // 接收用户id
   props: ["userID"],
@@ -82,19 +82,19 @@ export default {
       topicData, // 表格数据
       topicPagination, //分页配置项
       onTableChange, //页码改变回调
-      getTopicData
+      getTopicData,
     } = useGetTopic(prop.userID);
     // 柒加圈columns
     const { columns } = useTopicColumns();
     // 屏蔽显示
     const {
       topicShieldVisible, // 屏蔽模态框
-      topicShield, // 显示屏蔽模态框
+      topicShieldModal, // 显示屏蔽模态框
       shielFrameValue, // 双向绑定屏蔽理由输入框
       confirmShieldModal, // 屏蔽框确认
-      topicShow, // 显示框
-      cancelShieldModal // 关闭模态框清空并提示
-    } = useTopicShieldShow(getTopicData);
+      topicShowModal, // 显示框
+      cancelShieldModal, // 关闭模态框清空并提示
+    } = useSetTopicShieldShow(getTopicData);
     return {
       topicData,
       columns,
@@ -102,13 +102,13 @@ export default {
       onTableChange,
       getTopicData,
       topicShieldVisible, // 屏蔽模态框
-      topicShield, // 显示屏蔽模态框
+      topicShieldModal, // 显示屏蔽模态框
       shielFrameValue, // 双向绑定屏蔽理由输入框
       confirmShieldModal, // 屏蔽框确认
-      topicShow, // 显示框
-      cancelShieldModal // 关闭模态框清空并提示
+      topicShowModal, // 显示框
+      cancelShieldModal, // 关闭模态框清空并提示
     };
-  }
+  },
 };
 </script>
 
