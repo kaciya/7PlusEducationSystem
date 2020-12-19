@@ -69,6 +69,22 @@ export function useGetQuestion() {
     }).catch((err) => {
       console.log(err);
     })
+      .then(res => {
+        let { success, data } = res;
+        // 如果数据获取成功
+        if (success) {
+          // 保存数据
+          questionList.value = data.records;
+          console.log(data);
+          // 记录数据库中的数据总数
+          total.value = data.total;
+          // 关闭加载状态
+          isLoading.value = false;
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   // 跳转页码时
@@ -94,7 +110,7 @@ export function useGetQuestion() {
     questionList,
     isLoading,
     total,
-    changePagenum,
-  }
+    changePagenum
+  };
 }
 //#endregion

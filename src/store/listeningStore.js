@@ -11,7 +11,7 @@ export default {
   mutations: {
     /**
      * 是否显示添加模态框
-     * @param {*} state 
+     * @param {*} state
      * @param {*} payload 题型 type:string，是否显示 visible:boolean
      */
     SHOW_ADDMODAL(state, payload) {

@@ -9,6 +9,13 @@ const app = createApp(App);
 import Antd from "ant-design-vue";
 import "ant-design-vue/dist/antd.css";
 
+// 全局配置message.config
+import { message } from "ant-design-vue";
+message.config({
+  duration: 2,
+  maxCount: 2,
+});
+
 // 使用富文本编辑器
 import CKEditor from "@ckeditor/ckeditor5-vue";
 

@@ -30,11 +30,11 @@ export const useLogout = () => {
           httpPost(auth.UserLogout).then(res => {
             if (res.success) {
               // 移除token
-              window.sessionStorage.removeItem("token");
+              window.localStorage.removeItem("token");
               // 调回登录页
               router.push("/login");
               // 提示退出成功
-              message.success("退出成功", 2);
+              message.success("退出成功");
               // 结束加载
               resolve();
             }

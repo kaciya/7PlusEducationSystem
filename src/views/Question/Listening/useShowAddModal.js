@@ -20,5 +20,5 @@ export function useShowAddModal(category) {
   return {
     addModalVisible,
     showAddModal
-  }
+  };
 }

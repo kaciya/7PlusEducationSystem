@@ -10,7 +10,7 @@ export function useDelLabel(getLabels) {
    * 删除标签方法
    * @param {*} id 要删除的id
    */
-  const delLabel = (id) => {
+  const delLabel = id => {
     // 发起删除请求
     httpDelete(questionLabel.DelLabel + "/" + id).then(res => {
       if (res.success == true) {
