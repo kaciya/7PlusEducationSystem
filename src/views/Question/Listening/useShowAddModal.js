@@ -1,24 +1,24 @@
-// 引入共享库
-import { useStore } from "vuex"
-// 导出
-/**
+// 引入响应式API
+import { reactive } from "vue"
+/** 
+ * 导出
  * @param {*} category 当前题型分类
  */
 export function useShowAddModal(category) {
-  // 共享库
-  let store = useStore();
+  // 添加模态框的显示和隐藏
+  const addModalVisible = reactive({
+    sst: false
+  })
 
   // 显示添加题目模态框
-  let showAddModal = () => {
+  const showAddModal = () => {
     // 关闭sst模态框
-    store.commit("SHOW_ADDMODAL", {
-      type: category.value,
-      visible: true
-    });
+    addModalVisible[category.value.toLowerCase()] = true;
   }
 
   // 返回
   return {
+    addModalVisible,
     showAddModal
   }
 }

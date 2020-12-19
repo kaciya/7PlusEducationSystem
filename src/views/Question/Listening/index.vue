@@ -15,7 +15,7 @@
       <a-radio-group
         v-model:value="category"
         button-style="solid"
-        @change="getQuestion"
+        @change="getQuestion(true)"
       >
         <a-radio-button value="SST">SST（录音总结）</a-radio-button>
         <a-radio-button value="WED">WED（听写句子）</a-radio-button>
@@ -42,7 +42,7 @@
             size="small"
             v-model:value="labelId"
             style="min-width: 90px"
-            @change="getQuestion"
+            @change="getQuestion(true)"
           >
             <a-select-option value=""> 全部 </a-select-option>
             <a-select-option
@@ -67,7 +67,10 @@
           <!-- 添加题目按钮 -->
           <a-button type="primary" @click="showAddModal">添加</a-button>
           <!-- 添加题目模态框 -->
-          <AddSSTModal></AddSSTModal>
+          <AddSSTModal
+            :addModalVisible="addModalVisible"
+            @getQuestion="getQuestion"
+          ></AddSSTModal>
         </template>
         <!-- 操作区域 end -->
       </a-page-header>
@@ -118,6 +121,8 @@
         :loading="isLoading"
         :pagination="{
           total: total,
+          current: pagenum,
+          pageSize: pagesize,
           showSizeChanger: true,
           showQuickJumper: true,
         }"
@@ -157,7 +162,13 @@
             >上传音频</a-button
           >
           <a-button type="primary" style="margin-left: 10px">编辑</a-button>
-          <a-button type="danger" style="margin-left: 10px">删除</a-button>
+          <a-popconfirm
+            title="确定删除这个题目吗？"
+            @confirm="delQuestion(record.id)"
+            @cancel="cancelDelQuestion"
+          >
+            <a-button type="danger" style="margin-left: 10px">删除</a-button>
+          </a-popconfirm>
         </template>
         <!-- 题目操作区 end -->
       </a-table>
@@ -192,12 +203,16 @@ import { useDownloadTemplate } from "./useDownloadTemplate";
 import { useUploadAudio } from "./useUploadAudio";
 // 导入 显示添加题目模态框 功能
 import { useShowAddModal } from "./useShowAddModal";
+// 导入 删除题目功能
+import { useDelQuestion } from "./useDelQuestion";
 
 export default {
   // setup响应api入口
   setup() {
     // 渲染题目列表
     let {
+      pagenum,
+      pagesize,
       category,
       labelId,
       getQuestion,
@@ -233,11 +248,17 @@ export default {
     let { uploadAudio } = useUploadAudio();
 
     // 显示添加模态框 功能
-    let { showAddModal } = useShowAddModal(category);
+    let { addModalVisible, showAddModal } = useShowAddModal(category);
+
+    // 删除题目 功能
+    let { delQuestion, cancelDelQuestion } = useDelQuestion(getQuestion);
 
     // 返回
     return {
       //#region 渲染表格
+      // 当前页码, 每页几条
+      pagenum,
+      pagesize,
       // 当前题目分类
       category,
       // 当前选择的标签筛选
@@ -284,7 +305,16 @@ export default {
       //#endregion
 
       //#region 显示添加模态框功能
+      // 添加模态框的显示与隐藏
+      addModalVisible,
+      // 显示添加模态框
       showAddModal,
+      //#endregion
+
+      //#region 删除题目功能
+      delQuestion,
+      // 取消删除
+      cancelDelQuestion,
       //#endregion
     };
   },

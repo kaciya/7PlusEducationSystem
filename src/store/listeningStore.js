@@ -5,7 +5,7 @@ export default {
   state() {
     return {
       // SST添加模态框 显示与隐藏
-      AddSSTVisible: false,
+      addSSTVisible: false,
     };
   },
   mutations: {
@@ -15,7 +15,7 @@ export default {
      * @param {*} payload 题型 type:string，是否显示 visible:boolean
      */
     SHOW_ADDMODAL(state, payload) {
-      state[`Add${payload.type.toUpperCase()}Visible`] = payload.visible;
+      state[`add${payload.type.toUpperCase()}Visible`] = payload.visible;
     }
   },
   actions: {},

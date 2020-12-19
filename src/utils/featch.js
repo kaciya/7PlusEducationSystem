@@ -53,6 +53,10 @@ instance.interceptors.response.use(
         return Promise.resolve(response);
       case 4001: // 用户名或密码错误
         return Promise.resolve(response);
+      case 5101: // 题库编号已存在
+        return Promise.resolve(response);
+      case 5001: // 题库标签最多写三个
+        return Promise.resolve(response);
       // 服务器状态码不是2开头的情况
       //  这里可以跟你们的后台开发人员协商好统一的错误状态码
       // 然后根据返回的状态码进行一些操作，例如登录过期提示，错误提示等等

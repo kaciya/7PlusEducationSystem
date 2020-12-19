@@ -4,4 +4,6 @@ export default {
   GetQuestion: "/question/page",
   // 删除题目
   DelQuestion: "/question",
+  // 上传音频
+  uploadAudio: "/oss/upload"
 };

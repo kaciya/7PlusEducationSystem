@@ -103,11 +103,16 @@ import { useClearPassword } from "./useClearPassword";
 export default {
   setup() {
     // 表单提交
-    let { loginModel, loginSubmit, loginFormRef, logining } = useLoginSubmit();
+    const {
+      loginModel,
+      loginSubmit,
+      loginFormRef,
+      logining,
+    } = useLoginSubmit();
     // 表单校验
-    let { loginRules } = userLoginRules();
+    const { loginRules } = userLoginRules();
     // 清除密码
-    let { clearPassword } = useClearPassword(loginModel);
+    const { clearPassword } = useClearPassword(loginModel);
     // 返回
     return {
       // 登录表单

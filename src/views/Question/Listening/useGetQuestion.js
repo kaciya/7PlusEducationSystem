@@ -58,7 +58,8 @@ export function useGetQuestion() {
         // 记录数据库中的数据总数
         total.value = data.total;
         // 判断是否超出最后一页，如果超出，重新请求
-        if (data.current > data.pages) {
+        // 此处注意data.pages!=0是为了避免出现因为没数据不停重复请求的情况
+        if (data.current > data.pages && data.pages != 0) {
           pagenum.value = data.pages;
           getQuestion();
         }
@@ -86,6 +87,7 @@ export function useGetQuestion() {
 
   return {
     pagenum,
+    pagesize,
     category,
     labelId,
     getQuestion,
