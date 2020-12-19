@@ -68,7 +68,7 @@
           bordered
           :columns="columns"
           :data-source="topicData"
-          :row-key="(record) => record.id"
+          row-key="id"
           :pagination="tablePagination"
           @change="tablePageChange"
         >

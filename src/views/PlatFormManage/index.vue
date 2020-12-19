@@ -126,7 +126,7 @@
           bordered
           :columns="columns"
           :data-source="noticeData"
-          :row-key="(record) => record.id"
+          row-key="id"
           :pagination="tablePagination"
           @change="tablePageChange"
         >
