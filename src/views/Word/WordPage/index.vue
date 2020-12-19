@@ -52,7 +52,7 @@
       >
         <template #extra>
           <a-button @click="delWords"> 批量删除 </a-button>
-          <a-button> 批量导入单词 </a-button>
+          <a-button @click="addBatchWord"> 批量导入单词 </a-button>
           <a-button @click="addWord"> 导入单词 </a-button>
         </template>
       </a-page-header>
@@ -185,6 +185,42 @@
       </a-form>
     </a-modal>
     <!-- 修改模态框end -->
+    <!-- 批量导入单词模态框start -->
+    <!-- :afterClose="addBatchEmpty"
+      @ok="addBatchOk" -->
+    <a-modal
+      title="批量导入单词"
+      v-model:visible="addBatchVisible"
+      :maskClosable="false"
+    >
+      <!-- 导入文件 -->
+      <a-row>
+        <a-col :offset="1">导入文件： </a-col>
+        <a-col :span="18">
+          <!-- 批量上传 -->
+          <a-upload>
+            <a-button> <upload-outlined /> 选择文件 </a-button>
+          </a-upload>
+          <!-- 说明提示 -->
+          <a-alert type="info" show-icon style="margin-top: 10px">
+            <template #message>
+              <p style="margin: 0px">
+                说明：<br />1. 文件格式必须是xls、xlsx <br />2.
+                单词字段对应列数据不能为空
+              </p>
+            </template>
+          </a-alert>
+        </a-col>
+      </a-row>
+      <!-- 模板下载 -->
+      <a-row>
+        <a-col :offset="1">模板下载： </a-col>
+        <a-col>
+          <a @click="addTemplate" style="color: #1abc9c">单词.xlsx</a>
+        </a-col>
+      </a-row>
+    </a-modal>
+    <!-- 批量导入单词模态框end -->
   </a-layout-content>
 </template>
 
@@ -205,10 +241,15 @@ import { useGetCategory } from "../WordCategory/useGetCategory";
 import { useDelWord } from "./useDelWord";
 // 修改
 import { useEditWord } from "./useEditWord";
+// 批量导入单词
+import { useAddBatchWord } from "./useAddBatchWord";
+// 引入icons图标
+import { UploadOutlined } from "@ant-design/icons-vue";
 export default {
   // 使用组件
   components: {
-    Crumbs
+    Crumbs,
+    UploadOutlined
   },
   // setup响应api入口
   setup() {
@@ -253,6 +294,8 @@ export default {
       editOk, //点击确定事件
       editEmpty // 模态框关闭事件
     } = useEditWord(getWordData);
+    // 批量导入单词
+    const { addBatchVisible, addBatchWord, addTemplate } = useAddBatchWord();
     return {
       wordRef,
       wordModel,
@@ -280,7 +323,10 @@ export default {
       editModel,
       editRef,
       editOk,
-      editEmpty
+      editEmpty,
+      addBatchVisible,
+      addBatchWord,
+      addTemplate
     };
   }
 };
