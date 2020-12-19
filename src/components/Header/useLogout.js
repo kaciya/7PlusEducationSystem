@@ -39,9 +39,10 @@ export const useLogout = () => {
               resolve();
             }
           }).catch(err => {
-            console.log(err);
+            // console.log(err);
+            throw new Error(err);
           })
-        }).catch(() => message.error("退出失败", 2));
+        }).catch(() => message.error("退出失败"));
       },
       onCancel() {
         return;

@@ -74,7 +74,7 @@ instance.interceptors.response.use(
     switch (data.code) {
       case 401: // 没有被授权
         setTimeout(() => {
-          message.warning("登录超时，请重新登录", 2);
+          message.warning("登录超时，请重新登录");
           setTimeout(() => {
             window.location.replace("/");
           }, 200);

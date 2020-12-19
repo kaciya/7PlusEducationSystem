@@ -49,7 +49,8 @@ export const useGetUserAdd = () => {
         }
       })
       .catch(err => {
-        console.log(err);
+        // console.log(err);
+        throw new Error(err);
       });
   }
   //#endregion
@@ -93,7 +94,8 @@ export const useGetUserAdd = () => {
         }
       })
       .catch(err => {
-        console.log(err);
+        // console.log(err);
+        throw new Error(err);
       });
   }
   //#endregion
