@@ -111,6 +111,16 @@ const routes = [
           pathName: "/question/speaking"
         }
       },
+      // 阅读题库
+      {
+        path: "/question/reading",
+        component: () => import("@/views/Question/Reading")
+      },
+      // 写作题库
+      {
+        path: "/question/writing",
+        component: () => import("@/views/Question/Writing")
+      },
       //#endregion
       //#region 柒加圈
       //柒加圈发布列表
