@@ -318,7 +318,7 @@ router.beforeEach((to, from, next) => {
   // 开启进度条
   NProgress.start();
   // 获取token
-  let isAuthenticated = window.sessionStorage.getItem("token");
+  let isAuthenticated = window.localStorage.getItem("token");
   // 1. 去登录页时不拦截   2. 检测是否获取token经过校验
   // 不是去登录页，且没有经过校验 跳转至登录页面
   if (to.name !== "Login" && !isAuthenticated) {

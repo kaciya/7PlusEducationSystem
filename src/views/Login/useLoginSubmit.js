@@ -45,11 +45,13 @@ export const useLoginSubmit = () => {
           logining.value = false;
           if (res.success) {
             // 保存token
-            window.sessionStorage.setItem("token", res.data.token);
+            window.localStorage.setItem("token", res.data.token);
             // 提示用户登录成功
             message.success("登录成功");
             // 将 用户信息 存入共享库
             store.commit("SET_USERINFOS", res.data);
+            // 将 用户信息 存在本地
+            window.localStorage.setItem("userInfos", JSON.stringify(res.data));
             // 跳转主页
             router.push("/home");
           } else {

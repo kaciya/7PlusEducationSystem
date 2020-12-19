@@ -108,8 +108,6 @@
 <script>
 // 引入面包屑组件
 import Crumbs from "@/components/Crumbs";
-// 引入 钩子函数
-import { onMounted } from "vue";
 // 引入 标签管理表单列配置
 import { useLabelColumns } from "./useLableColumns";
 // 引入 获取所有标签方法
@@ -153,12 +151,6 @@ export default {
       editLabel,
       cancelEditLabel
     } = useEditLabel(getLabels);
-
-    // 在mounted时候
-    onMounted(() => {
-      // 获取所有标签
-      getLabels();
-    });
 
     return {
       //#region 渲染标签列表
