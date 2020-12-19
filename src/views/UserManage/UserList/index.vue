@@ -186,9 +186,3 @@ export default {
 }
 // 表格样式 end
 </style>
-<style>
-/* 表格标题加粗 */
-.ant-table-thead > tr > th {
-  font-weight: 600;
-}
-</style>
