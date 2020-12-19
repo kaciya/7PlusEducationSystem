@@ -121,13 +121,13 @@ export default {
       // 点击删除密码
       clearPassword,
       // 正在登录的状态
-      logining,
+      logining
     };
   },
   components: {
     UserOutlined,
-    LockOutlined,
-  },
+    LockOutlined
+  }
 };
 </script>
 

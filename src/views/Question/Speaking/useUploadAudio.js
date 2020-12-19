@@ -7,12 +7,12 @@ export function useUploadAudio() {
    * @param {*} id 题目id
    * @param {*} audioUrl 音频路径
    */
-  let uploadAudio = (id, audioUrl) => {
+  const uploadAudio = (id, audioUrl) => {
     console.log(id, audioUrl);
-  }
+  };
 
   return {
     uploadAudio
-  }
+  };
 }
 //#endregion

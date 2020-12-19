@@ -26,7 +26,6 @@ export function useGetQuestion() {
   const pagenum = ref(1);
   const pagesize = ref(10);
 
-
   // 获取题目
   const getQuestion = () => {
     // 开启加载状态
@@ -41,7 +40,7 @@ export function useGetQuestion() {
       pageNum: pagenum.value,
       // 分页大小
       pageSize: pagesize.value,
-      // 类型  2.说
+      // 类型  2.口语
       type: 2,
     }).then((res) => {
       let { success, data } = res;
@@ -58,21 +57,29 @@ export function useGetQuestion() {
     }).catch((err) => {
       console.log(err);
     })
+      .then(res => {
+        let { success, data } = res;
+        // 如果数据获取成功
+        if (success) {
+          // 保存数据
+          questionList.value = data.records;
+          console.log(data);
+          // 记录数据库中的数据总数
+          total.value = data.total;
+          // 关闭加载状态
+          isLoading.value = false;
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   // 跳转页码时
-  function changePagenum(page, pageSize) {
-    // 根据分页器的 page, size 刷新页面
-    pagenum.value = page;
-    pagesize.value = pageSize;
-    getQuestion();
-  }
-
-  // 修改每页多少条
-  function showSizeChange(current, size) {
+  function changePagenum({ current, pageSize }) {
     // 根据分页器的 page, size 刷新页面
     pagenum.value = current;
-    pagesize.value = size;
+    pagesize.value = pageSize;
     getQuestion();
   }
 
@@ -90,7 +97,6 @@ export function useGetQuestion() {
     isLoading,
     total,
     changePagenum,
-    showSizeChange
   }
 }
 //#endregion

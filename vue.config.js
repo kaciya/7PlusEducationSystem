@@ -11,5 +11,25 @@ module.exports = {
         }
       }
     }
-  }
+  },
+  // 修改全局html标题
+  chainWebpack: config => {
+    config.plugin('html')
+      .tap(args => {
+        // console.log(args);
+        args[0].title = "柒加教育-后台管理";
+        return args;
+      })
+  },
+  // favicon图标配置
+  pwa: {
+    iconPaths: {
+      favicon32: './favicon.ico',
+      favicon16: './favicon.ico',
+      appleTouchIcon: './favicon.ico',
+      maskIcon: './favicon.ico',
+      msTileImage: './favicon.ico'
+    }
+  },
+
 };
