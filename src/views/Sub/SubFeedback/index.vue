@@ -81,12 +81,13 @@
 
         <!-- 操作 -->
         <template #operation="{ record }">
-          <a-button type="primary" v-if="record.status == 1" disabled>
+          <a-button type="primary" size="small" v-if="record.status == 1" disabled>
             <LineOutlined />
           </a-button>
 
           <a-button
             type="primary"
+            size="small"
             v-else-if="record.status == 0"
             @click="editManage(record.id)"
           >

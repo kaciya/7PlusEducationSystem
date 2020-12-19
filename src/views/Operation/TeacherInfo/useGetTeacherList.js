@@ -27,7 +27,7 @@ export const useGetTeacherList = (pageNum, pageSize, callback) => {
       }
     })
     .catch(err => {
-      console.log(err);
+      throw err;
     });
 };
 

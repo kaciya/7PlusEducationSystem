@@ -6,6 +6,8 @@ import {
 
 //#region 复选框选中方法
 export const useGetTreeChecked = () => {
+    const defKeys = reactive([]);
+
     //复选框所需数据
     const checkedData = reactive({
         //父级复选框值
@@ -18,11 +20,23 @@ export const useGetTreeChecked = () => {
         //如果选中复选框
         if(e.target.checked){
             console.log(record);
+            getTreeRecursion(record,defKeys);
         }
     }
     //#endregion
 
     //#region 递归获取子选择 
+    getTreeRecursion = (node,arr) => {
+        //判断 node对象中 是否有 子数组 
+        if(!node.child){
+            return arr.push(node.permissionId);
+        }
+
+        //如果 有子数组 则继续执行此方法
+        node.child.forEach(item => {
+            getTreeRecursion(item.arr);
+        });
+    }
     //#endregion
 
     //返回参数

@@ -34,7 +34,7 @@
               重置
             </a-button>
             <a-button
-              type="primary"
+              type="primary" 
               class="header-btn"
               @click="searchClick"
             >

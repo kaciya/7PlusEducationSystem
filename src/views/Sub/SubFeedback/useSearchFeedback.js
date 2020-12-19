@@ -24,10 +24,6 @@ export const useSearchFeedback = (getFeedbackData , headerData) => {
 
         //发起查询请求
         getFeedbackData(params);
-        //将双向绑定的 日期 和 选择项 中的值 重置
-        headerData.selectModel = "2";
-        headerData.dateModel = [];
-        headerData.confirmDate = {};
     }
 
     //返回 查询方法

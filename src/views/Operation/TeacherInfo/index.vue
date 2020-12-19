@@ -10,20 +10,13 @@
     />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
-    <div
-      :style="{
-        padding: '20px',
-        background: '#fff',
-        minHeight: '93%'
-      }"
-    >
+    <a-card style="min-height: 93%">
       <!-- 头部按钮 start -->
       <a-row style="margin-bottom: 10px">
         <a-col :span="20"></a-col>
         <a-col :span="4">
           <a-button
             type="primary"
-            size="large"
             style="float: right"
             @click="showModal"
           >
@@ -55,24 +48,23 @@
             size="small"
             style="margin-right: 10px"
             @click="showEditModal(record.id)"
+            class="modify-btn"
           >
             编辑
           </a-button>
-          <a-button
-            type="danger"
-            size="small"
-            @click="
-              useDelTeacherList(
+          <a-popconfirm placement="topRight" title="您真的要删除该项么?" @confirm="delSubmit(
                 record.id,
-                useGetTeacherList,
                 pageNum,
                 pageSize,
                 loadState
-              )
-            "
+              )" @cancel="delCancel">
+          <a-button
+            type="danger"
+            size="small"
           >
             删除
           </a-button>
+          </a-popconfirm>
         </template>
       </a-table>
       <!-- 表格 end -->
@@ -266,7 +258,7 @@
         </a-form>
       </a-modal>
       <!-- 编辑用户模态框 end -->
-    </div>
+    </a-card>
     <!-- 主体Main end -->
   </a-layout-content>
 </template>
@@ -312,7 +304,7 @@ export default {
     });
 
     //#region 删除老师
-
+    const { delSubmit,delCancel } = useDelTeacherList(useGetTeacherList);
     //#endregion
 
     //#region 添加老师
@@ -368,7 +360,8 @@ export default {
       showSizeChange,
       //#endregion
       // 删除教师
-      useDelTeacherList,
+      delSubmit,
+      delCancel,
       //#region 添加老师
       addLabelVisible,
       showModal,

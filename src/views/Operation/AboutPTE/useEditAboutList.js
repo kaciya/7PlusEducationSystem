@@ -62,11 +62,11 @@ export const useEditAboutList = (getAboutData) => {
             getAboutData();
           })
           .catch(err => {
-            console.log(err);
+            throw err;
           })
       })
       .catch(err => {
-        console.log(err);
+        throw err;
       })
   }
 

@@ -97,7 +97,7 @@ export const useEditTeacherList = options => {
           })
           .catch(err => {
             editModalLoad.value = false;
-            console.log(err);
+            throw err;
           });
       })
       .catch(error => {

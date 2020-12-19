@@ -24,7 +24,7 @@ export const useGetExerciseList = () => {
         }
       })
       .catch(err => {
-        console.log(err);
+        throw err;
       });
   };
 

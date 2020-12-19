@@ -42,7 +42,8 @@
           <template #operation="{ record }">
             <a-button
               type="primary"
-              class="operation-btn"
+              size="small"
+              class="operation-btn modify-btn"
               @click="editRouter(record.roleId)"
             >
               编辑
@@ -51,7 +52,9 @@
               title="确定删除此权限组?"
               @confirm="showDelConfirm(record.roleId)"
             >
-              <a-button type="danger" class="operation-btn"> 删除 </a-button>
+              <a-button type="danger" size="small" class="operation-btn">
+                删除
+              </a-button>
             </a-popconfirm>
           </template>
           <!-- 配置 operation 操作 end -->
@@ -86,7 +89,7 @@ import { useRolesColums } from "./useRolesColums";
 export default {
   // 组件
   components: {
-    Crumbs
+    Crumbs,
   },
 
   // setup响应api入口
@@ -141,7 +144,7 @@ export default {
   width: auto;
 }
 
-.operation-btn{
-  margin: 0 5px
+.operation-btn {
+  margin: 0 5px;
 }
 </style>

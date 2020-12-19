@@ -87,7 +87,7 @@ export const useAddTeacherList = options => {
           })
           .catch(err => {
             confirmLoading.value = false;
-            console.log(err);
+            throw err;
           });
       })
       .catch(error => {

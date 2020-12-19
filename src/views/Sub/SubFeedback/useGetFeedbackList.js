@@ -16,8 +16,6 @@ import {
 
 //#region 获取 用户提交 联系记录列表
 export const useGetFeedbackList = (feedbackTable) => {
-  //图片获取正则表达
-  const matchReg = ref("\\[(.*?)\\]");
 
   //#region 分页参数 
   const feedbackPagination = reactive({
@@ -41,13 +39,11 @@ export const useGetFeedbackList = (feedbackTable) => {
       .then(res => {
         //判断是否获取成功
         if (res.success) {
-          //遍历获取到的数据列表
-          res.data.records.forEach(element => {
-            //获取每个图片  使用正则表达式将图片地址 切割出 重新存入图片参数中
-            element.picUrls = element.picUrls.match(matchReg.value)[1];
-          });
           //将获取到的数据列表存入变量中
           feedbackTable.data = res.data.records;
+          res.data.records.forEach(element => {
+              console.log(typeof(element.picUrls) + " " + element.picUrls);
+          });
           //获取分页总数量
           feedbackPagination.total = res.data.total;
         }

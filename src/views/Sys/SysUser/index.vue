@@ -113,7 +113,8 @@
             <!-- 密码重置 -->
             <a-button
               type="primary"
-              class="operation-btn"
+              size="small"
+              class="operation-btn modify-btn"
               @click="resetUserPwd(record.userId)"
             >
               密码重置
@@ -125,7 +126,9 @@
                 <p class="popconfirm-text-top">确定删除该操作员?</p>
                 <p class="popconfirm-text-bottom">删除后无法恢复数据</p>
               </template>
-              <a-button type="danger" class="operation-btn"> 删除 </a-button>
+              <a-button type="danger" size="small" class="operation-btn">
+                删除
+              </a-button>
             </a-popconfirm>
             <!-- 删除按钮 end -->
           </template>
@@ -168,7 +171,7 @@ import { useGetUserPermissions } from "./useGetUserPermissions";
 
 export default {
   components: {
-    Crumbs
+    Crumbs,
   },
 
   // setup响应api入口
@@ -176,7 +179,9 @@ export default {
     //#region 获取 导入方法中返回的 子方法和参数
     const { sysUsersTable } = useUserColums();
 
-    const { getUserList , userPagination , pageChange } = useGetUserList(sysUsersTable);
+    const { getUserList, userPagination, pageChange } = useGetUserList(
+      sysUsersTable
+    );
 
     const { changeStatus } = useEditUserStatus(getUserList);
 
@@ -239,7 +244,7 @@ export default {
       //重置账号密码回调
       resetUserPwd,
       //点击下一页方法
-      pageChange
+      pageChange,
     };
     //#endregion
   },

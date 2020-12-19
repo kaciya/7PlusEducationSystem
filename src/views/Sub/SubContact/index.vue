@@ -69,12 +69,18 @@
 
           <!-- 操作 -->
           <template #operation="{ record }">
-            <a-button type="primary" v-if="record.state == 1" disabled>
+            <a-button
+              type="primary"
+              size="small"
+              v-if="record.state == 1"
+              disabled
+            >
               <LineOutlined />
             </a-button>
 
             <a-button
               type="primary"
+              size="small"
               v-else-if="record.state == 0"
               @click="editManage(record.id)"
             >
@@ -129,7 +135,13 @@ export default {
   // setup响应api入口
   setup() {
     //#region 获取 导入方法中返回的 子方法和参数
+
+    // 获取  用户提交列表表格对象
     const { contactTable } = useContactColums();
+
+    // 获取 
+    //分页参数
+    //渲染列表数据方法 
 
     const { contactPagination, getContactData, pageChange } = useGetContactList(
       contactTable
