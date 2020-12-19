@@ -1,5 +1,5 @@
 import { reactive } from "vue";
-export const useNoticeGetColumns = () => {
+export const useGetNoticeColumns = () => {
   // 表格列的配置
   const columns = reactive([
     {
@@ -32,6 +32,7 @@ export const useNoticeGetColumns = () => {
       slots: { customRender: "operation" }
     }
   ]);
+
   return {
     columns
   };

@@ -1,64 +1,48 @@
-import { onMounted, ref } from "vue";
-// 导入get请求方法
+import { onMounted, reactive } from "vue";
+// 导入请求方法
 import { httpGet } from "@/utils/http";
 // 导入接口
 import topic from "@/api/topicAPI";
 
 export const useGetArticle = id => {
-  // 用户头像图片地址
-  const publisherAvatar = ref("");
-  // 用户名
-  const publisherUserName = ref("");
-  // 创建时间
-  const publisherCreateTime = ref("");
-  // ip地址
-  const publisherIp = ref("");
-  // 文章分类
-  const publisherCategory = ref("");
-  // 文章收藏数量
-  const publisherFavoriteCount = ref("");
-  // 文章阅读数量
-  const publisherReadCount = ref("");
-  // 文章内容
-  const publisherContent = ref("");
-  // 文章评论数量
-  const publisherCommentCount = ref("");
+  const publisher = reactive({
+    avatar: "", // 用户头像图片地址
+    userName: "", // 用户名
+    createTime: "", // 创建时间
+    ip: "", // ip地址
+    category: "", // 文章分类
+    favouriteCount: "", // 文章收藏数量
+    readCount: "", // 文章阅读数量
+    content: "", // 文章内容
+    commentCount: "" // 文章评论数量
+  });
+
   // 获取文章详情
-  const getArticle = () => {
-    httpGet(topic.getArticle + "/" + id)
+  const getArticleDetails = () => {
+    httpGet(topic.GetArticle + "/" + id)
       .then(res => {
         let { data } = res;
-        if (!data.avatar) {
-          data.avatar =
-            "https://axure-file.lanhuapp.com/722bc281-5269-4069-b62e-36a9c6d9ac14__91b179a0b2490fafbecb391f4ae79eba.png";
-        }
-        publisherAvatar.value = data.avatar;
-        publisherUserName.value = data.userName;
-        publisherCreateTime.value = data.createTime;
-        publisherIp.value = data.ip;
-        publisherCategory.value = data.category;
-        publisherFavoriteCount.value = data.favoriteCount;
-        publisherReadCount.value = data.readCount;
-        publisherContent.value = data.content;
-        publisherCommentCount.value = data.commentCount;
+        publisher.avatar = data.avatar;
+        publisher.userName = data.userName;
+        publisher.createTime = data.createTime;
+        publisher.ip = data.ip;
+        publisher.category = data.category;
+        publisher.favouriteCount = data.favoriteCount;
+        publisher.readCount = data.readCount;
+        publisher.content = data.content;
+        publisher.commentCount = data.commentCount;
       })
       .catch(err => {
         console.log(err);
       });
   };
+
   onMounted(() => {
-    getArticle();
+    getArticleDetails();
   });
+
   return {
-    getArticle,
-    publisherAvatar,
-    publisherUserName,
-    publisherCreateTime,
-    publisherIp,
-    publisherCategory,
-    publisherFavoriteCount,
-    publisherReadCount,
-    publisherContent,
-    publisherCommentCount
+    getArticleDetails,
+    publisher
   };
 };
