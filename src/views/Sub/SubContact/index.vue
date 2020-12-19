@@ -4,34 +4,28 @@
     <Crumbs :crumbName="[{ name: '用户提交' }, { name: '联系记录' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
-    <div
-      :style="{
-        padding: '20px',
-        background: '#fff',
-        minHeight: '93%'
-      }"
-    >
+    <a-card style="min-height: 93%">
       <!-- 日期 账号名称 查询内容 -->
       <a-form>
         <a-row>
-          <a-col :span="7" :offset="1">
+          <a-col :span="9" :offset="1">
             <a-form-item label="时间范围">
               <a-range-picker
                 :show-time="{ format: 'HH:mm:ss' }"
                 format="YYYY-MM-DD HH:mm:ss"
-                v-model:value="dateModel.date"
+                v-model:value="headerData.dateModel"
                 :placeholder="['开始日期', '结束日期']"
-                @change="dateChange"
-                @ok="dateChangeOk"
+                @change="changeDate"
+                @ok="changeDateConfirm"
               />
             </a-form-item>
           </a-col>
-          <a-col :span="5">
+          <a-col :span="5" :offset="1">
             <a-form-item label="状态">
               <a-select
                 style="width: 120px"
-                v-model:value="selectModel"
-                @change="selectChange"
+                v-model:value="headerData.selectModel"
+                @change="changeStatus"
               >
                 <a-select-option value="2"> 全部 </a-select-option>
                 <a-select-option value="1"> 已解决 </a-select-option>
@@ -39,15 +33,9 @@
               </a-select>
             </a-form-item>
           </a-col>
-          <a-col :span="4" :offset="7">
-            <a-button style="margin: 0 10px; float: right" @click="resetClick">
-              重置
-            </a-button>
-            <a-button
-              type="primary"
-              style="margin: 0 10px; float: right"
-              @click="searchClick"
-            >
+          <a-col :span="4" :offset="4">
+            <a-button class="header-btn" @click="resetClick"> 重置 </a-button>
+            <a-button type="primary" class="header-btn" @click="searchClick">
               查询
             </a-button>
           </a-col>
@@ -55,70 +43,50 @@
       </a-form>
       <!-- 日期 账号名称 查询内容 end-->
 
-      <!-- 权限组列表上标题 -->
-      <a-row>
-        <a-col :span="2">
-          <h3 style="font-weight: 600">数据列表</h3>
-        </a-col>
-      </a-row>
-      <!-- 权限组列表上标题 end -->
+      <!-- 联系记录列表card -->
+      <a-card title="数据列表">
+        <!-- 数据列表 -->
+        <a-table
+          bordered
+          :columns="contactTable.colums"
+          :data-source="contactTable.data"
+          row-Key="id"
+          :pagination="contactPagination"
+          @change="pageChange"
+        >
+          <!-- 列表索引 -->
+          <template #index="{ index }">
+            {{ index + 1 }}
+          </template>
+          <!-- 列表索引 end -->
 
-      <!-- 数据列表 -->
-      <a-table
-        :rowKey="record => record.id"
-        :columns="contactTable.contactColums"
-        :data-source="contactTable.contactData"
-        :pagination="false"
-        bordered
-      >
-        <!-- 列表索引 -->
-        <template #index="{ index }">
-          {{ index + 1 }}
-        </template>
-        <!-- 列表索引 end -->
+          <!-- 状态 -->
+          <template #state="{ record }">
+            <a-tag color="blue" v-if="record.state == 1"> 已解决 </a-tag>
+            <a-tag color="cyan" v-else-if="record.state == 0"> 未解决 </a-tag>
+          </template>
+          <!-- 状态 end -->
 
-        <!-- 状态 -->
-        <template #state="{ record }">
-          <span v-if="record.state == 1"> 已解决 </span>
-          <span v-else-if="record.state == 0"> 未解决 </span>
-        </template>
-        <!-- 状态 end -->
+          <!-- 操作 -->
+          <template #operation="{ record }">
+            <a-button type="primary" v-if="record.state == 1" disabled>
+              <LineOutlined />
+            </a-button>
 
-        <!-- 操作 -->
-        <template #operation="{ record }">
-          <a-tag color="blue" v-if="record.state == 1">
-            <LineOutlined />
-          </a-tag>
-          <a-tag
-            color="blue"
-            v-else-if="record.state == 0"
-            style="cursor: pointer"
-            @click="manageClick(record.id)"
-          >
-            处理
-          </a-tag>
-        </template>
-        <!-- 操作 end -->
-      </a-table>
-      <!-- 数据列表 end -->
-      <!-- 分页 -->
-      <a-row>
-        <a-col :span="24">
-          <a-pagination
-            show-size-changer
-            v-model:current="pageInfo.pageNum"
-            v-model:pageSize="pageInfo.pageSize"
-            :page-size-options="pageInfo.pageSizeOptions"
-            :defaultPageSize="10"
-            :total="pageInfo.total"
-            @change="pageChange"
-            @showSizeChange="pageSizeChange"
-            style="float: right; margin: 10px 0"
-          />
-        </a-col>
-      </a-row>
-      <!-- 分页 end -->
-    </div>
+            <a-button
+              type="primary"
+              v-else-if="record.state == 0"
+              @click="editManage(record.id)"
+            >
+              处理
+            </a-button>
+          </template>
+          <!-- 操作 end -->
+        </a-table>
+        <!-- 数据列表 end -->
+      </a-card>
+      <!-- 联系记录列表card end -->
+    </a-card>
     <!-- 主体Main end -->
   </a-layout-content>
 </template>
@@ -130,14 +98,23 @@ import Crumbs from "@/components/Crumbs";
 // 引入 钩子函数
 import { onMounted } from "vue";
 
-//导入 useSysContactList 文件 获取相应的方法
-import { showContactList } from "./useSubContactList";
+// 获取 联系记录 后台请求的 列表数据
+import { useGetContactList } from "./useGetContactList";
 
-//导入 useSysContactHeader 文件 获取相应方法
-import { SubContactHeader } from "./useSubContactHeader";
+// 获取 联系记录 顶部 日期 和 选择器 方法
+import { useContactHeader } from "./useContactHeader";
 
-//导入 useSysContactColumns 文件 获取相应的列表项
-import { useSubContactColums } from "./useSubContactColums";
+// 定义 联系记录 列表项
+import { useContactColums } from "./useContactColums";
+
+// 获取 联系记录 查询方法
+import { useSearchContact } from "./useSearchContact";
+
+// 获取 联系记录 重置方法
+import { useResetContact } from "./useResetContact";
+
+// 获取 联系记录 处理操作方法
+import { useEditContactManage } from "./useEditContactManage";
 
 //导入 图标样式
 import { LineOutlined } from "@ant-design/icons-vue";
@@ -146,71 +123,75 @@ export default {
   // 使用组件
   components: {
     Crumbs,
-    LineOutlined
+    LineOutlined,
   },
 
+  // setup响应api入口
   setup() {
-    //获取 方法中的 参数
-    let { contactTable } = useSubContactColums();
+    //#region 获取 导入方法中返回的 子方法和参数
+    const { contactTable } = useContactColums();
 
-    let {
-      pageInfo,
-      getContactData,
-      pageChange,
-      manageClick,
-      pageSizeChange
-    } = showContactList(contactTable);
+    const { contactPagination, getContactData, pageChange } = useGetContactList(
+      contactTable
+    );
 
-    let {
-      dateModel,
-      selectModel,
-      dateChangeOk,
-      dateChange,
-      selectChange,
-      resetClick,
-      searchClick
-    } = SubContactHeader(getContactData);
+    const {
+      headerData,
+      changeDateConfirm,
+      changeDate,
+      changeStatus,
+    } = useContactHeader();
 
-    //在Mounted 获取列表
+    const { searchClick } = useSearchContact(getContactData, headerData);
+
+    const { resetClick } = useResetContact(getContactData, headerData);
+
+    const { editManage } = useEditContactManage();
+    //#endregion
+
+    //#region 在Mounted 获取列表
     onMounted(() => {
-      getContactData({});
+      getContactData();
     });
+    //#endregion
 
-    //返回参数
+    //#region 返回参数
     return {
       //用户提交列表表格对象
       contactTable,
-      //日期选择器选中时间
-      dateModel,
-      //默认选择项
-      selectModel,
-      //分页数据对象
-      pageInfo,
+      //顶部 日期 与 状态 绑定数据对象
+      headerData,
+      //分页参数
+      contactPagination,
       //渲染列表数据方法
       getContactData,
-      //分页改变页数方法
-      pageChange,
-      //每页显示多少条数据的方法
-      pageSizeChange,
       //选择项改变方法
-      selectChange,
+      changeStatus,
       //日期选择器改变方法
-      dateChange,
+      changeDate,
       //日期选择器选中方法
-      dateChangeOk,
+      changeDateConfirm,
       //重置 日期范围 和状态方法
       resetClick,
       //查询 日期范围 和状态匹配列表项方法
       searchClick,
       //点击操作中的处理方法
-      manageClick
+      editManage,
+      //点击下一页方法
+      pageChange,
     };
-  }
+    //#endregion
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .ant-btn {
   width: auto;
+}
+
+.header-btn {
+  margin: 3px 10px;
+  float: right;
 }
 </style>

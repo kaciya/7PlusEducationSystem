@@ -4,33 +4,22 @@
     <Crumbs :crumbName="[{ name: '权限管理' }, { name: '权限组' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
-    <div
-      :style="{
-        padding: '20px',
-        background: '#fff',
-        minHeight: '93%'
-      }"
-    >
-      <!-- 权限组列表上标题 -->
-      <a-row>
-        <a-col :span="2">
-          <h3 style="font-weight: 600">标签列表</h3>
-        </a-col>
-        <a-col :span="1" offset="20">
-          <a-button type="primary" @click="handleAddRouter"> 添加 </a-button>
-        </a-col>
-      </a-row>
-      <!-- 权限组列表上标题 end -->
-
-      <!-- 权限组内容 -->
-      <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
+    <a-card style="min-height: 93%">
+      <!-- 权限组card -->
+      <a-card title="标签列表">
+        <!-- 权限组card 右侧内容 -->
+        <template #extra>
+          <a-button type="primary" @click="addRouter"> 添加 </a-button>
+        </template>
+        <!-- 权限组card 右侧内容 end -->
         <!-- 标签列表 -->
         <a-table
-          :rowKey="record => record.roleId"
-          :columns="rolesTable.rolesColums"
-          :data-source="rolesTable.rolesData"
-          :pagination="false"
           bordered
+          :columns="rolesTable.colums"
+          :data-source="rolesTable.data"
+          row-Key="roleId"
+          :pagination="rolePagination"
+          @change="pageChange"
         >
           <!-- 配置 # index 索引 -->
           <template #index="{ index }">
@@ -53,41 +42,24 @@
           <template #operation="{ record }">
             <a-button
               type="primary"
-              style="margin: 0 5px"
-              @click="handleEditRouter(record.roleId)"
+              class="operation-btn"
+              @click="editRouter(record.roleId)"
             >
               编辑
             </a-button>
-            <a-button
-              type="danger"
-              style="margin: 0 5px"
-              @click="showDelConfirm(record.roleId)"
-              >删除
-            </a-button>
+            <a-popconfirm
+              title="确定删除此权限组?"
+              @confirm="showDelConfirm(record.roleId)"
+            >
+              <a-button type="danger" class="operation-btn"> 删除 </a-button>
+            </a-popconfirm>
           </template>
           <!-- 配置 operation 操作 end -->
         </a-table>
         <!-- 标签列表 end -->
-        <!-- 分页 -->
-        <a-row>
-          <a-col :span="24">
-            <a-pagination
-              show-size-changer
-              v-model:current="pageInfo.pageNum"
-              v-model:pageSize="pageInfo.pageSize"
-              :page-size-options="pageInfo.pageSizeOptions"
-              :defaultPageSize="10"
-              :total="pageInfo.total"
-              @change="pageChange"
-              @showSizeChange="pageSizeChange"
-              style="float: right; margin: 10px 0"
-            />
-          </a-col>
-        </a-row>
-        <!-- 分页 end -->
-      </div>
-      <!-- 权限组内容 end -->
-    </div>
+      </a-card>
+      <!-- 权限组card end -->
+    </a-card>
     <!-- 主体Main end -->
   </a-layout-content>
 </template>
@@ -96,23 +68,20 @@
 // 引入面包屑组件
 import Crumbs from "@/components/Crumbs";
 
-//导入图标组件
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons-vue";
-
 // 引入 钩子函数
 import { onMounted } from "vue";
 
-//导入rolesList中返回的数据
-import { showRoleList } from "./useSysRolesList";
+// 获取 权限组 后台请求的 列表数据
+import { useGetRolesList } from "./useGetRolesList";
 
-//导入rolesDel中返回的数据
-import { removeSysRoles } from "./useSysRolesDel";
+// 获取 权限组 删除方法
+import { useDelRoles } from "./useDelRoles";
 
-//导入rolesStatus中返回的数据
-import { updateRoleStatus } from "./useSysRoleStatusEdit";
+// 获取 权限组 状态更改方法
+import { useEditRoleStatus } from "./useEditRoleStatus";
 
-//导入useSysRolesColums中返回的列表数据
-import { useSysRolesColums } from "./useSysRolesColums";
+// 获取 权限组 列表项
+import { useRolesColums } from "./useRolesColums";
 
 export default {
   // 组件
@@ -120,58 +89,59 @@ export default {
     Crumbs
   },
 
+  // setup响应api入口
   setup() {
-    //通过useSysRolesColums方法获取 列表数据
-    let { rolesTable } = useSysRolesColums();
+    //#region 获取 导入方法中返回的 子方法和参数
+    const { rolesTable } = useRolesColums();
 
-    //通过showRoleList方法 渲染列表和分页数据
-    let {
-      pageInfo,
+    const {
+      rolePagination,
+      getRolesData,
       pageChange,
-      getSysRolesData,
-      pageSizeChange,
-      handleAddRouter,
-      handleEditRouter
-    } = showRoleList(rolesTable);
+      addRouter,
+      editRouter,
+    } = useGetRolesList(rolesTable);
 
-    //通过removeSysRoles获取删除模态框
-    let { showDelConfirm } = removeSysRoles(getSysRolesData);
+    const { showDelConfirm } = useDelRoles(getRolesData);
 
-    //通过updateRoleStatus获取更改权限组启用状态方法
-    let { statusChange } = updateRoleStatus(getSysRolesData);
+    const { statusChange } = useEditRoleStatus(getRolesData);
+    //#endregion
 
     //在Mounted 获取列表
     onMounted(() => {
-      getSysRolesData();
+      getRolesData();
     });
 
-    //返回参数
+    //#region 返回参数
     return {
       //权限组列表
       rolesTable,
-      //分页数据对象
-      pageInfo,
+      //分页参数
+      rolePagination,
       //渲染权限组列表方法
-      getSysRolesData,
-      //点击下一页方法
-      pageChange,
-      //每页显示多少条数据的方法
-      pageSizeChange,
+      getRolesData,
       //显示删除模态框方法
       showDelConfirm,
       //更改用户状态方法
       statusChange,
       //权限组添加路由跳转
-      handleAddRouter,
+      addRouter,
       //权限组编辑路由跳转
-      handleEditRouter
+      editRouter,
+      //点击下一页方法
+      pageChange,
     };
-  }
+    //#endregion
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .ant-btn {
   width: auto;
+}
+
+.operation-btn{
+  margin: 0 5px
 }
 </style>

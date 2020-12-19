@@ -1,51 +1,44 @@
 //导入 reactive 对象
-import { reactive } from "vue";
+import {
+  reactive
+} from "vue";
 
 //#region 列表参数
-export const useSubContactColums = () => {
+export const useContactColums = () => {
   //创建表格项
   const contactTable = reactive({
-    contactColums: [
-      {
-        title: "索引",
-        align: "center",
+    colums: [{
+        title: "序号",
         key: "index",
         slots: {
           customRender: "index"
         },
-        align: "center"
       },
       {
         title: "姓名",
-        align: "center",
         dataIndex: "name"
       },
       {
         title: "邮箱",
-        align: "center",
         dataIndex: "email"
       },
       {
         title: "电话",
-        align: "center",
         dataIndex: "mobile"
       },
       {
         title: "QQ",
-        align: "center",
         dataIndex: "qq"
       },
       {
         title: "内容",
-        align: "center",
         dataIndex: "content"
       },
       {
         title: "提交时间",
-        align: "center",
         dataIndex: "createTime",
         //默认降序排列
-        defaultSortOrder: "descend",
+        defaultSortOrder: 'descend',
         //日期排序
         sorter: (a, b) => {
           let aTime = new Date(a.createTime);
@@ -55,12 +48,10 @@ export const useSubContactColums = () => {
       },
       {
         title: "处理时间",
-        align: "center",
         dataIndex: "updateTime"
       },
       {
         title: "状态",
-        align: "center",
         key: "state",
         slots: {
           customRender: "state"
@@ -68,7 +59,6 @@ export const useSubContactColums = () => {
       },
       {
         title: "操作",
-        align: "center",
         key: "operation",
         slots: {
           customRender: "operation"
@@ -76,7 +66,7 @@ export const useSubContactColums = () => {
       }
     ],
     //列表数据
-    contactData: []
+    data: []
   });
 
   //返回数据

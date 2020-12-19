@@ -4,33 +4,27 @@
     <Crumbs :crumbName="[{ name: '用户提交' }, { name: '反馈列表' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
-    <div
-      :style="{
-        padding: '20px',
-        background: '#fff',
-        minHeight: '93%'
-      }"
-    >
+    <a-card style="min-height: 93%">
       <!-- 日期 账号名称 查询内容 -->
       <a-form>
         <a-row>
-          <a-col :span="7" :offset="1">
+          <a-col :span="9" :offset="1">
             <a-form-item label="时间范围">
               <a-range-picker
                 :show-time="{ format: 'HH:mm:ss' }"
                 format="YYYY-MM-DD HH:mm:ss"
-                v-model:value="dateModel.date"
+                v-model:value="headerData.dateModel"
                 :placeholder="['开始日期', '结束日期']"
-                @change="dateChange"
-                @ok="dateChangeOk"
+                @change="changeDate"
+                @ok="changeDateConfirm"
               />
             </a-form-item>
           </a-col>
-          <a-col :span="5">
+          <a-col :span="5" :offset="1">
             <a-form-item label="状态">
               <a-select
-                v-model:value="selectModel"
-                @change="selectChange"
+                v-model:value="headerData.selectModel"
+                @change="changeStatus"
                 style="width: 120px"
               >
                 <a-select-option value="2"> 全部 </a-select-option>
@@ -39,13 +33,13 @@
               </a-select>
             </a-form-item>
           </a-col>
-          <a-col :span="4" :offset="7">
-            <a-button style="margin: 0 10px; float: right" @click="resetClick">
+          <a-col :span="4" :offset="4">
+            <a-button class="header-btn" @click="resetClick">
               重置
             </a-button>
             <a-button
               type="primary"
-              style="margin: 0 10px; float: right"
+              class="header-btn"
               @click="searchClick"
             >
               查询
@@ -55,21 +49,16 @@
       </a-form>
       <!-- 日期 账号名称 查询内容 end-->
 
-      <!-- 权限组列表上标题 -->
-      <a-row>
-        <a-col :span="2">
-          <h3 style="font-weight: 600">数据列表</h3>
-        </a-col>
-      </a-row>
-      <!-- 权限组列表上标题 end -->
-
+      <!-- 反馈列表card -->
+      <a-card title="数据列表">
       <!-- 数据列表 -->
       <a-table
-        :rowKey="record => record.id"
-        :columns="feedbackTable.feedbackColums"
-        :data-source="feedbackTable.feedbackData"
-        :pagination="false"
         bordered
+        :columns="feedbackTable.colums"
+        :data-source="feedbackTable.data"
+        row-Key="id"
+        :pagination="feedbackPagination"
+        @change="pageChange"
       >
         <!-- 列表索引 -->
         <template #index="{ index }">
@@ -85,71 +74,62 @@
 
         <!-- 状态 -->
         <template #status="{ record }">
-          <span v-if="record.status == 1"> 已解决 </span>
-          <span v-else-if="record.status == 0"> 未解决 </span>
+          <a-tag color="blue" v-if="record.status == 1"> 已解决 </a-tag>
+          <a-tag color="cyan" v-else-if="record.status == 0"> 未解决 </a-tag>
         </template>
         <!-- 状态 end -->
 
         <!-- 操作 -->
         <template #operation="{ record }">
-          <a-tag color="blue" v-if="record.status == 1">
+          <a-button type="primary" v-if="record.status == 1" disabled>
             <LineOutlined />
-          </a-tag>
-          <a-tag
-            color="blue"
+          </a-button>
+
+          <a-button
+            type="primary"
             v-else-if="record.status == 0"
-            @click="manageClick(record.id)"
-            style="cursor: pointer"
+            @click="editManage(record.id)"
           >
             处理
-          </a-tag>
+          </a-button>
         </template>
         <!-- 操作 end -->
       </a-table>
       <!-- 数据列表 end -->
-      <!-- 分页 -->
-      <a-row>
-        <a-col :span="24">
-          <a-pagination
-            show-size-changer
-            v-model:current="pageInfo.pageNum"
-            v-model:pageSize="pageInfo.pageSize"
-            :page-size-options="pageInfo.pageSizeOptions"
-            :defaultPageSize="10"
-            :total="pageInfo.total"
-            @change="pageChange"
-            @showSizeChange="pageSizeChange"
-            style="float: right; margin: 10px 0"
-          />
-        </a-col>
-      </a-row>
-      <!-- 分页 end -->
-    </div>
+      </a-card>
+      <!-- 反馈列表card end -->
+    </a-card>
     <!-- 主体Main end -->
   </a-layout-content>
 </template>
 
 <script>
-// 引入面包屑组件
+// 引入 面包屑组件
 import Crumbs from "@/components/Crumbs";
 
 // 引入 钩子函数
 import { onMounted } from "vue";
 
-//导入 useSubFeedbackList 文件 获取相应的方法
-import { showFeedbackList } from "./useSubFeedbackList";
+// 获取 反馈列表 后台请求的 列表数据
+import { useGetFeedbackList } from "./useGetFeedbackList";
 
-//导入 useSubFeedbackHeader 文件 获取相应的方法
-import { SubFeedbackHeader } from "./useSubFeedbackHeader";
+// 获取 反馈列表 顶部 日期 和 选择器 方法
+import { useFeedbackHeader } from "./useFeedbackHeader";
 
-//导入 useSubFeedbackColums 文件 获取相应的列表数据
-import { useSubFeedbackColums } from "./useSubFeedbackColums";
+// 定义 反馈列表 列表项
+import { useFeedbackColums } from "./useFeedbackColums";
+
+// 获取 反馈列表 查询方法
+import { useSearchFeedback } from "./useSearchFeedback";
+
+// 获取 反馈列表 重置方法
+import { useResetFeedback } from "./useResetFeedback";
+
+// 获取 反馈列表 处理操作方法
+import { useEditFeedbackManage } from "./useEditFeedbackManage";
 
 //导入 图标样式
 import { LineOutlined } from "@ant-design/icons-vue";
-
-//导入 reactive 对象
-import { reactive, ref } from "vue";
 
 export default {
   // 使用组件
@@ -158,69 +138,73 @@ export default {
     LineOutlined
   },
 
-  //setup 编写 主要内容
+  // setup响应api入口
   setup() {
-    //获取 useSubFeedbackColums 方法中的 参数
-    let { feedbackTable } = useSubFeedbackColums();
+    //#region 获取 导入方法中返回的 子方法和参数
+    const { feedbackTable } = useFeedbackColums();
 
-    //获取 showFeedbackList 方法中的 参数
-    let {
-      pageInfo,
+    const {
+      feedbackPagination,
       getFeedbackData,
-      pageChange,
-      pageSizeChange,
-      manageClick
-    } = showFeedbackList(feedbackTable);
+      pageChange
+    } = useGetFeedbackList(feedbackTable);
 
-    //获取 SubFeedbackHeader 方法中的 参数
-    let {
-      dateModel,
-      selectModel,
-      selectChange,
-      dateChange,
-      dateChangeOk,
-      resetClick,
-      searchClick
-    } = SubFeedbackHeader(getFeedbackData);
+    const {
+      headerData,
+      changeStatus,
+      changeDate,
+      changeDateConfirm,
+    } = useFeedbackHeader();
+
+    const { searchClick } = useSearchFeedback(getFeedbackData, headerData);
+
+    const { resetClick } = useResetFeedback(getFeedbackData, headerData);
+
+    const { editManage } = useEditFeedbackManage();
+    //#endregion
 
     //在Mounted 获取列表
     onMounted(() => {
-      getFeedbackData({});
+      getFeedbackData();
     });
 
-    //返回参数
+    //#region 返回参数
     return {
       //反馈列表
       feedbackTable,
-      //分页数据对象
-      pageInfo,
-      //点击下一页方法
-      pageChange,
-      //每页显示多少条数据的方法
-      pageSizeChange,
-      //日期值
-      dateModel,
+      //顶部 日期 与 状态 绑定数据对象
+      headerData,
+      //分页参数
+      feedbackPagination,
       //日期选择器改变方法
-      dateChange,
+      changeDate,
       //日期范围确定
-      dateChangeOk,
-      //默认选择项
-      selectModel,
+      changeDateConfirm,
       //渲染表格数据方法
       getFeedbackData,
       //选择项改变方法
-      selectChange,
+      changeStatus,
       //重置状态 和 时间范围
       resetClick,
       //查询列表
-      searchClick
+      searchClick,
+      //点击操作中的处理方法
+      editManage,
+      //点击下一页方法
+      pageChange,
     };
-  }
+    //#endregion
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .ant-btn {
   width: auto;
+}
+
+.header-btn{
+  margin: 3px 10px;
+  float: right
 }
 </style>

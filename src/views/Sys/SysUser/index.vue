@@ -4,111 +4,101 @@
     <Crumbs :crumbName="[{ name: '权限管理' }, { name: '账号管理' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
-    <div
-      :style="{
-        padding: '20px',
-        background: '#fff',
-        minHeight: '93%'
-      }"
-    >
-      <!-- 权限管理列表上标题 -->
-      <a-row>
-        <a-col :span="2">
-          <h3 style="font-weight: 600">账号列表</h3>
-        </a-col>
-        <a-col :span="2" offset="20">
-          <a-button type="primary" @click="showAddModal">
-            添加账号
-          </a-button>
-        </a-col>
-      </a-row>
-      <!-- 权限管理列表上标题 end -->
-
-      <!-- 添加账号 模态框表单 -->
-      <a-modal
-        title="添加账号"
-        v-model:visible="addUserVisible"
-        :confirm-loading="confirmLoading"
-        :maskClosable="false"
-      >
-        <!-- 自定义 页脚 -->
-        <template #footer>
-          <span style="float:left; margin-top:5px;color:#c5c5c5;"
-            >创建子账号时默认密码为：QJ123.</span
-          >
-          <a-button key="back" @click="handleAddCancel"> 取消 </a-button>
-          <a-button
-            key="submit"
-            type="primary"
-            @click="handleAddOk(getSysUserList)"
-          >
-            确定
-          </a-button>
+    <a-card style="min-height: 93%">
+      <!-- 权限管理card -->
+      <a-card title="账号列表">
+        <!-- 权限组card 右侧内容 -->
+        <template #extra>
+          <a-button type="primary" @click="showAddModal"> 添加账号 </a-button>
         </template>
-        <!-- 自定义 页脚end -->
+        <!-- 权限组card 右侧内容 end -->
 
-        <!-- 添加账号表单 -->
-        <a-form
-          v-model:model="sysUserForm"
-          :rules="sysUserRules"
-          ref="addUserFormRef"
+        <!-- 添加账号 模态框表单 -->
+        <a-modal
+          title="添加账号"
+          v-model:visible="addUserVisible"
+          :confirm-loading="confirmLoading"
+          :maskClosable="false"
         >
-          <a-form-item
-            label="操作员名称"
-            required
-            name="realName"
-            :wrapper-col="{ span: 24 }"
-          >
-            <a-input
-              v-model:value="sysUserForm.realName"
-              placeholder="请填写操作员名称"
-              size="large"
-            />
-          </a-form-item>
-          <a-form-item
-            label="账号"
-            required
-            name="username"
-            :wrapper-col="{ span: 24 }"
-          >
-            <a-input
-              v-model:value="sysUserForm.username"
-              placeholder="请填写登录账号"
-              size="large"
-            />
-          </a-form-item>
-          <a-form-item
-            label="权限组"
-            :wrapper-col="{ span: 24 }"
-            name="roleIds"
-          >
-            <a-select
-              placeholder="请选择权限组"
-              v-model:value="sysUserForm.roleIds"
-              size="large"
+          <!-- 自定义 页脚 -->
+          <template #footer>
+            <span style="float: left; margin-top: 5px; color: #c5c5c5"
+              >创建子账号时默认密码为：QJ123.</span
             >
-              <a-select-option
-                v-for="item in RolesPermissionsList.data"
-                :key="item.roleId"
-                :value="item.roleId"
+            <a-button key="back" @click="addUserCancel"> 取消 </a-button>
+            <a-button
+              key="submit"
+              type="primary"
+              @click="addUserConfirm(getSysUserList)"
+            >
+              确定
+            </a-button>
+          </template>
+          <!-- 自定义 页脚end -->
+
+          <!-- 添加账号表单 -->
+          <a-form
+            :model="sysUserForm"
+            :rules="sysUserRules"
+            ref="addUserFormRef"
+          >
+            <a-form-item
+              label="操作员名称"
+              required
+              name="realName"
+              :hasFeedback="true"
+              :wrapper-col="{ span: 24 }"
+            >
+              <a-input
+                v-model:value="sysUserForm.realName"
+                placeholder="请填写操作员名称"
+                size="large"
+              />
+            </a-form-item>
+            <a-form-item
+              label="账号"
+              required
+              name="username"
+              :hasFeedback="true"
+              :wrapper-col="{ span: 24 }"
+            >
+              <a-input
+                v-model:value="sysUserForm.username"
+                placeholder="请填写登录账号"
+                size="large"
+              />
+            </a-form-item>
+            <a-form-item
+              label="权限组"
+              name="roleIds"
+              :wrapper-col="{ span: 24 }"
+            >
+              <a-select
+                placeholder="请选择权限组"
+                v-model:value="sysUserForm.roleIds"
+                size="large"
               >
-                {{ item.roleName }}
-              </a-select-option>
-            </a-select>
-          </a-form-item>
-        </a-form>
-        <!-- 添加账号表单 end -->
-      </a-modal>
-      <!-- 添加账号 模态框表单 end -->
-      <!-- 权限管理内容 -->
-      <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
+                <a-select-option
+                  v-for="item in rolesPermissionsList.data"
+                  :key="item.roleId"
+                  :value="item.roleId"
+                >
+                  {{ item.roleName }}
+                </a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-form>
+          <!-- 添加账号表单 end -->
+        </a-modal>
+        <!-- 添加账号 模态框表单 end -->
         <!-- 账号列表 -->
         <a-table
-          :rowKey="record => record.userId"
-          :columns="sysUsersTable.sysUsersColums"
-          :data-source="sysUsersTable.sysUsersData"
-          :pagination="false"
           bordered
+          :columns="sysUsersTable.colums"
+          :data-source="sysUsersTable.data"
+          row-Key="userId"
+          :pagination="userPagination"
+          @change="pageChange"
         >
           <template #index="{ index }">
             {{ index + 1 }}
@@ -116,51 +106,34 @@
           <template #status="{ record }">
             <a-switch
               :checked="record.status == 1 ? true : false"
-              @click="statusChange(record.userId)"
+              @click="changeStatus(record.userId)"
             />
           </template>
           <template #operation="{ record }">
             <!-- 密码重置 -->
             <a-button
               type="primary"
-              style="margin: 0 5px"
-              @click="handleResetPwd(record.userId)"
+              class="operation-btn"
+              @click="resetUserPwd(record.userId)"
             >
               密码重置
             </a-button>
             <!-- 密码重置 end -->
             <!-- 删除按钮 -->
-            <a-button
-              type="danger"
-              style="margin: 0 5px"
-              @click="showDelConfirm(record.userId)"
-            >
-              删除
-            </a-button>
+            <a-popconfirm @confirm="showDelConfirm(record.userId)">
+              <template #title>
+                <p class="popconfirm-text-top">确定删除该操作员?</p>
+                <p class="popconfirm-text-bottom">删除后无法恢复数据</p>
+              </template>
+              <a-button type="danger" class="operation-btn"> 删除 </a-button>
+            </a-popconfirm>
             <!-- 删除按钮 end -->
           </template>
         </a-table>
         <!-- 账号列表 end -->
-        <!-- 分页 -->
-        <a-row>
-          <a-col :span="24">
-            <a-pagination
-              show-size-changer
-              v-model:current="pageInfo.pageNum"
-              v-model:pageSize="pageInfo.pageSize"
-              :page-size-options="pageInfo.pageSizeOptions"
-              :defaultPageSize="10"
-              :total="pageInfo.total"
-              @change="pageChange"
-              @showSizeChange="pageSizeChange"
-              style="float: right; margin: 10px 0"
-            />
-          </a-col>
-        </a-row>
-        <!-- 分页 end -->
-      </div>
-      <!-- 权限管理内容 end -->
-    </div>
+      </a-card>
+      <!-- 权限管理card end -->
+    </a-card>
     <!-- 主体Main end -->
   </a-layout-content>
 </template>
@@ -169,98 +142,90 @@
 // 引入面包屑组件
 import Crumbs from "@/components/Crumbs";
 
-//导入sysUserList中返回的方法
-import { showSysUserList } from "./useSysUserList";
-
-//导入sysUserDel中返回的方法
-import { removeSysUser } from "./useSysUserDel";
-
-//导入sysUserStatusEdit中返回的方法
-import { updateUserStatus } from "./useSysUserStatusEdit";
-
-//导入sysUserResetPwd中返回的方法
-import { sysUserResetPwd } from "./useSysUserResetPwd";
-
-//导入sysUserAdd中返回的方法
-import { addSysUser, sysUserRules, getUserPermissions } from "./useSysUserAdd";
-
-//导入sysuserColums中返回的列表
-import { useSysuserColums } from "./useSysUserColums";
-
 // 引入 钩子函数
 import { onMounted } from "vue";
+
+// 获取 账号管理 后台请求的 列表数据
+import { useGetUserList } from "./useGetUserList";
+
+// 获取 账号管理 删除账号方法
+import { useDelUser } from "./useDelUser";
+
+// 获取 账号管理 删除账号方法
+import { useEditUserStatus } from "./useEditUserStatus";
+
+// 获取 账号管理 重置账号方法
+import { useResetUserPwd } from "./useResetUserPwd";
+
+// 获取 账号管理 添加账号方法
+import { useAddUser } from "./useAddUser";
+
+// 获取 账号管理 列表项
+import { useUserColums } from "./useUserColums";
+
+// 获取 账号管理 权限组列表
+import { useGetUserPermissions } from "./useGetUserPermissions";
 
 export default {
   components: {
     Crumbs
   },
 
+  // setup响应api入口
   setup() {
-    //通过sysUserColums方法获取列表
-    let { sysUsersTable } = useSysuserColums();
+    //#region 获取 导入方法中返回的 子方法和参数
+    const { sysUsersTable } = useUserColums();
 
-    //通过sysUserList方法获取
-    let {
-      getSysUserList,
-      pageInfo,
-      pageChange,
-      pageSizeChange
-    } = showSysUserList(sysUsersTable);
+    const { getUserList , userPagination , pageChange } = useGetUserList(sysUsersTable);
 
-    //通过updateUserStatus方法更改账号启用状态
-    let { statusChange } = updateUserStatus(getSysUserList);
+    const { changeStatus } = useEditUserStatus(getUserList);
 
-    //通过removeSysUser方法获取显示删除模态框方法
-    let { showDelConfirm } = removeSysUser(getSysUserList);
+    const { showDelConfirm } = useDelUser(getUserList);
 
-    //通过UserPermissions获取权限组列表
-    let { getPermissions, RolesPermissionsList } = getUserPermissions();
+    const { resetUserPwd } = useResetUserPwd();
 
-    //通过sysUserResetPwd获取重置密码方法
-    let { handleResetPwd } = sysUserResetPwd();
-
-    //通过addSysUser方法获取数据
-    let {
+    const {
+      sysUserRules,
       addUserVisible,
       confirmLoading,
       sysUserForm,
       showAddModal,
-      handleAddOk,
-      handleAddCancel,
-      addUserFormRef
-    } = addSysUser(getSysUserList);
+      addUserConfirm,
+      addUserCancel,
+      addUserFormRef,
+    } = useAddUser(getUserList);
+
+    const { rolesPermissionsList, getPermissions } = useGetUserPermissions();
+
+    //#endregion
 
     //在Mounted 获取列表
     onMounted(() => {
-      getSysUserList();
+      getUserList();
       getPermissions();
-      handleResetPwd(1);
+      resetUserPwd(1);
     });
 
-    //返回
+    //#region 返回参数
     return {
       //账号列表 表格数据
       sysUsersTable,
-      //分页数据对象
-      pageInfo,
       //账号添加表单数据模型对象
       sysUserForm,
       //权限列表
-      RolesPermissionsList,
+      rolesPermissionsList,
       //添加表单
       addUserFormRef,
       //账号添加表单校验规则
       sysUserRules,
       //渲染表格
-      getSysUserList,
-      //点击下一页方法
-      pageChange,
-      //每页显示多少条数据的方法
-      pageSizeChange,
+      getUserList,
+      //分页参数
+      userPagination,
       //显示删除模态框方法
       showDelConfirm,
       //改变启用状态方法
-      statusChange,
+      changeStatus,
       //显示添加账号模态框
       addUserVisible,
       //模态框确认时加载
@@ -268,18 +233,37 @@ export default {
       //显示添加账号模态框
       showAddModal,
       //添加账号确定回调
-      handleAddOk,
+      addUserConfirm,
       //添加账号取消时回调
-      handleAddCancel,
+      addUserCancel,
       //重置账号密码回调
-      handleResetPwd
+      resetUserPwd,
+      //点击下一页方法
+      pageChange
     };
-  }
+    //#endregion
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .ant-btn {
   width: auto;
+}
+
+.operation-btn {
+  margin: 0 5px;
+}
+
+.popconfirm-text-top {
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.popconfirm-text-bottom {
+  font-size: 13px;
+  color: #999999;
+  margin-bottom: 5px;
 }
 </style>

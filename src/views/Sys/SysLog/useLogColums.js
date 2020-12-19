@@ -2,13 +2,11 @@
 import { reactive } from "vue";
 
 //#region 创建变量  获取表格项
-export const useSysLogColums = () => {
-  //创建变量 渲染表格项
+export const useLogColums = () => {
+      //创建变量 渲染表格项
   const logTable = reactive({
-    logColums: [
-      {
-        title: "索引",
-        align: "center",
+    colums: [{
+        title: "序号",
         key: "index",
         slots: {
           customRender: "index"
@@ -16,7 +14,6 @@ export const useSysLogColums = () => {
       },
       {
         title: "日志时间",
-        align: "center",
         dataIndex: "createTime",
         //默认降序排列
         defaultSortOrder: "descend",
@@ -29,28 +26,24 @@ export const useSysLogColums = () => {
       },
       {
         title: "账号",
-        align: "center",
         dataIndex: "username"
       },
       {
         title: "操作员名称",
-        align: "center",
         dataIndex: "realName"
       },
       {
         title: "操作模块",
-        align: "center",
         dataIndex: "title"
       },
       {
         title: "内容",
-        align: "center",
         dataIndex: "params"
       }
     ],
 
     //获取列表数据
-    logData: []
+    data: []
   });
 
   //返回数据
