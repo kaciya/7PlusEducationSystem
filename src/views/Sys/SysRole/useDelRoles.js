@@ -28,7 +28,7 @@ export const useDelRoles = (getSysRolesData) => {
                 }
             })
             .catch(error => {
-                 console.log(error);
+                 throw error;
             });
         }
 

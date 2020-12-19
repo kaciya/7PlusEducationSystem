@@ -95,8 +95,18 @@ export default {
   // setup响应api入口
   setup() {
     //#region 获取 导入方法中返回的 子方法和参数
+    /**
+     * rolesTable 权限组列表
+     */
     const { rolesTable } = useRolesColums();
 
+    /**
+     * rolePagination 分页参数
+     * getRolesData 渲染权限组列表方法
+     * pageChange 点击下一页方法
+     * addRouter 权限组添加路由跳转
+     * editRouter 权限组编辑路由跳转
+     */
     const {
       rolePagination,
       getRolesData,
@@ -105,8 +115,14 @@ export default {
       editRouter,
     } = useGetRolesList(rolesTable);
 
+    /**
+     * showDelConfirm 显示删除模态框方法
+     */
     const { showDelConfirm } = useDelRoles(getRolesData);
 
+    /**
+     * statusChange 更改用户状态方法
+     */
     const { statusChange } = useEditRoleStatus(getRolesData);
     //#endregion
 

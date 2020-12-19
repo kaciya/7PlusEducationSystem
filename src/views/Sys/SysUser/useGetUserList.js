@@ -39,10 +39,19 @@ export const useGetUserList = (sysUsersTable) => {
         //判断相应状态
         if (res.success) {
           sysUsersTable.data = res.data;
+
+          // //获取分页总数量
+          // userPagination.total = res.data.total;
+
+          // //判断是否超出最后一页
+          // if(res.data.current > res.data.pages && res.pages != 0){
+          //   userPagination.current = res.data.pages;
+          //   getUserList
+          // }
         }
       })
       .catch(error => {
-        console.log(error);
+        throw error;
       });
   }
   //#endregion

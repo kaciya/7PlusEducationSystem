@@ -142,25 +142,48 @@ export default {
   // setup响应api入口
   setup() {
     //#region 获取 导入方法中返回的 子方法和参数
+    /**
+     * feedbackTable 反馈列表
+     */
     const { feedbackTable } = useFeedbackColums();
 
+    /**
+     * feedbackPagination 分页参数
+     * getFeedbackData 渲染表格数据方法
+     * pageChange 点击下一页方法
+     */
     const {
       feedbackPagination,
       getFeedbackData,
       pageChange
     } = useGetFeedbackList(feedbackTable);
 
-    const {
+    /**
+     * headerData 顶部 日期 与 状态 绑定数据对象
+     * changeStatus 选择项改变方法
+     * changeDate 日期选择器改变方法
+     * changeDateConfirm 日期范围确定
+     */
+    const { 
       headerData,
       changeStatus,
       changeDate,
       changeDateConfirm,
     } = useFeedbackHeader();
 
+    /**
+     * searchClick 查询列表
+     */
     const { searchClick } = useSearchFeedback(getFeedbackData, headerData);
 
+    /**
+     * resetClick 重置状态 和 时间范围
+     */
     const { resetClick } = useResetFeedback(getFeedbackData, headerData);
 
+    /**
+     * editManage 点击操作中的处理方法
+     */
     const { editManage } = useEditFeedbackManage();
     //#endregion
 

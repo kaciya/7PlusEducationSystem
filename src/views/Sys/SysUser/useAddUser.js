@@ -95,7 +95,7 @@ export const useAddUser = (getUserList) => {
                 })
             })
             .catch(error => {
-                console.log(error);
+                throw error;
             });
     }
 

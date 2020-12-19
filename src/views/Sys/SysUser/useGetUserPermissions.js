@@ -28,7 +28,7 @@ export const useGetUserPermissions = () => {
                 }
             })
             .catch(error => {
-                console.log(error);
+                throw error;
             });
     }
     //#endregion

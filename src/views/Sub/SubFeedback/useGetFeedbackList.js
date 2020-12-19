@@ -41,15 +41,12 @@ export const useGetFeedbackList = (feedbackTable) => {
         if (res.success) {
           //将获取到的数据列表存入变量中
           feedbackTable.data = res.data.records;
-          res.data.records.forEach(element => {
-              console.log(typeof(element.picUrls) + " " + element.picUrls);
-          });
           //获取分页总数量
           feedbackPagination.total = res.data.total;
         }
       })
       .catch(error => {
-        console.log(error);
+        throw error;
       });
   }
   //#endregion

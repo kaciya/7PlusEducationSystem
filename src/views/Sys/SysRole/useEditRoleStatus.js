@@ -22,7 +22,7 @@ export const useEditRoleStatus = (getSysRolesData) => {
                 }
             })
             .catch(error => {
-                console.log(error);
+                throw error;
             });
     }
 
