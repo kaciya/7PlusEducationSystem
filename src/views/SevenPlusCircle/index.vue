@@ -104,7 +104,12 @@
             >
               屏蔽
             </a-button>
-            <a-button v-else type="danger" @click="topicShowModal(text.id)">
+            <a-button
+              v-else
+              type="primary"
+              class="pass-btn"
+              @click="topicShowModal(text.id)"
+            >
               显示
             </a-button>
           </template>
