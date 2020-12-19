@@ -67,14 +67,10 @@
                     <!-- 删除密码按钮 start -->
                     <a-tooltip placement="topLeft">
                       <template #title>
-                        <span>点击删除已输入密码</span>
+                        <span>点击重置账号密码</span>
                       </template>
-                      <a-button
-                        type="default"
-                        size="large"
-                        @click="clearPassword"
-                      >
-                        删除
+                      <a-button type="default" size="large" @click="resetForm">
+                        重置
                       </a-button>
                     </a-tooltip>
                     <!-- 删除密码按钮 end -->
@@ -97,8 +93,8 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
 import { userLoginRules } from "./userLoginRules";
 // 导入表单登录方法
 import { useLoginSubmit } from "./useLoginSubmit";
-// 导入清除密码功能
-import { useClearPassword } from "./useClearPassword";
+// 导入重置表单功能
+import { useResetForm } from "./useResetForm";
 
 export default {
   setup() {
@@ -111,8 +107,8 @@ export default {
     } = useLoginSubmit();
     // 表单校验
     const { loginRules } = userLoginRules();
-    // 清除密码
-    const { clearPassword } = useClearPassword(loginModel);
+    // 重置表单
+    const { resetForm } = useResetForm(loginFormRef);
     // 返回
     return {
       // 登录表单
@@ -123,16 +119,16 @@ export default {
       loginRules,
       // 点击登录方法
       loginSubmit,
-      // 点击删除密码
-      clearPassword,
+      // 点击重置表单
+      resetForm,
       // 正在登录的状态
-      logining
+      logining,
     };
   },
   components: {
     UserOutlined,
-    LockOutlined
-  }
+    LockOutlined,
+  },
 };
 </script>
 
