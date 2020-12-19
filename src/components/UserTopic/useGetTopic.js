@@ -25,7 +25,7 @@ export const useGetTopic = id => {
   //#endregion 分页配置项
   // 获取后台数据
   const getTopicData = async () => {
-    const res = await httpGet(user.UserTopic + `/${id}`, {
+    const res = await httpGet(user.GetUserTopic + `/${id}`, {
       // 降序
       descColumns: "createTime",
       pageNum: topicPagination.current,
