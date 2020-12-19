@@ -63,44 +63,42 @@ export const useAddUser = getUserList => {
   });
   //#endregion
 
-  //添加账号确定时的回调
-  const addUserConfirm = () => {
-    //发起请求 添加账号
-    addUserFormRef.value
-      .validate()
-      .then(() => {
-        //获取请求需要参数
-        const params = {
-          realName: sysUserForm.realName,
-          roleIds: [sysUserForm.roleIds],
-          username: sysUserForm.username
-        };
-        //发起请求  添加数据
-        httpPost(sys.AddUser, params).then(res => {
-          //判断如果请求成功
-          if (res.success) {
-            //显示确认加载
-            confirmLoading.value = true;
-            message.success(res.message);
-            //设置定时器
-            setTimeout(() => {
-              //关闭加载与弹窗
-              addUserVisible.value = false;
-              confirmLoading.value = false;
-              //清空表单
-              addUserFormRef.value.resetFields();
-              //重新刷新页面
-              getUserList();
-            }, 1000);
-          } else {
-            message.error("添加失败: " + res.message);
-          }
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
+    //添加账号确定时的回调
+    const addUserConfirm = () => {
+        //发起请求 添加账号                     
+        addUserFormRef.value.validate().then(() => {
+                //获取请求需要参数
+                const params = {
+                    realName: sysUserForm.realName,
+                    roleIds: [sysUserForm.roleIds],
+                    username: sysUserForm.username
+                }
+                //发起请求  添加数据
+                httpPost(sys.AddUser, params).then(res => {
+                    //判断如果请求成功
+                    if (res.success) {
+                        //显示确认加载
+                        confirmLoading.value = true;
+                        message.success(res.message);
+                        //设置定时器
+                        setTimeout(() => {
+                            //关闭加载与弹窗
+                            addUserVisible.value = false;
+                            confirmLoading.value = false;
+                            //清空表单
+                            addUserFormRef.value.resetFields();
+                            //重新刷新页面
+                            getUserList();
+                        }, 1000);
+                    } else {
+                        message.error("添加失败: " + res.message);
+                    }
+                })
+            })
+            .catch(error => {
+                throw error;
+            });
+    }
 
   //添加账号取消时的回调
   const addUserCancel = () => {

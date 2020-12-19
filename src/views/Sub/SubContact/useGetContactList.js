@@ -38,7 +38,7 @@ export const useGetContactList = contactTable => {
         }
       })
       .catch(error => {
-        console.log(error);
+        throw error;
       });
   };
   //#endregion

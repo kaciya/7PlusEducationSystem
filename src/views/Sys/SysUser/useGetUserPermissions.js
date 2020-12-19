@@ -9,24 +9,23 @@ import { httpGet } from "@/utils/http";
 
 //#region 渲染权限列表
 export const useGetUserPermissions = () => {
-  //权限列表数据存储对象
-  let rolesPermissionsList = reactive({});
-
-  //#region 获取权限组列表
-  const getPermissions = () => {
-    //发起请求  获取权限列表
-    httpGet(role.GetRolesList)
-      .then(res => {
-        if (res.success) {
-          //获取权限列表数据
-          rolesPermissionsList.data = res.data;
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-  //#endregion
+    //权限列表数据存储对象
+    let rolesPermissionsList = reactive({});
+    
+    //#region 获取权限组列表
+    const getPermissions = () => {
+        //发起请求  获取权限列表
+        httpGet(role.GetRolesList).then(res => {
+                if (res.success) {
+                    //获取权限列表数据
+                    rolesPermissionsList.data = res.data;
+                }
+            })
+            .catch(error => {
+                throw error;
+            });
+    }
+    //#endregion
 
   //返回
   return {

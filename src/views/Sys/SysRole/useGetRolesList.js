@@ -41,7 +41,7 @@ export const useGetRolesList = rolesTable => {
         }
       })
       .catch(error => {
-        console.log("error", error);
+        throw error;
       });
   };
   //#endregion

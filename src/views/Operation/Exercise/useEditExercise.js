@@ -65,7 +65,7 @@ export const useEditExercise = getExercise => {
             getExercise();
           })
           .catch(err => {
-            console.log(err);
+            throw err;
             confirmLoading.value = false;
           });
       })

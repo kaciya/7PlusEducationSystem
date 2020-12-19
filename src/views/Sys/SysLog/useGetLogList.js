@@ -50,7 +50,7 @@ export const useGetLogList = logTable => {
         }
       })
       .catch(error => {
-        console.log(error);
+        throw error;
       });
   };
   //#endregion

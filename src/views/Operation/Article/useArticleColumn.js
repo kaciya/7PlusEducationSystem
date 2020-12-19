@@ -18,7 +18,7 @@ export const column = [
     title: "发布时间",
     dataIndex: "createTime",
     key: "createTime",
-    width: "10%"
+    width: "15%"
   },
   {
     title: "发布人"

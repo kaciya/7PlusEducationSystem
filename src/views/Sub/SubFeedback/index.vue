@@ -47,51 +47,52 @@
 
       <!-- 反馈列表card -->
       <a-card title="数据列表">
-        <!-- 数据列表 -->
-        <a-table
-          bordered
-          :columns="feedbackTable.colums"
-          :data-source="feedbackTable.data"
-          row-Key="id"
-          :pagination="feedbackPagination"
-          @change="pageChange"
-        >
-          <!-- 列表索引 -->
-          <template #index="{ index }">
-            {{ index + 1 }}
-          </template>
-          <!-- 列表索引 end -->
+      <!-- 数据列表 -->
+      <a-table
+        bordered
+        :columns="feedbackTable.colums"
+        :data-source="feedbackTable.data"
+        row-Key="id"
+        :pagination="feedbackPagination"
+        @change="pageChange"
+      >
+        <!-- 列表索引 -->
+        <template #index="{ index }">
+          {{ index + 1 }}
+        </template>
+        <!-- 列表索引 end -->
 
-          <!-- 图片 -->
-          <template #picUrls="{ record }">
-            <image :src="record.picUrls" />
-          </template>
-          <!-- 图片 end -->
+        <!-- 图片 -->
+        <template #picUrls="{ record }">
+          <image :src="record.picUrls" />
+        </template>
+        <!-- 图片 end -->
 
-          <!-- 状态 -->
-          <template #status="{ record }">
-            <a-tag color="blue" v-if="record.status == 1"> 已解决 </a-tag>
-            <a-tag color="cyan" v-else-if="record.status == 0"> 未解决 </a-tag>
-          </template>
-          <!-- 状态 end -->
+        <!-- 状态 -->
+        <template #status="{ record }">
+          <a-tag color="blue" v-if="record.status == 1"> 已解决 </a-tag>
+          <a-tag color="cyan" v-else-if="record.status == 0"> 未解决 </a-tag>
+        </template>
+        <!-- 状态 end -->
 
-          <!-- 操作 -->
-          <template #operation="{ record }">
-            <a-button type="primary" v-if="record.status == 1" disabled>
-              <LineOutlined />
-            </a-button>
+        <!-- 操作 -->
+        <template #operation="{ record }">
+          <a-button type="primary" size="small" v-if="record.status == 1" disabled>
+            <LineOutlined />
+          </a-button>
 
-            <a-button
-              type="primary"
-              v-else-if="record.status == 0"
-              @click="editManage(record.id)"
-            >
-              处理
-            </a-button>
-          </template>
-          <!-- 操作 end -->
-        </a-table>
-        <!-- 数据列表 end -->
+          <a-button
+            type="primary"
+            size="small"
+            v-else-if="record.status == 0"
+            @click="editManage(record.id)"
+          >
+            处理
+          </a-button>
+        </template>
+        <!-- 操作 end -->
+      </a-table>
+      <!-- 数据列表 end -->
       </a-card>
       <!-- 反馈列表card end -->
     </a-card>
@@ -137,25 +138,48 @@ export default {
   // setup响应api入口
   setup() {
     //#region 获取 导入方法中返回的 子方法和参数
+    /**
+     * feedbackTable 反馈列表
+     */
     const { feedbackTable } = useFeedbackColums();
 
+    /**
+     * feedbackPagination 分页参数
+     * getFeedbackData 渲染表格数据方法
+     * pageChange 点击下一页方法
+     */
     const {
       feedbackPagination,
       getFeedbackData,
       pageChange
     } = useGetFeedbackList(feedbackTable);
 
-    const {
+    /**
+     * headerData 顶部 日期 与 状态 绑定数据对象
+     * changeStatus 选择项改变方法
+     * changeDate 日期选择器改变方法
+     * changeDateConfirm 日期范围确定
+     */
+    const { 
       headerData,
       changeStatus,
       changeDate,
       changeDateConfirm
     } = useFeedbackHeader();
 
+    /**
+     * searchClick 查询列表
+     */
     const { searchClick } = useSearchFeedback(getFeedbackData, headerData);
 
+    /**
+     * resetClick 重置状态 和 时间范围
+     */
     const { resetClick } = useResetFeedback(getFeedbackData, headerData);
 
+    /**
+     * editManage 点击操作中的处理方法
+     */
     const { editManage } = useEditFeedbackManage();
     //#endregion
 

@@ -58,13 +58,13 @@ export const useEditAboutList = getAboutData => {
             getAboutData();
           })
           .catch(err => {
-            console.log(err);
-          });
+            throw err;
+          })
       })
       .catch(err => {
-        console.log(err);
-      });
-  };
+        throw err;
+      })
+  }
 
   // 点击取消后的回调函数
   const editCancel = () => {

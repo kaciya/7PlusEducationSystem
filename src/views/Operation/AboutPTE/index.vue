@@ -6,55 +6,34 @@
     />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
-    <div
-      :style="{
-        padding: '20px',
-        background: '#fff',
-        minHeight: '93%'
-      }"
-    >
+    <a-card style="min-height: 93%">
       <!-- 发布文章 start -->
       <a-page-header style="padding-top: 0">
         <a-row>
           <a-col :span="24">
-            <a-button
-              type="primary"
-              size="large"
-              style="float: right"
-              @click="showAdd"
-              >发布</a-button
-            >
+            <a-button type="primary" style="float: right" @click="showAdd">发布</a-button>
           </a-col>
         </a-row>
       </a-page-header>
       <!-- 发布文章 end -->
-      <!-- 表格 start -->
-      <a-table
-        :columns="aboutList.column"
-        :data-source="aboutList.data"
-        :row-key="record => record.id"
-        bordered
-      >
-        <template #state="{ record }">
-          <a-switch :checked="Boolean(record.state)" />
-        </template>
-        <template #operational="{ record }">
-          <a-button
-            type="primary"
-            style="margin-right: 15px"
-            @click="showModify(record.id)"
-          >
-            编辑
+    <!-- 表格 start -->
+    <a-table
+      :columns="aboutList.column"
+      :data-source="aboutList.data"
+      :row-key="record => record.id"
+      bordered
+    >
+      <template #state="{ record }">
+        <a-switch :checked="Boolean(record.state)" @click="stateChange(record.id)"/>
+      </template>
+      <template #operational="{ record }">
+        <a-button type="primary" style="margin-right: 15px" @click="showModify(record.id)" size="small" class="modify-btn">
+          编辑
+        </a-button>
+        <a-popconfirm placement="topRight" title="您真的要删除该项么?" @confirm="delSubmit(record.id)" @cancel="delCancel">
+          <a-button type="danger" size="small">
+                  删除
           </a-button>
-          <a-popconfirm
-            placement="topRight"
-            title="您真的要删除该项么?"
-            @confirm="delSubmit(record.id)"
-            @cancel="delCancel"
-          >
-            <a-button type="danger">
-              删除
-            </a-button>
           </a-popconfirm>
         </template>
       </a-table>
@@ -114,8 +93,8 @@
           </a-form-item>
         </a-form>
       </a-modal>
-      <!-- 编辑模态框 end-->
-    </div>
+    <!-- 编辑模态框 end-->
+    </a-card>
     <!-- 主体Main end -->
   </a-layout-content>
 </template>
@@ -125,13 +104,15 @@
 import Crumbs from "@/components/Crumbs";
 // 引入表格列
 import { column } from "./useAboutColumn";
-// 引入获取数据方法
+// 引入获取PTE数据方法
 import { useGetAboutList } from "./useGetAboutList";
-// 引入添加数据方法
+// 引入添加PTE数据方法
 import { useAddAboutList } from "./useAddAboutList";
-// 引入编辑数据方法
+// 引入编辑PTE数据方法
 import { useEditAboutList } from "./useEditAboutList";
-// 引入删除数据方法
+// 引入更改PTE文章状态方法
+import { useStateAboutList } from "./useStateAboutList";
+// 引入删除PTE数据方法
 import { useDelAboutList } from "./useDelAboutList";
 
 export default {
@@ -172,6 +153,10 @@ export default {
     } = useEditAboutList(getAboutData);
     //#endregion
 
+    //#region 更改PTE状态方法
+    const { stateChange } = useStateAboutList(getAboutData);
+    //#endregion
+
     //#region 删除PTE数据方法
     const { delSubmit, delCancel } = useDelAboutList(getAboutData);
     //#endregion
@@ -197,6 +182,9 @@ export default {
       showModify,
       editSubmit,
       editCancel,
+      //#endregion
+      //#region 更改文章状态
+      stateChange,
       //#endregion
       //#region 删除数据方法
       delSubmit,

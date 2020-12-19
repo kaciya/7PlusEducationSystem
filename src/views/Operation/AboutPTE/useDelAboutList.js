@@ -27,9 +27,9 @@ export const useDelAboutList = getAboutData => {
         }
       })
       .catch(err => {
-        console.log(err);
-      });
-  };
+        throw err;
+      })
+  }
 
   // 点击取消的回调函数
   const delCancel = () => {

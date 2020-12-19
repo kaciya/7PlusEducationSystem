@@ -25,6 +25,8 @@
             type="primary"
             style="margin-left: 40px"
             @click="editShow(record.id, record.name)"
+            size="small"
+            class="modify-btn"
           >
             编辑
           </a-button>

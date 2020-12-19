@@ -55,7 +55,7 @@ export const useEditProblemList = getProblem => {
         }
       })
       .catch(err => {
-        console.log(err);
+        throw err;
       });
   };
 
