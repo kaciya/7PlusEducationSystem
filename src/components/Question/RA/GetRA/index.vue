@@ -22,11 +22,10 @@ export default {
       // 模态框状态
       getRAVisible,
       // 关闭模态框
-      closeGetRA,
+      closeGetRA
     };
-  },
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

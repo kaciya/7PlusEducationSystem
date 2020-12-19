@@ -64,7 +64,7 @@ export const useAddWord = getWordData => {
           })
           .catch(err => {
             // 请求失败的回调
-            console.log(err);
+            throw new Error(err);
           });
       })
       .catch(error => {

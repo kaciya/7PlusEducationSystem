@@ -1,32 +1,25 @@
 //导入 reactive 对象
-import {
-  ref,
-  reactive
-} from "vue";
+import { ref, reactive } from "vue";
 
 //导入 API接口
-import {
-  feedback
-} from "@/api/subUserAPI";
+import { feedback } from "@/api/subUserAPI";
 
 //导入 GET请求方法
-import {
-  httpGet
-} from "@/utils/http";
+import { httpGet } from "@/utils/http";
 
 //#region 获取 用户提交 联系记录列表
-export const useGetFeedbackList = (feedbackTable) => {
+export const useGetFeedbackList = feedbackTable => {
   //图片获取正则表达
   const matchReg = ref("\\[(.*?)\\]");
 
-  //#region 分页参数 
+  //#region 分页参数
   const feedbackPagination = reactive({
     //列表所在页数
     current: 1,
     //现在一页显示多少条数据
     pageSize: 10,
     //指定每页可以显示多少条
-    pageSizeOptions: ['10'],
+    pageSizeOptions: ["10"],
     //一共多少条数据
     total: 0,
     // 允许改变每页条数
@@ -35,7 +28,7 @@ export const useGetFeedbackList = (feedbackTable) => {
   //#endregion
 
   //#region 根据后台接口地址发送请求联系记录
-  const getFeedbackData = (params) => {
+  const getFeedbackData = params => {
     //请求接口: /admin/feedback/page
     httpGet(feedback.GetFeedbackList, params)
       .then(res => {
@@ -55,17 +48,17 @@ export const useGetFeedbackList = (feedbackTable) => {
       .catch(error => {
         console.log(error);
       });
-  }
+  };
   //#endregion
 
   //#region 点击下一页方法
   const pageChange = pagination => {
-    //点击下一页后 将分页参数中的 当前页 和 一页显示的数据改变 
+    //点击下一页后 将分页参数中的 当前页 和 一页显示的数据改变
     feedbackPagination.current = pagination.current;
     feedbackPagination.pageSize = pagination.pageSize;
     //刷新列表
     getFeedbackData();
-  }
+  };
   //#endregion
 
   //返回数据
@@ -75,7 +68,7 @@ export const useGetFeedbackList = (feedbackTable) => {
     //反馈列表 数据
     getFeedbackData,
     //点击下一页方法
-    pageChange,
+    pageChange
   };
 };
 //#endregion

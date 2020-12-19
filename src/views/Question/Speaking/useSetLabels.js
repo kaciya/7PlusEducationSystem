@@ -2,11 +2,11 @@
 // 引入 httpPost请求
 import { httpPost } from "@/utils/http";
 // 引入 接口配置
-import { speak } from '@/api/questionSpeakAPI';
+import { speak } from "@/api/questionSpeakAPI";
 import { message } from "ant-design-vue";
 // 导出
 /**
- * 
+ *
  * @param {*} labelList 所有标签列表
  */
 export function useSetLabels(labelList) {
@@ -27,7 +27,9 @@ export function useSetLabels(labelList) {
     let checkedIds = [];
     checkedLabels.forEach(ele => {
       // 如果 标签列表中的标签名 与 所选标签名一致，记录索引
-      checkedIds.push(labelList.value.findIndex((value) => value.name == ele).toString());
+      checkedIds.push(
+        labelList.value.findIndex(value => value.name == ele).toString()
+      );
     });
     // 发起请求设置标签
     // httpPost(speak.SetLabels(category), {
@@ -41,7 +43,7 @@ export function useSetLabels(labelList) {
     //   console.log(err);
     // });
     console.log(httpPost, speak.SetLabels(category));
-  }
+  };
 
   return {
     setLabels

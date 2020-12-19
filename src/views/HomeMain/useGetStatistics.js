@@ -26,7 +26,8 @@ export const useGetStatistics = () => {
       }
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
+      throw new Error(err);
     });
 
   // 返回

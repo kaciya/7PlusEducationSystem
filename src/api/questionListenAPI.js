@@ -5,7 +5,7 @@ export const listen = {
   // 批量上传
   BulkUpload: category => `/question/listen/${category}/import`,
   // 模板下载
-  DownloadTemplate: (category) => `/question/listen/${category}/export/template`,
+  DownloadTemplate: category => `/question/listen/${category}/export/template`,
   // 添加题目
-  AddQuestion: (category) => `/question/listen/${category}/add`,
-}
+  AddQuestion: category => `/question/listen/${category}/add`
+};

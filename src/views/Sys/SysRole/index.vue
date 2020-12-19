@@ -99,7 +99,7 @@ export default {
       getRolesData,
       pageChange,
       addRouter,
-      editRouter,
+      editRouter
     } = useGetRolesList(rolesTable);
 
     const { showDelConfirm } = useDelRoles(getRolesData);
@@ -129,10 +129,10 @@ export default {
       //权限组编辑路由跳转
       editRouter,
       //点击下一页方法
-      pageChange,
+      pageChange
     };
     //#endregion
-  },
+  }
 };
 </script>
 
@@ -141,7 +141,7 @@ export default {
   width: auto;
 }
 
-.operation-btn{
-  margin: 0 5px
+.operation-btn {
+  margin: 0 5px;
 }
 </style>

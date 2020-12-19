@@ -37,11 +37,7 @@
             <a-button class="header-btn" @click="resetClick">
               重置
             </a-button>
-            <a-button
-              type="primary"
-              class="header-btn"
-              @click="searchClick"
-            >
+            <a-button type="primary" class="header-btn" @click="searchClick">
               查询
             </a-button>
           </a-col>
@@ -51,51 +47,51 @@
 
       <!-- 反馈列表card -->
       <a-card title="数据列表">
-      <!-- 数据列表 -->
-      <a-table
-        bordered
-        :columns="feedbackTable.colums"
-        :data-source="feedbackTable.data"
-        row-Key="id"
-        :pagination="feedbackPagination"
-        @change="pageChange"
-      >
-        <!-- 列表索引 -->
-        <template #index="{ index }">
-          {{ index + 1 }}
-        </template>
-        <!-- 列表索引 end -->
+        <!-- 数据列表 -->
+        <a-table
+          bordered
+          :columns="feedbackTable.colums"
+          :data-source="feedbackTable.data"
+          row-Key="id"
+          :pagination="feedbackPagination"
+          @change="pageChange"
+        >
+          <!-- 列表索引 -->
+          <template #index="{ index }">
+            {{ index + 1 }}
+          </template>
+          <!-- 列表索引 end -->
 
-        <!-- 图片 -->
-        <template #picUrls="{ record }">
-          <image :src="record.picUrls" />
-        </template>
-        <!-- 图片 end -->
+          <!-- 图片 -->
+          <template #picUrls="{ record }">
+            <image :src="record.picUrls" />
+          </template>
+          <!-- 图片 end -->
 
-        <!-- 状态 -->
-        <template #status="{ record }">
-          <a-tag color="blue" v-if="record.status == 1"> 已解决 </a-tag>
-          <a-tag color="cyan" v-else-if="record.status == 0"> 未解决 </a-tag>
-        </template>
-        <!-- 状态 end -->
+          <!-- 状态 -->
+          <template #status="{ record }">
+            <a-tag color="blue" v-if="record.status == 1"> 已解决 </a-tag>
+            <a-tag color="cyan" v-else-if="record.status == 0"> 未解决 </a-tag>
+          </template>
+          <!-- 状态 end -->
 
-        <!-- 操作 -->
-        <template #operation="{ record }">
-          <a-button type="primary" v-if="record.status == 1" disabled>
-            <LineOutlined />
-          </a-button>
+          <!-- 操作 -->
+          <template #operation="{ record }">
+            <a-button type="primary" v-if="record.status == 1" disabled>
+              <LineOutlined />
+            </a-button>
 
-          <a-button
-            type="primary"
-            v-else-if="record.status == 0"
-            @click="editManage(record.id)"
-          >
-            处理
-          </a-button>
-        </template>
-        <!-- 操作 end -->
-      </a-table>
-      <!-- 数据列表 end -->
+            <a-button
+              type="primary"
+              v-else-if="record.status == 0"
+              @click="editManage(record.id)"
+            >
+              处理
+            </a-button>
+          </template>
+          <!-- 操作 end -->
+        </a-table>
+        <!-- 数据列表 end -->
       </a-card>
       <!-- 反馈列表card end -->
     </a-card>
@@ -153,7 +149,7 @@ export default {
       headerData,
       changeStatus,
       changeDate,
-      changeDateConfirm,
+      changeDateConfirm
     } = useFeedbackHeader();
 
     const { searchClick } = useSearchFeedback(getFeedbackData, headerData);
@@ -191,10 +187,10 @@ export default {
       //点击操作中的处理方法
       editManage,
       //点击下一页方法
-      pageChange,
+      pageChange
     };
     //#endregion
-  },
+  }
 };
 </script>
 
@@ -203,8 +199,8 @@ export default {
   width: auto;
 }
 
-.header-btn{
+.header-btn {
   margin: 3px 10px;
-  float: right
+  float: right;
 }
 </style>
