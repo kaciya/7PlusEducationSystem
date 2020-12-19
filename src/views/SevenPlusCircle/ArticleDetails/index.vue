@@ -1,5 +1,4 @@
 <template>
-  <!-- 主体 start -->
   <a-layout-content>
     <!-- 面包屑 start -->
     <Crumbs
@@ -9,7 +8,7 @@
           name: '柒加圈'
         },
         {
-          route: '',
+          route: '/topic/page',
           name: '发布列表'
         },
         {
@@ -19,39 +18,32 @@
       ]"
     ></Crumbs>
     <!-- 面包屑 end -->
-    <div
-      :style="{
-        padding: '20px',
-        background: '#fff',
-        minHeight: '93%',
-        color: 'rgb(153, 153, 153)'
-      }"
-    >
+    <a-card style="min-height: 93%">
       <!-- 文章内容 start -->
       <a-row>
         <a-col :span="5" class="information">
           <a-row :style="{ height: '100%' }">
             <a-col :span="7">
               <div class="publisher-img">
-                <img :src="publisherAvatar" alt="" />
+                <img :src="publisher.avatar" alt="" />
               </div>
             </a-col>
             <a-col :span="17">
-              <p>{{ publisherUserName }}</p>
-              <p><span>日期：</span> {{ publisherCreateTime }}</p>
-              <p><span>IP地址:</span> {{ publisherIp }}</p>
+              <p>{{ publisher.userName }}</p>
+              <p><span>日期：</span> {{ publisher.createTime }}</p>
+              <p><span>IP地址:</span> {{ publisher.ip }}</p>
               <div class="tag">
-                <span>{{ publisherCategory }}</span>
+                <span>{{ publisher.category }}</span>
               </div>
             </a-col>
           </a-row>
         </a-col>
         <a-col :span="19" class="article-content">
           <div>
-            <span><StarOutlined /> 收藏 {{ publisherFavoriteCount }}</span>
-            <span><ReadOutlined /> 阅读 {{ publisherReadCount }}</span>
+            <span><StarOutlined /> 收藏 {{ publisher.favouriteCount }}</span>
+            <span><ReadOutlined /> 阅读 {{ publisher.readCount }}</span>
           </div>
-          <p v-html="publisherContent"></p>
+          <p v-html="publisher.content"></p>
         </a-col>
       </a-row>
       <!-- 文章内容 end  -->
@@ -61,15 +53,33 @@
         <a-col :span="24">
           <div>
             <span
-              ><CommentOutlined /> 全部评论 {{ publisherCommentCount }}</span
+              ><CommentOutlined /> 全部评论 {{ publisher.commentCount }}</span
             >
           </div>
         </a-col>
       </a-row>
       <!-- 评论 end -->
-    </div>
+      <a-row class="comment-content" v-for="item in commentList" :key="item.id">
+        <a-col :span="2">
+          <div class="reviewers">
+            <img :src="item.avatar" alt="" />
+          </div>
+        </a-col>
+        <a-col :span="22">
+          <p>{{ item.userName }}</p>
+          <p>回复{{ item.userName }}：{{ item.content }}</p>
+          <p>{{ item.createTime }}</p>
+        </a-col>
+      </a-row>
+      <a-pagination
+        showSizeChanger
+        v-model:current="pageNum"
+        :total="commentTotal"
+        :pageSizeOptions="pageSizeOptions"
+        @change="commentPaging"
+      />
+    </a-card>
   </a-layout-content>
-  <!-- 主体 end -->
 </template>
 
 <script>
@@ -77,6 +87,9 @@
 import Crumbs from "@/components/Crumbs";
 // 引入文章详情
 import { useGetArticle } from "./useGetArticle";
+// 引入文章评论
+import { useGetComment } from "./useGetComment";
+import { useCommentPaging } from "./useCommentPaging";
 // 导入router
 import { useRoute } from "vue-router";
 // 引入icon图标
@@ -91,28 +104,32 @@ export default {
     const route = useRoute();
 
     const {
-      getArticle, // 获取文章详情
-      publisherAvatar, // 用户头像图片地址
-      publisherUserName, // 用户名
-      publisherCreateTime, // 创建时间
-      publisherIp, // ip地址
-      publisherCategory, // 文章分类
-      publisherFavoriteCount, // 文章收藏数量
-      publisherReadCount, // 文章阅读数量
-      publisherContent, // 文章内容
-      publisherCommentCount // 文章评论数量
+      getArticleDetails, // 获取文章详情
+      publisher // 获取文章内容对象
     } = useGetArticle(route.params.id);
+
+    // getComment：获取评论数据请求方法
+    // commentList：请求到的数据
+    const { getComment, commentList, commentTotal, pageNum } = useGetComment(
+      route.params.id
+    );
+
+    // pageSizeOptions：可改变的pageSize
+    // commentPaging：点击分页
+    const { pageSizeOptions, commentPaging } = useCommentPaging(
+      getComment,
+      pageNum
+    );
+
     return {
-      getArticle,
-      publisherAvatar,
-      publisherUserName,
-      publisherCreateTime,
-      publisherIp,
-      publisherCategory,
-      publisherFavoriteCount,
-      publisherReadCount,
-      publisherContent,
-      publisherCommentCount
+      getArticleDetails,
+      publisher,
+      getComment,
+      commentList,
+      commentTotal,
+      pageNum,
+      pageSizeOptions,
+      commentPaging
     };
   },
   // 使用组件
@@ -182,5 +199,31 @@ export default {
     height: 30px;
     border-bottom: 1px solid #eee;
   }
+}
+.comment-content {
+  height: 120px;
+  border-bottom: 1px solid #eee;
+  .reviewers {
+    position: relative;
+    top: 50px;
+    left: 40px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  p {
+    margin-bottom: 0;
+    height: 40px;
+    line-height: 40px;
+  }
+}
+.ant-pagination {
+  margin-top: 16px;
+  text-align: right;
 }
 </style>

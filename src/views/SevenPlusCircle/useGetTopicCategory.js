@@ -1,13 +1,14 @@
 import { onMounted, ref } from "vue";
 // 导入接口
 import topic from "@/api/topicAPI";
-// 导入get请求方法
+// 导入请求方法
 import { httpGet } from "@/utils/http";
-export const useTopicGetCategory = () => {
+export const useGetTopicCategory = () => {
   // 分类列表数据
   let categoryList = ref([]);
+
   const getCategory = () => {
-    httpGet(topic.getCategory)
+    httpGet(topic.GetCategory)
       .then(res => {
         categoryList.value = res.data;
       })
@@ -15,9 +16,11 @@ export const useTopicGetCategory = () => {
         console.log(err);
       });
   };
+
   onMounted(() => {
     getCategory();
   });
+
   return {
     getCategory,
     categoryList

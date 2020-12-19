@@ -1,41 +1,52 @@
-import { ref, onMounted } from "vue";
-// 导入get请求方法
+import { ref, onMounted, reactive } from "vue";
+// 导入请求方法
 import { httpGet } from "@/utils/http";
 // 导入接口
 import notice from "@/api/noticeAPI";
 export const useNoticeDataList = () => {
   // 定义内容
-  const noticeData = ref();
-  // 数据总条数
-  const noticeTotal = ref(0);
+  const noticeData = ref([]);
+
+  // 表格分页
+  const tablePagination = reactive({
+    current: 1,
+    pageSize: 10,
+    pageSizeOptions: ["10"],
+    total: 0,
+    showSizeChanger: true
+  });
+
   // 发起请求获取数据
-  const noticeGetData = (pageNum = 1, pageSize = 20, status, title) => {
+  const getNoticeData = (status, title, username) => {
     const params = {
       descColumns: "createTime",
-      pageNum: pageNum,
-      pageSize: pageSize,
+      pageNum: tablePagination.current,
+      pageSize: tablePagination.pageSize,
       status: status,
-      title: title
+      title: title,
+      username: username
     };
-    httpGet(notice.getDataList, params)
+    httpGet(notice.GetDataList, params)
       .then(res => {
         const { data } = res;
-        noticeTotal.value = data.total;
         if (res.code == 200) {
-          noticeData.value = res.data.records;
+          noticeData.value = data.records;
+          tablePagination.total = data.total;
         }
       })
       .catch(err => {
         console.log(err);
       });
   };
+
   // 获取数据
   onMounted(() => {
-    noticeGetData();
+    getNoticeData();
   });
+
   return {
-    noticeGetData,
+    getNoticeData,
     noticeData,
-    noticeTotal
+    tablePagination
   };
 };
