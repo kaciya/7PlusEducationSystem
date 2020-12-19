@@ -24,13 +24,12 @@ export function useSetLabels(labelList) {
       return checkedLabels.pop();
     }
     // 找出所选标签的ids
-    let checkedIds = [];
+    const checkedIds = [];
     checkedLabels.forEach(ele => {
       // 如果 标签列表中的标签名 与 所选标签名一致，记录索引
-      checkedIds.push(
-        labelList.value.findIndex(value => value.name == ele).toString()
-      );
+      checkedIds.push(labelList.value[labelList.value.findIndex((value) => value.name == ele)].id);
     });
+    console.log(checkedIds);
     // 发起请求设置标签
     // httpPost(listen.SetLabels(category), {
     //   // 题目id
