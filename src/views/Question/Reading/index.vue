@@ -85,9 +85,17 @@
         <!-- 题目标签选择器 end -->
         <!-- 题目操作区 start -->
         <template #operation>
-          <a-button type="primary">查看</a-button>
-          <a-button type="primary" style="margin-left: 10px">编辑</a-button>
-          <a-button type="danger" style="margin-left: 10px">删除</a-button>
+          <a-button type="primary" size="small">查看</a-button>
+          <a-button
+            type="primary"
+            size="small"
+            class="modify-btn"
+            style="margin-left: 10px"
+            >编辑</a-button
+          >
+          <a-button type="danger" size="small" style="margin-left: 10px"
+            >删除</a-button
+          >
         </template>
         <!-- 题目操作区 end -->
       </a-table>
@@ -121,7 +129,7 @@ export default {
       questionList,
       isLoading,
       configPage,
-      changePagenum
+      changePagenum,
     } = useGetQuestion();
     // 获取全部标签类型
     let { labelList } = useGetLabels();
@@ -155,7 +163,7 @@ export default {
       setLabels,
       // 分页配置项
       configPage,
-      changePagenum
+      changePagenum,
       //#endregion
     };
   },
