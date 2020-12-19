@@ -41,14 +41,14 @@ import { useGetUserInfo } from "./useGetUserInfo";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  UserOutlined
+  UserOutlined,
 } from "@ant-design/icons-vue";
 export default {
   // 导入组件
   components: {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
-    UserOutlined
+    UserOutlined,
   },
   // setup响应api入口
   setup() {
@@ -72,9 +72,9 @@ export default {
       collapsed, //侧边栏状态
       setCollapsed, //操作侧边栏状态
       dropdownClick, //下拉菜单点击
-      handleLogout //退出登录
+      handleLogout, //退出登录
     };
-  }
+  },
 };
 </script>
 
@@ -110,45 +110,6 @@ export default {
 
     &:hover {
       background-color: rgba(0, 0, 0, 0.025);
-    }
-  }
-}
-</style>
-<style lang="scss">
-// 【公用样式】
-// 查看按钮 蓝
-// 删除按钮 红
-// 编辑按钮 棕
-.modify-btn {
-  &.ant-btn-primary {
-    background-color: #e6a23c;
-    border-color: #e6a23c;
-
-    &:hover,
-    &:focus {
-      background-color: #ebb563;
-      border-color: #ebb563;
-    }
-    &:active {
-      background: #cf9236;
-      border-color: #cf9236;
-    }
-  }
-}
-// 状态操作 开/关
-.pass-btn {
-  &.ant-btn-primary {
-    background-color: #67c23a;
-    border-color: #67c23a;
-
-    &:hover,
-    &:focus {
-      background: #85ce61;
-      border-color: #85ce61;
-    }
-    &:active {
-      background: #5daf34;
-      border-color: #5daf34;
     }
   }
 }
