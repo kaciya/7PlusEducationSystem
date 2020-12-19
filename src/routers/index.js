@@ -114,12 +114,18 @@ const routes = [
       // 阅读题库
       {
         path: "/question/reading",
-        component: () => import("@/views/Question/Reading")
+        component: () => import("@/views/Question/Reading"),
+        meta: {
+          pathName: "/question/reading"
+        }
       },
       // 写作题库
       {
         path: "/question/writing",
-        component: () => import("@/views/Question/Writing")
+        component: () => import("@/views/Question/Writing"),
+        meta: {
+          pathName: "/question/writing"
+        }
       },
       //#endregion
       //#region 柒加圈

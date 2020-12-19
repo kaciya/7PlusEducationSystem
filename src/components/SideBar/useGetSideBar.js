@@ -74,12 +74,12 @@ export const useGetSideBar = () => {
         {
           id: 134,
           authName: "阅读题库",
-          path: "ydtk"
+          path: "question/reading"
         },
         {
           id: 135,
           authName: "写作题库",
-          path: "xztk"
+          path: "question/writing"
         }
       ]
     },
