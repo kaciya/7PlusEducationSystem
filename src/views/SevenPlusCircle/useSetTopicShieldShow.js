@@ -1,7 +1,7 @@
 import { ref, createVNode } from "vue";
 // 导入接口
 import topic from "@/api/topicAPI";
-// 导入请求方法
+// 导入post请求方法
 import { httpPost } from "@/utils/http";
 // 引入提示方法
 import { message, Modal } from "ant-design-vue";

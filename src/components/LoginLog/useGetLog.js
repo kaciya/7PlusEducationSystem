@@ -25,7 +25,7 @@ export const useGetLog = id => {
   //#endregion 分页配置项
   // 获取后台数据
   const getLogData = async () => {
-    const res = await httpGet(user.LoginJournal + `/${id}`, {
+    const res = await httpGet(user.GetLoginLog + `/${id}`, {
       // 降序
       descColumns: "createTime",
       pageNum: logPagination.current,
