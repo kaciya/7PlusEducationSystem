@@ -1,5 +1,5 @@
 import { reactive } from "vue";
-export const useTopicGetColumns = () => {
+export const useGetTopicColumns = () => {
   // 表格列的配置
   const columns = reactive([
     {
@@ -10,7 +10,8 @@ export const useTopicGetColumns = () => {
     {
       title: "内容",
       key: "content",
-      slots: { customRender: "content" }
+      slots: { customRender: "content" },
+      ellipsis: true
     },
     {
       title: "发布用户",
@@ -42,6 +43,7 @@ export const useTopicGetColumns = () => {
       slots: { customRender: "operation" }
     }
   ]);
+
   return {
     columns
   };
