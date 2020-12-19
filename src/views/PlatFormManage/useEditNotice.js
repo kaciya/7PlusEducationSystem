@@ -91,7 +91,6 @@ export const useEditNotice = getNoticeData => {
           .then(res => {
             if (res.code == 200) {
               message.success("编辑成功");
-              editFormRef.value.resetFields();
               editVisible.value = false;
               // 重新渲染
               getNoticeData();
