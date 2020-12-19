@@ -113,13 +113,7 @@
         :data-source="questionList"
         row-key="id"
         :loading="isLoading"
-        :pagination="{
-          total: total,
-          current: pagenum,
-          pageSize: pagesize,
-          showSizeChanger: true,
-          showQuickJumper: true,
-        }"
+        :pagination="questionPagination"
         @change="changePagenum"
       >
         <!-- 题目标签选择器 start -->
@@ -214,14 +208,12 @@ export default {
   setup() {
     // 渲染题目列表
     let {
-      pagenum,
-      pagesize,
+      questionPagination,
       category,
       labelId,
       getQuestion,
       questionList,
       isLoading,
-      total,
       changePagenum,
     } = useGetQuestion();
 
@@ -259,9 +251,8 @@ export default {
     // 返回
     return {
       //#region 渲染表格
-      // 当前页码, 每页几条
-      pagenum,
-      pagesize,
+      // 分页器配置
+      questionPagination,
       // 当前题目分类
       category,
       // 当前选择的标签筛选
@@ -276,8 +267,6 @@ export default {
       questionList,
       // 加载状态
       isLoading,
-      // 数据库中题目总条数
-      total,
       // 跳转页码时
       changePagenum,
       // 设置题目标签
