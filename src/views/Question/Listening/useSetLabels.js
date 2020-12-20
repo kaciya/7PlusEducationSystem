@@ -27,7 +27,10 @@ export function useSetLabels(labelList) {
     const checkedIds = [];
     checkedLabels.forEach(ele => {
       // 如果 标签列表中的标签名 与 所选标签名一致，记录索引
-      checkedIds.push(labelList.value[labelList.value.findIndex((value) => value.name == ele)].id);
+      checkedIds.push(
+        labelList.value[labelList.value.findIndex(value => value.name == ele)]
+          .id
+      );
     });
     console.log(checkedIds);
     // 发起请求设置标签

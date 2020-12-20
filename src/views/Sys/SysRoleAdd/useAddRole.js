@@ -1,17 +1,12 @@
 //导入 reactive 对象
-import {
-    reactive
-} from "vue";
+import { reactive } from "vue";
 
 //导入 API 接口
-import {
-    role
-} from "@/api/sysUserAPI";
+import { role } from "@/api/sysUserAPI";
 
 //#region 权限组添加 功能
 export const useAddRole = () => {
     
-
     //#region 权限组添加 表单校验规则
     const addRoleRules = reactive({
         realName: [{
@@ -29,11 +24,6 @@ export const useAddRole = () => {
     });
     //#endregion
 
-    //#region 复选框
-
-    //#endregion
-
-
     //返回参数 和 方法
     return{
         //添加表单校验规则
@@ -43,4 +33,3 @@ export const useAddRole = () => {
     }
 }
 //#endregion
-

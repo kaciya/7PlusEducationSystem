@@ -102,7 +102,7 @@
         <!-- 操作 -->
         <template #operation="{ record }">
           <!-- 跳转到用户详情页面并传id -->
-          <a-button type="primary">
+          <a-button type="primary" size="small">
             <router-link :to="'/user/details/' + record.id">查看</router-link>
           </a-button>
         </template>
@@ -185,10 +185,4 @@ export default {
   color: #16a085;
 }
 // 表格样式 end
-</style>
-<style>
-/* 表格标题加粗 */
-.ant-table-thead > tr > th {
-  font-weight: 600;
-}
 </style>

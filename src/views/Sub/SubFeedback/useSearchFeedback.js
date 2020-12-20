@@ -1,7 +1,5 @@
 //导入 reactive 对象
-import {
-    reactive
-} from "vue";
+import { reactive } from "vue";
 
 //#region 查询列表
 export const useSearchFeedback = (getFeedbackData , headerData) => {
@@ -24,16 +22,12 @@ export const useSearchFeedback = (getFeedbackData , headerData) => {
 
         //发起查询请求
         getFeedbackData(params);
-        //将双向绑定的 日期 和 选择项 中的值 重置
-        headerData.selectModel = "2";
-        headerData.dateModel = [];
-        headerData.confirmDate = {};
     }
 
-    //返回 查询方法
-    return{
-        searchClick
-    }
-}
+  //返回 查询方法
+  return {
+    searchClick
+  };
+};
 
 //#endregion

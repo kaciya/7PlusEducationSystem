@@ -4,23 +4,16 @@
     <Crumbs
       :crumbName="[
         { name: '运营管理' },
-        { name: '常见问题(学习中心)', route: '#' }
+        { name: '常见问题(学习中心)', route: '/operation/problem' }
       ]"
     />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
-    <div
-      :style="{
-        padding: '20px',
-        background: '#fff',
-        minHeight: '93%'
-      }"
-    >
+    <a-card style="min-height: 93%">
       <a-row>
         <a-col :span="24" style="margin-bottom: 15px">
           <a-button
             type="primary"
-            size="large"
             style="float: right"
             @click="showAddForm"
           >
@@ -41,12 +34,16 @@
             type="primary"
             style="margin-right: 10px"
             @click="showEditForm(record)"
+            size="small"
+            class="modify-btn"
           >
             编辑
           </a-button>
-          <a-button type="danger" @click="showDeleteConfirm(record.id)">
+          <a-popconfirm placement="topRight" title="您真的要删除该项么?" @confirm="delSubmit(record.id)" @cancel="delCancel">
+          <a-button type="danger" size="small">
             删除
           </a-button>
+          </a-popconfirm>
         </template>
       </a-table>
       <!-- 问题列表 end -->
@@ -118,7 +115,7 @@
         </a-form>
       </a-modal>
       <!-- 编辑问题模态框 end -->
-    </div>
+    </a-card>
     <!-- 主体Main end -->
   </a-layout-content>
 </template>
@@ -177,7 +174,7 @@ export default {
     //#endregion
 
     //#region 删除问题方法
-    const { showDeleteConfirm } = useDelProblem(getProblem);
+    const { delSubmit,delCancel } = useDelProblem(getProblem);
     //#endregion
 
     return {
@@ -203,7 +200,8 @@ export default {
       eEditCancel,
       //#endregion
       //#reigon 删除问题方法
-      showDeleteConfirm
+      delSubmit,
+      delCancel
       //endregion
     };
   }

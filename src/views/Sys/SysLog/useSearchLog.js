@@ -1,8 +1,5 @@
 //导入 reactive 对象
-import {
-    reactive
-} from "vue";
-
+import { reactive } from "vue";
 
 //#region 查询列表
 export const useSearchLog = (getLogData , headerData) => {
@@ -25,16 +22,11 @@ export const useSearchLog = (getLogData , headerData) => {
         }
         //发起查询请求
         getLogData(params);
-
-        //将双向绑定的 日期 和 账号名称 中的值 重置
-        headerData.dateModel = [];
-        headerData.usernameModel = "";
-        headerData.confirmDate = {};
     }
 
-    //返回 查询方法
-    return{
-        searchClick
-    }
-}
+  //返回 查询方法
+  return {
+    searchClick
+  };
+};
 //#endregion

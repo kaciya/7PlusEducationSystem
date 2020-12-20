@@ -52,7 +52,7 @@ export const useAddProblemList = getProblem => {
         }
       })
       .catch(err => {
-        console.log(err);
+        throw err;
       });
   };
 

@@ -1,27 +1,20 @@
 <template>
-  <!-- 主体 start -->
   <a-layout-content>
     <!-- 面包屑 start -->
     <Crumbs
       :crumbName="[
         {
           route: '',
-          name: '平台管理'
+          name: '平台管理',
         },
         {
           route: '',
-          name: '公告管理'
-        }
+          name: '公告管理',
+        },
       ]"
     ></Crumbs>
     <!-- 面包屑 end -->
-    <div
-      :style="{
-        padding: '20px',
-        background: '#fff',
-        minHeight: '93%'
-      }"
-    >
+    <a-card style="min-height: 93%">
       <!-- 查询 start -->
       <div class="query border">
         <a-row>
@@ -31,10 +24,7 @@
                 <span>输入查询：</span>
               </a-col>
               <a-col :span="17">
-                <a-input
-                  v-model:value="noticeInputQuery"
-                  placeholder="公告标题"
-                />
+                <a-input v-model:value="noticeTitle" placeholder="公告标题" />
               </a-col>
             </a-row>
           </a-col>
@@ -45,6 +35,7 @@
               </a-col>
               <a-col :span="17">
                 <a-select v-model:value="noticeStatus" placeholder="全部">
+                  <a-select-option value=""> 全部 </a-select-option>
                   <a-select-option value="1"> 已发布 </a-select-option>
                   <a-select-option value="0"> 已结束 </a-select-option>
                 </a-select>
@@ -54,10 +45,10 @@
           <a-col :span="5" :offset="1">
             <a-row>
               <a-col :span="7" class="right">
-                <span>对象：</span>
+                <span>发布人员：</span>
               </a-col>
               <a-col :span="17">
-                <a-input v-model:value="noticeObj" placeholder="全部" />
+                <a-input v-model:value="noticeUserName" placeholder="全部" />
               </a-col>
             </a-row>
           </a-col>
@@ -75,104 +66,116 @@
       </div>
       <!-- 查询 end -->
       <!-- 数据列表 start -->
-      <div class="border">
-        <div class="border-bottom">
-          <span>数据列表</span>
-          <a-button type="primary" @click="addShowModal"> 添加 </a-button>
-          <!-- 添加模态框 start -->
-          <a-modal
-            v-model:visible="addVisible"
-            title="发布公告"
-            width="950px"
-            @cancel="cancelAddModal"
-            @ok="confirmAddModal"
-          >
-            <a-form :model="addModel" :rules="addRules" ref="addForm">
-              <a-form-item
-                :labelCol="{ span: 3 }"
-                :wrapperCol="{ span: 21 }"
-                label="公告标题："
-                name="noticeTitle"
-              >
-                <a-input
-                  v-model:value="addModel.noticeTitle"
-                  placeholder="请填写公告标题"
-                />
-              </a-form-item>
-              <a-form-item
-                :labelCol="{ span: 3 }"
-                :wrapperCol="{ span: 21 }"
-                label="截止时间："
-                name="endDate"
-              >
-                <a-date-picker
-                  format="YYYY-MM-DD"
-                  :disabled-date="DisabledDate"
-                  v-model:value="addModel.endDate"
-                />
-              </a-form-item>
-              <a-form-item
-                :labelCol="{ span: 3 }"
-                :wrapperCol="{ span: 21 }"
-                label="公告内容："
-                name="noticeContent"
-              >
-                <ckeditor
-                  :editor="editor"
-                  v-model="addModel.noticeContent"
-                ></ckeditor>
-              </a-form-item>
-            </a-form>
-          </a-modal>
-          <!-- 添加模态框 end -->
-        </div>
+      <div class="table border">
+        <a-page-header style="border-bottom: 1px solid #ddd" title="数据列表">
+          <template #extra>
+            <a-button type="primary" @click="addShowModal"> 添加 </a-button>
+            <!-- 添加模态框 start -->
+            <a-modal
+              v-model:visible="addVisible"
+              title="发布公告"
+              width="950px"
+              :afterClose="addCloselModal"
+              @ok="addConfirmModal"
+            >
+              <a-form :model="addModel" :rules="addRules" ref="addFormRef">
+                <a-form-item
+                  :labelCol="{ span: 3 }"
+                  :wrapperCol="{ span: 21 }"
+                  label="公告标题："
+                  name="noticeTitle"
+                >
+                  <a-input
+                    v-model:value="addModel.noticeTitle"
+                    placeholder="请填写公告标题"
+                  />
+                </a-form-item>
+                <a-form-item
+                  :labelCol="{ span: 3 }"
+                  :wrapperCol="{ span: 21 }"
+                  label="截止时间："
+                  name="endDate"
+                >
+                  <a-date-picker
+                    format="YYYY-MM-DD HH:mm:ss"
+                    :disabled-date="disabledDate"
+                    :show-time="{
+                      defaultValue: moment('00:00:00', 'HH:mm:ss'),
+                    }"
+                    v-model:value="addModel.endDate"
+                  />
+                </a-form-item>
+                <a-form-item
+                  :labelCol="{ span: 3 }"
+                  :wrapperCol="{ span: 21 }"
+                  label="公告内容："
+                  name="noticeContent"
+                >
+                  <ckeditor
+                    :editor="editor"
+                    v-model="addModel.noticeContent"
+                  ></ckeditor>
+                </a-form-item>
+              </a-form>
+            </a-modal>
+            <!-- 添加模态框 end -->
+          </template>
+        </a-page-header>
         <!-- 表格 start -->
         <a-table
           bordered
           :columns="columns"
           :data-source="noticeData"
-          :row-key="record => record.id"
-          :pagination="false"
+          row-key="id"
+          :pagination="tablePagination"
+          @change="tablePageChange"
         >
           <template #status="{ text }">
             <span v-if="text.status == 1">已发布</span>
             <span v-else>已结束</span>
           </template>
           <template #operation="{ text }">
-            <div v-if="text.status == 0">
+            <div v-if="text.status == 1">
               <a-button
+                class="modify-btn"
                 type="primary"
-                @click="
-                  handleShowUpdateModal(
-                    text.id,
-                    text.title,
-                    text.content,
-                    text.createTime,
-                    text.status
-                  )
-                "
                 style="margin-right: 10px"
+                @click="editShowModal(text)"
                 >编辑</a-button
               >
-              <a-button type="danger" @click="delOneNotice(text.id)"
-                >删除</a-button
+              <a-popconfirm
+                title="此操作将永久删除该用户, 是否继续?"
+                ok-text="确认"
+                cancel-text="取消"
+                @confirm="delOneNotice(text.id)"
+                @cancel="cancelDel"
               >
+                <a-button type="danger"> 删除 </a-button>
+              </a-popconfirm>
             </div>
             <div v-else>
-              <a>删除</a>
+              <a-popconfirm
+                title="此操作将永久删除该用户, 是否继续?"
+                ok-text="确认"
+                cancel-text="取消"
+                @confirm="delOneNotice(text.id)"
+                @cancel="cancelDel"
+              >
+                <a-button type="danger"> 删除 </a-button>
+              </a-popconfirm>
             </div>
           </template>
         </a-table>
         <!-- 表格 end -->
         <!-- 编辑模态框 start -->
         <a-modal
-          v-model:visible="updateVisible"
+          v-model:visible="editVisible"
           title="编辑公告"
           width="950px"
-          @cancel="handleCancelUpdateModal"
-          @ok="handleConfirmUpdateModal"
+          :afterClose="editCloselModal"
+          @ok="editConfirmModal"
         >
-          <a-form :model="updateModel" :rules="updateRules" ref="updateForm">
+          <a-form :model="editModel" :rules="editRules" ref="editFormRef">
             <a-form-item
               :labelCol="{ span: 3 }"
               :wrapperCol="{ span: 21 }"
@@ -180,7 +183,7 @@
               name="noticeTitle"
             >
               <a-input
-                v-model:value="updateModel.noticeTitle"
+                v-model:value="editModel.noticeTitle"
                 placeholder="请填写公告标题"
               />
             </a-form-item>
@@ -191,9 +194,12 @@
               name="endDate"
             >
               <a-date-picker
-                format="YYYY-MM-DD"
-                :disabled-date="DisabledDate"
-                v-model:value="updateModel.endDate"
+                format="YYYY-MM-DD HH:mm:ss"
+                :disabled-date="disabledDate"
+                :show-time="{
+                  defaultValue: moment('00:00:00', 'HH:mm:ss'),
+                }"
+                v-model:value="editModel.endDate"
               />
             </a-form-item>
             <a-form-item
@@ -202,73 +208,77 @@
               label="公告内容："
               name="noticeContent"
             >
+              <!-- @ready="onReady" -->
               <ckeditor
                 :editor="editor"
-                v-model="updateModel.noticeContent"
+                :config="editorConfig"
+                v-model="editModel.noticeContent"
               ></ckeditor>
             </a-form-item>
           </a-form>
         </a-modal>
         <!-- 编辑模态框 end -->
-        <!-- 分页 start -->
-        <a-pagination
-          @change="onChangePage"
-          show-size-changer
-          :page-size-options="['20']"
-          v-model:current="pageNum"
-          :pageSize="20"
-          :total="noticeTotal"
-        />
-        <!-- 分页 end -->
       </div>
       <!-- 数据列表 end -->
-    </div>
+    </a-card>
   </a-layout-content>
-  <!-- 主体 end -->
 </template>
 
 <script>
+import { ref } from "vue";
 // 引入面包屑组件
 import Crumbs from "@/components/Crumbs";
 // 引入表格配置
 import { useNoticeDataList } from "./useNoticeDataList";
-import { useNoticeGetColumns } from "./useNoticeGetColumns";
+import { useGetNoticeColumns } from "./useGetNoticeColumns";
 // 引入查询重置
-import { useNoticeQuery } from "./useNoticeQuery";
+import { useGetNoticeList } from "./useGetNoticeList";
 // 引入添加公告
-import { useNoticeAdd } from "./useNoticeAdd";
+import { useAddNotice } from "./useAddNotice";
 // 引入编辑公告
-import { useNoticeModify } from "./useNoticeModify";
+import { useEditNotice } from "./useEditNotice";
 // 引入删除公告
-import { useNoticeDel } from "./useNoticeDel";
+import { useDelNotice } from "./useDelNotice";
 // 引入富文本编辑器
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+// 中文化富文本
+import "@ckeditor/ckeditor5-build-classic/build/translations/zh-cn";
+// 上传图片处理文件
+// import MyUploadAdapter from "./MyUploadAdapter.js";
 // 引入日期处理
 import moment from "moment";
-import { ref } from "vue";
 export default {
   setup() {
     // 数据列表
-    // columns：表格列的配置
+    // getNoticeData：获取数据
     // noticeData：数据列表
-    // noticeGetData：获取数据
-    // noticeTotal：数据总条数
-    const { noticeData, noticeGetData, noticeTotal } = useNoticeDataList();
-    const { columns } = useNoticeGetColumns();
-    // 点击换页
-    const onChangePage = (page, pageSize) => {
-      noticeGetData(page, pageSize);
-    };
+    // tablePagination：分页
+    const { getNoticeData, noticeData, tablePagination } = useNoticeDataList();
+
+    // columns：表格列的配置
+    const { columns } = useGetNoticeColumns();
 
     // 查询重置
     const {
-      noticeInputQuery, // 输入查询
+      noticeTitle, // 输入查询
       noticeStatus, // 公告状态
-      noticeObj, // 发布人员对象
-      pageNum, // 当前页
+      noticeUserName, // 发布人员对象
       noticeReset, // 重置
-      noticeRead // 查询
-    } = useNoticeQuery(noticeGetData);
+      noticeRead, // 查询
+      noticeModel, // 查询存下的输入框内容
+    } = useGetNoticeList(getNoticeData, tablePagination);
+
+    // 点击切换页面
+    const tablePageChange = (pagination) => {
+      tablePagination.current = pagination.current;
+      tablePagination.pageSize = pagination.pageSize;
+      // 重新渲染
+      getNoticeData(
+        noticeModel.status,
+        noticeModel.title,
+        noticeModel.username
+      );
+    };
 
     // 添加公告
     const {
@@ -276,75 +286,94 @@ export default {
       addShowModal, // 显示添加模态框
       addModel, // 表单内容
       addRules, // 校验规则
-      cancelAddModal, // 关闭模态框
-      confirmAddModal, // 确认添加
-      addForm // 表单ref
-    } = useNoticeAdd();
+      addCloselModal, // 关闭模态框
+      addConfirmModal, // 确认添加
+      addFormRef, // 表单ref
+    } = useAddNotice(getNoticeData);
 
     // 编辑公告
     const {
-      updateVisible, // 模态框绑定
-      handleShowUpdateModal, // 显示编辑模态框
-      updateModel, // 表单内容
-      updateRules, // 校验规则
-      handleCancelUpdateModal, // 关闭模态框
-      handleConfirmUpdateModal, // 确认编辑
-      updateForm // 表单ref
-    } = useNoticeModify();
+      editVisible, // 模态框绑定
+      editShowModal, // 显示编辑模态框
+      editModel, // 表单内容
+      editRules, // 校验规则
+      editCloselModal, // 关闭模态框
+      editConfirmModal, // 确认编辑
+      editFormRef, // 表单ref
+    } = useEditNotice(getNoticeData);
 
     // 日期选择设置
-    const DisabledDate = current => {
+    const disabledDate = (current) => {
       // 不能选择今天和今天之前的日期
       return current && current < moment().endOf("day");
     };
 
-    // 删除公告
-    const { delOneNotice } = useNoticeDel();
+    // delOneNotice：删除公告
+    // cancelDel：取消删除
+    const { delOneNotice, cancelDel } = useDelNotice(getNoticeData);
 
     // 使用富文本编辑器
     const editor = ref(ClassicEditor);
+
+    // 中文化富文本
+    const editorConfig = ref({
+      language: "zh-cn",
+    });
+
+    // const onReady = (editor) => {
+    //   // 自定义上传图片插件
+    //   editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
+    //     return new MyUploadAdapter(loader);
+    //   };
+    // };
     return {
       // 数据列表
+      getNoticeData,
       noticeData,
-      noticeGetData,
-      noticeTotal,
-      onChangePage,
+      tablePagination,
       columns,
+      tablePageChange,
       // 查询重置
-      noticeInputQuery,
+      noticeTitle,
       noticeStatus,
-      noticeObj,
-      pageNum,
+      noticeUserName,
       noticeReset,
       noticeRead,
+      noticeModel,
       // 添加公告
       addVisible,
       addShowModal,
       addModel,
       addRules,
-      cancelAddModal,
-      confirmAddModal,
-      addForm,
+      addCloselModal,
+      addConfirmModal,
+      addFormRef,
       // 编辑
-      updateVisible,
-      handleShowUpdateModal,
-      updateModel,
-      updateRules,
-      handleCancelUpdateModal,
-      handleConfirmUpdateModal,
-      updateForm,
+      editVisible,
+      editShowModal,
+      editModel,
+      editRules,
+      editCloselModal,
+      editConfirmModal,
+      editFormRef,
       // 日期选择设置
-      DisabledDate,
+      disabledDate,
+      moment,
       // 删除
       delOneNotice,
+      // 取消删除
+      cancelDel,
       // 富文本编辑器
-      editor
+      editor,
+      // 中文化富文本
+      editorConfig,
+      // onReady,
     };
   },
   // 使用组件
   components: {
-    Crumbs
-  }
+    Crumbs,
+  },
 };
 </script>
 
@@ -369,31 +398,12 @@ export default {
     text-align: right;
   }
 }
+.table {
+  .ant-table-wrapper {
+    padding: 24px;
+  }
+}
 .border {
   border: 1px solid #ddd;
-  .border-bottom {
-    height: 50px;
-    border-bottom: 1px solid #ddd;
-    > span {
-      line-height: 50px;
-      color: #333;
-      font-weight: 700;
-      margin-left: 11px;
-    }
-    & > .ant-btn {
-      float: right;
-      margin: 9px 16px;
-    }
-  }
-  .ant-table-wrapper {
-    padding: 16px;
-  }
-  .ant-pagination {
-    text-align: right;
-    padding: 16px;
-  }
-  .ant-pagination-next {
-    margin-right: 8px;
-  }
 }
 </style>

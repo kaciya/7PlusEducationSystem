@@ -37,11 +37,7 @@
             <a-button class="header-btn" @click="resetClick">
               重置
             </a-button>
-            <a-button
-              type="primary"
-              class="header-btn"
-              @click="searchClick"
-            >
+            <a-button type="primary" class="header-btn" @click="searchClick">
               查询
             </a-button>
           </a-col>
@@ -81,12 +77,13 @@
 
         <!-- 操作 -->
         <template #operation="{ record }">
-          <a-button type="primary" v-if="record.status == 1" disabled>
+          <a-button type="primary" size="small" v-if="record.status == 1" disabled>
             <LineOutlined />
           </a-button>
 
           <a-button
             type="primary"
+            size="small"
             v-else-if="record.status == 0"
             @click="editManage(record.id)"
           >
@@ -141,25 +138,48 @@ export default {
   // setup响应api入口
   setup() {
     //#region 获取 导入方法中返回的 子方法和参数
+    /**
+     * feedbackTable 反馈列表
+     */
     const { feedbackTable } = useFeedbackColums();
 
+    /**
+     * feedbackPagination 分页参数
+     * getFeedbackData 渲染表格数据方法
+     * pageChange 点击下一页方法
+     */
     const {
       feedbackPagination,
       getFeedbackData,
       pageChange
     } = useGetFeedbackList(feedbackTable);
 
-    const {
+    /**
+     * headerData 顶部 日期 与 状态 绑定数据对象
+     * changeStatus 选择项改变方法
+     * changeDate 日期选择器改变方法
+     * changeDateConfirm 日期范围确定
+     */
+    const { 
       headerData,
       changeStatus,
       changeDate,
-      changeDateConfirm,
+      changeDateConfirm
     } = useFeedbackHeader();
 
+    /**
+     * searchClick 查询列表
+     */
     const { searchClick } = useSearchFeedback(getFeedbackData, headerData);
 
+    /**
+     * resetClick 重置状态 和 时间范围
+     */
     const { resetClick } = useResetFeedback(getFeedbackData, headerData);
 
+    /**
+     * editManage 点击操作中的处理方法
+     */
     const { editManage } = useEditFeedbackManage();
     //#endregion
 
@@ -191,10 +211,10 @@ export default {
       //点击操作中的处理方法
       editManage,
       //点击下一页方法
-      pageChange,
+      pageChange
     };
     //#endregion
-  },
+  }
 };
 </script>
 
@@ -203,8 +223,8 @@ export default {
   width: auto;
 }
 
-.header-btn{
+.header-btn {
   margin: 3px 10px;
-  float: right
+  float: right;
 }
 </style>

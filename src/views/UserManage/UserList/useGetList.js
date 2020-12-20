@@ -39,7 +39,7 @@ export const useGetList = () => {
   let isSuccess = ref(false);
   // 获取后台数据
   const getUserListData = async () => {
-    const res = await httpGet(user.UserPage, {
+    const res = await httpGet(user.GetUserPage, {
       // 降序
       descColumns: "createTime",
       pageNum: userPagination.current,

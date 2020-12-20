@@ -5,7 +5,7 @@ export default {
   state() {
     return {
       // SST添加模态框 显示与隐藏
-      addSSTVisible: false,
+      addSSTVisible: false
     };
   },
   mutations: {

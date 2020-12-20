@@ -1,0 +1,42 @@
+/* 【table】 */
+// 标题加粗
+.ant-table-thead > tr > th {
+    font-weight: 600;
+}
+
+/* 【按钮】 */
+// 查看按钮[蓝] 删除按钮[红]
+// 编辑按钮[棕]
+.modify-btn {
+  &.ant-btn-primary {
+    background-color: #e6a23c;
+    border-color: #e6a23c;
+
+    &:hover,
+    &:focus {
+      background-color: #ebb563;
+      border-color: #ebb563;
+    }
+    &:active {
+      background: #cf9236;
+      border-color: #cf9236;
+    }
+  }
+}
+// 状态操作[显示绿]
+.pass-btn {
+  &.ant-btn-primary {
+    background-color: #67c23a;
+    border-color: #67c23a;
+
+    &:hover,
+    &:focus {
+      background: #85ce61;
+      border-color: #85ce61;
+    }
+    &:active {
+      background: #5daf34;
+      border-color: #5daf34;
+    }
+  }
+}

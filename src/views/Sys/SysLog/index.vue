@@ -34,7 +34,7 @@
               重置
             </a-button>
             <a-button
-              type="primary"
+              type="primary" 
               class="header-btn"
               @click="searchClick"
             >
@@ -47,18 +47,17 @@
 
       <!-- 权限组列表card-->
       <a-card title="标签列表">
-
-      <!-- 数据列表 -->
-      <a-table
-        bordered
-        :columns="logTable.colums"
-        :data-source="logTable.data"
-        row-Key="id"
-        :pagination="logPagination"
-        @change="pageChange"
-      >
-      </a-table>
-      <!-- 数据列表 end -->
+        <!-- 数据列表 -->
+        <a-table
+          bordered
+          :columns="logTable.colums"
+          :data-source="logTable.data"
+          row-Key="id"
+          :pagination="logPagination"
+          @change="pageChange"
+        >
+        </a-table>
+        <!-- 数据列表 end -->
       </a-card>
       <!-- 权限组列表card end-->
     </a-card>
@@ -97,22 +96,41 @@ export default {
   // setup响应api入口
   setup() {
     //#region 获取 导入方法中返回的 子方法和参数
+    /**
+     * logTable 操作日志列表
+     */
     const { logTable } = useLogColums();
 
+    /**
+     * logPagination 分页参数
+     * getLogData 渲染操作日志列表
+     * pageChange 点击下一页方法
+     */
     const {
       logPagination,
       getLogData,
       pageChange
     } = useGetLogList(logTable);
 
+    /**
+     * headerData 顶部 日期 与 状态 绑定数据对象
+     * changeDate 日期选择器改变方法
+     * changeDateConfirm 日期范围确定
+     */
     const {
       headerData,
       changeDate,
       changeDateConfirm,
     } = useLogHeader();
 
+    /**
+     * searchClick 根据 时间范围 和 账号名称 查询方法
+     */
     const { searchClick } = useSearchLog(getLogData, headerData);
-
+    
+    /**
+     * resetClick 重置 时间范围 和 账号名称方法
+     */
     const { resetClick } = useResetLog(getLogData , headerData);
     //#endregion
 
@@ -143,17 +161,17 @@ export default {
       pageChange
     };
     //#endregion
-  },
+  }
 };
-</script> 
+</script>
 
 <style lang="scss" scoped>
 .ant-btn {
   width: auto;
 }
 
-.header-btn{
+.header-btn {
   margin: 3px 10px;
-  float: right
+  float: right;
 }
 </style>

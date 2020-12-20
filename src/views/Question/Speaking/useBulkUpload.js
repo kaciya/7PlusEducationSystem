@@ -53,16 +53,23 @@ export function useBulkUpload() {
         const formData = new FormData();
         formData.append("files", bulkUpload.fileList[0]);
         // 提交表单
-        axios.post("http://pte.admin.api.banyuge.com/admin" + speak.BulkUpload("ra"), formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            "Token": window.sessionStorage.getItem("token")
-          }
-        }).then((res) => {
-          console.log(res);
-        }).catch((err) => {
-          console.log(err);
-        })
+        axios
+          .post(
+            "http://pte.admin.api.banyuge.com/admin" + speak.BulkUpload("ra"),
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Token: window.sessionStorage.getItem("token")
+              }
+            }
+          )
+          .then(res => {
+            console.log(res);
+          })
+          .catch(err => {
+            console.log(err);
+          });
         // 清空
         bulkUpload.fileList = [];
       } else {

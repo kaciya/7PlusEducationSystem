@@ -1,17 +1,11 @@
 //导入 reactive 对象
-import {
-    reactive
-} from "vue";
+import { reactive } from "vue";
 
 //导入 API 接口
-import {
-    role
-} from "@/api/sysUserAPI";
+import { role } from "@/api/sysUserAPI";
 
 //导入 GET请求方法
-import {
-    httpGet
-} from "@/utils/http";
+import { httpGet } from "@/utils/http";
 
 //#region 渲染权限列表
 export const useGetUserPermissions = () => {
@@ -28,15 +22,15 @@ export const useGetUserPermissions = () => {
                 }
             })
             .catch(error => {
-                console.log(error);
+                throw error;
             });
     }
     //#endregion
 
-    //返回
-    return {
-        rolesPermissionsList,
-        getPermissions
-    }
-}
+  //返回
+  return {
+    rolesPermissionsList,
+    getPermissions
+  };
+};
 //#endregion

@@ -24,13 +24,13 @@ export const useEditUserStatus = (getSysUserList) => {
                 }
             })
             .catch(error => {
-                console.log(error);
+                throw error;
             });
     }
 
-    //返回方法
-    return{
-        changeStatus
-    }
-}
+  //返回方法
+  return {
+    changeStatus
+  };
+};
 //#endregion

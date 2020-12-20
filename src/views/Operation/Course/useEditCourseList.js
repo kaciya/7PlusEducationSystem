@@ -77,7 +77,7 @@ export const useEditCourseList = getCourse => {
         }
       })
       .catch(err => {
-        console.log(err);
+        throw err;
       });
   };
 

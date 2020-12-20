@@ -5,7 +5,7 @@
       :crumbName="[
         { name: '权限管理' },
         { name: '权限组', route: '/sys/role' },
-        { name: '添加' },
+        { name: '添加' }
       ]"
     />
     <!-- 面包屑 end -->
@@ -74,6 +74,11 @@ export default {
   // setup响应api入口
   setup() {
     //#region 获取 导入方法中返回的 子方法和参数
+
+    /**
+     * addRoleRules 添加表单校验规则
+     * addRoleForm 表单数据模型对象
+     */
     const { addRoleRules, addRoleForm } = useAddRole();
 
     //#endregion
@@ -83,10 +88,10 @@ export default {
       //添加表单校验规则
       addRoleRules,
       //表单数据模型对象
-      addRoleForm,
+      addRoleForm
     };
     //#endregion
-  },
+  }
 };
 </script>
 

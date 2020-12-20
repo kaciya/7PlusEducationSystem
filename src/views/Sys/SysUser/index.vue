@@ -113,7 +113,8 @@
             <!-- 密码重置 -->
             <a-button
               type="primary"
-              class="operation-btn"
+              size="small"
+              class="operation-btn modify-btn"
               @click="resetUserPwd(record.userId)"
             >
               密码重置
@@ -125,7 +126,9 @@
                 <p class="popconfirm-text-top">确定删除该操作员?</p>
                 <p class="popconfirm-text-bottom">删除后无法恢复数据</p>
               </template>
-              <a-button type="danger" class="operation-btn"> 删除 </a-button>
+              <a-button type="danger" size="small" class="operation-btn">
+                删除
+              </a-button>
             </a-popconfirm>
             <!-- 删除按钮 end -->
           </template>
@@ -168,22 +171,51 @@ import { useGetUserPermissions } from "./useGetUserPermissions";
 
 export default {
   components: {
-    Crumbs
+    Crumbs,
   },
 
   // setup响应api入口
   setup() {
     //#region 获取 导入方法中返回的 子方法和参数
+    /**
+     * sysUsersTable 账号列表 表格数据
+     */
     const { sysUsersTable } = useUserColums();
 
-    const { getUserList , userPagination , pageChange } = useGetUserList(sysUsersTable);
+    /**
+     * getUserList 渲染表格
+     * userPagination 分页参数
+     * pageChange 点击下一页方法
+     */
+    const { getUserList, userPagination, pageChange } = useGetUserList(
+      sysUsersTable
+    );
 
+    /**
+     * changeStatus 改变启用状态方法
+     */
     const { changeStatus } = useEditUserStatus(getUserList);
 
+    /**
+     * showDelConfirm 显示删除模态框方法
+     */
     const { showDelConfirm } = useDelUser(getUserList);
 
+    /**
+     * resetUserPwd 重置账号密码回调
+     */
     const { resetUserPwd } = useResetUserPwd();
 
+    /**
+     * sysUserRules 账号添加表单校验规则
+     * addUserVisible 显示添加账号模态框
+     * confirmLoading 模态框确认时加载
+     * sysUserForm 账号添加表单数据模型对象
+     * showAddModal 显示添加账号模态框
+     * addUserConfirm 添加账号确定回调
+     * addUserCancel 添加账号取消时回调
+     * addUserFormRef 添加表单
+     */
     const {
       sysUserRules,
       addUserVisible,
@@ -192,9 +224,13 @@ export default {
       showAddModal,
       addUserConfirm,
       addUserCancel,
-      addUserFormRef,
+      addUserFormRef
     } = useAddUser(getUserList);
 
+    /**
+     * rolesPermissionsList 权限列表
+     * getPermissions 渲染权限列表
+     */
     const { rolesPermissionsList, getPermissions } = useGetUserPermissions();
 
     //#endregion
@@ -239,10 +275,10 @@ export default {
       //重置账号密码回调
       resetUserPwd,
       //点击下一页方法
-      pageChange
+      pageChange,
     };
     //#endregion
-  },
+  }
 };
 </script>
 

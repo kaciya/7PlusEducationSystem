@@ -42,7 +42,8 @@
           <template #operation="{ record }">
             <a-button
               type="primary"
-              class="operation-btn"
+              size="small"
+              class="operation-btn modify-btn"
               @click="editRouter(record.roleId)"
             >
               编辑
@@ -51,7 +52,9 @@
               title="确定删除此权限组?"
               @confirm="showDelConfirm(record.roleId)"
             >
-              <a-button type="danger" class="operation-btn"> 删除 </a-button>
+              <a-button type="danger" size="small" class="operation-btn">
+                删除
+              </a-button>
             </a-popconfirm>
           </template>
           <!-- 配置 operation 操作 end -->
@@ -86,24 +89,40 @@ import { useRolesColums } from "./useRolesColums";
 export default {
   // 组件
   components: {
-    Crumbs
+    Crumbs,
   },
 
   // setup响应api入口
   setup() {
     //#region 获取 导入方法中返回的 子方法和参数
+    /**
+     * rolesTable 权限组列表
+     */
     const { rolesTable } = useRolesColums();
 
+    /**
+     * rolePagination 分页参数
+     * getRolesData 渲染权限组列表方法
+     * pageChange 点击下一页方法
+     * addRouter 权限组添加路由跳转
+     * editRouter 权限组编辑路由跳转
+     */
     const {
       rolePagination,
       getRolesData,
       pageChange,
       addRouter,
-      editRouter,
+      editRouter
     } = useGetRolesList(rolesTable);
 
+    /**
+     * showDelConfirm 显示删除模态框方法
+     */
     const { showDelConfirm } = useDelRoles(getRolesData);
 
+    /**
+     * statusChange 更改用户状态方法
+     */
     const { statusChange } = useEditRoleStatus(getRolesData);
     //#endregion
 
@@ -129,10 +148,10 @@ export default {
       //权限组编辑路由跳转
       editRouter,
       //点击下一页方法
-      pageChange,
+      pageChange
     };
     //#endregion
-  },
+  }
 };
 </script>
 
@@ -141,7 +160,7 @@ export default {
   width: auto;
 }
 
-.operation-btn{
-  margin: 0 5px
+.operation-btn {
+  margin: 0 5px;
 }
 </style>

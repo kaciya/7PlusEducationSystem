@@ -37,7 +37,7 @@ export function useGetQuestion() {
    * 获取题目
    * @param {*} goFirstPage 是否前往第一页
    */
-  const getQuestion = (goFirstPage) => {
+  const getQuestion = goFirstPage => {
     if (goFirstPage) {
       questionPagination.current = 1;
     }
@@ -87,7 +87,7 @@ export function useGetQuestion() {
     questionPagination.current = current;
     questionPagination.pageSize = pageSize;
     getQuestion();
-  }
+  };
 
   // 初始化时
   onMounted(() => {

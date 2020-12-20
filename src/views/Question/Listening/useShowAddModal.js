@@ -1,6 +1,6 @@
 // 引入响应式API
-import { reactive } from "vue"
-/** 
+import { reactive } from "vue";
+/**
  * 导出
  * @param {*} category 当前题型分类
  */
@@ -16,7 +16,7 @@ export function useShowAddModal(category) {
   const showAddModal = () => {
     // 关闭sst模态框
     addModalVisible[category.value.toLowerCase()] = true;
-  }
+  };
 
   // 返回
   return {

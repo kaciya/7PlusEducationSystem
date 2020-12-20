@@ -46,9 +46,11 @@ export const about = {
   AddAboutList: "about/add",
   // 修改数据列表
   EditAboutList: "about/update",
+  // 修改文章状态
+  EditStateAboutList: (id) => `about/status/${id}`,
   // 删除数据列表
-  DelAboutList: (id) => `about/${id}`
-}
+  DelAboutList: id => `about/${id}`
+};
 
 // 常见问题
 export const problem = {

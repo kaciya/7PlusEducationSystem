@@ -8,9 +8,12 @@
     <!-- 渲染权限类型 -->
     <template #permissionType="{ record }">
       <!-- 一级渲染 -->
-        <a-checkbox  :value="record.permissionId" @change="getCheckedChild($event,record)">
-          {{ record.name }}
-        </a-checkbox>
+      <a-checkbox
+        :value="record.permissionId"
+        @change="getCheckedChild($event, record)"
+      >
+        {{ record.name }}
+      </a-checkbox>
       <!-- 一级渲染 end -->
     </template>
     <!-- 渲染权限类型 end -->
@@ -80,11 +83,10 @@ export default {
       //权限组 复选框选中项对象
       checkedData,
       //递归实现 对子数据选中方法
-      getCheckedChild,
+      getCheckedChild
     };
-  },
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

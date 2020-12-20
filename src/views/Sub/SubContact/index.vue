@@ -69,12 +69,18 @@
 
           <!-- 操作 -->
           <template #operation="{ record }">
-            <a-button type="primary" v-if="record.state == 1" disabled>
+            <a-button
+              type="primary"
+              size="small"
+              v-if="record.state == 1"
+              disabled
+            >
               <LineOutlined />
             </a-button>
 
             <a-button
               type="primary"
+              size="small"
               v-else-if="record.state == 0"
               @click="editManage(record.id)"
             >
@@ -123,29 +129,53 @@ export default {
   // 使用组件
   components: {
     Crumbs,
-    LineOutlined,
+    LineOutlined
   },
 
   // setup响应api入口
   setup() {
     //#region 获取 导入方法中返回的 子方法和参数
+
+    /**
+     * contactTable 用户提交列表表格对象
+     */
     const { contactTable } = useContactColums();
 
+    /**
+     * contactPagination 分页参数
+     * getContactData 渲染列表数据方法
+     * pageChange 点击下一页方法
+     */
     const { contactPagination, getContactData, pageChange } = useGetContactList(
       contactTable
     );
 
+    /**
+     * headerData 顶部 日期 与 状态 绑定数据对象
+     * changeDateConfirm 日期选择器选中方法
+     * changeDate 日期选择器改变方法
+     * changeStatus 选择项改变方法
+     */
     const {
       headerData,
       changeDateConfirm,
       changeDate,
-      changeStatus,
+      changeStatus
     } = useContactHeader();
-
+    
+    /**
+     * searchClick 查询 日期范围 和状态匹配列表项方法
+     */
     const { searchClick } = useSearchContact(getContactData, headerData);
 
+    /**
+     * resetClick 重置 日期范围 和状态方法
+     */
     const { resetClick } = useResetContact(getContactData, headerData);
 
+    /**
+     * editManage 点击操作中的处理方法
+     */
     const { editManage } = useEditContactManage();
     //#endregion
 
@@ -178,10 +208,10 @@ export default {
       //点击操作中的处理方法
       editManage,
       //点击下一页方法
-      pageChange,
+      pageChange
     };
     //#endregion
-  },
+  }
 };
 </script>
 

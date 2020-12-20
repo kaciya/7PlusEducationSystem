@@ -2,22 +2,15 @@
   <a-layout-content>
     <!-- 面包屑 start -->
     <Crumbs
-      :crumbName="[{ name: '运营管理' }, { name: '课程服务', route: '#' }]"
+      :crumbName="[{ name: '运营管理' }, { name: '课程服务', route: '/operation/course' }]"
     />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
-    <div
-      :style="{
-        padding: '20px',
-        background: '#fff',
-        minHeight: '93%'
-      }"
-    >
+    <a-card style="min-height: 93%">
       <a-row>
         <a-col :span="24" style="margin-bottom: 10px">
           <a-button
             type="primary"
-            size="large"
             style="float: right"
             @click="showAddForm"
           >
@@ -38,12 +31,16 @@
             type="primary"
             style="margin-right: 45px"
             @click="showEdit(record)"
+            size="small"
+            class="modify-btn"
           >
             编辑
           </a-button>
-          <a-button type="danger" @click="showDelete(record.id)">
+          <a-popconfirm placement="topRight" title="您真的要删除该项么?" @confirm="deleteCourseSubmit(record.id)" @cancel="delCancel">
+          <a-button type="danger" size="small">
             删除
           </a-button>
+          </a-popconfirm>
         </template>
       </a-table>
       <!-- 表格end -->
@@ -157,7 +154,7 @@
         </a-form>
       </a-modal>
       <!-- 课程信息编辑模态框 end -->
-    </div>
+    </a-card>
     <!-- 主体Main end -->
   </a-layout-content>
 </template>
@@ -215,7 +212,7 @@ export default {
     //endregion
 
     //#region 删除课程
-    const { showDelete } = useDelCourseList(getCourse);
+    const { deleteCourseSubmit,delCancel } = useDelCourseList(getCourse);
     //#endregion
 
     return {
@@ -241,7 +238,8 @@ export default {
       editCancel,
       //#endregion
       //#region 删除课程
-      showDelete
+      deleteCourseSubmit,
+      delCancel
       //#endregion
     };
   }

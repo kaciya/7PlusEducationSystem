@@ -6,7 +6,7 @@ import { message } from "ant-design-vue";
 // 导入 post 请求
 import { httpPost } from "@/utils/http";
 // 导入听力题库接口配置
-import { listen } from '@/api/questionListenAPI';
+import { listen } from "@/api/questionListenAPI";
 
 /**
  * 导出添加SST题型 功能
@@ -36,23 +36,28 @@ export function useAddSST(addModalVisible, getQuestion) {
     rules: {
       // 编号
       no: [
-        { required: true, whitespace: true, message: '题目编号必须填写', trigger: 'blur' },
+        {
+          required: true,
+          whitespace: true,
+          message: "题目编号必须填写",
+          trigger: "blur"
+        }
       ]
-    },
+    }
   });
 
   // 表单ref
   const addSSTRef = ref(null);
 
   // 改变选择标签时
-  const changeLabels = (checkedValue) => {
+  const changeLabels = checkedValue => {
     // 限制只能选择三个标签
     if (checkedValue.length > 3) {
       // 去掉第一个
       checkedValue.shift();
       message.warn("每题标签最多可以选择三个");
     }
-  }
+  };
 
   // 添加SST题目
   const confirmAddSST = () => {
@@ -74,8 +79,8 @@ export function useAddSST(addModalVisible, getQuestion) {
         }
       }).catch((err) => {
         console.log(err);
-      })
-    }).catch((err) => {
+      });
+    }).catch(err => {
       console.log(err);
     });
   };
@@ -83,10 +88,10 @@ export function useAddSST(addModalVisible, getQuestion) {
   // 取消添加sst题目
   const cancelAddSST = () => {
     // 提示用户
-    message.warn('取消添加sst题目');
+    message.warn("取消添加sst题目");
     // 重置表单
     addSSTRef.value.resetFields();
-  }
+  };
 
   return {
     addSST,
@@ -94,6 +99,6 @@ export function useAddSST(addModalVisible, getQuestion) {
     changeLabels,
     confirmAddSST,
     cancelAddSST
-  }
+  };
 }
 //#endregion
