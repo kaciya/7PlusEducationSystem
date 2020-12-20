@@ -12,7 +12,7 @@
         @change="getQuestion(true)"
       >
         <a-radio-button value="SST">SST（录音总结）</a-radio-button>
-        <a-radio-button value="WED">WED（听写句子）</a-radio-button>
+        <a-radio-button value="WFD">WFD（听写句子）</a-radio-button>
         <a-radio-button value="FIB">FIB（听力填空）</a-radio-button>
         <a-radio-button value="MCS">MCS（听力单选）</a-radio-button>
         <a-radio-button value="MCM">MCM（听力多选）</a-radio-button>
@@ -52,19 +52,18 @@
 
         <!-- 操作区域 start -->
         <template #extra>
-          <!-- 批量上传按钮（只在SST和WED中存在） -->
+          <!-- 批量上传按钮（只在SST和WFD中存在） -->
           <a-button
-            v-if="category == 'WED' || category == 'SST'"
+            v-if="category == 'WFD' || category == 'SST'"
             @click="showBulkUpload"
             >批量上传</a-button
           >
           <!-- 添加题目按钮 -->
           <a-button type="primary" @click="showAddModal">添加</a-button>
           <!-- 添加题目模态框 -->
-          <AddSSTModal
-            :addModalVisible="addModalVisible"
-            @getQuestion="getQuestion"
-          ></AddSSTModal>
+          <AddSSTModal :addModalVisible="addModalVisible"></AddSSTModal>
+          <AddWFDModal :addModalVisible="addModalVisible"></AddWFDModal>
+          <AddFIBModal :addModalVisible="addModalVisible"></AddFIBModal>
         </template>
         <!-- 操作区域 end -->
       </a-page-header>
@@ -143,6 +142,7 @@
         <!-- 题目操作区 start -->
         <template #operation="{ record }">
           <a-button type="primary" size="small">查看</a-button>
+          <!-- :show-upload-list="false" 不显示上传文件列表-->
           <a-button
             type="primary"
             style="margin-left: 10px"
@@ -181,8 +181,14 @@ import Crumbs from "@/components/Crumbs";
 // 引入icons图标
 import { UploadOutlined } from "@ant-design/icons-vue";
 
+//#region 添加题目模态框
 // 引入 添加sst题目模态框
 import AddSSTModal from "@/components/Question/SST/AddSST";
+// 引入 添加wfd题目模态框
+import AddWFDModal from "@/components/Question/WFD/AddWFD";
+// 引入 添加fib题目模态框
+import AddFIBModal from "@/components/Question/FIB/AddFIB";
+//#endregion
 
 // 导入 题目列表 列配置
 import { useQuestionColumns } from "./useQuestionColumns";
@@ -316,8 +322,14 @@ export default {
     Crumbs,
     // 上传图标
     UploadOutlined,
+    //#region 添加题目模态框
     // 添加SST题目模态框
     AddSSTModal,
+    // 添加WFD题目模态框
+    AddWFDModal,
+    // 添加FIB题目模态框
+    AddFIBModal,
+    //#endregion
   },
 };
 </script>

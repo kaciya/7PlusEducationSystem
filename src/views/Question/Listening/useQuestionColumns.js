@@ -14,7 +14,7 @@ export function useQuestionColumns() {
     },
     {
       title: "题目音频",
-      key: "titleAudio"
+      dataIndex: "titleAudio"
     },
     {
       title: "标签",

@@ -1,4 +1,4 @@
-//#region 添加SST题型
+//#region 添加WFD题型
 // 引入响应式API
 import { reactive, ref } from "vue";
 // 引入提示框
@@ -9,13 +9,13 @@ import { httpPost } from "@/utils/http";
 import { listen } from '@/api/questionListenAPI';
 
 /**
- * 导出添加SST题型 功能
+ * 导出添加WFD题型 功能
  * @param {*} addModalVisible 添加模态框的显示与隐藏
- * @param {*} getQuestion 重新获取列表
+ * @param {*} emit setup中触发事件的方法
  */
-export function useAddSST(addModalVisible, getQuestion) {
+export function useAddWFD(addModalVisible, getQuestion) {
   // 表单数据 校验规则
-  const addSST = reactive({
+  const addWFD = reactive({
     model: {
       // 编号
       no: "",
@@ -42,31 +42,30 @@ export function useAddSST(addModalVisible, getQuestion) {
   });
 
   // 表单ref
-  const addSSTRef = ref(null);
+  const addWFDRef = ref(null);
 
   // 改变选择标签时
   const changeLabels = (checkedValue) => {
     // 限制只能选择三个标签
     if (checkedValue.length > 3) {
-      // 去掉第一个
       checkedValue.shift();
       message.warn("每题标签最多可以选择三个");
     }
   }
 
-  // 添加SST题目
-  const confirmAddSST = () => {
+  // 添加WFD题目
+  const confirmAddWFD = () => {
     // 先校验
-    addSSTRef.value.validate().then(() => {
+    addWFDRef.value.validate().then(() => {
       // 发送添加题目请求
-      httpPost(listen.AddQuestion('sst'), addSST.model).then((res) => {
+      httpPost(listen.AddQuestion('wfd'), addWFD.model).then((res) => {
         if (res.success == true) {
           // 提示用户添加成功
           message.success("添加题目成功");
           // 刷新页面
-          getQuestion()
-          // 关闭sst模态框
-          addModalVisible.sst = false;
+          getQuestion();
+          // 关闭wfd模态框
+          addModalVisible.wfd = false;
         }
         else {
           // 添加失败，提示用户失败原因
@@ -80,20 +79,20 @@ export function useAddSST(addModalVisible, getQuestion) {
     });
   };
 
-  // 取消添加sst题目
-  const cancelAddSST = () => {
+  // 取消添加wfd题目
+  const cancelAddWFD = () => {
     // 提示用户
-    message.warn('取消添加sst题目');
+    message.warn('取消添加wfd题目');
     // 重置表单
-    addSSTRef.value.resetFields();
+    addWFDRef.value.resetFields();
   }
 
   return {
-    addSST,
-    addSSTRef,
+    addWFD,
+    addWFDRef,
     changeLabels,
-    confirmAddSST,
-    cancelAddSST
+    confirmAddWFD,
+    cancelAddWFD
   }
 }
 //#endregion
