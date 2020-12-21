@@ -6,21 +6,28 @@ import topic from "@/api/topicAPI";
 export const useGetComment = id => {
   // 定义评论数据
   const commentList = ref([]);
+
+  // 评论总数量
   const commentTotal = ref(0);
+
+  // 页码
   const pageNum = ref(1);
 
+  // 发起请求获取数据
   const getComment = () => {
     httpGet(topic.GetComment + "/" + id, {
       pageNum: pageNum.value,
       pageSize: 10
     })
       .then(res => {
-        let { data } = res;
-        commentTotal.value = data.total;
-        commentList.value = data.records;
+        let { data, success } = res;
+        if (success) {
+          commentTotal.value = data.total;
+          commentList.value = data.records;
+        }
       })
       .catch(err => {
-        console.log(err);
+        throw new Error(err);
       });
   };
 
