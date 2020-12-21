@@ -1,30 +1,30 @@
 <template>
-  <!-- 添加SST题目模态框 -->
+  <!-- 添加WFD题目模态框 -->
   <a-modal
-    v-model:visible="addModalVisible.sst"
+    v-model:visible="addModalVisible.wfd"
     title="添加"
-    @ok="confirmAddSST"
-    @cancel="cancelAddSST"
+    @ok="confirmAddWFD"
+    @cancel="cancelAddWFD"
     :maskClosable="false"
   >
-    <!-- 添加sst题目表单 start -->
+    <!-- 添加wfd题目表单 start -->
     <a-form
-      :model="addSST.model"
-      :rules="addSST.rules"
-      ref="addSSTRef"
+      :model="addWFD.model"
+      :rules="addWFD.rules"
+      ref="addWFDRef"
       :label-col="{ span: 4 }"
       :wrapper-col="{ span: 18 }"
     >
       <a-form-item label="编号" name="no" hasFeedback>
-        <a-input v-model:value="addSST.model.no" />
+        <a-input v-model:value="addWFD.model.no" />
       </a-form-item>
       <a-form-item label="题目" name="title">
-        <a-input v-model:value="addSST.model.title" />
+        <a-input v-model:value="addWFD.model.title" />
       </a-form-item>
       <a-form-item label="标签选择" name="labelIds">
         <!-- 题目标签复选框 start -->
         <a-checkbox-group
-          v-model:value="addSST.model.labelIds"
+          v-model:value="addWFD.model.labelIds"
           @change="changeLabels"
         >
           <a-checkbox :value="item.id" v-for="item in labelList" :key="item.id">
@@ -46,21 +46,17 @@
         <!-- 上传音频 end -->
       </a-form-item>
       <a-form-item label="题目原文" name="titleText">
-        <a-textarea v-model:value="addSST.model.titleText" :rows="4" />
+        <a-textarea v-model:value="addWFD.model.titleText" :rows="4" />
         <a-button type="primary" @click="audioSynthetic">转换为音频</a-button>
       </a-form-item>
       <a-form-item label="答案参考" name="answer">
-        <a-textarea v-model:value="addSST.model.answer" :rows="3" />
+        <a-textarea v-model:value="addWFD.model.answer" :rows="3" />
       </a-form-item>
       <a-form-item label="备注" name="remark">
-        <a-textarea v-model:value="addSST.model.remark" :rows="2" />
+        <a-textarea v-model:value="addWFD.model.remark" :rows="2" />
       </a-form-item>
-      <a-divider />
-      <a-row>
-        <a-col> <CheckCircleTwoTone /> 静听读写 </a-col>
-      </a-row>
     </a-form>
-    <!-- 添加sst题目表单 end -->
+    <!-- 添加wfd题目表单 end -->
   </a-modal>
 </template>
 
@@ -69,17 +65,16 @@
 import { inject } from "vue";
 // 引入图标
 import { CheckCircleTwoTone } from "@ant-design/icons-vue";
-// 引入 添加SST题目 功能
-import { addSST, useAddSST } from "./useAddSST";
+// 引入 添加WFD题目 功能
+import { addWFD, useAddWFD } from "./useAddWFD";
 // 引入 上传音频 功能
-import { useUploadAudio } from "./useUploadAudio";
+import { useUploadAudio } from "@/components/Question/SST/AddSST/useUploadAudio";
 // 引入 标签列表 功能
 import { useGetLabels } from "@/views/Question/QuestionLabel/useGetLables";
 // 引入 音频合成 功能
-import { useAudioSynthetic } from "./useAudioSynthetic";
+import { useAudioSynthetic } from "@/components/Question/SST/AddSST/useAudioSynthetic";
 
 export default {
-  // 接收父组件传来的数据
   props: ["addModalVisible"],
   setup(props) {
     // 添加模态框的显示与隐藏
@@ -91,22 +86,22 @@ export default {
     // 标签列表
     const { labelList } = useGetLabels();
 
-    // 添加SST题目
+    // 添加WFD题目
     const {
-      addSST,
-      addSSTRef,
+      addWFD,
+      addWFDRef,
       changeLabels,
-      confirmAddSST,
-      cancelAddSST,
-    } = useAddSST(addModalVisible, getQuestion);
+      confirmAddWFD,
+      cancelAddWFD,
+    } = useAddWFD(addModalVisible, getQuestion);
 
     // 上传音频功能
     const { uploadAudio, uploadAudioList, changeUploadAudio } = useUploadAudio(
-      addSST
+      addWFD
     );
 
     // 音频合成功能
-    const { audioSynthetic } = useAudioSynthetic(addSST, uploadAudioList);
+    const { audioSynthetic } = useAudioSynthetic(addWFD, uploadAudioList);
 
     // 返回
     return {
@@ -121,15 +116,15 @@ export default {
       // 音频合成功能
       audioSynthetic,
       // 添加题目的表单数据和校验规则
-      addSST,
+      addWFD,
       // 添加题目表单
-      addSSTRef,
+      addWFDRef,
       // 改变选择标签时
       changeLabels,
-      // 添加sst题目
-      confirmAddSST,
-      // 取消添加sst题目
-      cancelAddSST,
+      // 添加wfd题目
+      confirmAddWFD,
+      // 取消添加wfd题目
+      cancelAddWFD,
     };
   },
   components: {

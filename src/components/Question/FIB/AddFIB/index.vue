@@ -1,30 +1,30 @@
 <template>
-  <!-- 添加SST题目模态框 -->
+  <!-- 添加FIB题目模态框 -->
   <a-modal
-    v-model:visible="addModalVisible.sst"
+    v-model:visible="addModalVisible.fib"
     title="添加"
-    @ok="confirmAddSST"
-    @cancel="cancelAddSST"
+    @ok="confirmAddFIB"
+    @cancel="cancelAddFIB"
     :maskClosable="false"
   >
-    <!-- 添加sst题目表单 start -->
+    <!-- 添加fib题目表单 start -->
     <a-form
-      :model="addSST.model"
-      :rules="addSST.rules"
-      ref="addSSTRef"
+      :model="addFIB.model"
+      :rules="addFIB.rules"
+      ref="addFIBRef"
       :label-col="{ span: 4 }"
       :wrapper-col="{ span: 18 }"
     >
       <a-form-item label="编号" name="no" hasFeedback>
-        <a-input v-model:value="addSST.model.no" />
+        <a-input v-model:value="addFIB.model.no" />
       </a-form-item>
       <a-form-item label="题目" name="title">
-        <a-input v-model:value="addSST.model.title" />
+        <a-input v-model:value="addFIB.model.title" />
       </a-form-item>
       <a-form-item label="标签选择" name="labelIds">
         <!-- 题目标签复选框 start -->
         <a-checkbox-group
-          v-model:value="addSST.model.labelIds"
+          v-model:value="addFIB.model.labelIds"
           @change="changeLabels"
         >
           <a-checkbox :value="item.id" v-for="item in labelList" :key="item.id">
@@ -46,21 +46,41 @@
         <!-- 上传音频 end -->
       </a-form-item>
       <a-form-item label="题目原文" name="titleText">
-        <a-textarea v-model:value="addSST.model.titleText" :rows="4" />
         <a-button type="primary" @click="audioSynthetic">转换为音频</a-button>
+        <!-- 题目原文及填空答案 start -->
+        <div v-for="(item, index) in addFIB.model.titleText" :key="index">
+          <!-- 题目原文 -->
+          <a-input
+            placeholder="文本"
+            style="width: 60%; margin-right: 8px"
+            v-model:value="item.text"
+          />
+          <!-- 填空答案 -->
+          <a-input
+            v-if="index != addFIB.model.titleText.length - 1"
+            v-model:value="item.answer"
+            placeholder="填空答案"
+            style="width: 30%; margin-right: 8px"
+          />
+          <!-- 移除图标 -->
+          <MinusCircleOutlined
+            v-if="index != 0 && index != addFIB.model.titleText.length - 1"
+            @click="delTitleText(index)"
+          />
+        </div>
+        <!-- 题目原文及填空答案 end -->
+
+        <!-- 添加原文填空 -->
+        <a-button type="dashed" style="width: 60%" @click="addTitleText">
+          <PlusOutlined />添加原文填空
+        </a-button>
       </a-form-item>
-      <a-form-item label="答案参考" name="answer">
-        <a-textarea v-model:value="addSST.model.answer" :rows="3" />
-      </a-form-item>
+      <!-- 备注 -->
       <a-form-item label="备注" name="remark">
-        <a-textarea v-model:value="addSST.model.remark" :rows="2" />
+        <a-textarea v-model:value="addFIB.model.remark" :rows="2" />
       </a-form-item>
-      <a-divider />
-      <a-row>
-        <a-col> <CheckCircleTwoTone /> 静听读写 </a-col>
-      </a-row>
     </a-form>
-    <!-- 添加sst题目表单 end -->
+    <!-- 添加fib题目表单 end -->
   </a-modal>
 </template>
 
@@ -68,11 +88,15 @@
 // 引入注入方法
 import { inject } from "vue";
 // 引入图标
-import { CheckCircleTwoTone } from "@ant-design/icons-vue";
-// 引入 添加SST题目 功能
-import { addSST, useAddSST } from "./useAddSST";
+import {
+  CheckCircleTwoTone,
+  MinusCircleOutlined,
+  PlusOutlined,
+} from "@ant-design/icons-vue";
+// 引入 添加FIB题目 功能
+import { addFIB, useAddFIB } from "./useAddFIB";
 // 引入 上传音频 功能
-import { useUploadAudio } from "./useUploadAudio";
+import { useUploadAudio } from "@/components/Question/SST/AddSST/useUploadAudio";
 // 引入 标签列表 功能
 import { useGetLabels } from "@/views/Question/QuestionLabel/useGetLables";
 // 引入 音频合成 功能
@@ -91,22 +115,24 @@ export default {
     // 标签列表
     const { labelList } = useGetLabels();
 
-    // 添加SST题目
+    // 添加FIB题目
     const {
-      addSST,
-      addSSTRef,
+      addFIB,
+      addFIBRef,
       changeLabels,
-      confirmAddSST,
-      cancelAddSST,
-    } = useAddSST(addModalVisible, getQuestion);
+      addTitleText,
+      delTitleText,
+      confirmAddFIB,
+      cancelAddFIB,
+    } = useAddFIB(addModalVisible, getQuestion);
 
     // 上传音频功能
     const { uploadAudio, uploadAudioList, changeUploadAudio } = useUploadAudio(
-      addSST
+      addFIB
     );
 
     // 音频合成功能
-    const { audioSynthetic } = useAudioSynthetic(addSST, uploadAudioList);
+    const { audioSynthetic } = useAudioSynthetic(addFIB, uploadAudioList);
 
     // 返回
     return {
@@ -121,19 +147,25 @@ export default {
       // 音频合成功能
       audioSynthetic,
       // 添加题目的表单数据和校验规则
-      addSST,
+      addFIB,
       // 添加题目表单
-      addSSTRef,
+      addFIBRef,
       // 改变选择标签时
       changeLabels,
-      // 添加sst题目
-      confirmAddSST,
-      // 取消添加sst题目
-      cancelAddSST,
+      // 添加题目原文填空
+      addTitleText,
+      // 移除题目原文填空
+      delTitleText,
+      // 添加fib题目
+      confirmAddFIB,
+      // 取消添加fib题目
+      cancelAddFIB,
     };
   },
   components: {
     CheckCircleTwoTone,
+    MinusCircleOutlined,
+    PlusOutlined,
   },
 };
 </script>

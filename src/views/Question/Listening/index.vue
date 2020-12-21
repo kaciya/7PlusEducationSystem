@@ -12,7 +12,7 @@
         @change="getQuestion(true)"
       >
         <a-radio-button value="SST">SST（录音总结）</a-radio-button>
-        <a-radio-button value="WED">WED（听写句子）</a-radio-button>
+        <a-radio-button value="WFD">WFD（听写句子）</a-radio-button>
         <a-radio-button value="FIB">FIB（听力填空）</a-radio-button>
         <a-radio-button value="MCS">MCS（听力单选）</a-radio-button>
         <a-radio-button value="MCM">MCM（听力多选）</a-radio-button>
@@ -52,19 +52,18 @@
 
         <!-- 操作区域 start -->
         <template #extra>
-          <!-- 批量上传按钮（只在SST和WED中存在） -->
+          <!-- 批量上传按钮（只在SST和WFD中存在） -->
           <a-button
-            v-if="category == 'WED' || category == 'SST'"
+            v-if="category == 'WFD' || category == 'SST'"
             @click="showBulkUpload"
             >批量上传</a-button
           >
           <!-- 添加题目按钮 -->
           <a-button type="primary" @click="showAddModal">添加</a-button>
           <!-- 添加题目模态框 -->
-          <AddSSTModal
-            :addModalVisible="addModalVisible"
-            @getQuestion="getQuestion"
-          ></AddSSTModal>
+          <AddSSTModal :addModalVisible="addModalVisible"></AddSSTModal>
+          <AddWFDModal :addModalVisible="addModalVisible"></AddWFDModal>
+          <AddFIBModal :addModalVisible="addModalVisible"></AddFIBModal>
         </template>
         <!-- 操作区域 end -->
       </a-page-header>
@@ -113,13 +112,7 @@
         :data-source="questionList"
         row-key="id"
         :loading="isLoading"
-        :pagination="{
-          total: total,
-          current: pagenum,
-          pageSize: pagesize,
-          showSizeChanger: true,
-          showQuickJumper: true
-        }"
+        :pagination="questionPagination"
         @change="changePagenum"
       >
         <!-- 题目标签选择器 start -->
@@ -149,6 +142,7 @@
         <!-- 题目操作区 start -->
         <template #operation="{ record }">
           <a-button type="primary" size="small">查看</a-button>
+          <!-- :show-upload-list="false" 不显示上传文件列表-->
           <a-button
             type="primary"
             style="margin-left: 10px"
@@ -187,8 +181,14 @@ import Crumbs from "@/components/Crumbs";
 // 引入icons图标
 import { UploadOutlined } from "@ant-design/icons-vue";
 
+//#region 添加题目模态框
 // 引入 添加sst题目模态框
 import AddSSTModal from "@/components/Question/SST/AddSST";
+// 引入 添加wfd题目模态框
+import AddWFDModal from "@/components/Question/WFD/AddWFD";
+// 引入 添加fib题目模态框
+import AddFIBModal from "@/components/Question/FIB/AddFIB";
+//#endregion
 
 // 导入 题目列表 列配置
 import { useQuestionColumns } from "./useQuestionColumns";
@@ -214,15 +214,13 @@ export default {
   setup() {
     // 渲染题目列表
     let {
-      pagenum,
-      pagesize,
+      questionPagination,
       category,
       labelId,
       getQuestion,
       questionList,
       isLoading,
-      total,
-      changePagenum
+      changePagenum,
     } = useGetQuestion();
 
     // 获取全部标签类型
@@ -241,7 +239,7 @@ export default {
       bulkUploadChange,
       beforeBulkUpload,
       clickBulkUpload,
-      cancelBulkUpload
+      cancelBulkUpload,
     } = useBulkUpload();
 
     // 模板下载功能
@@ -259,9 +257,8 @@ export default {
     // 返回
     return {
       //#region 渲染表格
-      // 当前页码, 每页几条
-      pagenum,
-      pagesize,
+      // 分页器配置
+      questionPagination,
       // 当前题目分类
       category,
       // 当前选择的标签筛选
@@ -276,8 +273,6 @@ export default {
       questionList,
       // 加载状态
       isLoading,
-      // 数据库中题目总条数
-      total,
       // 跳转页码时
       changePagenum,
       // 设置题目标签
@@ -317,7 +312,7 @@ export default {
       //#region 删除题目功能
       delQuestion,
       // 取消删除
-      cancelDelQuestion
+      cancelDelQuestion,
       //#endregion
     };
   },
@@ -327,9 +322,15 @@ export default {
     Crumbs,
     // 上传图标
     UploadOutlined,
+    //#region 添加题目模态框
     // 添加SST题目模态框
-    AddSSTModal
-  }
+    AddSSTModal,
+    // 添加WFD题目模态框
+    AddWFDModal,
+    // 添加FIB题目模态框
+    AddFIBModal,
+    //#endregion
+  },
 };
 </script>
 
