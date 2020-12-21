@@ -1,30 +1,30 @@
 <template>
-  <!-- 添加MCS题目模态框 -->
+  <!-- 添加MCM题目模态框 -->
   <a-modal
-    v-model:visible="addModalVisible[questionType]"
+    v-model:visible="addModalVisible.mcm"
     title="添加"
-    @ok="confirmAddMCS"
-    @cancel="cancelAddMCS"
+    @ok="confirmAddMCM"
+    @cancel="cancelAddMCM"
     :maskClosable="false"
   >
-    <!-- 添加mcs题目表单 start -->
+    <!-- 添加mcm题目表单 start -->
     <a-form
-      :model="addMCS.model"
-      :rules="addMCS.rules"
-      ref="addMCSRef"
+      :model="addMCM.model"
+      :rules="addMCM.rules"
+      ref="addMCMRef"
       :label-col="{ span: 4 }"
       :wrapper-col="{ span: 18 }"
     >
       <a-form-item label="编号" name="no" hasFeedback>
-        <a-input v-model:value="addMCS.model.no" />
+        <a-input v-model:value="addMCM.model.no" />
       </a-form-item>
       <a-form-item label="题目" name="title">
-        <a-input v-model:value="addMCS.model.title" />
+        <a-input v-model:value="addMCM.model.title" />
       </a-form-item>
       <!-- 题目标签复选框 start -->
       <a-form-item label="标签选择" name="labelIds">
         <a-checkbox-group
-          v-model:value="addMCS.model.labelIds"
+          v-model:value="addMCM.model.labelIds"
           @change="changeLabels"
         >
           <a-checkbox :value="item.id" v-for="item in labelList" :key="item.id">
@@ -49,21 +49,21 @@
 
       <!-- 题目原文 start -->
       <a-form-item label="题目原文" name="titleText">
-        <a-textarea v-model:value="addMCS.model.titleText" :rows="4" />
+        <a-textarea v-model:value="addMCM.model.titleText" :rows="4" />
         <a-button type="primary" @click="audioSynthetic">转换为音频</a-button>
       </a-form-item>
       <!-- 题目原文 end -->
 
       <!-- 题目问题 start -->
       <a-form-item label="题目问题" name="titleQuestion">
-        <a-input v-model:value="addMCS.model.titleQuestion" />
+        <a-input v-model:value="addMCM.model.titleQuestion" />
       </a-form-item>
       <!-- 题目问题 end -->
 
       <!-- 题目选项 start -->
       <a-form-item
         :label="item.key"
-        v-for="(item, index) in addMCS.model.choices"
+        v-for="(item, index) in addMCM.model.choices"
         :key="item.key"
       >
         <a-input
@@ -71,7 +71,7 @@
           style="width: 85%; margin-right: 10px"
         />
         <MinusCircleOutlined
-          v-if="index != 0 && index == addMCS.model.choices.length - 1"
+          v-if="index != 0 && index == addMCM.model.choices.length - 1"
           @click="delChoices(index)"
         />
       </a-form-item>
@@ -85,9 +85,13 @@
 
       <!-- 答案参考 start -->
       <a-form-item label="参考答案" name="answer">
-        <a-select v-model:value="addMCS.model.answer">
+        <a-select
+          mode="multiple"
+          placeholder="多选"
+          v-model:value="addMCM.model.answer"
+        >
           <a-select-option
-            v-for="item in addMCS.model.choices"
+            v-for="item in addMCM.model.choices"
             :key="item.key"
             :value="item.key"
           >
@@ -97,13 +101,13 @@
       </a-form-item>
       <!-- 答案参考 end -->
       <a-form-item label="讲解" name="titleAnalysis">
-        <a-textarea v-model:value="addMCS.model.titleAnalysis" :rows="4" />
+        <a-textarea v-model:value="addMCM.model.titleAnalysis" :rows="4" />
       </a-form-item>
       <a-form-item label="备注" name="remark">
-        <a-textarea v-model:value="addMCS.model.remark" :rows="2" />
+        <a-textarea v-model:value="addMCM.model.remark" :rows="2" />
       </a-form-item>
     </a-form>
-    <!-- 添加mcs题目表单 end -->
+    <!-- 添加mcm题目表单 end -->
   </a-modal>
 </template>
 
@@ -116,8 +120,8 @@ import {
   PlusOutlined,
   MinusCircleOutlined,
 } from "@ant-design/icons-vue";
-// 引入 添加MCS题目 功能
-import { addMCS, useAddMCS } from "./useAddMCS";
+// 引入 添加MCM题目 功能
+import { addMCM, useAddMCM } from "./useAddMCM";
 // 引入 上传音频 功能
 import { useUploadAudio } from "@/components/Question/SST/AddSST/useUploadAudio";
 // 引入 标签列表 功能
@@ -127,10 +131,10 @@ import { useAudioSynthetic } from "@/components/Question/SST/AddSST/useAudioSynt
 
 export default {
   // 接收父组件传来的数据
-  props: ["addModalVisible", "questionType"],
+  props: ["addModalVisible"],
   setup(props) {
     // 添加模态框的显示与隐藏
-    const { addModalVisible, questionType } = props;
+    const { addModalVisible } = props;
 
     // 获取父组件的刷新题目列表的方法
     const getQuestion = inject("getQuestion");
@@ -138,24 +142,24 @@ export default {
     // 标签列表
     const { labelList } = useGetLabels();
 
-    // 添加MCS题目
+    // 添加MCM题目
     const {
-      addMCS,
-      addMCSRef,
+      addMCM,
+      addMCMRef,
       changeLabels,
       addChoices,
       delChoices,
-      confirmAddMCS,
-      cancelAddMCS,
-    } = useAddMCS(addModalVisible, getQuestion, questionType);
+      confirmAddMCM,
+      cancelAddMCM,
+    } = useAddMCM(addModalVisible, getQuestion);
 
     // 上传音频功能
     const { uploadAudio, uploadAudioList, changeUploadAudio } = useUploadAudio(
-      addMCS
+      addMCM
     );
 
     // 音频合成功能
-    const { audioSynthetic } = useAudioSynthetic(addMCS, uploadAudioList);
+    const { audioSynthetic } = useAudioSynthetic(addMCM, uploadAudioList);
 
     // 返回
     return {
@@ -170,19 +174,19 @@ export default {
       // 音频合成功能
       audioSynthetic,
       // 添加题目的表单数据和校验规则
-      addMCS,
+      addMCM,
       // 添加题目表单
-      addMCSRef,
+      addMCMRef,
       // 改变选择标签时
       changeLabels,
       // 添加题目选项
       addChoices,
       // 删除题目选项
       delChoices,
-      // 添加mcs题目
-      confirmAddMCS,
-      // 取消添加mcs题目
-      cancelAddMCS,
+      // 添加mcm题目
+      confirmAddMCM,
+      // 取消添加mcm题目
+      cancelAddMCM,
     };
   },
   components: {

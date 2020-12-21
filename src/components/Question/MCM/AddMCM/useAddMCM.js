@@ -1,4 +1,4 @@
-//#region 添加MCS题型
+//#region 添加MCM题型
 // 引入响应式API
 import { reactive, ref } from "vue";
 // 引入提示框
@@ -9,13 +9,13 @@ import { httpPost } from "@/utils/http";
 import { listen } from "@/api/questionListenAPI";
 
 /**
- * 导出添加MCS题型 功能
+ * 导出添加MCM题型 功能
  * @param {*} addModalVisible 添加模态框的显示与隐藏
  * @param {*} getQuestion 重新获取列表
  */
-export function useAddMCS(addModalVisible, getQuestion, questionType) {
+export function useAddMCM(addModalVisible, getQuestion) {
   // 表单数据 校验规则
-  const addMCS = reactive({
+  const addMCM = reactive({
     model: {
       // 编号
       no: "",
@@ -39,7 +39,7 @@ export function useAddMCS(addModalVisible, getQuestion, questionType) {
       // 题目解析
       titleAnalysis: "",
       // 答案参考
-      answer: "",
+      answer: [],
       // 备注
       remark: ""
     },
@@ -58,7 +58,7 @@ export function useAddMCS(addModalVisible, getQuestion, questionType) {
   });
 
   // 表单ref
-  const addMCSRef = ref(null);
+  const addMCMRef = ref(null);
 
   // 改变选择标签时
   const changeLabels = checkedValue => {
@@ -72,33 +72,33 @@ export function useAddMCS(addModalVisible, getQuestion, questionType) {
 
   // 添加题目选项
   const addChoices = () => {
-    addMCS.model.choices.push({
+    addMCM.model.choices.push({
       content: "",
       // A、B、C、D...
-      key: String.fromCharCode(addMCS.model.choices.length + 65)
+      key: String.fromCharCode(addMCM.model.choices.length + 65)
     })
   }
 
   // 删除题目选项
   const delChoices = (index) => {
-    addMCS.model.choices.splice(index, 1);
+    addMCM.model.choices.splice(index, 1);
     // 重置一下选项答案
-    addMCS.model.answer = ""
+    addMCM.model.answer = []
   }
 
-  // 添加MCS题目
-  const confirmAddMCS = () => {
+  // 添加MCM题目
+  const confirmAddMCM = () => {
     // 先校验
-    addMCSRef.value.validate().then(() => {
+    addMCMRef.value.validate().then(() => {
       // 发送添加题目请求
-      httpPost(listen.AddQuestion(questionType), addMCS.model).then((res) => {
+      httpPost(listen.AddQuestion('mcm'), addMCM.model).then((res) => {
         if (res.success == true) {
           // 提示用户添加成功
           message.success("添加题目成功");
           // 刷新页面
           getQuestion()
-          // 关闭mcs/smw/hcs模态框
-          addModalVisible[questionType] = false;
+          // 关闭mcm/smw/hcs模态框
+          addModalVisible.mcm = false;
         }
         else {
           // 添加失败，提示用户失败原因
@@ -112,22 +112,22 @@ export function useAddMCS(addModalVisible, getQuestion, questionType) {
     });
   };
 
-  // 取消添加mcs题目
-  const cancelAddMCS = () => {
+  // 取消添加mcm题目
+  const cancelAddMCM = () => {
     // 提示用户
-    message.warn(`取消添加${questionType}题目`);
+    message.warn(`取消添加mcm题目`);
     // 重置表单
-    addMCSRef.value.resetFields();
+    addMCMRef.value.resetFields();
   };
 
   return {
-    addMCS,
-    addMCSRef,
+    addMCM,
+    addMCMRef,
     changeLabels,
     addChoices,
     delChoices,
-    confirmAddMCS,
-    cancelAddMCS
+    confirmAddMCM,
+    cancelAddMCM
   };
 }
 //#endregion
