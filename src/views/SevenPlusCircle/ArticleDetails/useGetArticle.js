@@ -33,7 +33,7 @@ export const useGetArticle = id => {
         publisher.commentCount = data.commentCount;
       })
       .catch(err => {
-        console.log(err);
+        throw new Error(err);
       });
   };
 
