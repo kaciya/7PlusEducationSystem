@@ -34,7 +34,7 @@
                 <span>分类：</span>
               </a-col>
               <a-col :span="17">
-                <a-select v-model:value="topicSortStatus" placeholder="全部">
+                <a-select v-model:value="topicSortStatus">
                   <a-select-option value=""> 全部 </a-select-option>
                   <a-select-option
                     :value="item.id"
@@ -91,6 +91,7 @@
           </template>
           <template #operation="{ text }">
             <a-button
+              size="small"
               type="primary"
               style="margin-right: 10px"
               @click="checkArticle(text.id)"
@@ -99,6 +100,7 @@
             </a-button>
             <a-button
               v-if="text.status == 1"
+              size="small"
               type="danger"
               @click="topicShieldModal(text.id)"
             >
@@ -106,6 +108,7 @@
             </a-button>
             <a-button
               v-else
+              size="small"
               type="primary"
               class="pass-btn"
               @click="topicShowModal(text.id)"
@@ -156,31 +159,31 @@ import { useGetTopicCategory } from "./useGetTopicCategory";
 import { useRouter } from "vue-router";
 export default {
   setup() {
-    // 数据列表
-    // getTopicData：获取数据
-    // topicData：表格内容
-    // tablePagination：分页
-    const { getTopicData, topicData, tablePagination } = useTopicDataList();
+    const {
+      topicData, // 表格内容
+      topicUserName, // 用户名称
+      topicSortStatus, // 分类
+      tablePagination, // 分页
+      clearInput, // 清空输入框
+      getTopicData // 获取数据
+    } = useTopicDataList();
 
     // 表格列的配置
     const { columns } = useGetTopicColumns();
-
-    // 查询重置
-    const {
-      topicUserName, // 用户名称输入框双向绑定
-      topicSortStatus, // 分类双向绑定
-      topicReset, // 重置
-      topicRead, // 查询
-      topicModel // 查询存下的输入框内容
-    } = useGetTopicList(getTopicData, tablePagination);
 
     // 点击切换页面
     const tablePageChange = pagination => {
       tablePagination.current = pagination.current;
       tablePagination.pageSize = pagination.pageSize;
       // 重新渲染
-      getTopicData(topicModel.username, topicModel.status);
+      getTopicData();
     };
+
+    // 查询重置
+    const {
+      topicReset, // 重置
+      topicRead // 查询
+    } = useGetTopicList(getTopicData, clearInput, tablePagination);
 
     // 屏蔽显示
     const {
@@ -207,17 +210,16 @@ export default {
 
     return {
       // 数据列表
-      getTopicData,
       topicData,
+      topicUserName,
+      topicSortStatus,
       tablePagination,
+      getTopicData,
       columns,
       tablePageChange,
       // 查询重置
-      topicUserName,
-      topicSortStatus,
       topicReset,
       topicRead,
-      topicModel,
       // 屏蔽显示
       topicShieldVisible,
       topicShieldModal,
