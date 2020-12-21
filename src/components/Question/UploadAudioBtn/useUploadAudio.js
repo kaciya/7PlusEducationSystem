@@ -11,6 +11,7 @@ import { message } from "ant-design-vue";
 /**
  * 上传音频
  * @param {*} id 题目id
+ * @param {*} getQuestion 刷新题目列表
  */
 export function useUploadAudio(id, getQuestion) {
   // 上传音频
@@ -46,6 +47,9 @@ export function useUploadAudio(id, getQuestion) {
           message.success("音频上传成功");
           // 刷新题目列表
           getQuestion()
+        }
+        else {
+          message.error(res.message)
         }
       }).catch((err) => {
         throw err;

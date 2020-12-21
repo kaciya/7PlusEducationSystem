@@ -37,8 +37,11 @@ export default {
 
     // 返回
     return {
+      // 上传音频文件地址及请求头
       uploadAudio,
+      // 上传音频文件列表
       uploadAudioList,
+      // 上次音频变更
       changeUploadAudio,
     };
   },

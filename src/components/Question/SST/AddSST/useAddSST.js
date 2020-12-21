@@ -72,6 +72,8 @@ export function useAddSST(addModalVisible, getQuestion) {
           getQuestion()
           // 关闭sst模态框
           addModalVisible.sst = false;
+          // 重置表单
+          addSSTRef.value.resetFields();
         }
         else {
           // 添加失败，提示用户失败原因

@@ -99,6 +99,13 @@ export function useAddMCS(addModalVisible, getQuestion, questionType) {
           getQuestion()
           // 关闭mcs/smw/hcs模态框
           addModalVisible[questionType] = false;
+          // 重置表单
+          addMCSRef.value.resetFields();
+          // 手动重置
+          addMCS.model.choices = [{
+            content: "",
+            key: "A"
+          }]
         }
         else {
           // 添加失败，提示用户失败原因
@@ -118,6 +125,11 @@ export function useAddMCS(addModalVisible, getQuestion, questionType) {
     message.warn(`取消添加${questionType}题目`);
     // 重置表单
     addMCSRef.value.resetFields();
+    // 手动重置
+    addMCS.model.choices = [{
+      content: "",
+      key: "A"
+    }]
   };
 
   return {

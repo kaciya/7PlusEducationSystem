@@ -66,6 +66,8 @@ export function useAddWFD(addModalVisible, getQuestion) {
           getQuestion();
           // 关闭wfd模态框
           addModalVisible.wfd = false;
+          // 重置表单
+          addWFDRef.value.resetFields();
         }
         else {
           // 添加失败，提示用户失败原因

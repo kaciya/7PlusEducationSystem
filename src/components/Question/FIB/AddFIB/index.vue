@@ -46,7 +46,9 @@
         <!-- 上传音频 end -->
       </a-form-item>
       <a-form-item label="题目原文" name="titleText">
-        <a-button type="primary" @click="audioSynthetic">转换为音频</a-button>
+        <a-button type="primary" @click="audioSynthetic" :loading="synthesizing"
+          >转换为音频</a-button
+        >
         <!-- 题目原文及填空答案 start -->
         <div v-for="(item, index) in addFIB.model.titleText" :key="index">
           <!-- 题目原文 -->
@@ -132,7 +134,10 @@ export default {
     );
 
     // 音频合成功能
-    const { audioSynthetic } = useAudioSynthetic(addFIB, uploadAudioList);
+    const { synthesizing, audioSynthetic } = useAudioSynthetic(
+      addFIB,
+      uploadAudioList
+    );
 
     // 返回
     return {
@@ -144,6 +149,8 @@ export default {
       uploadAudioList,
       // 改变上传音频
       changeUploadAudio,
+      // 音频合成状态
+      synthesizing,
       // 音频合成功能
       audioSynthetic,
       // 添加题目的表单数据和校验规则

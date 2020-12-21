@@ -99,6 +99,15 @@ export function useAddMCM(addModalVisible, getQuestion) {
           getQuestion()
           // 关闭mcm/smw/hcs模态框
           addModalVisible.mcm = false;
+          // 重置表单
+          addMCMRef.value.resetFields();
+          // 因为没有对应的name 所以需要手动重置
+          addMCM.model.choices = [
+            {
+              content: "",
+              key: "A"
+            }
+          ]
         }
         else {
           // 添加失败，提示用户失败原因
@@ -118,6 +127,13 @@ export function useAddMCM(addModalVisible, getQuestion) {
     message.warn(`取消添加mcm题目`);
     // 重置表单
     addMCMRef.value.resetFields();
+    // 因为没有对应的name 所以需要手动重置
+    addMCM.model.choices = [
+      {
+        content: "",
+        key: "A"
+      }
+    ]
   };
 
   return {

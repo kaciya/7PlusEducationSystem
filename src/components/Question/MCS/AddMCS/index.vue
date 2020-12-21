@@ -35,7 +35,7 @@
       <!-- 题目标签复选框 end -->
 
       <!-- 上传音频 start -->
-      <a-form-item label="题目音频">
+      <a-form-item label="题目音频" name="titleAudio">
         <a-upload
           :action="uploadAudio.url"
           :headers="uploadAudio.headers"
@@ -50,7 +50,9 @@
       <!-- 题目原文 start -->
       <a-form-item label="题目原文" name="titleText">
         <a-textarea v-model:value="addMCS.model.titleText" :rows="4" />
-        <a-button type="primary" @click="audioSynthetic">转换为音频</a-button>
+        <a-button type="primary" @click="audioSynthetic" :loading="synthesizing"
+          >转换为音频</a-button
+        >
       </a-form-item>
       <!-- 题目原文 end -->
 
@@ -155,7 +157,10 @@ export default {
     );
 
     // 音频合成功能
-    const { audioSynthetic } = useAudioSynthetic(addMCS, uploadAudioList);
+    const { synthesizing, audioSynthetic } = useAudioSynthetic(
+      addMCS,
+      uploadAudioList
+    );
 
     // 返回
     return {
@@ -167,6 +172,8 @@ export default {
       uploadAudioList,
       // 改变上传音频
       changeUploadAudio,
+      // 音频合成状态
+      synthesizing,
       // 音频合成功能
       audioSynthetic,
       // 添加题目的表单数据和校验规则
