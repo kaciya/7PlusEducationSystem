@@ -64,6 +64,18 @@
           <AddSSTModal :addModalVisible="addModalVisible"></AddSSTModal>
           <AddWFDModal :addModalVisible="addModalVisible"></AddWFDModal>
           <AddFIBModal :addModalVisible="addModalVisible"></AddFIBModal>
+          <AddMCSModal
+            :addModalVisible="addModalVisible"
+            questionType="mcs"
+          ></AddMCSModal>
+          <AddMCSModal
+            :addModalVisible="addModalVisible"
+            questionType="smw"
+          ></AddMCSModal>
+          <AddMCSModal
+            :addModalVisible="addModalVisible"
+            questionType="hcs"
+          ></AddMCSModal>
         </template>
         <!-- 操作区域 end -->
       </a-page-header>
@@ -188,6 +200,8 @@ import AddSSTModal from "@/components/Question/SST/AddSST";
 import AddWFDModal from "@/components/Question/WFD/AddWFD";
 // 引入 添加fib题目模态框
 import AddFIBModal from "@/components/Question/FIB/AddFIB";
+// 引入 添加mcs、smw、hcs题目模态框
+import AddMCSModal from "@/components/Question/MCS/AddMCS";
 //#endregion
 
 // 导入 题目列表 列配置
@@ -329,6 +343,8 @@ export default {
     AddWFDModal,
     // 添加FIB题目模态框
     AddFIBModal,
+    // 添加mcs、smw、hcs题目模态框
+    AddMCSModal,
     //#endregion
   },
 };
