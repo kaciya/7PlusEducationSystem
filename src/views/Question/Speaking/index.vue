@@ -53,8 +53,8 @@
           <a-button
             v-if="category == 'RA' || category == 'RS' || category == 'ASQ'"
             @click="showBulkUpload"
-            >批量上传</a-button
-          >
+            >批量上传
+          </a-button>
           <!-- 添加题目按钮 -->
           <a-button type="primary" @click="showAddModal">添加</a-button>
           <!-- 添加题目模态框 -->
@@ -110,7 +110,7 @@
         :pagination="{
           total: total,
           showSizeChanger: true,
-          showQuickJumper: true
+          showQuickJumper: true,
         }"
         @change="changePagenum"
       >
@@ -151,7 +151,8 @@
             size="small"
             style="margin-left: 10px"
             @click="uploadAudio(record.id, 'audioUrl')"
-            >上传音频</a-button
+          >
+            上传音频</a-button
           >
           <a-button
             type="primary"
@@ -160,15 +161,21 @@
             style="margin-left: 10px"
             >编辑</a-button
           >
-          <a-button type="danger" size="small" style="margin-left: 10px"
-            >删除</a-button
+          <a-popconfirm
+            title="确定删除这个题目吗？"
+            @confirm="delQuestion(record.id)"
+            @cancel="cancelDelQuestion"
           >
+            <a-button type="danger" style="margin-left: 10px" size="small">
+              删除
+            </a-button>
+          </a-popconfirm>
         </template>
         <!-- 题目操作区 end -->
         <!-- 题目列表 end -->
       </a-table>
       <!-- 查看模态框 -->
-      <GetRAModal />
+      <GetRAModal :getModalVisible="getModalVisible" />
     </a-card>
     <!-- 主体Main end -->
   </a-layout-content>
@@ -203,32 +210,34 @@ import { useUploadAudio } from "./useUploadAudio";
 import { useShowGetModal } from "./useShowGetModal";
 // 导入 显示添加题目模态框 功能
 import { useShowAddModal } from "./useShowAddModal";
+// 导入 删除题目功能
+import { useDelQuestion } from "./useDelQuestion";
 
 export default {
   // setup响应api入口
   setup() {
     // 渲染题目列表
-    let {
+    const {
       category,
       labelId,
       getQuestion,
       questionList,
       isLoading,
       total,
-      changePagenum
+      changePagenum,
     } = useGetQuestion();
 
     // 获取全部标签类型
-    let { labelList } = useGetLabels();
+    const { labelList } = useGetLabels();
 
     // 题目列表 列配置
-    let { questionColumns, questionColumns2 } = useQuestionColumns();
+    const { questionColumns, questionColumns2 } = useQuestionColumns();
 
     // 设置 题目标签
-    let { setLabels } = useSetLabels(labelList);
+    const { setLabels } = useSetLabels(labelList);
 
     // 批量上传 功能
-    let {
+    const {
       bulkUpload,
       showBulkUpload,
       bulkUploadChange,
@@ -238,16 +247,19 @@ export default {
     } = useBulkUpload();
 
     // 模板下载功能
-    let { downloadTemplateUrl } = useDownloadTemplate(category);
+    const { downloadTemplateUrl } = useDownloadTemplate(category);
 
     // 上传音频功能
-    let { uploadAudio } = useUploadAudio();
+    const { uploadAudio } = useUploadAudio();
 
     // 显示查看模态框 功能
-    let { showGetModal } = useShowGetModal(category);
+    const { getModalVisible, showGetModal } = useShowGetModal(category);
 
     // 显示添加模态框 功能
-    let { showAddModal } = useShowAddModal(category);
+    const { showAddModal } = useShowAddModal(category);
+
+    // 删除题目 功能
+    let { delQuestion, cancelDelQuestion } = useDelQuestion(getQuestion);
 
     // 返回
     return {
@@ -299,11 +311,20 @@ export default {
       //#endregion
 
       //#region 显示查看模态框功能
+      // 查看模态框的显示隐藏
+      getModalVisible,
+      // 显示查看模态框
       showGetModal,
       //#endregion
 
       //#region 显示添加模态框功能
-      showAddModal
+      showAddModal,
+      //#endregion
+
+      //#region 删除题目功能
+      delQuestion,
+      // 取消删除
+      cancelDelQuestion,
       //#endregion
     };
   },
@@ -316,8 +337,8 @@ export default {
     // 查看RA题目模态框
     GetRAModal,
     // 添加SST题目模态框
-    AddSSTModal
-  }
+    AddSSTModal,
+  },
 };
 </script>
 
