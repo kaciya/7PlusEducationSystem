@@ -5,7 +5,7 @@
     :width="888"
     :footer="null"
     :maskClosable="false"
-    dialogClass="check-modal"
+    class="check-modal"
     v-model:visible="getModalVisible.ra"
   >
     <a-form v-bind="layout">
