@@ -273,7 +273,7 @@ export default {
       templateName: "单词",
       uploadUrl: word.AddWords,
       downloadUrl: word.ExportTemplat,
-      uploadData: getWordData,
+      getData: getWordData,
     });
     return {
       //#region 获取（查询）数据
