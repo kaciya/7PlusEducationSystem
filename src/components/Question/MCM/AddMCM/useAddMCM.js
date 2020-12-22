@@ -1,4 +1,4 @@
-//#region 添加SST题型
+//#region 添加MCM题型
 // 引入响应式API
 import { reactive, ref } from "vue";
 // 引入提示框
@@ -9,13 +9,13 @@ import { httpPost } from "@/utils/http";
 import { listen } from "@/api/questionListenAPI";
 
 /**
- * 导出添加SST题型 功能
+ * 导出添加MCM题型 功能
  * @param {*} addModalVisible 添加模态框的显示与隐藏
  * @param {*} getQuestion 重新获取列表
  */
-export function useAddSST(addModalVisible, getQuestion) {
+export function useAddMCM(addModalVisible, getQuestion) {
   // 表单数据 校验规则
-  const addSST = reactive({
+  const addMCM = reactive({
     model: {
       // 编号
       no: "",
@@ -27,8 +27,19 @@ export function useAddSST(addModalVisible, getQuestion) {
       titleAudio: "",
       // 题目原文
       titleText: "",
+      // 题目问题
+      titleQuestion: "",
+      // 题目选项
+      choices: [
+        {
+          content: "",
+          key: "A"
+        }
+      ],
+      // 题目解析
+      titleAnalysis: "",
       // 答案参考
-      answer: "",
+      answer: [],
       // 备注
       remark: ""
     },
@@ -47,7 +58,7 @@ export function useAddSST(addModalVisible, getQuestion) {
   });
 
   // 表单ref
-  const addSSTRef = ref(null);
+  const addMCMRef = ref(null);
 
   // 改变选择标签时
   const changeLabels = checkedValue => {
@@ -59,21 +70,44 @@ export function useAddSST(addModalVisible, getQuestion) {
     }
   };
 
-  // 添加SST题目
-  const confirmAddSST = () => {
+  // 添加题目选项
+  const addChoices = () => {
+    addMCM.model.choices.push({
+      content: "",
+      // A、B、C、D...
+      key: String.fromCharCode(addMCM.model.choices.length + 65)
+    })
+  }
+
+  // 删除题目选项
+  const delChoices = (index) => {
+    addMCM.model.choices.splice(index, 1);
+    // 重置一下选项答案
+    addMCM.model.answer = []
+  }
+
+  // 添加MCM题目
+  const confirmAddMCM = () => {
     // 先校验
-    addSSTRef.value.validate().then(() => {
+    addMCMRef.value.validate().then(() => {
       // 发送添加题目请求
-      httpPost(listen.AddQuestion('sst'), addSST.model).then((res) => {
+      httpPost(listen.AddQuestion('mcm'), addMCM.model).then((res) => {
         if (res.success == true) {
           // 提示用户添加成功
           message.success("添加题目成功");
           // 刷新页面
           getQuestion()
-          // 关闭sst模态框
-          addModalVisible.sst = false;
+          // 关闭mcm/smw/hcs模态框
+          addModalVisible.mcm = false;
           // 重置表单
-          addSSTRef.value.resetFields();
+          addMCMRef.value.resetFields();
+          // 因为没有对应的name 所以需要手动重置
+          addMCM.model.choices = [
+            {
+              content: "",
+              key: "A"
+            }
+          ]
         }
         else {
           // 添加失败，提示用户失败原因
@@ -87,20 +121,29 @@ export function useAddSST(addModalVisible, getQuestion) {
     });
   };
 
-  // 取消添加sst题目
-  const cancelAddSST = () => {
+  // 取消添加mcm题目
+  const cancelAddMCM = () => {
     // 提示用户
-    message.warn("取消添加sst题目");
+    message.warn(`取消添加mcm题目`);
     // 重置表单
-    addSSTRef.value.resetFields();
+    addMCMRef.value.resetFields();
+    // 因为没有对应的name 所以需要手动重置
+    addMCM.model.choices = [
+      {
+        content: "",
+        key: "A"
+      }
+    ]
   };
 
   return {
-    addSST,
-    addSSTRef,
+    addMCM,
+    addMCMRef,
     changeLabels,
-    confirmAddSST,
-    cancelAddSST
+    addChoices,
+    delChoices,
+    confirmAddMCM,
+    cancelAddMCM
   };
 }
 //#endregion

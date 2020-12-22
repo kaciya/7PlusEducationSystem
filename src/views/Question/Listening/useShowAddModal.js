@@ -9,7 +9,10 @@ export function useShowAddModal(category) {
   const addModalVisible = reactive({
     sst: false,
     wfd: false,
-    fib: false
+    fib: false,
+    mcs: false,
+    smw: false,
+    hcs: false
   })
 
   // 显示添加题目模态框

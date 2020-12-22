@@ -64,6 +64,19 @@
           <AddSSTModal :addModalVisible="addModalVisible"></AddSSTModal>
           <AddWFDModal :addModalVisible="addModalVisible"></AddWFDModal>
           <AddFIBModal :addModalVisible="addModalVisible"></AddFIBModal>
+          <AddMCSModal
+            :addModalVisible="addModalVisible"
+            questionType="mcs"
+          ></AddMCSModal>
+          <AddMCSModal
+            :addModalVisible="addModalVisible"
+            questionType="smw"
+          ></AddMCSModal>
+          <AddMCSModal
+            :addModalVisible="addModalVisible"
+            questionType="hcs"
+          ></AddMCSModal>
+          <AddMCMModal :addModalVisible="addModalVisible"></AddMCMModal>
         </template>
         <!-- 操作区域 end -->
       </a-page-header>
@@ -142,14 +155,8 @@
         <!-- 题目操作区 start -->
         <template #operation="{ record }">
           <a-button type="primary" size="small">查看</a-button>
-          <!-- :show-upload-list="false" 不显示上传文件列表-->
-          <a-button
-            type="primary"
-            style="margin-left: 10px"
-            @click="uploadAudio(record.id, 'audioUrl')"
-            size="small"
-            >上传音频</a-button
-          >
+          <!-- 上传音频按钮-->
+          <UploadAudioBtn :id="record.id"></UploadAudioBtn>
           <a-button
             type="primary"
             style="margin-left: 10px"
@@ -178,6 +185,8 @@
 <script>
 // 引入面包屑组件
 import Crumbs from "@/components/Crumbs";
+// 引入上传音频按钮组件
+import UploadAudioBtn from "@/components/Question/UploadAudioBtn";
 // 引入icons图标
 import { UploadOutlined } from "@ant-design/icons-vue";
 
@@ -188,6 +197,10 @@ import AddSSTModal from "@/components/Question/SST/AddSST";
 import AddWFDModal from "@/components/Question/WFD/AddWFD";
 // 引入 添加fib题目模态框
 import AddFIBModal from "@/components/Question/FIB/AddFIB";
+// 引入 添加mcs、smw、hcs题目模态框
+import AddMCSModal from "@/components/Question/MCS/AddMCS";
+// 引入 添加mcm题目模态框
+import AddMCMModal from "@/components/Question/MCM/AddMCM";
 //#endregion
 
 // 导入 题目列表 列配置
@@ -202,8 +215,6 @@ import { useSetLabels } from "./useSetLabels";
 import { useBulkUpload } from "./useBulkUpload";
 // 导入 模板下载功能
 import { useDownloadTemplate } from "./useDownloadTemplate";
-// 导入 上传音频功能
-import { useUploadAudio } from "./useUploadAudio";
 // 导入 显示添加题目模态框 功能
 import { useShowAddModal } from "./useShowAddModal";
 // 导入 删除题目功能
@@ -244,9 +255,6 @@ export default {
 
     // 模板下载功能
     let { downloadTemplateUrl } = useDownloadTemplate(category);
-
-    // 上传音频功能
-    let { uploadAudio } = useUploadAudio();
 
     // 显示添加模态框 功能
     let { addModalVisible, showAddModal } = useShowAddModal(category);
@@ -298,10 +306,6 @@ export default {
       downloadTemplateUrl,
       //#endregion
 
-      //#region 上传音频功能
-      uploadAudio,
-      //#endregion
-
       //#region 显示添加模态框功能
       // 添加模态框的显示与隐藏
       addModalVisible,
@@ -322,6 +326,8 @@ export default {
     Crumbs,
     // 上传图标
     UploadOutlined,
+    // 上传音频按钮组件
+    UploadAudioBtn,
     //#region 添加题目模态框
     // 添加SST题目模态框
     AddSSTModal,
@@ -329,6 +335,10 @@ export default {
     AddWFDModal,
     // 添加FIB题目模态框
     AddFIBModal,
+    // 添加mcs、smw、hcs题目模态框
+    AddMCSModal,
+    // 添加mcm题目模态框
+    AddMCMModal,
     //#endregion
   },
 };

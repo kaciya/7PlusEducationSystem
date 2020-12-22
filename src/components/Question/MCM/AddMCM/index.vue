@@ -1,40 +1,41 @@
 <template>
-  <!-- 添加FIB题目模态框 -->
+  <!-- 添加MCM题目模态框 -->
   <a-modal
-    v-model:visible="addModalVisible.fib"
+    v-model:visible="addModalVisible.mcm"
     title="添加"
-    @ok="confirmAddFIB"
-    @cancel="cancelAddFIB"
+    @ok="confirmAddMCM"
+    @cancel="cancelAddMCM"
     :maskClosable="false"
   >
-    <!-- 添加fib题目表单 start -->
+    <!-- 添加mcm题目表单 start -->
     <a-form
-      :model="addFIB.model"
-      :rules="addFIB.rules"
-      ref="addFIBRef"
+      :model="addMCM.model"
+      :rules="addMCM.rules"
+      ref="addMCMRef"
       :label-col="{ span: 4 }"
       :wrapper-col="{ span: 18 }"
     >
       <a-form-item label="编号" name="no" hasFeedback>
-        <a-input v-model:value="addFIB.model.no" />
+        <a-input v-model:value="addMCM.model.no" />
       </a-form-item>
       <a-form-item label="题目" name="title">
-        <a-input v-model:value="addFIB.model.title" />
+        <a-input v-model:value="addMCM.model.title" />
       </a-form-item>
+      <!-- 题目标签复选框 start -->
       <a-form-item label="标签选择" name="labelIds">
-        <!-- 题目标签复选框 start -->
         <a-checkbox-group
-          v-model:value="addFIB.model.labelIds"
+          v-model:value="addMCM.model.labelIds"
           @change="changeLabels"
         >
           <a-checkbox :value="item.id" v-for="item in labelList" :key="item.id">
             {{ item.name }}
           </a-checkbox>
         </a-checkbox-group>
-        <!-- 题目标签复选框 end -->
       </a-form-item>
+      <!-- 题目标签复选框 end -->
+
+      <!-- 上传音频 start -->
       <a-form-item label="题目音频">
-        <!-- 上传音频 start -->
         <a-upload
           :action="uploadAudio.url"
           :headers="uploadAudio.headers"
@@ -43,46 +44,72 @@
         >
           <a-button type="primary">上传音频</a-button>
         </a-upload>
-        <!-- 上传音频 end -->
       </a-form-item>
+      <!-- 上传音频 end -->
+
+      <!-- 题目原文 start -->
       <a-form-item label="题目原文" name="titleText">
+        <a-textarea v-model:value="addMCM.model.titleText" :rows="4" />
         <a-button type="primary" @click="audioSynthetic" :loading="synthesizing"
           >转换为音频</a-button
         >
-        <!-- 题目原文及填空答案 start -->
-        <div v-for="(item, index) in addFIB.model.titleText" :key="index">
-          <!-- 题目原文 -->
-          <a-input
-            placeholder="文本"
-            style="width: 60%; margin-right: 8px"
-            v-model:value="item.text"
-          />
-          <!-- 填空答案 -->
-          <a-input
-            v-if="index != addFIB.model.titleText.length - 1"
-            v-model:value="item.answer"
-            placeholder="填空答案"
-            style="width: 30%; margin-right: 8px"
-          />
-          <!-- 移除图标 -->
-          <MinusCircleOutlined
-            v-if="index != 0 && index != addFIB.model.titleText.length - 1"
-            @click="delTitleText(index)"
-          />
-        </div>
-        <!-- 题目原文及填空答案 end -->
+      </a-form-item>
+      <!-- 题目原文 end -->
 
-        <!-- 添加原文填空 -->
-        <a-button type="dashed" style="width: 60%" @click="addTitleText">
-          <PlusOutlined />添加原文填空
+      <!-- 题目问题 start -->
+      <a-form-item label="题目问题" name="titleQuestion">
+        <a-input v-model:value="addMCM.model.titleQuestion" />
+      </a-form-item>
+      <!-- 题目问题 end -->
+
+      <!-- 题目选项 start -->
+      <a-form-item
+        :label="item.key"
+        v-for="(item, index) in addMCM.model.choices"
+        :key="item.key"
+      >
+        <a-input
+          v-model:value="item.content"
+          style="width: 85%; margin-right: 10px"
+        />
+        <MinusCircleOutlined
+          v-if="index != 0 && index == addMCM.model.choices.length - 1"
+          @click="delChoices(index)"
+        />
+      </a-form-item>
+      <a-form-item label=" " :colon="false">
+        <a-button type="dashed" style="width: 60%" @click="addChoices">
+          <PlusOutlined />添加选项
         </a-button>
       </a-form-item>
-      <!-- 备注 -->
+
+      <!-- 题目选项 end -->
+
+      <!-- 答案参考 start -->
+      <a-form-item label="参考答案" name="answer">
+        <a-select
+          mode="multiple"
+          placeholder="多选"
+          v-model:value="addMCM.model.answer"
+        >
+          <a-select-option
+            v-for="item in addMCM.model.choices"
+            :key="item.key"
+            :value="item.key"
+          >
+            {{ item.key }}
+          </a-select-option>
+        </a-select>
+      </a-form-item>
+      <!-- 答案参考 end -->
+      <a-form-item label="讲解" name="titleAnalysis">
+        <a-textarea v-model:value="addMCM.model.titleAnalysis" :rows="4" />
+      </a-form-item>
       <a-form-item label="备注" name="remark">
-        <a-textarea v-model:value="addFIB.model.remark" :rows="2" />
+        <a-textarea v-model:value="addMCM.model.remark" :rows="2" />
       </a-form-item>
     </a-form>
-    <!-- 添加fib题目表单 end -->
+    <!-- 添加mcm题目表单 end -->
   </a-modal>
 </template>
 
@@ -92,17 +119,17 @@ import { inject } from "vue";
 // 引入图标
 import {
   CheckCircleTwoTone,
-  MinusCircleOutlined,
   PlusOutlined,
+  MinusCircleOutlined,
 } from "@ant-design/icons-vue";
-// 引入 添加FIB题目 功能
-import { addFIB, useAddFIB } from "./useAddFIB";
+// 引入 添加MCM题目 功能
+import { addMCM, useAddMCM } from "./useAddMCM";
 // 引入 上传音频 功能
 import { useUploadAudio } from "@/components/Question/SST/AddSST/useUploadAudio";
 // 引入 标签列表 功能
 import { useGetLabels } from "@/views/Question/QuestionLabel/useGetLables";
 // 引入 音频合成 功能
-import { useAudioSynthetic } from "./useAudioSynthetic";
+import { useAudioSynthetic } from "@/components/Question/SST/AddSST/useAudioSynthetic";
 
 export default {
   // 接收父组件传来的数据
@@ -117,25 +144,25 @@ export default {
     // 标签列表
     const { labelList } = useGetLabels();
 
-    // 添加FIB题目
+    // 添加MCM题目
     const {
-      addFIB,
-      addFIBRef,
+      addMCM,
+      addMCMRef,
       changeLabels,
-      addTitleText,
-      delTitleText,
-      confirmAddFIB,
-      cancelAddFIB,
-    } = useAddFIB(addModalVisible, getQuestion);
+      addChoices,
+      delChoices,
+      confirmAddMCM,
+      cancelAddMCM,
+    } = useAddMCM(addModalVisible, getQuestion);
 
     // 上传音频功能
     const { uploadAudio, uploadAudioList, changeUploadAudio } = useUploadAudio(
-      addFIB
+      addMCM
     );
 
     // 音频合成功能
     const { synthesizing, audioSynthetic } = useAudioSynthetic(
-      addFIB,
+      addMCM,
       uploadAudioList
     );
 
@@ -154,25 +181,25 @@ export default {
       // 音频合成功能
       audioSynthetic,
       // 添加题目的表单数据和校验规则
-      addFIB,
+      addMCM,
       // 添加题目表单
-      addFIBRef,
+      addMCMRef,
       // 改变选择标签时
       changeLabels,
-      // 添加题目原文填空
-      addTitleText,
-      // 移除题目原文填空
-      delTitleText,
-      // 添加fib题目
-      confirmAddFIB,
-      // 取消添加fib题目
-      cancelAddFIB,
+      // 添加题目选项
+      addChoices,
+      // 删除题目选项
+      delChoices,
+      // 添加mcm题目
+      confirmAddMCM,
+      // 取消添加mcm题目
+      cancelAddMCM,
     };
   },
   components: {
     CheckCircleTwoTone,
-    MinusCircleOutlined,
     PlusOutlined,
+    MinusCircleOutlined,
   },
 };
 </script>
