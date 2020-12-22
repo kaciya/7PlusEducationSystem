@@ -9,6 +9,8 @@ import SideBarStore from "./sideBarStore";
 import ListeningStore from "./listeningStore";
 // 导入口语题库模块
 import SpeakingStore from "./speakingStore";
+// 引入图片上传模块
+import ImageUploadStore from "./imageUploadStore";
 
 export default createStore({
   modules: {
@@ -20,6 +22,8 @@ export default createStore({
     ListeningStore,
     // 口语题库共享库
     SpeakingStore,
+    // 图片上传共享库
+    ImageUploadStore
   },
   plugins: [
     // 配置数据持久化存储
