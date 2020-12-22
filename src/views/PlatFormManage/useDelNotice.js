@@ -8,16 +8,19 @@ export const useDelNotice = getNoticeData => {
   const delOneNotice = noticeId => {
     httpDelete(notice.DelOneNotice + "/" + noticeId)
       .then(res => {
-        if (res.code == 200) {
+        let { success } = res;
+        if (success) {
           message.success("删除成功");
+          // 重新渲染数据
           getNoticeData();
         }
       })
       .catch(err => {
-        console.log(err);
+        throw new Error(err);
       });
   };
 
+  // 取消删除
   const cancelDel = () => {
     message.warning("已取消");
   };

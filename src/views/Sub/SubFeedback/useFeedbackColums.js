@@ -23,9 +23,9 @@ export const useFeedbackColums = () => {
       },
       {
         title: "图片",
-        key: "picUrls",
+        key: "pics",
         slots: {
-          customRender: "picUrls"
+          customRender: "pics"
         }
       },
       {

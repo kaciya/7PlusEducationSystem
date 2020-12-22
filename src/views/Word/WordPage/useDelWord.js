@@ -5,12 +5,14 @@ import word from "@/api/wordPageAPI";
 //全局提示
 import { message } from "ant-design-vue";
 import { ref } from "vue";
+// 对话框插件
 import { ExclamationCircleOutlined } from "@ant-design/icons-vue";
 import { createVNode } from "vue";
 import { Modal } from "ant-design-vue";
 export const useDelWord = getWordData => {
-  // 点击删除触发的事件
+  //#region 点击删除触发的事件
   let delWord = id => {
+    // 判断传入是不是数组
     id = Array.isArray(id) ? id : [id];
     // 发送请求
     httpPost(word.DelWord, {
@@ -31,13 +33,15 @@ export const useDelWord = getWordData => {
         throw new Error(err);
       });
   };
+  //#endregion
   // 多选数据
   let wordKeys = ref([]);
-  //多选触发事件
+  //#region 多选触发事件
   const onSelectChange = selectedRowKeys => {
     wordKeys.value = selectedRowKeys;
   };
-  // 删除事件
+  //#endregion
+  //#region 批量删除
   const delWords = () => {
     // 判断是否选择
     if (wordKeys.value.length == 0) {
@@ -60,6 +64,7 @@ export const useDelWord = getWordData => {
       });
     }
   };
+  //#endregion
   return {
     delWord,
     wordKeys,

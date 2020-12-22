@@ -23,7 +23,7 @@ export const useGetTopic = id => {
     showSizeChanger: true
   });
   //#endregion 分页配置项
-  // 获取后台数据
+  //#region 获取后台数据
   const getTopicData = async () => {
     const res = await httpGet(user.GetUserTopic + `/${id}`, {
       // 降序
@@ -32,16 +32,23 @@ export const useGetTopic = id => {
       pageSize: topicPagination.pageSize
     });
     if (res.success) {
+      // 数据
       topicData.data = res.data.records;
+      // 数据总数
       topicPagination.total = res.data.total;
     }
   };
-  // 页码改变回调
+  //#endregion
+  //#region 页码改变回调
   const onTableChange = pagination => {
+    // 第几页
     topicPagination.current = pagination.current;
+    // 每页显示多少条
     topicPagination.pageSize = pagination.pageSize;
+    // 刷新数据
     getTopicData();
   };
+  //#endregion
   // 初始化获取数据
   onMounted(() => {
     getTopicData();

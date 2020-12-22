@@ -18,8 +18,7 @@
           :columns="rolesTable.colums"
           :data-source="rolesTable.data"
           row-Key="roleId"
-          :pagination="rolePagination"
-          @change="pageChange"
+          :pagination="false"
         >
           <!-- 配置 # index 索引 -->
           <template #index="{ index }">
@@ -135,8 +134,6 @@ export default {
     return {
       //权限组列表
       rolesTable,
-      //分页参数
-      rolePagination,
       //渲染权限组列表方法
       getRolesData,
       //显示删除模态框方法
@@ -147,8 +144,6 @@ export default {
       addRouter,
       //权限组编辑路由跳转
       editRouter,
-      //点击下一页方法
-      pageChange
     };
     //#endregion
   }

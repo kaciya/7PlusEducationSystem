@@ -5,7 +5,13 @@ import { httpGet } from "@/utils/http";
 import topic from "@/api/topicAPI";
 export const useTopicDataList = () => {
   // 定义内容
-  const topicData = ref();
+  const topicData = ref([]);
+
+  // 用户名称输入框内容
+  const topicUserName = ref("");
+
+  // 分类选择
+  const topicSortStatus = ref("");
 
   // 分页
   const tablePagination = reactive({
@@ -16,25 +22,32 @@ export const useTopicDataList = () => {
     showSizeChanger: true
   });
 
+  // 清空输入框
+  const clearInput = () => {
+    topicUserName.value = "";
+    topicSortStatus.value = "";
+    tablePagination.current = 1;
+  };
+
   // 发起请求获取数据
-  const getTopicData = (topicUserName, topicSortStatus) => {
+  const getTopicData = () => {
     const params = {
       pageNum: tablePagination.current,
       pageSize: tablePagination.pageSize,
-      userName: topicUserName,
-      categoryId: topicSortStatus,
+      userName: topicUserName.value,
+      categoryId: topicSortStatus.value,
       descColumns: "createTime"
     };
     httpGet(topic.GetDataList, params)
       .then(res => {
-        const { data } = res;
-        if (res.code == 200) {
+        const { data, success } = res;
+        if (success) {
           topicData.value = data.records;
           tablePagination.total = data.total;
         }
       })
       .catch(err => {
-        console.log(err);
+        throw new Error(err);
       });
   };
 
@@ -44,8 +57,11 @@ export const useTopicDataList = () => {
   });
 
   return {
-    getTopicData,
     topicData,
-    tablePagination
+    topicUserName,
+    topicSortStatus,
+    tablePagination,
+    clearInput,
+    getTopicData
   };
 };

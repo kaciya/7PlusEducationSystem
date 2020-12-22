@@ -36,8 +36,8 @@ export const useEditFeedbackManage = () => {
                             getFeedbackData();
                         }
                     })
-                    .catch(error => {
-                        throw error;
+                    .catch(err => {
+                        throw err;
                     })
             },
         });

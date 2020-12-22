@@ -23,12 +23,14 @@ export const useGetLog = id => {
     showSizeChanger: true
   });
   //#endregion 分页配置项
-  // 获取后台数据
+  //#region 获取后台数据
   const getLogData = async () => {
     const res = await httpGet(user.GetLoginLog + `/${id}`, {
       // 降序
       descColumns: "createTime",
+      // 第几页
       pageNum: logPagination.current,
+      // 每页显示多少条
       pageSize: logPagination.pageSize
     });
     if (res.code == 200) {
@@ -38,12 +40,17 @@ export const useGetLog = id => {
       logPagination.total = res.data.total;
     }
   };
-  // 页码改变回调
+  //#endregion
+  //#region 页码改变回调
   const onTableChange = pagination => {
+    // 第几页
     logPagination.current = pagination.current;
+    //每页显示多少条
     logPagination.pageSize = pagination.pageSize;
+    // 重新获取数据
     getLogData();
   };
+  //#endregion
   // 初始化获取数据
   onMounted(() => {
     getLogData();

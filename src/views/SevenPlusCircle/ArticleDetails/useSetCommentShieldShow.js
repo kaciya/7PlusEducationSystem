@@ -6,7 +6,7 @@ import { httpPost } from "@/utils/http";
 // 引入提示方法
 import { message, Modal } from "ant-design-vue";
 import { ExclamationCircleOutlined } from "@ant-design/icons-vue";
-export const useSetTopicShieldShow = getTopicData => {
+export const useSetCommentShieldShow = getComment => {
   // 屏蔽模态框
   const topicShieldVisible = ref(false);
 
@@ -28,7 +28,7 @@ export const useSetTopicShieldShow = getTopicData => {
       id: topicUserId.value,
       reason: shielFrameValue.value
     };
-    httpPost(topic.ShieldShowUser, params)
+    httpPost(topic.ShieldShowComment, params)
       .then(res => {
         let { success } = res;
         if (success) {
@@ -36,7 +36,7 @@ export const useSetTopicShieldShow = getTopicData => {
           topicShieldVisible.value = false;
           shielFrameValue.value = "";
           // 重新渲染数据
-          getTopicData();
+          getComment();
         }
       })
       .catch(err => {
@@ -56,7 +56,7 @@ export const useSetTopicShieldShow = getTopicData => {
       title: "您是否要执行显示",
       icon: createVNode(ExclamationCircleOutlined),
       onOk() {
-        httpPost(topic.ShieldShowUser, {
+        httpPost(topic.ShieldShowComment, {
           id: id
         })
           .then(res => {
@@ -65,7 +65,7 @@ export const useSetTopicShieldShow = getTopicData => {
               message.success("显示成功");
               topicShieldVisible.value = false;
               // 重新渲染数据
-              getTopicData();
+              getComment();
             }
           })
           .catch(err => {
@@ -83,7 +83,7 @@ export const useSetTopicShieldShow = getTopicData => {
     shielFrameValue,
     topicShieldModal,
     confirmShieldModal,
-    topicShowModal,
-    cancelShieldModal
+    cancelShieldModal,
+    topicShowModal
   };
 };
