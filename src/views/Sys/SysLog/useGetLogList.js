@@ -1,11 +1,17 @@
 //导入 reactive 对象
-import { reactive } from "vue";
+import {
+  reactive
+} from "vue";
 
 //导入 API接口
-import { log } from "@/api/sysUserAPI";
+import {
+  log
+} from "@/api/sysUserAPI";
 
 //导入 GET请求方法
-import { httpGet } from "@/utils/http";
+import {
+  httpGet
+} from "@/utils/http";
 
 //#region 获取 操作日志 数据列表
 export const useGetLogList = logTable => {
@@ -24,6 +30,9 @@ export const useGetLogList = logTable => {
   });
   //#endregion
 
+  //获取查询数据
+  const searchData = reactive({});
+
   //#region 发起请求  获取数据列表
   const getLogData = getParam => {
     //创建变量params 将请求需要的参数传递给后台
@@ -33,6 +42,8 @@ export const useGetLogList = logTable => {
     });
     //判断获取到的参数是否为空
     if (getParam) {
+      //获取查询数据
+      searchData.data = getParam;
       //不为空则 添加到 params对象中
       params.endTime = getParam.endDate;
       params.startTime = getParam.startDate;
@@ -49,8 +60,8 @@ export const useGetLogList = logTable => {
           logPagination.total = res.data.total;
         }
       })
-      .catch(error => {
-        throw error;
+      .catch(err => {
+        throw err;
       });
   };
   //#endregion
@@ -61,7 +72,7 @@ export const useGetLogList = logTable => {
     logPagination.current = pagination.current;
     logPagination.pageSize = pagination.pageSize;
     //刷新列表
-    getLogData();
+    getLogData(searchData.data);
   };
   //#endregion
 

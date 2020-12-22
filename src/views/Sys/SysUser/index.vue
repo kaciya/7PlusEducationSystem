@@ -97,8 +97,7 @@
           :columns="sysUsersTable.colums"
           :data-source="sysUsersTable.data"
           row-Key="userId"
-          :pagination="userPagination"
-          @change="pageChange"
+          :pagination="false"
         >
           <template #index="{ index }">
             {{ index + 1 }}
@@ -187,7 +186,7 @@ export default {
      * userPagination 分页参数
      * pageChange 点击下一页方法
      */
-    const { getUserList, userPagination, pageChange } = useGetUserList(
+    const { getUserList , userInfos } = useGetUserList(
       sysUsersTable
     );
 
@@ -239,7 +238,7 @@ export default {
     onMounted(() => {
       getUserList();
       getPermissions();
-      resetUserPwd(1);
+      resetUserPwd(userInfos.userId);
     });
 
     //#region 返回参数
@@ -256,8 +255,6 @@ export default {
       sysUserRules,
       //渲染表格
       getUserList,
-      //分页参数
-      userPagination,
       //显示删除模态框方法
       showDelConfirm,
       //改变启用状态方法
@@ -274,8 +271,6 @@ export default {
       addUserCancel,
       //重置账号密码回调
       resetUserPwd,
-      //点击下一页方法
-      pageChange,
     };
     //#endregion
   }
