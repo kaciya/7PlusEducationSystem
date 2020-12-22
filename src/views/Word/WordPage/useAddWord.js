@@ -8,16 +8,19 @@ import { message } from "ant-design-vue";
 export const useAddWord = getWordData => {
   // 控制模态框显示隐藏
   const addVisible = ref(false);
-  // 点击导入单词事件
+  //#region 点击导入单词事件
   const addWord = () => {
+    // 显示模态框
     addVisible.value = true;
   };
-  //输入框内容
+  //#endregion
+  //#region 输入框内容
   const addModel = reactive({
     wordName: "",
     wordCategory: ""
   });
-  //输入框校验
+  //#endregion
+  //#region 输入框校验
   const addRules = reactive({
     wordName: [
       {
@@ -25,7 +28,7 @@ export const useAddWord = getWordData => {
         whitespace: true,
         message: "请输入单词",
         trigger: "blur"
-      }
+      },
     ],
     wordCategory: [
       {
@@ -36,9 +39,10 @@ export const useAddWord = getWordData => {
       }
     ]
   });
+  //#endregion
   //   表单ref
   const addRef = ref(null);
-  // 点击确定事件
+  //#region 点击确定事件
   const addOK = () => {
     // 判断表单校验是否通过
     addRef.value
@@ -72,12 +76,14 @@ export const useAddWord = getWordData => {
         console.log("error", error);
       });
   };
+  //#endregion
 
-  // 模态框关闭时的回调
+  //#region 模态框关闭时的回调
   let addEmpty = () => {
     // 清空文本框
     addRef.value.resetFields();
   };
+  //#endregion
   return {
     addVisible,
     addWord,

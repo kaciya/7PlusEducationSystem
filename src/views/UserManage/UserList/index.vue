@@ -153,17 +153,22 @@ export default {
     //#endregion
     // 导出数据
     return {
+      //#region 获取(查询)数据
       userModel,
-      userRef,
       getUserList,
-      resetUserList,
       getUserListData,
       userData,
-      columns,
       onTableChange,
-      userPagination
+      userPagination,
+      //#endregion
+      // 表格columns
+      columns,
+      //#region 重置
+      userRef,
+      resetUserList,
+      //#endregion
     };
-  }
+  },
 };
 </script>
 
