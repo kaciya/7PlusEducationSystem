@@ -107,11 +107,7 @@
         :data-source="questionList"
         row-key="id"
         :loading="isLoading"
-        :pagination="{
-          total: total,
-          showSizeChanger: true,
-          showQuickJumper: true,
-        }"
+        :pagination="questionPagination"
         @change="changePagenum"
       >
         <template #pics="{ record }">
@@ -146,14 +142,8 @@
           <a-button type="primary" size="small" @click="showGetModal(record.id)"
             >查看</a-button
           >
-          <a-button
-            type="primary"
-            size="small"
-            style="margin-left: 10px"
-            @click="uploadAudio(record.id, 'audioUrl')"
-          >
-            上传音频</a-button
-          >
+          <!-- 上传音频按钮-->
+          <UploadAudioBtn :id="record.id"></UploadAudioBtn>
           <a-button
             type="primary"
             size="small"
@@ -184,6 +174,8 @@
 <script>
 // 引入面包屑组件
 import Crumbs from "@/components/Crumbs";
+// 引入上传音频按钮组件
+import UploadAudioBtn from "@/components/Question/UploadAudioBtn";
 // 引入icons图标
 import { UploadOutlined } from "@ant-design/icons-vue";
 
@@ -204,8 +196,6 @@ import { useSetLabels } from "./useSetLabels";
 import { useBulkUpload } from "./useBulkUpload";
 // 导入 模板下载功能
 import { useDownloadTemplate } from "./useDownloadTemplate";
-// 导入 上传音频功能
-import { useUploadAudio } from "./useUploadAudio";
 // 导入 显示查看题目模态框 功能
 import { useShowGetModal } from "./useShowGetModal";
 // 导入 显示添加题目模态框 功能
@@ -218,12 +208,12 @@ export default {
   setup() {
     // 渲染题目列表
     const {
+      questionPagination,
       category,
       labelId,
       getQuestion,
       questionList,
       isLoading,
-      total,
       changePagenum,
     } = useGetQuestion();
 
@@ -249,9 +239,6 @@ export default {
     // 模板下载功能
     const { downloadTemplateUrl } = useDownloadTemplate(category);
 
-    // 上传音频功能
-    const { uploadAudio } = useUploadAudio();
-
     // 显示查看模态框 功能
     const { getModalVisible, showGetModal } = useShowGetModal(category);
 
@@ -264,6 +251,8 @@ export default {
     // 返回
     return {
       //#region 渲染表格
+      // 分页器配置
+      questionPagination,
       // 当前题目分类
       category,
       // 当前选择的标签筛选
@@ -279,8 +268,6 @@ export default {
       questionList,
       // 加载状态
       isLoading,
-      // 数据库中题目总条数
-      total,
       // 跳转页码时
       changePagenum,
       // 设置题目标签
@@ -306,10 +293,6 @@ export default {
       downloadTemplateUrl,
       //#endregion
 
-      //#region 上传音频功能
-      uploadAudio,
-      //#endregion
-
       //#region 显示查看模态框功能
       // 查看模态框的显示隐藏
       getModalVisible,
@@ -332,6 +315,8 @@ export default {
   components: {
     // 面包屑
     Crumbs,
+    // 上传音频按钮组件
+    UploadAudioBtn,
     // 上传图标
     UploadOutlined,
     // 查看RA题目模态框
