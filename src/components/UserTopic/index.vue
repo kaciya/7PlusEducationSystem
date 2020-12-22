@@ -87,7 +87,7 @@ export default {
       topicData, // 表格数据
       topicPagination, //分页配置项
       onTableChange, //页码改变回调
-      getTopicData
+      getTopicData //获取数据方法
     } = useGetTopic(prop.userID);
     // 柒加圈columns
     const { columns } = useTopicColumns();
@@ -101,19 +101,24 @@ export default {
       cancelShieldModal // 关闭模态框清空并提示
     } = useSetTopicShieldShow(getTopicData);
     return {
+      //#region 柒加圈数据
       topicData,
-      columns,
       topicPagination,
       onTableChange,
       getTopicData,
-      topicShieldVisible, // 屏蔽模态框
-      topicShieldModal, // 显示屏蔽模态框
-      shielFrameValue, // 双向绑定屏蔽理由输入框
-      confirmShieldModal, // 屏蔽框确认
-      topicShowModal, // 显示框
-      cancelShieldModal // 关闭模态框清空并提示
+      //#endregion
+      // 柒加圈columns
+      columns,
+      //#region 显示屏蔽功能
+      topicShieldVisible,
+      topicShieldModal,
+      shielFrameValue,
+      confirmShieldModal,
+      topicShowModal,
+      cancelShieldModal
+      //#endregion
     };
-  }
+  },
 };
 </script>
 

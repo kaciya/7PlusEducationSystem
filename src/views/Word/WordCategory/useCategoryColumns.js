@@ -1,5 +1,5 @@
 import { reactive } from "vue";
-
+// 词库分类表格columns
 export const useCategoryColumns = () => {
   const columns = reactive([
     {
