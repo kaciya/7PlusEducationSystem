@@ -73,6 +73,8 @@ import { inject } from "vue";
 import { CheckCircleTwoTone } from "@ant-design/icons-vue";
 // 引入 添加SST题目 功能
 import { addSST, useAddSST } from "./useAddSST";
+// 引入 上传音频列表
+import { useUploadAudioList } from "./useUploadAudioList";
 // 引入 上传音频 功能
 import { useUploadAudio } from "./useUploadAudio";
 // 引入 标签列表 功能
@@ -93,6 +95,9 @@ export default {
     // 标签列表
     const { labelList } = useGetLabels();
 
+    // 上传音频列表
+    const { uploadAudioList } = useUploadAudioList();
+
     // 添加SST题目
     const {
       addSST,
@@ -100,11 +105,12 @@ export default {
       changeLabels,
       confirmAddSST,
       cancelAddSST,
-    } = useAddSST(addModalVisible, getQuestion);
+    } = useAddSST(addModalVisible, getQuestion, uploadAudioList);
 
     // 上传音频功能
-    const { uploadAudio, uploadAudioList, changeUploadAudio } = useUploadAudio(
-      addSST
+    const { uploadAudio, changeUploadAudio } = useUploadAudio(
+      addSST,
+      uploadAudioList
     );
 
     // 音频合成功能

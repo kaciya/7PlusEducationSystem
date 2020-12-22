@@ -1,6 +1,6 @@
-//#region 添加MCM题型
+//#region 编辑MCS题型
 // 引入响应式API
-import { reactive, ref } from "vue";
+import { reactive, ref, watch } from "vue";
 // 引入提示框
 import { message } from "ant-design-vue";
 // 导入 post 请求
@@ -9,13 +9,13 @@ import { httpPost } from "@/utils/http";
 import { listen } from "@/api/questionListenAPI";
 
 /**
- * 导出添加MCM题型 功能
- * @param {*} addModalVisible 添加模态框的显示与隐藏
+ * 导出编辑MCS题型 功能
+ * @param {*} editModalVisible 编辑模态框的显示与隐藏
  * @param {*} getQuestion 重新获取列表
  */
-export function useAddMCM(addModalVisible, getQuestion, uploadAudioList) {
+export function useEditMCS(editModalVisible, getQuestion, editDetail, questionType, uploadAudioList) {
   // 表单数据 校验规则
-  const addMCM = reactive({
+  const editMCS = reactive({
     model: {
       // 编号
       no: "",
@@ -39,7 +39,7 @@ export function useAddMCM(addModalVisible, getQuestion, uploadAudioList) {
       // 题目解析
       titleAnalysis: "",
       // 答案参考
-      answer: [],
+      answer: "",
       // 备注
       remark: ""
     },
@@ -61,8 +61,23 @@ export function useAddMCM(addModalVisible, getQuestion, uploadAudioList) {
     }
   });
 
+  // 每次打开编辑模态框都会触发 editDetail的监听，
+  // 这时重新处理题目详情数据给编辑表单的modal
+  watch(editDetail, (val) => {
+    for (const key in val) {
+      if (key == "labels") {
+        // 标签特殊处理，将labels:[{id:1, name:'高频'}] map为 表单中的labelIds:['1']
+        editMCS.model.labelIds = val[key].map((value) => value.id);
+      }
+      else {
+        // 其它值直接赋值
+        editMCS.model[key] = val[key]
+      }
+    }
+  })
+
   // 表单ref
-  const addMCMRef = ref(null);
+  const editMCSRef = ref(null);
 
   // 改变选择标签时
   const changeLabels = checkedValue => {
@@ -74,49 +89,47 @@ export function useAddMCM(addModalVisible, getQuestion, uploadAudioList) {
     }
   };
 
-  // 添加题目选项
-  const addChoices = () => {
-    addMCM.model.choices.push({
+  // 编辑题目选项
+  const editChoices = () => {
+    editMCS.model.choices.push({
       content: "",
       // A、B、C、D...
-      key: String.fromCharCode(addMCM.model.choices.length + 65)
+      key: String.fromCharCode(editMCS.model.choices.length + 65)
     })
   }
 
   // 删除题目选项
   const delChoices = (index) => {
-    addMCM.model.choices.splice(index, 1);
+    editMCS.model.choices.splice(index, 1);
     // 重置一下选项答案
-    addMCM.model.answer = []
+    editMCS.model.answer = ""
   }
 
-  // 添加MCM题目
-  const confirmAddMCM = () => {
+  // 编辑MCS题目
+  const confirmEditMCS = () => {
     // 先校验
-    addMCMRef.value.validate().then(() => {
-      // 发送添加题目请求
-      httpPost(listen.AddQuestion('mcm'), addMCM.model).then((res) => {
+    editMCSRef.value.validate().then(() => {
+      // 发送编辑题目请求
+      httpPost(listen.EditQuestion(questionType), editMCS.model).then((res) => {
         if (res.success == true) {
-          // 提示用户添加成功
-          message.success("添加题目成功");
+          // 提示用户编辑成功
+          message.success("编辑题目成功");
           // 刷新页面
           getQuestion()
-          // 关闭mcm/smw/hcs模态框
-          addModalVisible.mcm = false;
+          // 关闭mcs/smw/hcs模态框
+          editModalVisible[questionType] = false;
           // 重置表单
-          addMCMRef.value.resetFields();
-          // 因为没有对应的name 所以需要手动重置
-          addMCM.model.choices = [
-            {
-              content: "",
-              key: "A"
-            }
-          ];
+          editMCSRef.value.resetFields();
+          // 手动重置
+          editMCS.model.choices = [{
+            content: "",
+            key: "A"
+          }];
           // 清除音频上传列表
           uploadAudioList.value = []
         }
         else {
-          // 添加失败，提示用户失败原因
+          // 编辑失败，提示用户失败原因
           message.error(res.message);
         }
       }).catch((err) => {
@@ -127,31 +140,29 @@ export function useAddMCM(addModalVisible, getQuestion, uploadAudioList) {
     });
   };
 
-  // 取消添加mcm题目
-  const cancelAddMCM = () => {
+  // 取消编辑mcs题目
+  const cancelEditMCS = () => {
     // 提示用户
-    message.warn(`取消添加mcm题目`);
+    message.warn(`取消编辑${questionType}题目`);
     // 重置表单
-    addMCMRef.value.resetFields();
-    // 因为没有对应的name 所以需要手动重置
-    addMCM.model.choices = [
-      {
-        content: "",
-        key: "A"
-      }
-    ];
+    editMCSRef.value.resetFields();
+    // 手动重置
+    editMCS.model.choices = [{
+      content: "",
+      key: "A"
+    }];
     // 清除音频上传列表
     uploadAudioList.value = []
   };
 
   return {
-    addMCM,
-    addMCMRef,
+    editMCS,
+    editMCSRef,
     changeLabels,
-    addChoices,
+    editChoices,
     delChoices,
-    confirmAddMCM,
-    cancelAddMCM
+    confirmEditMCS,
+    cancelEditMCS
   };
 }
 //#endregion

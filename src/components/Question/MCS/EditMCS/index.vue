@@ -1,30 +1,30 @@
 <template>
-  <!-- 添加MCS题目模态框 -->
+  <!-- 编辑MCS题目模态框 -->
   <a-modal
-    v-model:visible="addModalVisible[questionType]"
-    title="添加"
-    @ok="confirmAddMCS"
-    @cancel="cancelAddMCS"
+    v-model:visible="editModalVisible[questionType]"
+    title="编辑"
+    @ok="confirmEditMCS"
+    @cancel="cancelEditMCS"
     :maskClosable="false"
   >
-    <!-- 添加mcs题目表单 start -->
+    <!-- 编辑mcs题目表单 start -->
     <a-form
-      :model="addMCS.model"
-      :rules="addMCS.rules"
-      ref="addMCSRef"
+      :model="editMCS.model"
+      :rules="editMCS.rules"
+      ref="editMCSRef"
       :label-col="{ span: 4 }"
       :wrapper-col="{ span: 18 }"
     >
       <a-form-item label="编号" name="no" hasFeedback>
-        <a-input v-model:value="addMCS.model.no" />
+        <a-input v-model:value="editMCS.model.no" />
       </a-form-item>
       <a-form-item label="题目" name="title">
-        <a-input v-model:value="addMCS.model.title" />
+        <a-input v-model:value="editMCS.model.title" />
       </a-form-item>
       <!-- 题目标签复选框 start -->
       <a-form-item label="标签选择" name="labelIds">
         <a-checkbox-group
-          v-model:value="addMCS.model.labelIds"
+          v-model:value="editMCS.model.labelIds"
           @change="changeLabels"
         >
           <a-checkbox :value="item.id" v-for="item in labelList" :key="item.id">
@@ -49,7 +49,7 @@
 
       <!-- 题目原文 start -->
       <a-form-item label="题目原文" name="titleText">
-        <a-textarea v-model:value="addMCS.model.titleText" :rows="4" />
+        <a-textarea v-model:value="editMCS.model.titleText" :rows="4" />
         <a-button type="primary" @click="audioSynthetic" :loading="synthesizing"
           >转换为音频</a-button
         >
@@ -58,14 +58,14 @@
 
       <!-- 题目问题 start -->
       <a-form-item label="题目问题" name="titleQuestion">
-        <a-input v-model:value="addMCS.model.titleQuestion" />
+        <a-input v-model:value="editMCS.model.titleQuestion" />
       </a-form-item>
       <!-- 题目问题 end -->
 
       <!-- 题目选项 start -->
       <a-form-item
         :label="item.key"
-        v-for="(item, index) in addMCS.model.choices"
+        v-for="(item, index) in editMCS.model.choices"
         :key="item.key"
       >
         <a-input
@@ -73,13 +73,13 @@
           style="width: 85%; margin-right: 10px"
         />
         <MinusCircleOutlined
-          v-if="index != 0 && index == addMCS.model.choices.length - 1"
+          v-if="index != 0 && index == editMCS.model.choices.length - 1"
           @click="delChoices(index)"
         />
       </a-form-item>
       <a-form-item label=" " :colon="false">
-        <a-button type="dashed" style="width: 60%" @click="addChoices">
-          <PlusOutlined />添加选项
+        <a-button type="dashed" style="width: 60%" @click="editChoices">
+          <PlusOutlined />编辑选项
         </a-button>
       </a-form-item>
 
@@ -87,9 +87,9 @@
 
       <!-- 答案参考 start -->
       <a-form-item label="参考答案" name="answer">
-        <a-select v-model:value="addMCS.model.answer">
+        <a-select v-model:value="editMCS.model.answer">
           <a-select-option
-            v-for="item in addMCS.model.choices"
+            v-for="item in editMCS.model.choices"
             :key="item.key"
             :value="item.key"
           >
@@ -99,13 +99,13 @@
       </a-form-item>
       <!-- 答案参考 end -->
       <a-form-item label="讲解" name="titleAnalysis">
-        <a-textarea v-model:value="addMCS.model.titleAnalysis" :rows="4" />
+        <a-textarea v-model:value="editMCS.model.titleAnalysis" :rows="4" />
       </a-form-item>
       <a-form-item label="备注" name="remark">
-        <a-textarea v-model:value="addMCS.model.remark" :rows="2" />
+        <a-textarea v-model:value="editMCS.model.remark" :rows="2" />
       </a-form-item>
     </a-form>
-    <!-- 添加mcs题目表单 end -->
+    <!-- 编辑mcs题目表单 end -->
   </a-modal>
 </template>
 
@@ -118,8 +118,8 @@ import {
   PlusOutlined,
   MinusCircleOutlined,
 } from "@ant-design/icons-vue";
-// 引入 添加MCS题目 功能
-import { addMCS, useAddMCS } from "./useAddMCS";
+// 引入 编辑MCS题目 功能
+import { editMCS, useEditMCS } from "./useEditMCS";
 // 引入 上传音频列表
 import { useUploadAudioList } from "@/components/Question/SST/AddSST/useUploadAudioList";
 // 引入 上传音频 功能
@@ -131,13 +131,16 @@ import { useAudioSynthetic } from "@/components/Question/SST/AddSST/useAudioSynt
 
 export default {
   // 接收父组件传来的数据
-  props: ["addModalVisible", "questionType"],
+  props: ["editModalVisible", "questionType"],
   setup(props) {
-    // 添加模态框的显示与隐藏
-    const { addModalVisible, questionType } = props;
+    // 编辑模态框的显示与隐藏
+    const { editModalVisible, questionType } = props;
 
     // 获取父组件的刷新题目列表的方法
     const getQuestion = inject("getQuestion");
+
+    // 获取要编辑的题目详情
+    const editDetail = inject("editDetail");
 
     // 标签列表
     const { labelList } = useGetLabels();
@@ -145,26 +148,32 @@ export default {
     // 上传音频列表
     const { uploadAudioList } = useUploadAudioList();
 
-    // 添加MCS题目
+    // 编辑MCS题目
     const {
-      addMCS,
-      addMCSRef,
+      editMCS,
+      editMCSRef,
       changeLabels,
-      addChoices,
+      editChoices,
       delChoices,
-      confirmAddMCS,
-      cancelAddMCS,
-    } = useAddMCS(addModalVisible, getQuestion, questionType, uploadAudioList);
+      confirmEditMCS,
+      cancelEditMCS,
+    } = useEditMCS(
+      editModalVisible,
+      getQuestion,
+      editDetail,
+      questionType,
+      uploadAudioList
+    );
 
     // 上传音频功能
     const { uploadAudio, changeUploadAudio } = useUploadAudio(
-      addMCS,
+      editMCS,
       uploadAudioList
     );
 
     // 音频合成功能
     const { synthesizing, audioSynthetic } = useAudioSynthetic(
-      addMCS,
+      editMCS,
       uploadAudioList
     );
 
@@ -182,20 +191,20 @@ export default {
       synthesizing,
       // 音频合成功能
       audioSynthetic,
-      // 添加题目的表单数据和校验规则
-      addMCS,
-      // 添加题目表单
-      addMCSRef,
+      // 编辑题目的表单数据和校验规则
+      editMCS,
+      // 编辑题目表单
+      editMCSRef,
       // 改变选择标签时
       changeLabels,
-      // 添加题目选项
-      addChoices,
+      // 编辑题目选项
+      editChoices,
       // 删除题目选项
       delChoices,
-      // 添加mcs题目
-      confirmAddMCS,
-      // 取消添加mcs题目
-      cancelAddMCS,
+      // 编辑mcs题目
+      confirmEditMCS,
+      // 取消编辑mcs题目
+      cancelEditMCS,
     };
   },
   components: {

@@ -1,6 +1,6 @@
-//#region 添加SST题型
+//#region 编辑SST题型
 // 引入响应式API
-import { reactive, ref } from "vue";
+import { reactive, ref, watch } from "vue";
 // 引入提示框
 import { message } from "ant-design-vue";
 // 导入 post 请求
@@ -9,13 +9,13 @@ import { httpPost } from "@/utils/http";
 import { listen } from "@/api/questionListenAPI";
 
 /**
- * 导出添加SST题型 功能
- * @param {*} addModalVisible 添加模态框的显示与隐藏
+ * 导出编辑SST题型 功能
+ * @param {*} editModalVisible 编辑模态框的显示与隐藏
  * @param {*} getQuestion 重新获取列表
  */
-export function useAddSST(addModalVisible, getQuestion, uploadAudioList) {
+export function useEditSST(editModalVisible, getQuestion, editDetail, uploadAudioList) {
   // 表单数据 校验规则
-  const addSST = reactive({
+  const editSST = reactive({
     model: {
       // 编号
       no: "",
@@ -45,18 +45,28 @@ export function useAddSST(addModalVisible, getQuestion, uploadAudioList) {
       ],
       // 题目
       title: [
-        {
-          required: true,
-          whitespace: true,
-          message: "题目必须填写",
-          trigger: "blur"
-        }
+        { required: true, whitespace: true, message: "题目必须填写", trigger: "blur" }
       ]
     }
   });
 
+  // 每次打开编辑模态框都会触发 editDetail的监听，
+  // 这时重新处理题目详情数据给编辑表单的modal
+  watch(editDetail, (val) => {
+    for (const key in val) {
+      if (key == "labels") {
+        // 标签特殊处理，将labels:[{id:1, name:'高频'}] map为 表单中的labelIds:['1']
+        editSST.model.labelIds = val[key].map((value) => value.id);
+      }
+      else {
+        // 其它值直接赋值
+        editSST.model[key] = val[key]
+      }
+    }
+  })
+
   // 表单ref
-  const addSSTRef = ref(null);
+  const editSSTRef = ref(null);
 
   // 改变选择标签时
   const changeLabels = checkedValue => {
@@ -68,26 +78,28 @@ export function useAddSST(addModalVisible, getQuestion, uploadAudioList) {
     }
   };
 
-  // 添加SST题目
-  const confirmAddSST = () => {
+  // 编辑SST题目
+  const confirmEditSST = () => {
     // 先校验
-    addSSTRef.value.validate().then(() => {
-      // 发送添加题目请求
-      httpPost(listen.AddQuestion('sst'), addSST.model).then((res) => {
+    editSSTRef.value.validate().then(() => {
+      // 后台问题，标签设置为空时，会导致页面请求失败
+      if (editSST.model.labelIds.length == 0) return;
+      // 发送编辑题目请求
+      httpPost(listen.EditQuestion('sst'), editSST.model).then((res) => {
         if (res.success == true) {
-          // 提示用户添加成功
-          message.success("添加题目成功");
+          // 提示用户编辑成功
+          message.success("编辑题目成功");
           // 刷新页面
           getQuestion()
           // 关闭sst模态框
-          addModalVisible.sst = false;
+          editModalVisible.sst = false;
           // 重置表单
-          addSSTRef.value.resetFields();
+          editSSTRef.value.resetFields();
           // 清除音频上传列表
           uploadAudioList.value = []
         }
         else {
-          // 添加失败，提示用户失败原因
+          // 编辑失败，提示用户失败原因
           message.error(res.message);
         }
       }).catch((err) => {
@@ -98,22 +110,22 @@ export function useAddSST(addModalVisible, getQuestion, uploadAudioList) {
     });
   };
 
-  // 取消添加sst题目
-  const cancelAddSST = () => {
+  // 取消编辑sst题目
+  const cancelEditSST = () => {
     // 提示用户
-    message.warn("取消添加sst题目");
+    message.warn("取消编辑sst题目");
     // 重置表单
-    addSSTRef.value.resetFields();
+    editSSTRef.value.resetFields();
     // 清除音频上传列表
     uploadAudioList.value = []
   };
 
   return {
-    addSST,
-    addSSTRef,
+    editSST,
+    editSSTRef,
     changeLabels,
-    confirmAddSST,
-    cancelAddSST
+    confirmEditSST,
+    cancelEditSST
   };
 }
 //#endregion

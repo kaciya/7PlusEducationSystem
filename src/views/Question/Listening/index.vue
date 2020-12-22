@@ -60,7 +60,7 @@
           >
           <!-- 添加题目按钮 -->
           <a-button type="primary" @click="showAddModal">添加</a-button>
-          <!-- 添加题目模态框 -->
+          <!-- 添加题目模态框 start -->
           <AddSSTModal :addModalVisible="addModalVisible"></AddSSTModal>
           <AddWFDModal :addModalVisible="addModalVisible"></AddWFDModal>
           <AddFIBModal :addModalVisible="addModalVisible"></AddFIBModal>
@@ -77,6 +77,7 @@
             questionType="hcs"
           ></AddMCSModal>
           <AddMCMModal :addModalVisible="addModalVisible"></AddMCMModal>
+          <!-- 添加题目模态框 end -->
         </template>
         <!-- 操作区域 end -->
       </a-page-header>
@@ -137,7 +138,7 @@
             style="width: 100%"
             placeholder="请选择标签，最多可以选择3项"
             option-label-prop="label"
-            @change="setLabels(record.id, record.category, record.labels)"
+            @change="editLabels(record.id, record.labels)"
           >
             <!-- 渲染所有标签 -->
             <a-select-option
@@ -162,6 +163,7 @@
             style="margin-left: 10px"
             class="modify-btn"
             size="small"
+            @click="showEditModal(record.id)"
             >编辑</a-button
           >
           <a-popconfirm
@@ -177,6 +179,25 @@
         <!-- 题目操作区 end -->
       </a-table>
       <!-- 题目列表 end -->
+
+      <!-- 编辑题目模态框 start -->
+      <EditSSTModal :editModalVisible="editModalVisible"></EditSSTModal>
+      <EditWFDModal :editModalVisible="editModalVisible"></EditWFDModal>
+      <EditFIBModal :editModalVisible="editModalVisible"></EditFIBModal>
+      <EditMCMModal :editModalVisible="editModalVisible"></EditMCMModal>
+      <EditMCSModal
+        :editModalVisible="editModalVisible"
+        questionType="mcs"
+      ></EditMCSModal>
+      <EditMCSModal
+        :editModalVisible="editModalVisible"
+        questionType="smw"
+      ></EditMCSModal>
+      <EditMCSModal
+        :editModalVisible="editModalVisible"
+        questionType="hcs"
+      ></EditMCSModal>
+      <!-- 编辑题目模态框 end -->
     </a-card>
     <!-- 主体Main end -->
   </a-layout-content>
@@ -203,6 +224,19 @@ import AddMCSModal from "@/components/Question/MCS/AddMCS";
 import AddMCMModal from "@/components/Question/MCM/AddMCM";
 //#endregion
 
+//#region 编辑题目模态框
+// 引入 编辑sst题目模态框
+import EditSSTModal from "@/components/Question/SST/EditSST";
+// 引入 编辑wfd题目模态框
+import EditWFDModal from "@/components/Question/WFD/EditWFD";
+// 引入 编辑fib题目模态框
+import EditFIBModal from "@/components/Question/FIB/EditFIB";
+// 引入 编辑mcm题目模态框
+import EditMCMModal from "@/components/Question/MCM/EditMCM";
+// 引入 编辑mcs、smw、hcs题目模态框
+import EditMCSModal from "@/components/Question/MCS/EditMCS";
+//#endregion
+
 // 导入 题目列表 列配置
 import { useQuestionColumns } from "./useQuestionColumns";
 // 导入 获取题目列表
@@ -210,13 +244,13 @@ import { useGetQuestion } from "./useGetQuestion";
 // 导入 获取 全部标签类型
 import { useGetLabels } from "../QuestionLabel/useGetLables";
 // 导入 设置题目标签功能
-import { useSetLabels } from "./useSetLabels";
+import { useEditLabels } from "./useEditLabels";
 // 导入 打开批量上传模态框的功能
 import { useBulkUpload } from "./useBulkUpload";
 // 导入 模板下载功能
 import { useDownloadTemplate } from "./useDownloadTemplate";
 // 导入 显示添加题目模态框 功能
-import { useShowAddModal } from "./useShowAddModal";
+import { useShowModal } from "./useShowModal";
 // 导入 删除题目功能
 import { useDelQuestion } from "./useDelQuestion";
 
@@ -241,7 +275,7 @@ export default {
     let { questionColumns } = useQuestionColumns();
 
     // 设置 题目标签
-    let { setLabels } = useSetLabels(labelList);
+    let { editLabels } = useEditLabels(labelList, getQuestion);
 
     // 批量上传 功能
     let {
@@ -257,7 +291,12 @@ export default {
     let { downloadTemplateUrl } = useDownloadTemplate(category);
 
     // 显示添加模态框 功能
-    let { addModalVisible, showAddModal } = useShowAddModal(category);
+    let {
+      addModalVisible,
+      showAddModal,
+      editModalVisible,
+      showEditModal,
+    } = useShowModal(category, getQuestion);
 
     // 删除题目 功能
     let { delQuestion, cancelDelQuestion } = useDelQuestion(getQuestion);
@@ -284,7 +323,7 @@ export default {
       // 跳转页码时
       changePagenum,
       // 设置题目标签
-      setLabels,
+      editLabels,
       //#endregion
 
       //#region 批量上传功能
@@ -313,6 +352,13 @@ export default {
       showAddModal,
       //#endregion
 
+      //#region 显示编辑模态框功能
+      // 编辑模态框的显示与隐藏
+      editModalVisible,
+      // 显示编辑模态框
+      showEditModal,
+      //#endregion
+
       //#region 删除题目功能
       delQuestion,
       // 取消删除
@@ -339,6 +385,19 @@ export default {
     AddMCSModal,
     // 添加mcm题目模态框
     AddMCMModal,
+    //#endregion
+
+    //#region 编辑题目模态框
+    // sst
+    EditSSTModal,
+    // wfd
+    EditWFDModal,
+    // fib
+    EditFIBModal,
+    // mcm
+    EditMCMModal,
+    // mcs、smw、hcs
+    EditMCSModal,
     //#endregion
   },
 };

@@ -2,22 +2,23 @@
 // 引入 httpPost请求
 import { httpPost } from "@/utils/http";
 // 引入 听力sst题配置接口
-import { listen } from "@/api/questionListenAPI";
+import questionAPI from "@/api/questionAPI";
 import { message } from "ant-design-vue";
 // 导出
 /**
- *
+ * 修改标签功能
  * @param {*} labelList 所有标签列表
+ * @param {*} getQuestion 刷新题目列表
  */
-export function useSetLabels(labelList) {
+export function useEditLabels(labelList, getQuestion) {
   // 设置题目标签
   /**
    *
    * @param {*} id 题目id
-   * @param {*} category 分类
    * @param {*} checkedLabels 选中的标签
    */
-  const setLabels = (id, category, checkedLabels) => {
+  const editLabels = (id, checkedLabels) => {
+    if (!checkedLabels) return;
     // 限制用户只能选择最多三个标签
     if (checkedLabels.length >= 4) {
       message.warn("每题最多可选三个标签");
@@ -32,23 +33,31 @@ export function useSetLabels(labelList) {
           .id
       );
     });
-    console.log(checkedIds);
+    // 后台问题，标签设置为空时，会导致页面请求失败
+    if (checkedLabels.length == 0) return;
     // 发起请求设置标签
-    // httpPost(listen.SetLabels(category), {
-    //   // 题目id
-    //   id,
-    //   // 选择的标签
-    //   labelsId: checkedIds
-    // }).then((res) => {
-    //   console.log(res);
-    // }).catch((err) => {
-    //   console.log(err);
-    // });
-    console.log(httpPost, listen.SetLabels(category));
+    httpPost(questionAPI.EditLabels, {
+      // 题目id
+      id,
+      // 选择的标签
+      labelIds: checkedIds
+    }).then((res) => {
+      if (res.success) {
+        // 成功时提示用户
+        message.success('修改题目标签成功');
+        // 刷新列表
+        getQuestion()
+      }
+      else {
+        message.success(res.message);
+      }
+    }).catch((err) => {
+      console.log(err);
+    });
   };
 
   return {
-    setLabels
+    editLabels
   };
 }
 //#endregion
