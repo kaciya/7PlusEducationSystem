@@ -68,12 +68,12 @@ export const useBatchWord = (uploadFile) => {
                 // 进入新连接下载表格查看错误
                 window.open(res.data.data.failUrl);
                 // 更新数据
-                uploadFile.uploadData();
+                uploadFile.getData();
               } else {
                 // 操作成功
                 message.success(res.data.message);
                 // 更新数据
-                uploadFile.uploadData();
+                uploadFile.getData();
               }
             } else {
               // 添加失败
