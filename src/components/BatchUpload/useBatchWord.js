@@ -6,29 +6,33 @@ import { useDownload } from "./useDownload";
 // 引入 axios
 import axios from "axios";
 
-export const useBatchWord = (uploadFile) => {
-  // 批量上传模态框的显示与隐藏
+export const useBatchWord = uploadFile => {
+  //#region 批量上传模态框数据
   const bulkUpload = reactive({
     visible: false,
     fileList: [],
   });
-  // 显示批量上传模态框
+  //#endregion
+  //#region 显示批量上传模态框
   function showBulkUpload() {
     bulkUpload.visible = true;
   }
-  // 文件改变时
+  //#endregion
+  //#region 文件改变时
   function bulkUploadChange(info) {
     let fileList = [...info.fileList];
     // 限制只要一个文件 （取最后一个）
     fileList = fileList.slice(-1);
     bulkUpload.fileList = fileList;
   }
-  // 文件上传前
+  //#endregion
+  //#region 文件上传前
   function beforeBulkUpload() {
     // 阻止默认的上传行为
     return false;
   }
-  // 点击上传功能
+  //#endregion
+  //#region 点击上传功能
   function clickBulkUpload() {
     // 如果用户没有选择文件
     if (bulkUpload.fileList.length == 0) {
@@ -59,7 +63,7 @@ export const useBatchWord = (uploadFile) => {
             Token: window.localStorage.getItem("token"),
           },
         })
-          .then((res) => {
+          .then(res => {
             // 判断是否添加
             if (res.data.success && res.data.data) {
               // 判断是否全部添加
@@ -82,7 +86,7 @@ export const useBatchWord = (uploadFile) => {
             // 关闭模态框
             bulkUpload.visible = false;
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(err);
           });
         // 清空
@@ -93,21 +97,21 @@ export const useBatchWord = (uploadFile) => {
       }
     }
   }
-
-  // 取消上传功能
+  //#endregion
+  //#region 取消上传功能
   function cancelBulkUpload() {
     // 清空
     bulkUpload.fileList = [];
     message.warning("已取消上传");
   }
-  // 下载模板请求
+  //#endregion
+  //#region 下载模板
   const { download } = useDownload();
   // 点击模板下载下载模板
-
   const downloadTemplate = () => {
     download(uploadFile.templateName, uploadFile.downloadUrl);
   };
-
+  //#endregion
   return {
     bulkUpload,
     showBulkUpload,

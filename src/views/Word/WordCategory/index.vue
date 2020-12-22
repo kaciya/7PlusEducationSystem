@@ -18,7 +18,7 @@
         </template>
       </a-page-header>
       <!-- 页头 end -->
-      <!-- 表格数据 -->
+      <!-- 表格数据 start -->
       <a-table
         bordered
         :columns="columns"
@@ -38,8 +38,7 @@
           </a-button>
         </template>
       </a-table>
-
-      <!-- 数据列表 end -->
+      <!-- 表格数据 end -->
 
       <!-- 添加模态框 start -->
       <a-modal
@@ -126,7 +125,7 @@ export default {
       addRules, // 表格rules
       addRef, // 表格
       addCategoryOk, // 点击确定添加回调
-      addCategoryEmpty //模态框关闭回调
+      addCategoryEmpty, //模态框关闭回调
     } = AddWordCategory(getCategoryData);
     // 修改词库名称
     const {
@@ -136,13 +135,17 @@ export default {
       editRules, // 表格rules
       editRef, // 表格
       editCategoryOk, //点击确定事件
-      editCategoryEmpty //模态框关闭回调
+      editCategoryEmpty, //模态框关闭回调
     } = ModifyWordCategory(getCategoryData);
     // 返回
     return {
+      //#region 获取(查询)数据
       getCategoryData,
       categoryData,
+      //#endregion
+      // 表格columns
       columns,
+      //#region 添加
       addVisible,
       addCategory,
       addModel,
@@ -150,6 +153,8 @@ export default {
       addRef,
       addCategoryOk,
       addCategoryEmpty,
+      //#endregion
+      //#region 修改
       editCategoryOk,
       editCategory,
       editVisible,
@@ -157,6 +162,7 @@ export default {
       editRules,
       editRef,
       editCategoryEmpty
+      //#endregion
     };
   }
 };

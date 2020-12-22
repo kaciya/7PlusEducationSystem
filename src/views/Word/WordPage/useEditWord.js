@@ -6,16 +6,17 @@ import word from "@/api/wordPageAPI";
 //全局提示
 import { message } from "ant-design-vue";
 export const useEditWord = getWordData => {
-  // 输入框数据
+  //#region 输入框数据
   const editModel = reactive({
     wordCategory: "",
     wordName: ""
   });
+  //#endregion
   // 控制修改模态框显示隐藏
   let editVisible = ref(false);
   // 词库名称ID
   let wordId = ref(null);
-  // 点击修改显示模态框
+  //#region 点击修改显示模态框
   const editWord = record => {
     editVisible.value = true;
     // // 存储词库名称ID
@@ -23,9 +24,10 @@ export const useEditWord = getWordData => {
     // 回显数据
     editModel.wordName = record.word;
   };
+  //#endregion
   // 表格ref相当于$refs
   let editRef = ref(null);
-  // 点击确定触发事件
+  //#region 点击确定触发事件
   const editOk = () => {
     // 表单校验
     editRef.value
@@ -60,12 +62,13 @@ export const useEditWord = getWordData => {
         console.log("error", error);
       });
   };
-
-  // 模态框关闭时的回调
+  //#endregion
+  //#region 模态框关闭时的回调
   let editEmpty = () => {
     // 清空文本框
     editRef.value.resetFields();
   };
+  //#endregion
   return {
     editModel,
     editRef,

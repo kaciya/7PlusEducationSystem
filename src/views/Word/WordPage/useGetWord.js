@@ -57,12 +57,13 @@ export const useGetWord = () => {
     }
   };
   //#endregion
-  // 页码改变回调
+  //#region 页码改变回调
   const onTableChange = (pagination) => {
     wordPagination.current = pagination.current;
     wordPagination.pageSize = pagination.pageSize;
     getWordData();
   };
+  //#endregion
   // 初始化
   onMounted(() => {
     getWordData();
