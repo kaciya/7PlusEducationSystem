@@ -23,12 +23,18 @@
           >{{ item.name }}</a-tag
         >
       </a-form-item>
-      <a-form-item label="题目音频"></a-form-item>
-      <a-form-item label="题目原文">
+      <a-form-item label="题目图片">
+        <img
+          src="item"
+          v-for="(item, index) in getModalVisible.detail['pics']"
+          :key="index"
+        />
+      </a-form-item>
+      <a-form-item label="题目内容">
         <span>{{ getModalVisible.detail["titleText"] }}</span>
-        <div>
-          <a-tag color="#108ee9"> 已使用该音频 </a-tag>
-        </div>
+      </a-form-item>
+      <a-form-item label="题目解析">
+        <span>{{ getModalVisible.detail["titleAnalysis"] }}</span>
       </a-form-item>
       <a-form-item label="备注">
         <span>{{ getModalVisible.detail["remark"] || "－" }}</span>
@@ -39,7 +45,7 @@
 
 <script>
 // 导入获取模态框
-import { useGetRA } from "./useGetRA";
+import { useGetDI } from "./useGetDI";
 export default {
   props: ["getModalVisible"],
   setup(props) {
@@ -47,7 +53,7 @@ export default {
     const { getModalVisible } = props;
 
     // 获取题目详情
-    const { layout } = useGetRA();
+    const { layout } = useGetDI();
 
     return {
       // 表单布局
@@ -58,28 +64,4 @@ export default {
 </script>
 
 <style lang="scss">
-// 查看模态框-common
-.check-modal {
-  // 模态框body
-  .ant-modal-body {
-    padding-top: 14px;
-    padding-bottom: 40px;
-  }
-
-  // 横向表格
-  .ant-form-item {
-    margin-bottom: 4px;
-  }
-
-  // 标签
-  .ant-tag-cyan {
-    padding: 2px 24px;
-  }
-
-  // 使用该音频
-  .ant-tag-has-color {
-    padding: 4px 14px;
-    border-radius: 6px;
-  }
-}
 </style>
