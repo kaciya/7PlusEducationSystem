@@ -1,6 +1,6 @@
-//#region 添加MCM题型
+//#region 编辑MCM题型
 // 引入响应式API
-import { reactive, ref } from "vue";
+import { reactive, ref, watch } from "vue";
 // 引入提示框
 import { message } from "ant-design-vue";
 // 导入 post 请求
@@ -9,13 +9,13 @@ import { httpPost } from "@/utils/http";
 import { listen } from "@/api/questionListenAPI";
 
 /**
- * 导出添加MCM题型 功能
- * @param {*} addModalVisible 添加模态框的显示与隐藏
+ * 导出编辑MCM题型 功能
+ * @param {*} editModalVisible 编辑模态框的显示与隐藏
  * @param {*} getQuestion 重新获取列表
  */
-export function useAddMCM(addModalVisible, getQuestion, uploadAudioList) {
+export function useEditMCM(editModalVisible, getQuestion, editDetail, uploadAudioList) {
   // 表单数据 校验规则
-  const addMCM = reactive({
+  const editMCM = reactive({
     model: {
       // 编号
       no: "",
@@ -61,8 +61,23 @@ export function useAddMCM(addModalVisible, getQuestion, uploadAudioList) {
     }
   });
 
+  // 每次打开编辑模态框都会触发 editDetail的监听，
+  // 这时重新处理题目详情数据给编辑表单的modal
+  watch(editDetail, (val) => {
+    for (const key in val) {
+      if (key == "labels") {
+        // 标签特殊处理，将labels:[{id:1, name:'高频'}] map为 表单中的labelIds:['1']
+        editMCM.model.labelIds = val[key].map((value) => value.id);
+      }
+      else {
+        // 其它值直接赋值
+        editMCM.model[key] = val[key]
+      }
+    }
+  })
+
   // 表单ref
-  const addMCMRef = ref(null);
+  const editMCMRef = ref(null);
 
   // 改变选择标签时
   const changeLabels = checkedValue => {
@@ -74,39 +89,41 @@ export function useAddMCM(addModalVisible, getQuestion, uploadAudioList) {
     }
   };
 
-  // 添加题目选项
-  const addChoices = () => {
-    addMCM.model.choices.push({
+  // 编辑题目选项
+  const editChoices = () => {
+    editMCM.model.choices.push({
       content: "",
       // A、B、C、D...
-      key: String.fromCharCode(addMCM.model.choices.length + 65)
+      key: String.fromCharCode(editMCM.model.choices.length + 65)
     })
   }
 
   // 删除题目选项
   const delChoices = (index) => {
-    addMCM.model.choices.splice(index, 1);
+    editMCM.model.choices.splice(index, 1);
     // 重置一下选项答案
-    addMCM.model.answer = []
+    editMCM.model.answer = []
   }
 
-  // 添加MCM题目
-  const confirmAddMCM = () => {
+  // 编辑MCM题目
+  const confirmEditMCM = () => {
     // 先校验
-    addMCMRef.value.validate().then(() => {
-      // 发送添加题目请求
-      httpPost(listen.AddQuestion('mcm'), addMCM.model).then((res) => {
+    editMCMRef.value.validate().then(() => {
+      // 后台问题，标签设置为空时，会导致页面请求失败
+      if (editMCM.model.labelIds.length == 0) return;
+      // 发送编辑题目请求
+      httpPost(listen.EditQuestion('mcm'), editMCM.model).then((res) => {
         if (res.success == true) {
-          // 提示用户添加成功
-          message.success("添加题目成功");
+          // 提示用户编辑成功
+          message.success("编辑题目成功");
           // 刷新页面
           getQuestion()
           // 关闭mcm/smw/hcs模态框
-          addModalVisible.mcm = false;
+          editModalVisible.mcm = false;
           // 重置表单
-          addMCMRef.value.resetFields();
+          editMCMRef.value.resetFields();
           // 因为没有对应的name 所以需要手动重置
-          addMCM.model.choices = [
+          editMCM.model.choices = [
             {
               content: "",
               key: "A"
@@ -116,7 +133,7 @@ export function useAddMCM(addModalVisible, getQuestion, uploadAudioList) {
           uploadAudioList.value = []
         }
         else {
-          // 添加失败，提示用户失败原因
+          // 编辑失败，提示用户失败原因
           message.error(res.message);
         }
       }).catch((err) => {
@@ -127,14 +144,14 @@ export function useAddMCM(addModalVisible, getQuestion, uploadAudioList) {
     });
   };
 
-  // 取消添加mcm题目
-  const cancelAddMCM = () => {
+  // 取消编辑mcm题目
+  const cancelEditMCM = () => {
     // 提示用户
-    message.warn(`取消添加mcm题目`);
+    message.warn(`取消编辑mcm题目`);
     // 重置表单
-    addMCMRef.value.resetFields();
+    editMCMRef.value.resetFields();
     // 因为没有对应的name 所以需要手动重置
-    addMCM.model.choices = [
+    editMCM.model.choices = [
       {
         content: "",
         key: "A"
@@ -145,13 +162,13 @@ export function useAddMCM(addModalVisible, getQuestion, uploadAudioList) {
   };
 
   return {
-    addMCM,
-    addMCMRef,
+    editMCM,
+    editMCMRef,
     changeLabels,
-    addChoices,
+    editChoices,
     delChoices,
-    confirmAddMCM,
-    cancelAddMCM
+    confirmEditMCM,
+    cancelEditMCM
   };
 }
 //#endregion

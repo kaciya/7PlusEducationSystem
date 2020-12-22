@@ -1,30 +1,30 @@
 <template>
-  <!-- 添加FIB题目模态框 -->
+  <!-- 编辑SST题目模态框 -->
   <a-modal
-    v-model:visible="addModalVisible.fib"
-    title="添加"
-    @ok="confirmAddFIB"
-    @cancel="cancelAddFIB"
+    v-model:visible="editModalVisible.sst"
+    title="编辑"
+    @ok="confirmEditSST"
+    @cancel="cancelEditSST"
     :maskClosable="false"
   >
-    <!-- 添加fib题目表单 start -->
+    <!-- 编辑sst题目表单 start -->
     <a-form
-      :model="addFIB.model"
-      :rules="addFIB.rules"
-      ref="addFIBRef"
+      :model="editSST.model"
+      :rules="editSST.rules"
+      ref="editSSTRef"
       :label-col="{ span: 4 }"
       :wrapper-col="{ span: 18 }"
     >
       <a-form-item label="编号" name="no" hasFeedback>
-        <a-input v-model:value="addFIB.model.no" />
+        <a-input v-model:value="editSST.model.no" disabled />
       </a-form-item>
       <a-form-item label="题目" name="title">
-        <a-input v-model:value="addFIB.model.title" />
+        <a-input v-model:value="editSST.model.title" disabled />
       </a-form-item>
       <a-form-item label="标签选择" name="labelIds">
         <!-- 题目标签复选框 start -->
         <a-checkbox-group
-          v-model:value="addFIB.model.labelIds"
+          v-model:value="editSST.model.labelIds"
           @change="changeLabels"
         >
           <a-checkbox :value="item.id" v-for="item in labelList" :key="item.id">
@@ -46,43 +46,27 @@
         <!-- 上传音频 end -->
       </a-form-item>
       <a-form-item label="题目原文" name="titleText">
+        <a-textarea
+          v-model:value="editSST.model.titleText"
+          disabled
+          :rows="4"
+        />
         <a-button type="primary" @click="audioSynthetic" :loading="synthesizing"
           >转换为音频</a-button
         >
-        <!-- 题目原文及填空答案 start -->
-        <div v-for="(item, index) in addFIB.model.titleText" :key="index">
-          <!-- 题目原文 -->
-          <a-input
-            placeholder="文本"
-            style="width: 60%; margin-right: 8px"
-            v-model:value="item.text"
-          />
-          <!-- 填空答案 -->
-          <a-input
-            v-if="index != addFIB.model.titleText.length - 1"
-            v-model:value="item.answer"
-            placeholder="填空答案"
-            style="width: 30%; margin-right: 8px"
-          />
-          <!-- 移除图标 -->
-          <MinusCircleOutlined
-            v-if="index != 0 && index != addFIB.model.titleText.length - 1"
-            @click="delTitleText(index)"
-          />
-        </div>
-        <!-- 题目原文及填空答案 end -->
-
-        <!-- 添加原文填空 -->
-        <a-button type="dashed" style="width: 60%" @click="addTitleText">
-          <PlusOutlined />添加原文填空
-        </a-button>
       </a-form-item>
-      <!-- 备注 -->
+      <a-form-item label="答案参考" name="answer">
+        <a-textarea v-model:value="editSST.model.answer" :rows="3" />
+      </a-form-item>
       <a-form-item label="备注" name="remark">
-        <a-textarea v-model:value="addFIB.model.remark" :rows="2" />
+        <a-textarea v-model:value="editSST.model.remark" :rows="2" />
       </a-form-item>
+      <a-divider />
+      <a-row>
+        <a-col> <CheckCircleTwoTone /> 静听读写 </a-col>
+      </a-row>
     </a-form>
-    <!-- 添加fib题目表单 end -->
+    <!-- 编辑sst题目表单 end -->
   </a-modal>
 </template>
 
@@ -90,13 +74,9 @@
 // 引入注入方法
 import { inject } from "vue";
 // 引入图标
-import {
-  CheckCircleTwoTone,
-  MinusCircleOutlined,
-  PlusOutlined,
-} from "@ant-design/icons-vue";
-// 引入 添加FIB题目 功能
-import { addFIB, useAddFIB } from "./useAddFIB";
+import { CheckCircleTwoTone } from "@ant-design/icons-vue";
+// 引入 编辑SST题目 功能
+import { editSST, useEditSST } from "./useEditSST";
 // 引入 上传音频列表
 import { useUploadAudioList } from "@/components/Question/SST/AddSST/useUploadAudioList";
 // 引入 上传音频 功能
@@ -104,17 +84,20 @@ import { useUploadAudio } from "@/components/Question/SST/AddSST/useUploadAudio"
 // 引入 标签列表 功能
 import { useGetLabels } from "@/views/Question/QuestionLabel/useGetLables";
 // 引入 音频合成 功能
-import { useAudioSynthetic } from "./useAudioSynthetic";
+import { useAudioSynthetic } from "@/components/Question/SST/AddSST/useAudioSynthetic";
 
 export default {
   // 接收父组件传来的数据
-  props: ["addModalVisible"],
+  props: ["editModalVisible"],
   setup(props) {
-    // 添加模态框的显示与隐藏
-    const { addModalVisible } = props;
+    // 编辑模态框的显示与隐藏
+    const { editModalVisible } = props;
 
     // 获取父组件的刷新题目列表的方法
     const getQuestion = inject("getQuestion");
+
+    // 获取要编辑的题目详情
+    const editDetail = inject("editDetail");
 
     // 标签列表
     const { labelList } = useGetLabels();
@@ -122,26 +105,24 @@ export default {
     // 上传音频列表
     const { uploadAudioList } = useUploadAudioList();
 
-    // 添加FIB题目
+    // 编辑SST题目
     const {
-      addFIB,
-      addFIBRef,
+      editSST,
+      editSSTRef,
       changeLabels,
-      addTitleText,
-      delTitleText,
-      confirmAddFIB,
-      cancelAddFIB,
-    } = useAddFIB(addModalVisible, getQuestion, uploadAudioList);
+      confirmEditSST,
+      cancelEditSST,
+    } = useEditSST(editModalVisible, getQuestion, editDetail, uploadAudioList);
 
     // 上传音频功能
     const { uploadAudio, changeUploadAudio } = useUploadAudio(
-      addFIB,
+      editSST,
       uploadAudioList
     );
 
     // 音频合成功能
     const { synthesizing, audioSynthetic } = useAudioSynthetic(
-      addFIB,
+      editSST,
       uploadAudioList
     );
 
@@ -159,26 +140,20 @@ export default {
       synthesizing,
       // 音频合成功能
       audioSynthetic,
-      // 添加题目的表单数据和校验规则
-      addFIB,
-      // 添加题目表单
-      addFIBRef,
+      // 编辑题目的表单数据和校验规则
+      editSST,
+      // 编辑题目表单
+      editSSTRef,
       // 改变选择标签时
       changeLabels,
-      // 添加题目原文填空
-      addTitleText,
-      // 移除题目原文填空
-      delTitleText,
-      // 添加fib题目
-      confirmAddFIB,
-      // 取消添加fib题目
-      cancelAddFIB,
+      // 编辑sst题目
+      confirmEditSST,
+      // 取消编辑sst题目
+      cancelEditSST,
     };
   },
   components: {
     CheckCircleTwoTone,
-    MinusCircleOutlined,
-    PlusOutlined,
   },
 };
 </script>
