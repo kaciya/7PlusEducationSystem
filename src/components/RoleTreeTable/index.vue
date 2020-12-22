@@ -10,7 +10,8 @@
       <!-- 一级渲染 -->
       <a-checkbox
         :value="record.permissionId"
-        @change="getCheckedChild($event, record)"
+
+        @change="getChildChecked($event, record)"
       >
         {{ record.name }}
       </a-checkbox>
@@ -24,7 +25,10 @@
       <a-row v-for="childItem in record.child" :key="childItem.permissionId">
         <!-- 二级渲染 -->
         <a-col :span="6">
-          <a-checkbox v-model:checked="checkedData.checkedOneChildModel">
+          <a-checkbox
+            :value="childItem.permissionId"
+            @change="getChildChecked($event, childItem)"
+          >
             {{ childItem.name }}
           </a-checkbox>
         </a-col>
@@ -32,9 +36,10 @@
         <!-- 三级渲染 -->
         <a-col :span="12">
           <a-checkbox
-            v-model:checked="childsItem.checkedSecondChildModel"
             v-for="childsItem in childItem.child"
             :key="childsItem.permissionId"
+            :value="childsItem.permissionId"
+            @change="getFatherChecked($event, childsItem)"
           >
             {{ childsItem.name }}
           </a-checkbox>
@@ -68,7 +73,7 @@ export default {
 
     const { getRolePermissions } = useGetTable(rolePermissionTable);
 
-    const { checkedData, getCheckedChild } = useGetTreeChecked();
+    const { checkedData, getChildChecked , getFatherChecked } = useGetTreeChecked(rolePermissionTable);
     //#endregion
 
     //在Mounted 获取列表
@@ -83,9 +88,11 @@ export default {
       //权限组 复选框选中项对象
       checkedData,
       //递归实现 对子数据选中方法
-      getCheckedChild
+      getChildChecked,
+      //递归实现 对躯干数据选中方法
+      getFatherChecked,
     };
-  }
+  },
 };
 </script>
 

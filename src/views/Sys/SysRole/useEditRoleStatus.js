@@ -21,8 +21,8 @@ export const useEditRoleStatus = (getSysRolesData) => {
                     message.error(res.message);
                 }
             })
-            .catch(error => {
-                throw error;
+            .catch(err => {
+                throw err;
             });
     }
 

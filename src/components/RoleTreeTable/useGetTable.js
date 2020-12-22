@@ -16,8 +16,8 @@ export const useGetTable = rolePermissionTable => {
           rolePermissionTable.data = res.data;
         }
       })
-      .catch(error => {
-        console.log(error);
+      .catch(err => {
+        throw err;
       });
   };
 
