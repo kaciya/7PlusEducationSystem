@@ -4,7 +4,7 @@ import {
   reactive
 } from "vue";
 
-export function useGetRA() {
+export function useGetDI() {
   // 题目详情布局
   const layout = reactive({
     labelCol: {
