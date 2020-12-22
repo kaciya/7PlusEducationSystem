@@ -7,8 +7,13 @@ import { reactive } from "vue";
 export function useShowAddModal(category) {
   // 添加模态框的显示和隐藏
   const addModalVisible = reactive({
-    sst: false
-  });
+    sst: false,
+    wfd: false,
+    fib: false,
+    mcs: false,
+    smw: false,
+    hcs: false
+  })
 
   // 显示添加题目模态框
   const showAddModal = () => {

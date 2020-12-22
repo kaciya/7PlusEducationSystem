@@ -15,21 +15,6 @@ export const useGetRolesList = rolesTable => {
   //使用useRouter
   const router = useRouter();
 
-  //#region 分页参数
-  const rolePagination = reactive({
-    //列表所在页数
-    current: 1,
-    //现在一页显示多少条数据
-    pageSize: 10,
-    //指定每页可以显示多少条
-    pageSizeOptions: ["10"],
-    //一共多少条数据
-    total: 0,
-    // 允许改变每页条数
-    showSizeChanger: true
-  });
-  //#endregion
-
   //#region 根据后台接口地址发送请求获取权限组数据
   const getRolesData = () => {
     //请求地址 /admin/role/list
@@ -40,8 +25,8 @@ export const useGetRolesList = rolesTable => {
           rolesTable.data = res.data;
         }
       })
-      .catch(error => {
-        throw error;
+      .catch(err => {
+        throw err;
       });
   };
   //#endregion
@@ -58,23 +43,11 @@ export const useGetRolesList = rolesTable => {
   };
   //#endregion
 
-  //#region 点击下一页方法
-  const pageChange = pagination => {
-    //点击下一页后 将分页参数中的 当前页 和 一页显示的数据改变
-    rolePagination.current = pagination.current;
-    rolePagination.pageSize = pagination.pageSize;
-    //刷新列表
-    getRolesData();
-  };
-  //#endregion
-
   //返回
   return {
-    rolePagination,
     getRolesData,
     addRouter,
     editRouter,
-    pageChange
   };
 };
 //#endregion

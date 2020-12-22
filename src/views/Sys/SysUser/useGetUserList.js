@@ -9,20 +9,9 @@ import { httpGet } from "@/utils/http";
 
 //#region 定义方法  获取账号列表
 export const useGetUserList = sysUsersTable => {
-  //#region 分页参数
-  const userPagination = reactive({
-    //列表所在页数
-    current: 1,
-    //现在一页显示多少条数据
-    pageSize: 10,
-    //指定每页可以显示多少条
-    pageSizeOptions: ["10"],
-    //一共多少条数据
-    total: 0,
-    // 允许改变每页条数
-    showSizeChanger: true
-  });
-  //#endregion
+
+  //获取localStorage中的用户信息
+  const userInfos = JSON.parse(window.localStorage.getItem("userInfos"));
 
   //#region 根据后台接口地址发送请求获取权限组数据
   const getUserList = () => {
@@ -31,39 +20,20 @@ export const useGetUserList = sysUsersTable => {
       .then(res => {
         //判断相应状态
         if (res.success) {
+          //获取用户列表数据
           sysUsersTable.data = res.data;
-
-          // //获取分页总数量
-          // userPagination.total = res.data.total;
-
-          // //判断是否超出最后一页
-          // if(res.data.current > res.data.pages && res.pages != 0){
-          //   userPagination.current = res.data.pages;
-          //   getUserList
-          // }
         }
       })
-      .catch(error => {
-        throw error;
+      .catch(err => {
+        throw err;
       });
-  };
-  //#endregion
-
-  //#region 点击下一页方法
-  const pageChange = pagination => {
-    //点击下一页后 将分页参数中的 当前页 和 一页显示的数据改变
-    userPagination.current = pagination.current;
-    userPagination.pageSize = pagination.pageSize;
-    //刷新列表
-    getUserList();
   };
   //#endregion
 
   //返回数据
   return {
-    userPagination,
+    userInfos,
     getUserList,
-    pageChange
   };
 };
 //#endregion

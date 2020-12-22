@@ -47,7 +47,9 @@
       </a-form-item>
       <a-form-item label="题目原文" name="titleText">
         <a-textarea v-model:value="addSST.model.titleText" :rows="4" />
-        <a-button type="primary">转换为音频</a-button>
+        <a-button type="primary" @click="audioSynthetic" :loading="synthesizing"
+          >转换为音频</a-button
+        >
       </a-form-item>
       <a-form-item label="答案参考" name="answer">
         <a-textarea v-model:value="addSST.model.answer" :rows="3" />
@@ -65,6 +67,8 @@
 </template>
 
 <script>
+// 引入注入方法
+import { inject } from "vue";
 // 引入图标
 import { CheckCircleTwoTone } from "@ant-design/icons-vue";
 // 引入 添加SST题目 功能
@@ -73,14 +77,18 @@ import { addSST, useAddSST } from "./useAddSST";
 import { useUploadAudio } from "./useUploadAudio";
 // 引入 标签列表 功能
 import { useGetLabels } from "@/views/Question/QuestionLabel/useGetLables";
+// 引入 音频合成 功能
+import { useAudioSynthetic } from "./useAudioSynthetic";
 
 export default {
-  // 发送事件
-  emits: ["getQuestion"],
+  // 接收父组件传来的数据
   props: ["addModalVisible"],
-  setup(props, { emit }) {
+  setup(props) {
     // 添加模态框的显示与隐藏
     const { addModalVisible } = props;
+
+    // 获取父组件的刷新题目列表的方法
+    const getQuestion = inject("getQuestion");
 
     // 标签列表
     const { labelList } = useGetLabels();
@@ -91,23 +99,34 @@ export default {
       addSSTRef,
       changeLabels,
       confirmAddSST,
-      cancelAddSST
-    } = useAddSST(addModalVisible, emit);
+      cancelAddSST,
+    } = useAddSST(addModalVisible, getQuestion);
 
     // 上传音频功能
     const { uploadAudio, uploadAudioList, changeUploadAudio } = useUploadAudio(
       addSST
     );
 
+    // 音频合成功能
+    const { synthesizing, audioSynthetic } = useAudioSynthetic(
+      addSST,
+      uploadAudioList
+    );
+
     // 返回
     return {
       // 标签列表
       labelList,
+      // 上传音频功能
       uploadAudio,
       // 上传音频列表
       uploadAudioList,
       // 改变上传音频
       changeUploadAudio,
+      // 音频合成状态
+      synthesizing,
+      // 音频合成功能
+      audioSynthetic,
       // 添加题目的表单数据和校验规则
       addSST,
       // 添加题目表单
@@ -117,12 +136,12 @@ export default {
       // 添加sst题目
       confirmAddSST,
       // 取消添加sst题目
-      cancelAddSST
+      cancelAddSST,
     };
   },
   components: {
-    CheckCircleTwoTone
-  }
+    CheckCircleTwoTone,
+  },
 };
 </script>
 

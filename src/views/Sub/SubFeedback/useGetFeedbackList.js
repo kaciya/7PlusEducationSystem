@@ -1,11 +1,18 @@
 //导入 reactive 对象
-import { ref, reactive } from "vue";
+import {
+  ref,
+  reactive
+} from "vue";
 
 //导入 API接口
-import { feedback } from "@/api/subUserAPI";
+import {
+  feedback
+} from "@/api/subUserAPI";
 
 //导入 GET请求方法
-import { httpGet } from "@/utils/http";
+import {
+  httpGet
+} from "@/utils/http";
 
 //#region 获取 用户提交 联系记录列表
 export const useGetFeedbackList = (feedbackTable) => {
@@ -25,8 +32,26 @@ export const useGetFeedbackList = (feedbackTable) => {
   });
   //#endregion
 
+  //获取查询数据
+  const searchData = reactive({});
+
   //#region 根据后台接口地址发送请求联系记录
-  const getFeedbackData = params => {
+  const getFeedbackData = getParam => {
+    //创建变量params 将请求需要的参数传递给后台
+    let params = reactive({
+      pageNum: feedbackPagination.current,
+      pageSize: feedbackPagination.pageSize
+    });
+
+    //判断获取到的参数是否为空
+    if (getParam) {
+      searchData.data = getParam;
+      //不为空则 添加到 params对象中
+      params.endDate = getParam.endDate;
+      params.startDate = getParam.startDate;
+      params.status = getParam.status;
+    }
+
     //请求接口: /admin/feedback/page
     httpGet(feedback.GetFeedbackList, params)
       .then(res => {
@@ -38,8 +63,8 @@ export const useGetFeedbackList = (feedbackTable) => {
           feedbackPagination.total = res.data.total;
         }
       })
-      .catch(error => {
-        throw error;
+      .catch(err => {
+        throw err;
       });
   };
   //#endregion
@@ -49,8 +74,9 @@ export const useGetFeedbackList = (feedbackTable) => {
     //点击下一页后 将分页参数中的 当前页 和 一页显示的数据改变
     feedbackPagination.current = pagination.current;
     feedbackPagination.pageSize = pagination.pageSize;
+
     //刷新列表
-    getFeedbackData();
+    getFeedbackData(searchData.data);
   };
   //#endregion
 

@@ -9,5 +9,7 @@ export default {
   // 获取文章详情
   GetArticle: "/topic/detail",
   // 获取文章评论
-  GetComment: "/topic/comment"
+  GetComment: "/topic/comment",
+  // 显示隐藏文章评论
+  ShieldShowComment: "/topic/comment/status"
 };

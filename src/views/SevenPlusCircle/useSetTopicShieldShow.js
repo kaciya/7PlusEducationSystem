@@ -1,7 +1,7 @@
 import { ref, createVNode } from "vue";
 // 导入接口
 import topic from "@/api/topicAPI";
-// 导入post请求方法
+// 导入请求方法
 import { httpPost } from "@/utils/http";
 // 引入提示方法
 import { message, Modal } from "ant-design-vue";
@@ -30,15 +30,17 @@ export const useSetTopicShieldShow = getTopicData => {
     };
     httpPost(topic.ShieldShowUser, params)
       .then(res => {
-        if (res.code == 200) {
+        let { success } = res;
+        if (success) {
           message.success("屏蔽成功");
           topicShieldVisible.value = false;
           shielFrameValue.value = "";
+          // 重新渲染数据
           getTopicData();
         }
       })
       .catch(err => {
-        console.log(err);
+        throw new Error(err);
       });
   };
 
@@ -58,14 +60,16 @@ export const useSetTopicShieldShow = getTopicData => {
           id: id
         })
           .then(res => {
-            if (res.code == 200) {
+            let { success } = res;
+            if (success) {
               message.success("显示成功");
               topicShieldVisible.value = false;
+              // 重新渲染数据
               getTopicData();
             }
           })
           .catch(err => {
-            console.log(err);
+            throw new Error(err);
           });
       },
       onCancel() {
