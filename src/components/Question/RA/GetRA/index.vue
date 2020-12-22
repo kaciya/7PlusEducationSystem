@@ -5,8 +5,8 @@
     :width="888"
     :footer="null"
     :maskClosable="false"
-    dialogClass="check-modal"
     v-model:visible="getModalVisible.ra"
+    class="check-modal"
   >
     <a-form v-bind="layout">
       <a-form-item label="编号">
