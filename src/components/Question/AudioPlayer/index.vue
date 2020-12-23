@@ -97,7 +97,7 @@ export default {
 
 <style lang="scss" scoped>
 // 定义通用高度
-$height: 38px;
+$height: 40px;
 /* 音频播放器 */
 .audio-wrapper {
   height: $height;
@@ -113,7 +113,7 @@ $height: 38px;
   .audio-btn {
     float: left;
     height: 100%;
-    padding: 2px 6px 0 12px;
+    padding: 2px 8px 0 12px;
     // display: initial; /* 解除与app的样式冲突 */
     cursor: pointer;
   }
