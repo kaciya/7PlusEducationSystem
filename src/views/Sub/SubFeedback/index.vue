@@ -63,8 +63,8 @@
         <!-- 列表索引 end -->
 
         <!-- 图片 -->
-        <template #picUrls="{ record }">
-          <image :src="record.picUrls" />
+        <template #pics="{ record }">
+          <image :src="item" v-for="(item,index) in record.pics" :key="index"/>
         </template>
         <!-- 图片 end -->
 
@@ -152,7 +152,7 @@ export default {
       feedbackPagination,
       getFeedbackData,
       pageChange
-    } = useGetFeedbackList(feedbackTable);
+    } = useGetFeedbackList(feedbackTable , searchData);
 
     /**
      * headerData 顶部 日期 与 状态 绑定数据对象
@@ -170,7 +170,7 @@ export default {
     /**
      * searchClick 查询列表
      */
-    const { searchClick } = useSearchFeedback(getFeedbackData, headerData);
+    const { searchData,searchClick } = useSearchFeedback(getFeedbackData, headerData);
 
     /**
      * resetClick 重置状态 和 时间范围

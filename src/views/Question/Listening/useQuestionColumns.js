@@ -32,7 +32,7 @@ export function useQuestionColumns() {
     },
     {
       title: "练习次数",
-      key: "totalNum"
+      dataIndex: "totalNum"
     },
     {
       title: "操作",

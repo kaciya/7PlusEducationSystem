@@ -46,7 +46,7 @@ export function useBulkUpload() {
       // 判断文件格式是否是xls、xlsx
       let isXlsOrXlsx =
         bulkUpload.fileList[0].type ==
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
         bulkUpload.fileList[0].type == "application/vnd.ms-excel";
       if (isXlsOrXlsx) {
         // 创建formdata
@@ -55,7 +55,7 @@ export function useBulkUpload() {
         // 提交表单
         axios
           .post(
-            "http://pte.admin.api.banyuge.com/admin" + listen.BulkUpload("sst"),
+            "/api" + listen.BulkUpload("sst"),
             formData,
             {
               headers: {

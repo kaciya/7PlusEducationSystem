@@ -28,11 +28,14 @@ export default {
     // 表格columns
     const { columns } = useLogColumns();
     return {
+      //#region 登录日志数据
       loglData,
-      columns,
       logPagination,
-      onTableChange
+      onTableChange,
+      //#endregion
+      // 表格columns
+      columns
     };
-  }
+  },
 };
 </script>

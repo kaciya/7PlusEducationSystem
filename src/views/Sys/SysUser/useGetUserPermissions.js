@@ -21,8 +21,8 @@ export const useGetUserPermissions = () => {
                     rolesPermissionsList.data = res.data;
                 }
             })
-            .catch(error => {
-                throw error;
+            .catch(err => {
+                throw err;
             });
     }
     //#endregion

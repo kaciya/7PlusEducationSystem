@@ -23,8 +23,8 @@ export const useEditUserStatus = (getSysUserList) => {
                     message.error(res.message);
                 }
             })
-            .catch(error => {
-                throw error;
+            .catch(err => {
+                throw err;
             });
     }
 

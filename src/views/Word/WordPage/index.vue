@@ -52,7 +52,8 @@
       >
         <template #extra>
           <a-button @click="delWords"> 批量删除 </a-button>
-          <a-button @click="addBatchWord"> 批量导入单词 </a-button>
+          <!-- 批量导入组件 -->
+          <Batch-upload :uploadFile="uploadFile"></Batch-upload>
           <a-button @click="addWord"> 导入单词 </a-button>
         </template>
       </a-page-header>
@@ -61,11 +62,11 @@
         bordered
         :columns="columns"
         :data-source="wordData.data"
-        :row-key="record => record.id"
+        :row-key="(record) => record.id"
         :pagination="wordPagination"
         :row-selection="{
           selectedRowKeys: wordKeys,
-          onChange: onSelectChange
+          onChange: onSelectChange,
         }"
         @change="onTableChange"
       >
@@ -185,42 +186,6 @@
       </a-form>
     </a-modal>
     <!-- 修改模态框end -->
-    <!-- 批量导入单词模态框start -->
-    <!-- :afterClose="addBatchEmpty"
-      @ok="addBatchOk" -->
-    <a-modal
-      title="批量导入单词"
-      v-model:visible="addBatchVisible"
-      :maskClosable="false"
-    >
-      <!-- 导入文件 -->
-      <a-row>
-        <a-col :offset="1">导入文件： </a-col>
-        <a-col :span="18">
-          <!-- 批量上传 -->
-          <a-upload>
-            <a-button> <upload-outlined /> 选择文件 </a-button>
-          </a-upload>
-          <!-- 说明提示 -->
-          <a-alert type="info" show-icon style="margin-top: 10px">
-            <template #message>
-              <p style="margin: 0px">
-                说明：<br />1. 文件格式必须是xls、xlsx <br />2.
-                单词字段对应列数据不能为空
-              </p>
-            </template>
-          </a-alert>
-        </a-col>
-      </a-row>
-      <!-- 模板下载 -->
-      <a-row>
-        <a-col :offset="1">模板下载： </a-col>
-        <a-col>
-          <a @click="addTemplate" style="color: #1abc9c">单词.xlsx</a>
-        </a-col>
-      </a-row>
-    </a-modal>
-    <!-- 批量导入单词模态框end -->
   </a-layout-content>
 </template>
 
@@ -241,15 +206,16 @@ import { useGetCategory } from "../WordCategory/useGetCategory";
 import { useDelWord } from "./useDelWord";
 // 修改
 import { useEditWord } from "./useEditWord";
-// 批量导入单词
-import { useAddBatchWord } from "./useAddBatchWord";
-// 引入icons图标
-import { UploadOutlined } from "@ant-design/icons-vue";
+//批量导入组件
+import BatchUpload from "@/components/BatchUpload";
+import { reactive } from "vue";
+// 引入接口配置
+import word from "@/api/wordPageAPI";
 export default {
   // 使用组件
   components: {
     Crumbs,
-    UploadOutlined
+    BatchUpload,
   },
   // setup响应api入口
   setup() {
@@ -262,7 +228,7 @@ export default {
       wordPagination, //分页配置项
       onTableChange, //页码改变的回调
       getWord, //查询
-      getWordData //获取后台数据
+      getWordData, //获取后台数据
     } = useGetWord();
     // 重置
     const { wordRef, resetWord } = useResetWord(getWordData, wordPagination);
@@ -274,7 +240,7 @@ export default {
       addOK, //点击确定事件
       addRules, //表单rules
       addRef, //表单ref
-      addEmpty // 模态框关闭事件
+      addEmpty, // 模态框关闭事件
     } = useAddWord(getWordData);
     // 添加所属类目数据
     const { categoryData } = useGetCategory();
@@ -283,7 +249,7 @@ export default {
       delWord, //删除单个
       wordKeys, //多选数据
       onSelectChange, //多选触发事件
-      delWords //批量删除
+      delWords, //批量删除
     } = useDelWord(getWordData);
     // 编辑
     const {
@@ -292,43 +258,66 @@ export default {
       editModel, //输入框model
       editRef, // 输入框ref
       editOk, //点击确定事件
-      editEmpty // 模态框关闭事件
+      editEmpty, // 模态框关闭事件
     } = useEditWord(getWordData);
-    // 批量导入单词
-    const { addBatchVisible, addBatchWord, addTemplate } = useAddBatchWord();
+    // 批量导入数据
+    /**
+     *   uploadTitle: 模态框标签
+     *   templateName: 下载模板名称(不含后缀)
+     *   uploadUrl: 上传路径
+     *   downloadUrl: 下载模板路径
+     *   uploadData: 同步数据方法
+     */
+    const uploadFile = reactive({
+      uploadTitle: "批量导入单词",
+      templateName: "单词",
+      uploadUrl: word.AddWords,
+      downloadUrl: word.ExportTemplat,
+      getData: getWordData,
+    });
     return {
-      wordRef,
+      //#region 获取（查询）数据
       wordModel,
-      columns,
       wordData,
+      columns,
       wordPagination,
       onTableChange,
-      wordKeys,
-      onSelectChange,
       getWord,
       getWordData,
+      //#endregion
+      //#region 重置
+      wordRef,
       resetWord,
+      //#endregion
+      //#region 导入单词
       addVisible,
       addWord,
       addModel,
       addOK,
       addRules,
-      categoryData,
       addRef,
       addEmpty,
+      //#endregion
+      // 下拉菜单类目
+      categoryData,
+      //#region 删除
       delWord,
       delWords,
+      wordKeys,
+      onSelectChange,
+      //#endregion
+      //#region 修改
       editVisible,
       editWord,
       editModel,
       editRef,
       editOk,
       editEmpty,
-      addBatchVisible,
-      addBatchWord,
-      addTemplate
+      //#endregion
+      // 批量导入数据
+      uploadFile,
     };
-  }
+  },
 };
 </script>
 

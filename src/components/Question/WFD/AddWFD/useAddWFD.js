@@ -13,7 +13,7 @@ import { listen } from '@/api/questionListenAPI';
  * @param {*} addModalVisible 添加模态框的显示与隐藏
  * @param {*} emit setup中触发事件的方法
  */
-export function useAddWFD(addModalVisible, getQuestion) {
+export function useAddWFD(addModalVisible, getQuestion, uploadAudioList) {
   // 表单数据 校验规则
   const addWFD = reactive({
     model: {
@@ -37,6 +37,15 @@ export function useAddWFD(addModalVisible, getQuestion) {
       // 编号
       no: [
         { required: true, whitespace: true, message: '题目编号必须填写', trigger: 'blur' },
+      ],
+      // 题目
+      title: [
+        {
+          required: true,
+          whitespace: true,
+          message: "题目必须填写",
+          trigger: "blur"
+        }
       ]
     },
   });
@@ -66,6 +75,10 @@ export function useAddWFD(addModalVisible, getQuestion) {
           getQuestion();
           // 关闭wfd模态框
           addModalVisible.wfd = false;
+          // 重置表单
+          addWFDRef.value.resetFields();
+          // 清除音频上传列表
+          uploadAudioList.value = []
         }
         else {
           // 添加失败，提示用户失败原因
@@ -85,6 +98,8 @@ export function useAddWFD(addModalVisible, getQuestion) {
     message.warn('取消添加wfd题目');
     // 重置表单
     addWFDRef.value.resetFields();
+    // 清除音频上传列表
+    uploadAudioList.value = []
   }
 
   return {

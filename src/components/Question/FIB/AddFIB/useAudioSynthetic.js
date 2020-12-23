@@ -1,4 +1,5 @@
 //#region 音频合成功能
+import { ref } from "vue";
 // 导入 post 请求
 import { httpPost } from "@/utils/http";
 // 导入 音频合成 接口配置
@@ -11,6 +12,9 @@ import { message } from "ant-design-vue";
  * @param {*} uploadAudioList 上传音频列表
  */
 export function useAudioSynthetic(addFIB, uploadAudioList) {
+  // 音频合成状态
+  const synthesizing = ref(false);
+
   // 音频合成
   const audioSynthetic = () => {
     // 获取全部题目原文
@@ -21,12 +25,14 @@ export function useAudioSynthetic(addFIB, uploadAudioList) {
     // 判断题目文本是否有内容
     if (titleText.trim().length != 0) {
       // 有内容
+      synthesizing.value = true;
       // 发起合成音频的请求
       httpPost(questionAPI.AudioSynthetic, {
         // 题目文本
         text: titleText
       }).then((res) => {
         if (res.success) {
+          synthesizing.value = false;
           // 提示用户转换音频成功
           message.success("转换音频成功, 此音频将为题目音频");
           // 保存题目音频
@@ -48,6 +54,7 @@ export function useAudioSynthetic(addFIB, uploadAudioList) {
   }
 
   return {
+    synthesizing,
     audioSynthetic
   }
 }

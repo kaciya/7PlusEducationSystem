@@ -60,7 +60,7 @@ export function useBulkUpload() {
             {
               headers: {
                 "Content-Type": "multipart/form-data",
-                Token: window.sessionStorage.getItem("token")
+                Token: window.localStorage.getItem("token")
               }
             }
           )
