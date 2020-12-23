@@ -72,9 +72,9 @@
         </div>
         <!-- 题目原文及填空答案 end -->
 
-        <!-- 编辑原文填空 -->
+        <!-- 添加原文填空 -->
         <a-button type="dashed" style="width: 60%" @click="editTitleText">
-          <PlusOutlined />编辑原文填空
+          <PlusOutlined />添加原文填空
         </a-button>
       </a-form-item>
       <!-- 备注 -->

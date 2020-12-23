@@ -64,14 +64,16 @@ export function useEditMCS(editModalVisible, getQuestion, editDetail, questionTy
   // 每次打开编辑模态框都会触发 editDetail的监听，
   // 这时重新处理题目详情数据给编辑表单的modal
   watch(editDetail, (val) => {
-    for (const key in val) {
-      if (key == "labels") {
-        // 标签特殊处理，将labels:[{id:1, name:'高频'}] map为 表单中的labelIds:['1']
-        editMCS.model.labelIds = val[key].map((value) => value.id);
-      }
-      else {
-        // 其它值直接赋值
-        editMCS.model[key] = val[key]
+    if (editModalVisible.mcs) {
+      for (const key in val) {
+        if (key == "labels") {
+          // 标签特殊处理，将labels:[{id:1, name:'高频'}] map为 表单中的labelIds:['1']
+          editMCS.model.labelIds = val[key].map((value) => value.id);
+        }
+        else {
+          // 其它值直接赋值
+          editMCS.model[key] = val[key]
+        }
       }
     }
   })
