@@ -13,7 +13,7 @@ import { listen } from "@/api/questionListenAPI";
  * @param {*} editModalVisible 编辑模态框的显示与隐藏
  * @param {*} getQuestion 重新获取列表
  */
-export function useEditSST(editModalVisible, getQuestion, editDetail, uploadAudioList) {
+export function useEditSST(editModalVisible, getQuestion, questionDetail, uploadAudioList) {
   // 表单数据 校验规则
   const editSST = reactive({
     model: {
@@ -50,9 +50,9 @@ export function useEditSST(editModalVisible, getQuestion, editDetail, uploadAudi
     }
   });
 
-  // 每次打开编辑模态框都会触发 editDetail的监听，
+  // 每次打开编辑模态框都会触发 questionDetail的监听，
   // 这时重新处理题目详情数据给编辑表单的modal
-  watch(editDetail, (val) => {
+  watch(questionDetail, (val) => {
     if (editModalVisible.sst) {
       for (const key in val) {
         if (key == "labels") {
