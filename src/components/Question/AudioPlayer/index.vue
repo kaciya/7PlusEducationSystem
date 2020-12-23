@@ -154,7 +154,7 @@ $height: 40px;
       transform: translate(-50%, -50%);
       cursor: pointer;
     }
-
+    
     &:hover {
       i {
         border: 6px solid #fff;
@@ -171,14 +171,17 @@ $height: 40px;
   }
 }
 
+// 音频播放控制
 .audio-control {
   padding-left: 20px;
 
+  // 播放速度调节
   .speed-control {
     width: 72px;
     color: #999;
   }
 
+  // 播放声音调节
   .voice-control {
     width: 80px;
     color: #000;
