@@ -4,7 +4,7 @@ export function useCloseRA(audioPlayerRef) {
     const closeModal = () => {
         // console.log(audioPlayerRef.value);
         // 调用播放组件方法 还原音频播放 
-        audioPlayerRef.value.audioEnded();
+        audioPlayerRef.value.audioEnded(true);
     }
 
     return {

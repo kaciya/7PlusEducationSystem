@@ -86,20 +86,25 @@ export function usePlayControl() {
     }
 
     // 播放完成时还原进度条等数据
-    function audioEnded() {
+    function audioEnded(isClose) {
+        // 如果关闭模态框
+        if (isClose) {
+            // 播放速度还原
+            dom.audio.value.playbackRate = 1;
+            // 播放速度还原1.0
+            audio.playbackSpeed = "1.0";
+            // 播放声音还原原声
+            audio.playbackVoice = "OV";
+        }
         // 还原进度条、进度点和当前播放时长
         dom.audio.value.pause(); //暂停
         dom.audio.value.currentTime = 0; //播放时长归0
-        dom.audio.value.playbackRate = 1; //播放速度还原
         dom.progressBar.value.style.width = 0; //进度条还原
         dom.progressDot.value.style.left = 0; //进度点还原
         dom.audioCurTime.value.innerText = transTime(0); //时长text归0
         // 播放按钮 还原暂停状态
         audio.isPaused = true;
-        // 播放速度还原1.0
-        audio.playbackSpeed = "1.0";
-        // 播放声音还原原声
-        audio.playbackVoice = "OV";
+
     }
     //#endregion
 
