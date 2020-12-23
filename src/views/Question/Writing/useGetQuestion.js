@@ -7,7 +7,7 @@ import { httpGet } from "@/utils/http";
 import question from "@/api/questionAPI";
 
 // 引入响应式API
-import { ref, reactive } from "vue";
+import { onMounted, ref, reactive } from "vue";
 
 export function useGetQuestion() {
   // 当前题目分类
@@ -51,7 +51,7 @@ export function useGetQuestion() {
       type: 4
     })
       .then(res => {
-        console.log(res);
+        // console.log(res);
         let { success, data } = res;
         if (success) {
           // 表格数据源赋值
@@ -72,6 +72,11 @@ export function useGetQuestion() {
     configPage.pageSize = pagination.pageSize;
     getQuestion();
   };
+  // 初始化
+  onMounted(() => {
+    // 获取题目列表
+    getQuestion();
+  });
   return {
     category,
     labelId,

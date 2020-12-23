@@ -6,17 +6,14 @@ import questionAPI from "@/api/questionAPI";
 // 引入提示框
 import { message } from "ant-design-vue";
 
-export function useUploadAudio(addSST) {
+export function useUploadAudio(addSST, uploadAudioList) {
   // 上传音频
   const uploadAudio = reactive({
     // 地址
-    url: "/api" + questionAPI.uploadAudio,
+    url: '/api' + questionAPI.UploadAudio,
     // 请求头
     headers: { Token: window.localStorage.getItem("token") }
   });
-
-  // 上传音频
-  const uploadAudioList = ref([]);
 
   // 切换上传音频
   const changeUploadAudio = info => {
@@ -24,8 +21,8 @@ export function useUploadAudio(addSST) {
     // 限制上传音频数量为 1
     fileList = fileList.slice(-1);
     uploadAudioList.value = fileList;
+    // 上传音频完成且成功
     if (info.file.status == "done" && info.file.response.success) {
-      console.log(info.file);
       // 提示用户
       message.success("音频上传成功");
       // 保存音频路径
@@ -36,7 +33,6 @@ export function useUploadAudio(addSST) {
   // 导出
   return {
     uploadAudio,
-    uploadAudioList,
     changeUploadAudio
   };
 }

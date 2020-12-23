@@ -52,10 +52,10 @@ export const useAddNotice = getNoticeData => {
     ]
   });
 
-  // ref
+  // 表单ref
   const addFormRef = ref(null);
 
-  // 关闭添加模态框
+  // 关闭添加模态框清空输入框
   const addCloselModal = () => {
     addFormRef.value.resetFields();
   };
@@ -78,7 +78,8 @@ export const useAddNotice = getNoticeData => {
         // 发起添加请求
         httpPost(notice.AddNotice, param)
           .then(res => {
-            if (res.code == 200) {
+            let { success } = res;
+            if (success) {
               message.success("添加成功");
               addVisible.value = false;
               // 重新渲染
@@ -86,21 +87,21 @@ export const useAddNotice = getNoticeData => {
             }
           })
           .catch(err => {
-            console.log(err);
+            throw new Error(err);
           });
       })
       .catch(error => {
-        console.log("error", error);
+        throw new Error(error);
       });
   };
 
   return {
     addVisible,
-    addShowModal,
     addModel,
+    addShowModal,
     addRules,
+    addFormRef,
     addCloselModal,
-    addConfirmModal,
-    addFormRef
+    addConfirmModal
   };
 };

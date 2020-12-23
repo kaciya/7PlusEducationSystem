@@ -7,6 +7,15 @@ export const useNoticeDataList = () => {
   // 定义内容
   const noticeData = ref([]);
 
+  // 输入查询
+  let noticeTitle = ref("");
+
+  // 公告状态
+  let noticeStatus = ref("");
+
+  // 发布人
+  let noticeUserName = ref("");
+
   // 表格分页
   const tablePagination = reactive({
     current: 1,
@@ -16,26 +25,39 @@ export const useNoticeDataList = () => {
     showSizeChanger: true
   });
 
+  // 清空输入框方法
+  const clearInput = () => {
+    noticeTitle.value = "";
+    noticeStatus.value = "";
+    noticeUserName = "";
+    tablePagination.current = 1;
+  };
+
   // 发起请求获取数据
-  const getNoticeData = (status, title, username) => {
+  const getNoticeData = () => {
     const params = {
       descColumns: "createTime",
       pageNum: tablePagination.current,
       pageSize: tablePagination.pageSize,
-      status: status,
-      title: title,
-      username: username
+      status: noticeStatus.value,
+      title: noticeTitle.value,
+      username: noticeUserName.value
     };
     httpGet(notice.GetDataList, params)
       .then(res => {
-        const { data } = res;
-        if (res.code == 200) {
+        const { data, success } = res;
+        if (success) {
           noticeData.value = data.records;
           tablePagination.total = data.total;
+          // 判断是否超出最后一页，如果超出，重新请求
+          if (data.current > data.pages && data.pages != 0) {
+            tablePagination.current = data.pages;
+            getNoticeData();
+          }
         }
       })
       .catch(err => {
-        console.log(err);
+        throw new Error(err);
       });
   };
 
@@ -45,8 +67,12 @@ export const useNoticeDataList = () => {
   });
 
   return {
-    getNoticeData,
     noticeData,
-    tablePagination
+    noticeTitle,
+    noticeStatus,
+    noticeUserName,
+    tablePagination,
+    clearInput,
+    getNoticeData
   };
 };

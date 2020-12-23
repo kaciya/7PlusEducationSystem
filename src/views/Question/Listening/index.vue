@@ -12,7 +12,7 @@
         @change="getQuestion(true)"
       >
         <a-radio-button value="SST">SST（录音总结）</a-radio-button>
-        <a-radio-button value="WED">WED（听写句子）</a-radio-button>
+        <a-radio-button value="WFD">WFD（听写句子）</a-radio-button>
         <a-radio-button value="FIB">FIB（听力填空）</a-radio-button>
         <a-radio-button value="MCS">MCS（听力单选）</a-radio-button>
         <a-radio-button value="MCM">MCM（听力多选）</a-radio-button>
@@ -52,19 +52,32 @@
 
         <!-- 操作区域 start -->
         <template #extra>
-          <!-- 批量上传按钮（只在SST和WED中存在） -->
+          <!-- 批量上传按钮（只在SST和WFD中存在） -->
           <a-button
-            v-if="category == 'WED' || category == 'SST'"
+            v-if="category == 'WFD' || category == 'SST'"
             @click="showBulkUpload"
             >批量上传</a-button
           >
           <!-- 添加题目按钮 -->
           <a-button type="primary" @click="showAddModal">添加</a-button>
-          <!-- 添加题目模态框 -->
-          <AddSSTModal
+          <!-- 添加题目模态框 start -->
+          <AddSSTModal :addModalVisible="addModalVisible"></AddSSTModal>
+          <AddWFDModal :addModalVisible="addModalVisible"></AddWFDModal>
+          <AddFIBModal :addModalVisible="addModalVisible"></AddFIBModal>
+          <AddMCSModal
             :addModalVisible="addModalVisible"
-            @getQuestion="getQuestion"
-          ></AddSSTModal>
+            questionType="mcs"
+          ></AddMCSModal>
+          <AddMCSModal
+            :addModalVisible="addModalVisible"
+            questionType="smw"
+          ></AddMCSModal>
+          <AddMCSModal
+            :addModalVisible="addModalVisible"
+            questionType="hcs"
+          ></AddMCSModal>
+          <AddMCMModal :addModalVisible="addModalVisible"></AddMCMModal>
+          <!-- 添加题目模态框 end -->
         </template>
         <!-- 操作区域 end -->
       </a-page-header>
@@ -113,13 +126,7 @@
         :data-source="questionList"
         row-key="id"
         :loading="isLoading"
-        :pagination="{
-          total: total,
-          current: pagenum,
-          pageSize: pagesize,
-          showSizeChanger: true,
-          showQuickJumper: true
-        }"
+        :pagination="questionPagination"
         @change="changePagenum"
       >
         <!-- 题目标签选择器 start -->
@@ -131,7 +138,7 @@
             style="width: 100%"
             placeholder="请选择标签，最多可以选择3项"
             option-label-prop="label"
-            @change="setLabels(record.id, record.category, record.labels)"
+            @change="editLabels(record.id, record.labels)"
           >
             <!-- 渲染所有标签 -->
             <a-select-option
@@ -149,18 +156,14 @@
         <!-- 题目操作区 start -->
         <template #operation="{ record }">
           <a-button type="primary" size="small">查看</a-button>
-          <a-button
-            type="primary"
-            style="margin-left: 10px"
-            @click="uploadAudio(record.id, 'audioUrl')"
-            size="small"
-            >上传音频</a-button
-          >
+          <!-- 上传音频按钮-->
+          <UploadAudioBtn :id="record.id"></UploadAudioBtn>
           <a-button
             type="primary"
             style="margin-left: 10px"
             class="modify-btn"
             size="small"
+            @click="showEditModal(record.id)"
             >编辑</a-button
           >
           <a-popconfirm
@@ -176,6 +179,25 @@
         <!-- 题目操作区 end -->
       </a-table>
       <!-- 题目列表 end -->
+
+      <!-- 编辑题目模态框 start -->
+      <EditSSTModal :editModalVisible="editModalVisible"></EditSSTModal>
+      <EditWFDModal :editModalVisible="editModalVisible"></EditWFDModal>
+      <EditFIBModal :editModalVisible="editModalVisible"></EditFIBModal>
+      <EditMCMModal :editModalVisible="editModalVisible"></EditMCMModal>
+      <EditMCSModal
+        :editModalVisible="editModalVisible"
+        questionType="mcs"
+      ></EditMCSModal>
+      <EditMCSModal
+        :editModalVisible="editModalVisible"
+        questionType="smw"
+      ></EditMCSModal>
+      <EditMCSModal
+        :editModalVisible="editModalVisible"
+        questionType="hcs"
+      ></EditMCSModal>
+      <!-- 编辑题目模态框 end -->
     </a-card>
     <!-- 主体Main end -->
   </a-layout-content>
@@ -184,11 +206,36 @@
 <script>
 // 引入面包屑组件
 import Crumbs from "@/components/Crumbs";
+// 引入上传音频按钮组件
+import UploadAudioBtn from "@/components/Question/UploadAudioBtn";
 // 引入icons图标
 import { UploadOutlined } from "@ant-design/icons-vue";
 
+//#region 添加题目模态框
 // 引入 添加sst题目模态框
 import AddSSTModal from "@/components/Question/SST/AddSST";
+// 引入 添加wfd题目模态框
+import AddWFDModal from "@/components/Question/WFD/AddWFD";
+// 引入 添加fib题目模态框
+import AddFIBModal from "@/components/Question/FIB/AddFIB";
+// 引入 添加mcs、smw、hcs题目模态框
+import AddMCSModal from "@/components/Question/MCS/AddMCS";
+// 引入 添加mcm题目模态框
+import AddMCMModal from "@/components/Question/MCM/AddMCM";
+//#endregion
+
+//#region 编辑题目模态框
+// 引入 编辑sst题目模态框
+import EditSSTModal from "@/components/Question/SST/EditSST";
+// 引入 编辑wfd题目模态框
+import EditWFDModal from "@/components/Question/WFD/EditWFD";
+// 引入 编辑fib题目模态框
+import EditFIBModal from "@/components/Question/FIB/EditFIB";
+// 引入 编辑mcm题目模态框
+import EditMCMModal from "@/components/Question/MCM/EditMCM";
+// 引入 编辑mcs、smw、hcs题目模态框
+import EditMCSModal from "@/components/Question/MCS/EditMCS";
+//#endregion
 
 // 导入 题目列表 列配置
 import { useQuestionColumns } from "./useQuestionColumns";
@@ -197,15 +244,13 @@ import { useGetQuestion } from "./useGetQuestion";
 // 导入 获取 全部标签类型
 import { useGetLabels } from "../QuestionLabel/useGetLables";
 // 导入 设置题目标签功能
-import { useSetLabels } from "./useSetLabels";
+import { useEditLabels } from "./useEditLabels";
 // 导入 打开批量上传模态框的功能
 import { useBulkUpload } from "./useBulkUpload";
 // 导入 模板下载功能
 import { useDownloadTemplate } from "./useDownloadTemplate";
-// 导入 上传音频功能
-import { useUploadAudio } from "./useUploadAudio";
 // 导入 显示添加题目模态框 功能
-import { useShowAddModal } from "./useShowAddModal";
+import { useShowModal } from "./useShowModal";
 // 导入 删除题目功能
 import { useDelQuestion } from "./useDelQuestion";
 
@@ -214,15 +259,13 @@ export default {
   setup() {
     // 渲染题目列表
     let {
-      pagenum,
-      pagesize,
+      questionPagination,
       category,
       labelId,
       getQuestion,
       questionList,
       isLoading,
-      total,
-      changePagenum
+      changePagenum,
     } = useGetQuestion();
 
     // 获取全部标签类型
@@ -232,7 +275,7 @@ export default {
     let { questionColumns } = useQuestionColumns();
 
     // 设置 题目标签
-    let { setLabels } = useSetLabels(labelList);
+    let { editLabels } = useEditLabels(labelList, getQuestion);
 
     // 批量上传 功能
     let {
@@ -241,17 +284,19 @@ export default {
       bulkUploadChange,
       beforeBulkUpload,
       clickBulkUpload,
-      cancelBulkUpload
+      cancelBulkUpload,
     } = useBulkUpload();
 
     // 模板下载功能
     let { downloadTemplateUrl } = useDownloadTemplate(category);
 
-    // 上传音频功能
-    let { uploadAudio } = useUploadAudio();
-
     // 显示添加模态框 功能
-    let { addModalVisible, showAddModal } = useShowAddModal(category);
+    let {
+      addModalVisible,
+      showAddModal,
+      editModalVisible,
+      showEditModal,
+    } = useShowModal(category, getQuestion);
 
     // 删除题目 功能
     let { delQuestion, cancelDelQuestion } = useDelQuestion(getQuestion);
@@ -259,9 +304,8 @@ export default {
     // 返回
     return {
       //#region 渲染表格
-      // 当前页码, 每页几条
-      pagenum,
-      pagesize,
+      // 分页器配置
+      questionPagination,
       // 当前题目分类
       category,
       // 当前选择的标签筛选
@@ -276,12 +320,10 @@ export default {
       questionList,
       // 加载状态
       isLoading,
-      // 数据库中题目总条数
-      total,
       // 跳转页码时
       changePagenum,
       // 设置题目标签
-      setLabels,
+      editLabels,
       //#endregion
 
       //#region 批量上传功能
@@ -303,10 +345,6 @@ export default {
       downloadTemplateUrl,
       //#endregion
 
-      //#region 上传音频功能
-      uploadAudio,
-      //#endregion
-
       //#region 显示添加模态框功能
       // 添加模态框的显示与隐藏
       addModalVisible,
@@ -314,10 +352,17 @@ export default {
       showAddModal,
       //#endregion
 
+      //#region 显示编辑模态框功能
+      // 编辑模态框的显示与隐藏
+      editModalVisible,
+      // 显示编辑模态框
+      showEditModal,
+      //#endregion
+
       //#region 删除题目功能
       delQuestion,
       // 取消删除
-      cancelDelQuestion
+      cancelDelQuestion,
       //#endregion
     };
   },
@@ -327,9 +372,34 @@ export default {
     Crumbs,
     // 上传图标
     UploadOutlined,
+    // 上传音频按钮组件
+    UploadAudioBtn,
+    //#region 添加题目模态框
     // 添加SST题目模态框
-    AddSSTModal
-  }
+    AddSSTModal,
+    // 添加WFD题目模态框
+    AddWFDModal,
+    // 添加FIB题目模态框
+    AddFIBModal,
+    // 添加mcs、smw、hcs题目模态框
+    AddMCSModal,
+    // 添加mcm题目模态框
+    AddMCMModal,
+    //#endregion
+
+    //#region 编辑题目模态框
+    // sst
+    EditSSTModal,
+    // wfd
+    EditWFDModal,
+    // fib
+    EditFIBModal,
+    // mcm
+    EditMCMModal,
+    // mcs、smw、hcs
+    EditMCSModal,
+    //#endregion
+  },
 };
 </script>
 

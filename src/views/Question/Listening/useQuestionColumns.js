@@ -14,7 +14,7 @@ export function useQuestionColumns() {
     },
     {
       title: "题目音频",
-      key: "titleAudio"
+      dataIndex: "titleAudio"
     },
     {
       title: "标签",
@@ -32,7 +32,7 @@ export function useQuestionColumns() {
     },
     {
       title: "练习次数",
-      key: "totalNum"
+      dataIndex: "totalNum"
     },
     {
       title: "操作",

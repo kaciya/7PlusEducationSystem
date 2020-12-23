@@ -2,25 +2,30 @@
  * @author Lemon
  * 编辑教师信息
  * */
-import { reactive, ref } from "vue";
+import { computed, reactive, ref } from "vue";
 import { httpPost } from "@/utils/http";
 import { teacherInfo } from "@/api/operationAPI";
 import { message } from "ant-design-vue";
 import { useGetTeacherList } from "./useGetTeacherList";
 
 // 编辑老师
-export const useEditTeacherList = options => {
+export const useEditTeacherList = (options,store) => {
   // 编辑模态的框状态
   const editLabelVisible = ref(false);
   // 设置模态框确定按钮的加载状态
   const editModalLoad = ref(false);
   // 获取id
   const userId = ref(null);
+  // 获取文件Url
+  const fileUrl = computed(() => store.state.ImageUploadStore.fileUrl);
 
   // 显示编辑模态框
   const showEditModal = id => {
     userId.value = id;
     editLabelVisible.value = true;
+    // 清除公共储存库里面的文件信息
+    store.commit("ImageUploadStore/DEL_IMAGE_FILES");
+    store.commit("ImageUploadStore/DEL_IMAGE_URL");
   };
 
   // 获取表单数据
@@ -74,6 +79,11 @@ export const useEditTeacherList = options => {
         const params = editModel;
         // 设置id
         params["id"] = userId;
+        // 判断用户是否上传了图片
+        if (fileUrl.value !== "") {
+          // 设置表单图片url
+          editModel.photo = fileUrl.value;
+        }
         // 发起ajax请求
         httpPost(teacherInfo.EditTeacherList, editModel)
           .then(res => {
@@ -84,6 +94,9 @@ export const useEditTeacherList = options => {
               message.success(res.message);
               // 关闭模态框
               editLabelVisible.value = false;
+              // 清除公共储存库里面的文件信息
+              store.commit("ImageUploadStore/DEL_IMAGE_FILES");
+              store.commit("ImageUploadStore/DEL_IMAGE_URL");
               // 清除表单里面的值
               editRef.value.resetFields();
               options.useGetTeacherList(

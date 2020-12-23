@@ -6,11 +6,12 @@ import wordType from "@/api/wordTypeAPI";
 //全局提示
 import { message } from "ant-design-vue";
 export const ModifyWordCategory = getCategoryData => {
-  // 输入框数据
+  //#region 输入框数据
   const editModel = reactive({
     name: ""
   });
-  // 表单校验
+  //#endregion
+  //#region 表单校验
   const editRules = reactive({
     // 词库名称不能为空
     name: [
@@ -23,6 +24,8 @@ export const ModifyWordCategory = getCategoryData => {
       }
     ]
   });
+  //#endregion
+  //#region 模态框
   // 控制添加模态框显示隐藏
   let editVisible = ref(false);
   // 词库名称ID
@@ -76,6 +79,7 @@ export const ModifyWordCategory = getCategoryData => {
     // 清空文本框
     editRef.value.resetFields();
   };
+  //#endregion
   return {
     editModel,
     editRules,

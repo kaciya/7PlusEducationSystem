@@ -23,10 +23,12 @@ export function useQuestionColumns() {
       dataIndex: "updateTime"
     },
     {
-      title: "备注"
+      title: "备注",
+      dataIndex: "remark"
     },
     {
-      title: "累计练习"
+      title: "累计练习",
+      dataIndex: "totalNum"
     },
     {
       title: "操作",

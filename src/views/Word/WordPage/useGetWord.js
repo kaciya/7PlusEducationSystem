@@ -10,7 +10,7 @@ export const useGetWord = () => {
   // #region 表格
   const wordData = reactive({
     // 表格数据
-    data: []
+    data: [],
   });
   //  分页配置项
   const wordPagination = reactive({
@@ -23,12 +23,12 @@ export const useGetWord = () => {
     // 总数
     total: 0,
     // 允许改变每页条数
-    showSizeChanger: true
+    showSizeChanger: true,
   });
   //#endregion 表格
   //#region 输入框数据
   const wordModel = reactive({
-    wordKey: ""
+    wordKey: "",
   });
   //#endregion 输入框数据
 
@@ -40,7 +40,7 @@ export const useGetWord = () => {
     const res = await httpGet(word.GetWord, {
       key: wordModel.wordKey,
       pageNum: wordPagination.current,
-      pageSize: wordPagination.pageSize
+      pageSize: wordPagination.pageSize,
     });
     if (res.success) {
       // 数据
@@ -49,24 +49,21 @@ export const useGetWord = () => {
       wordPagination.total = res.data.total;
       // 查询成功 把状态设置为true
       isSuccess.value = true;
-      // 计算最大页码
-      let maxPagenum = Math.ceil(
-        wordPagination.total / wordPagination.pageSize
-      );
-      // 如果当前页码超出最大页码，重新获取
-      if (wordPagination.current > maxPagenum) {
-        wordPagination.current = maxPagenum;
+      // 判断最后一页是否有数据 如果没有跳转前一页
+      if (res.data.current > res.data.pages && res.data.pages != 0) {
+        wordPagination.current = res.data.pages;
         getWordData();
       }
     }
   };
   //#endregion
-  // 页码改变回调
-  const onTableChange = pagination => {
+  //#region 页码改变回调
+  const onTableChange = (pagination) => {
     wordPagination.current = pagination.current;
     wordPagination.pageSize = pagination.pageSize;
     getWordData();
   };
+  //#endregion
   // 初始化
   onMounted(() => {
     getWordData();
@@ -92,6 +89,6 @@ export const useGetWord = () => {
     wordPagination,
     onTableChange,
     getWordData,
-    getWord
+    getWord,
   };
 };

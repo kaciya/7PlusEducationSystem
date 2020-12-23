@@ -1,4 +1,4 @@
-import { reactive, ref } from "vue";
+import { computed, reactive, ref } from "vue";
 // 引入api
 import { teacherInfo } from "@/api/operationAPI";
 // 引入http
@@ -6,16 +6,24 @@ import { httpPost } from "@/utils/http";
 import { message } from "ant-design-vue";
 
 // 添加老师
-export const useAddTeacherList = options => {
+export const useAddTeacherList = (options,store) => {
   // 模态框状态
   const addLabelVisible = ref(false);
   // 确定按钮loading
   const confirmLoading = ref(false);
+  // 获取文件Url
+  const fileUrl = computed(() => store.state.ImageUploadStore.fileUrl);
 
   // 显示模态框
   const showModal = () => {
     addLabelVisible.value = true;
+    // 清除公共储存库里面的文件信息
+    store.commit("ImageUploadStore/DEL_IMAGE_FILES");
+    store.commit("ImageUploadStore/DEL_IMAGE_URL");
   };
+
+  // 获取用户上传的文件
+  const addFileList = reactive({});
 
   // 获取表单数据
   const addModel = reactive({
@@ -56,7 +64,6 @@ export const useAddTeacherList = options => {
   });
 
   let addRef = ref(null);
-
   // 表单点击确定后的回调函数
   const handleSubmit = () => {
     confirmLoading.value = true;
@@ -64,6 +71,11 @@ export const useAddTeacherList = options => {
     addRef.value
       .validate()
       .then(() => {
+        // 判断用户是否上传了图片
+        if (fileUrl.value !== "") {
+          // 设置表单图片url
+          addModel.photo = fileUrl.value;
+        }
         // 发起ajax请求
         httpPost(teacherInfo.AddTeacherList, addModel)
           .then(res => {
@@ -75,6 +87,9 @@ export const useAddTeacherList = options => {
               addLabelVisible.value = false;
               // 清除表单里面的值
               addRef.value.resetFields();
+              // 清除公共储存库里面的文件信息
+              store.commit("ImageUploadStore/DEL_IMAGE_FILES");
+              store.commit("ImageUploadStore/DEL_IMAGE_URL");
               // 重新获取数据
               options.useGetTeacherList(
                 options.pageNum,
@@ -101,6 +116,8 @@ export const useAddTeacherList = options => {
     addLabelVisible,
     // 显示模态框
     showModal,
+    // 文件列表表
+    addFileList,
     // 获取表单数据
     addModel,
     // 表单校验规则
