@@ -47,8 +47,6 @@
         </a-col>
       </a-row>
       <!-- 文章内容 end  -->
-
-      <!-- 评论 start -->
       <a-row class="article-comment">
         <a-col :span="24">
           <div>
@@ -58,7 +56,7 @@
           </div>
         </a-col>
       </a-row>
-      <!-- 评论 end -->
+      <!-- 评论 start -->
       <a-row class="comment-content" v-for="item in commentList" :key="item.id">
         <a-col :span="2">
           <div class="reviewers">
@@ -87,6 +85,7 @@
           </p>
         </a-col>
       </a-row>
+      <!-- 评论 end -->
       <!-- 屏蔽模态框 start -->
       <a-modal
         v-model:visible="topicShieldVisible"
@@ -106,6 +105,7 @@
         </a-row>
       </a-modal>
       <!-- 屏蔽模态框 end  -->
+      <!-- 分页 start -->
       <a-pagination
         showSizeChanger
         v-model:current="pageNum"
@@ -113,6 +113,7 @@
         :pageSizeOptions="pageSizeOptions"
         @change="commentPaging"
       />
+      <!-- 分页 end -->
     </a-card>
   </a-layout-content>
 </template>

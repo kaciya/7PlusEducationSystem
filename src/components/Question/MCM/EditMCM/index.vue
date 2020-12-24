@@ -144,7 +144,7 @@ export default {
     const getQuestion = inject("getQuestion");
 
     // 获取要编辑的题目详情
-    const editDetail = inject("editDetail");
+    const questionDetail = inject("questionDetail");
 
     // 标签列表
     const { labelList } = useGetLabels();
@@ -161,7 +161,12 @@ export default {
       delChoices,
       confirmEditMCM,
       cancelEditMCM,
-    } = useEditMCM(editModalVisible, getQuestion, editDetail, uploadAudioList);
+    } = useEditMCM(
+      editModalVisible,
+      getQuestion,
+      questionDetail,
+      uploadAudioList
+    );
 
     // 上传音频功能
     const { uploadAudio, changeUploadAudio } = useUploadAudio(

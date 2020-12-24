@@ -25,17 +25,17 @@ export const useEditNotice = getNoticeData => {
   const editNoticeStatus = ref("");
 
   // 显示编辑模态框
-  const editShowModal = text => {
+  const editShowModal = record => {
     // 显示模态框
     editVisible.value = true;
     // id
-    editNoticeId.value = text.id;
+    editNoticeId.value = record.id;
     // 状态
-    editNoticeStatus.value = text.status;
+    editNoticeStatus.value = record.status;
     // 输入框回显
-    editModel.noticeTitle = text.title;
-    editModel.endDate = moment(text.createTime, "YYYY-MM-DD HH:mm:ss");
-    editModel.noticeContent = text.content;
+    editModel.noticeTitle = record.title;
+    editModel.endDate = moment(record.createTime, "YYYY-MM-DD HH:mm:ss");
+    editModel.noticeContent = record.content;
   };
 
   // 校验规则

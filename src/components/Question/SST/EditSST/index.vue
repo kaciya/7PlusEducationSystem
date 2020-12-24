@@ -97,7 +97,7 @@ export default {
     const getQuestion = inject("getQuestion");
 
     // 获取要编辑的题目详情
-    const editDetail = inject("editDetail");
+    const questionDetail = inject("questionDetail");
 
     // 标签列表
     const { labelList } = useGetLabels();
@@ -112,7 +112,12 @@ export default {
       changeLabels,
       confirmEditSST,
       cancelEditSST,
-    } = useEditSST(editModalVisible, getQuestion, editDetail, uploadAudioList);
+    } = useEditSST(
+      editModalVisible,
+      getQuestion,
+      questionDetail,
+      uploadAudioList
+    );
 
     // 上传音频功能
     const { uploadAudio, changeUploadAudio } = useUploadAudio(

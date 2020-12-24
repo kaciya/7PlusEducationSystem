@@ -13,7 +13,7 @@ import { listen } from '@/api/questionListenAPI';
  * @param {*} editModalVisible 编辑模态框的显示与隐藏
  * @param {*} emit setup中触发事件的方法
  */
-export function useEditWFD(editModalVisible, getQuestion, editDetail, uploadAudioList) {
+export function useEditWFD(editModalVisible, getQuestion, questionDetail, uploadAudioList) {
   // 表单数据 校验规则
   const editWFD = reactive({
     model: {
@@ -45,17 +45,19 @@ export function useEditWFD(editModalVisible, getQuestion, editDetail, uploadAudi
     },
   });
 
-  // 每次打开编辑模态框都会触发 editDetail的监听，
+  // 每次打开编辑模态框都会触发 questionDetail的监听，
   // 这时重新处理题目详情数据给编辑表单的modal
-  watch(editDetail, (val) => {
-    for (const key in val) {
-      if (key == "labels") {
-        // 标签特殊处理，将labels:[{id:1, name:'高频'}] map为 表单中的labelIds:['1']
-        editWFD.model.labelIds = val[key].map((value) => value.id);
-      }
-      else {
-        // 其它值直接赋值
-        editWFD.model[key] = val[key]
+  watch(questionDetail, (val) => {
+    if (editModalVisible.wfd) {
+      for (const key in val) {
+        if (key == "labels") {
+          // 标签特殊处理，将labels:[{id:1, name:'高频'}] map为 表单中的labelIds:['1']
+          editWFD.model.labelIds = val[key].map((value) => value.id);
+        }
+        else {
+          // 其它值直接赋值
+          editWFD.model[key] = val[key]
+        }
       }
     }
   })
