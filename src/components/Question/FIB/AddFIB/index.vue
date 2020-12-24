@@ -97,6 +97,8 @@ import {
 } from "@ant-design/icons-vue";
 // 引入 添加FIB题目 功能
 import { addFIB, useAddFIB } from "./useAddFIB";
+// 引入 上传音频列表
+import { useUploadAudioList } from "@/components/Question/SST/AddSST/useUploadAudioList";
 // 引入 上传音频 功能
 import { useUploadAudio } from "@/components/Question/SST/AddSST/useUploadAudio";
 // 引入 标签列表 功能
@@ -117,6 +119,9 @@ export default {
     // 标签列表
     const { labelList } = useGetLabels();
 
+    // 上传音频列表
+    const { uploadAudioList } = useUploadAudioList();
+
     // 添加FIB题目
     const {
       addFIB,
@@ -126,11 +131,12 @@ export default {
       delTitleText,
       confirmAddFIB,
       cancelAddFIB,
-    } = useAddFIB(addModalVisible, getQuestion);
+    } = useAddFIB(addModalVisible, getQuestion, uploadAudioList);
 
     // 上传音频功能
-    const { uploadAudio, uploadAudioList, changeUploadAudio } = useUploadAudio(
-      addFIB
+    const { uploadAudio, changeUploadAudio } = useUploadAudio(
+      addFIB,
+      uploadAudioList
     );
 
     // 音频合成功能

@@ -124,6 +124,8 @@ import {
 } from "@ant-design/icons-vue";
 // 引入 添加MCM题目 功能
 import { addMCM, useAddMCM } from "./useAddMCM";
+// 引入 上传音频列表
+import { useUploadAudioList } from "@/components/Question/SST/AddSST/useUploadAudioList";
 // 引入 上传音频 功能
 import { useUploadAudio } from "@/components/Question/SST/AddSST/useUploadAudio";
 // 引入 标签列表 功能
@@ -144,6 +146,9 @@ export default {
     // 标签列表
     const { labelList } = useGetLabels();
 
+    // 上传音频列表
+    const { uploadAudioList } = useUploadAudioList();
+
     // 添加MCM题目
     const {
       addMCM,
@@ -153,11 +158,12 @@ export default {
       delChoices,
       confirmAddMCM,
       cancelAddMCM,
-    } = useAddMCM(addModalVisible, getQuestion);
+    } = useAddMCM(addModalVisible, getQuestion, uploadAudioList);
 
     // 上传音频功能
-    const { uploadAudio, uploadAudioList, changeUploadAudio } = useUploadAudio(
-      addMCM
+    const { uploadAudio, changeUploadAudio } = useUploadAudio(
+      addMCM,
+      uploadAudioList
     );
 
     // 音频合成功能

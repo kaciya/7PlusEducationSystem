@@ -13,7 +13,7 @@ import { listen } from '@/api/questionListenAPI';
  * @param {*} addModalVisible 添加模态框的显示与隐藏
  * @param {*} getQuestion 重新获取列表
  */
-export function useAddFIB(addModalVisible, getQuestion) {
+export function useAddFIB(addModalVisible, getQuestion, uploadAudioList) {
   // 表单数据 校验规则
   const addFIB = reactive({
     model: {
@@ -34,7 +34,9 @@ export function useAddFIB(addModalVisible, getQuestion) {
           text: ""
         },
         {
+          // 答案
           answer: "",
+          // 文本
           text: ""
         },
       ],
@@ -46,6 +48,10 @@ export function useAddFIB(addModalVisible, getQuestion) {
       // 编号
       no: [
         { required: true, whitespace: true, message: '题目编号必须填写', trigger: 'blur' },
+      ],
+      // 题目
+      title: [
+        { required: true, whitespace: true, message: "题目必须填写", trigger: "blur" }
       ]
     },
   });
@@ -91,6 +97,8 @@ export function useAddFIB(addModalVisible, getQuestion) {
           addModalVisible.fib = false;
           // 重置表单
           addFIBRef.value.resetFields();
+          // 清除音频上传列表
+          uploadAudioList.value = []
         }
         else {
           // 添加失败，提示用户失败原因
@@ -110,6 +118,8 @@ export function useAddFIB(addModalVisible, getQuestion) {
     message.warn('取消添加fib题目');
     // 重置表单
     addFIBRef.value.resetFields();
+    // 清除音频上传列表
+    uploadAudioList.value = []
   }
 
   return {

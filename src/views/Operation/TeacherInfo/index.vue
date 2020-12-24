@@ -124,24 +124,12 @@
               <a-form-item
                 has-feedback
                 label="上传图片"
-                name="photo"
                 :labelCol="{ span: 4 }"
                 :wrapperCol="{ span: 20 }"
+                :key="Math.random()"
               >
-                <a-input
-                  type="text"
-                  autocomplete="off"
-                  v-model:value="addModel.photo"
-                />
+                <ImageUpload></ImageUpload>
               </a-form-item>
-              <!--              <a-form-item has-feedback label="上传图片" name="photo" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
-                <a-upload
-                  list-type="picture"
-                  :beforeUpload="beforeUpload"
-                >
-                  <a-button> <upload-outlined /> upload </a-button>
-                </a-upload>
-              </a-form-item>-->
               <a-form-item
                 label="简介"
                 :labelCol="{ span: 4 }"
@@ -208,27 +196,9 @@
                   v-model:value="editModel.name"
                 />
               </a-form-item>
-              <a-form-item
-                has-feedback
-                label="上传图片"
-                name="photo"
-                :labelCol="{ span: 4 }"
-                :wrapperCol="{ span: 20 }"
-              >
-                <a-input
-                  type="text"
-                  autocomplete="off"
-                  v-model:value="editModel.photo"
-                />
+              <a-form-item has-feedback label="上传图片" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}" :key="Math.random()">
+                <ImageUpload></ImageUpload>
               </a-form-item>
-              <!--              <a-form-item has-feedback label="上传图片" name="photo" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}">
-                              <a-upload
-                                list-type="picture"
-                                :beforeUpload="beforeUpload"
-                              >
-                                <a-button> <upload-outlined /> upload </a-button>
-                              </a-upload>
-                            </a-form-item>-->
               <a-form-item
                 label="简介"
                 :labelCol="{ span: 4 }"
@@ -278,14 +248,21 @@ import { useEditTeacherList } from "./useEditTeacherList";
 import { useTeacherColumns } from "./useTeacherColumns";
 // 引入表格数据
 import { teacherListData } from "./useGetTeacherList";
+// 引入图片上传模块
+import ImageUpload from "@/components/ImageUpload";
+// 引入储存库
+import { useStore } from "vuex";
 
 export default {
   // 使用组件
   components: {
-    Crumbs
+    Crumbs,
+    ImageUpload
   },
   // setup响应api入口
   setup() {
+    // 设置储存库
+    const store = useStore();
     // 设置表格列
     teacherListData.columns = useTeacherColumns;
     // 分页
@@ -323,7 +300,7 @@ export default {
       confirmLoading,
       addRef,
       handleSubmit
-    } = useAddTeacherList(addParams);
+    } = useAddTeacherList(addParams,store);
     //#endregion
 
     //#region 编辑老师
@@ -343,7 +320,7 @@ export default {
       showEditModal,
       editCancel,
       editSubmit
-    } = useEditTeacherList(editParams);
+    } = useEditTeacherList(editParams,store);
     //#endregion
 
     return {

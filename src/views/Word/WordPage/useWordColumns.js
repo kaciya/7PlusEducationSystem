@@ -1,5 +1,5 @@
 import { reactive } from "vue";
-// 用户列表columns;
+// 词库columns;
 export const useWordColumns = () => {
   const columns = reactive([
     {
