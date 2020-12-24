@@ -72,9 +72,9 @@
         </div>
         <!-- 题目原文及填空答案 end -->
 
-        <!-- 编辑原文填空 -->
+        <!-- 添加原文填空 -->
         <a-button type="dashed" style="width: 60%" @click="editTitleText">
-          <PlusOutlined />编辑原文填空
+          <PlusOutlined />添加原文填空
         </a-button>
       </a-form-item>
       <!-- 备注 -->
@@ -117,7 +117,7 @@ export default {
     const getQuestion = inject("getQuestion");
 
     // 获取要编辑的题目详情
-    const editDetail = inject("editDetail");
+    const questionDetail = inject("questionDetail");
 
     // 标签列表
     const { labelList } = useGetLabels();
@@ -134,7 +134,12 @@ export default {
       delTitleText,
       confirmEditFIB,
       cancelEditFIB,
-    } = useEditFIB(editModalVisible, getQuestion, editDetail, uploadAudioList);
+    } = useEditFIB(
+      editModalVisible,
+      getQuestion,
+      questionDetail,
+      uploadAudioList
+    );
 
     // 上传音频功能
     const { uploadAudio, changeUploadAudio } = useUploadAudio(
