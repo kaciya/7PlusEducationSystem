@@ -7,7 +7,7 @@ import { httpGet } from "@/utils/http";
 import question from "@/api/questionAPI";
 
 // 引入响应式API
-import { onMounted, ref, reactive } from "vue";
+import { onMounted, ref, reactive, provide } from "vue";
 
 export function useGetQuestion() {
   // 当前题目分类
@@ -66,6 +66,9 @@ export function useGetQuestion() {
         console.log(err);
       });
   };
+
+  // 向后代组件提供获取题目列表的方法
+  provide("getQuestion", getQuestion);
   // 跳转页码
   const changePagenum = pagination => {
     configPage.current = pagination.current;
