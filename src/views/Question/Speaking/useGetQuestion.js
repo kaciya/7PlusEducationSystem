@@ -39,7 +39,7 @@ export function useGetQuestion() {
    */
   const getQuestion = (goFirstPage) => {
     if (goFirstPage) {
-      pagenum.value = 1;
+      questionPagination.current = 1;
     }
     // 开启加载状态
     isLoading.value = true;
