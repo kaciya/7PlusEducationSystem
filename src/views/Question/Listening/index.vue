@@ -155,7 +155,9 @@
 
         <!-- 题目操作区 start -->
         <template #operation="{ record }">
-          <a-button type="primary" size="small">查看</a-button>
+          <a-button type="primary" size="small" @click="showGetModal(record.id)"
+            >查看</a-button
+          >
           <!-- 上传音频按钮-->
           <UploadAudioBtn :id="record.id"></UploadAudioBtn>
           <a-button
@@ -198,6 +200,12 @@
         questionType="hcs"
       ></EditMCSModal>
       <!-- 编辑题目模态框 end -->
+
+      <!-- 查看题目模态框 start -->
+      <!-- 查看wfd -->
+      <GetWFDModal :getModalVisible="getModalVisible"></GetWFDModal>
+      <GetFIBModal :getModalVisible="getModalVisible"></GetFIBModal>
+      <!-- 查看题目模态框 end -->
     </a-card>
     <!-- 主体Main end -->
   </a-layout-content>
@@ -235,6 +243,13 @@ import EditFIBModal from "@/components/Question/FIB/EditFIB";
 import EditMCMModal from "@/components/Question/MCM/EditMCM";
 // 引入 编辑mcs、smw、hcs题目模态框
 import EditMCSModal from "@/components/Question/MCS/EditMCS";
+//#endregion
+
+//#region 查看题目模态框
+// 引入 查看wfd题目模态框
+import GetWFDModal from "@/components/Question/WFD/GetWFD";
+// 引入 查看wfd题目模态框
+import GetFIBModal from "@/components/Question/FIB/GetFIB";
 //#endregion
 
 // 导入 题目列表 列配置
@@ -296,6 +311,8 @@ export default {
       showAddModal,
       editModalVisible,
       showEditModal,
+      getModalVisible,
+      showGetModal,
     } = useShowModal(category, getQuestion);
 
     // 删除题目 功能
@@ -359,6 +376,13 @@ export default {
       showEditModal,
       //#endregion
 
+      //#region 显示查看模态框功能
+      // 查看模态框的显示与隐藏
+      getModalVisible,
+      // 显示查看模态框
+      showGetModal,
+      //#endregion
+
       //#region 删除题目功能
       delQuestion,
       // 取消删除
@@ -398,6 +422,11 @@ export default {
     EditMCMModal,
     // mcs、smw、hcs
     EditMCSModal,
+    //#endregion
+
+    //#region 查看题目模态框
+    GetWFDModal,
+    GetFIBModal,
     //#endregion
   },
 };
