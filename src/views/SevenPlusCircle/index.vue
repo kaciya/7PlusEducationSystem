@@ -75,34 +75,34 @@
           <template #index="{ index }">
             <span>{{ index + 1 }}</span>
           </template>
-          <template #content="{ text }">
-            <span v-if="text.content">
-              {{ text.content }}
+          <template #content="{ record }">
+            <span v-if="record.content">
+              {{ record.content }}
             </span>
             <span v-else></span>
           </template>
-          <template #category="{ text }">
-            <span>{{ text.category }}</span>
+          <template #category="{ record }">
+            <span>{{ record.category }}</span>
           </template>
-          <template #about="{ text }">
-            <p>收藏：{{ text.favoriteCount }}</p>
-            <p>阅读：{{ text.readCount }}</p>
-            <p>评论：{{ text.commentCount }}</p>
+          <template #about="{ record }">
+            <p>收藏：{{ record.favoriteCount }}</p>
+            <p>阅读：{{ record.readCount }}</p>
+            <p>评论：{{ record.commentCount }}</p>
           </template>
-          <template #operation="{ text }">
+          <template #operation="{ record }">
             <a-button
               size="small"
               type="primary"
               style="margin-right: 10px"
-              @click="checkArticle(text.id)"
+              @click="checkArticle(record.id)"
             >
               查看
             </a-button>
             <a-button
-              v-if="text.status == 1"
+              v-if="record.status == 1"
               size="small"
               type="danger"
-              @click="topicShieldModal(text.id)"
+              @click="topicShieldModal(record.id)"
             >
               屏蔽
             </a-button>
@@ -111,7 +111,7 @@
               size="small"
               type="primary"
               class="pass-btn"
-              @click="topicShowModal(text.id)"
+              @click="topicShowModal(record.id)"
             >
               显示
             </a-button>

@@ -116,6 +116,7 @@
                     :editor="editor"
                     :config="editorConfig"
                     v-model="addModel.noticeContent"
+                    @ready="onReady"
                   ></ckeditor>
                 </a-form-item>
               </a-form>
@@ -132,25 +133,23 @@
           :pagination="tablePagination"
           @change="tablePageChange"
         >
-          <template #status="{ text }">
-            <span v-if="text.status == 1">已发布</span>
+          <template #status="{ record }">
+            <span v-if="record.status == 1">已发布</span>
             <span v-else>已结束</span>
           </template>
-          <template #operation="{ text }">
-            <div v-if="text.status == 1">
+          <template #operation="{ record }">
+            <div v-if="record.status == 1">
               <a-button
                 size="small"
                 class="modify-btn"
                 type="primary"
                 style="margin-right: 10px"
-                @click="editShowModal(text)"
+                @click="editShowModal(record)"
                 >编辑</a-button
               >
               <a-popconfirm
                 title="此操作将永久删除该用户, 是否继续?"
-                ok-text="确认"
-                cancel-text="取消"
-                @confirm="delOneNotice(text.id)"
+                @confirm="delOneNotice(record.id)"
                 @cancel="cancelDel"
               >
                 <a-button size="small" type="danger"> 删除 </a-button>
@@ -159,9 +158,7 @@
             <div v-else>
               <a-popconfirm
                 title="此操作将永久删除该用户, 是否继续?"
-                ok-text="确认"
-                cancel-text="取消"
-                @confirm="delOneNotice(text.id)"
+                @confirm="delOneNotice(record.id)"
                 @cancel="cancelDel"
               >
                 <a-button size="small" type="danger"> 删除 </a-button>
@@ -212,11 +209,11 @@
               label="公告内容："
               name="noticeContent"
             >
-              <!-- @ready="onReady" -->
               <ckeditor
                 :editor="editor"
                 :config="editorConfig"
                 v-model="editModel.noticeContent"
+                @ready="onReady"
               ></ckeditor>
             </a-form-item>
           </a-form>
@@ -248,7 +245,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 // 中文化富文本
 import "@ckeditor/ckeditor5-build-classic/build/translations/zh-cn";
 // 上传图片处理文件
-// import MyUploadAdapter from "./MyUploadAdapter.js";
+import MyUploadAdapter from "./useUploadAdapter.js";
 // 引入日期处理
 import moment from "moment";
 export default {
@@ -321,12 +318,13 @@ export default {
       language: "zh-cn"
     });
 
-    // const onReady = (editor) => {
-    //   // 自定义上传图片插件
-    //   editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
-    //     return new MyUploadAdapter(loader);
-    //   };
-    // };
+    // 图片上传
+    const onReady = editor => {
+      // 自定义上传图片插件
+      editor.plugins.get("FileRepository").createUploadAdapter = loader => {
+        return new MyUploadAdapter(loader);
+      };
+    };
     return {
       // 数据列表
       noticeData,
@@ -366,8 +364,9 @@ export default {
       // 富文本编辑器
       editor,
       // 中文化富文本
-      editorConfig
-      // onReady,
+      editorConfig,
+      // 图片上传
+      onReady
     };
   },
   // 使用组件
@@ -402,5 +401,11 @@ export default {
 }
 .border {
   border: 1px solid #ddd;
+}
+</style>
+
+<style>
+.ck-editor__editable {
+  min-height: 400px;
 }
 </style>
