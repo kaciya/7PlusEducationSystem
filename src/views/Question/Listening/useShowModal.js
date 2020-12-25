@@ -21,7 +21,8 @@ export function useShowModal(category, getQuestion) {
     mcs: false,
     smw: false,
     hcs: false,
-    mcm: false
+    mcm: false,
+    hiw: false
   })
 
   // 显示添加题目模态框
@@ -38,7 +39,8 @@ export function useShowModal(category, getQuestion) {
     mcs: false,
     smw: false,
     hcs: false,
-    mcm: false
+    mcm: false,
+    hiw: false
   });
 
   // 编辑题目的详情，向下注入
@@ -57,6 +59,7 @@ export function useShowModal(category, getQuestion) {
       if (success) {
         // 记录题目详情
         questionDetail.value = data;
+        console.log(data);
         // 回调函数 （打开模态框）
         callback();
       }
@@ -90,12 +93,13 @@ export function useShowModal(category, getQuestion) {
     mcs: false,
     smw: false,
     hcs: false,
-    mcm: false
+    mcm: false,
+    hiw: false
   });
 
   /**
    * 显示查看题目模态框
-   * @param {*} id 
+   * @param {*} id 题目id
    */
   const showGetModal = (id) => {
     getQuestionDetail(id, () => {

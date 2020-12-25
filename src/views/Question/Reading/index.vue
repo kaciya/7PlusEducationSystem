@@ -70,7 +70,7 @@
             placeholder="请选择标签，最多可以选择3项"
             mode="multiple"
             v-model:value="record.labels"
-            @change="setLabels(record)"
+            @change="editLabels(record.id, record.labels)"
           >
             <!-- 渲染所有标签 -->
             <a-select-option
@@ -184,7 +184,7 @@ import { useGetLabels } from "../QuestionLabel/useGetLables";
 // 导入 题目列表 列配置
 import { useQuestionColumns } from "./useQuestionColumns";
 // 导入 设置题目标签功能
-import { useSetLabels } from "./useSetLabels";
+import { useEditLabels } from "./useEditLabels";
 // 导入 删除题目功能
 import { useDelQuestion } from "./useDelQuestion";
 // 导入 显示模态框功能
@@ -208,7 +208,7 @@ export default {
     // 题目列表 列配置
     let { questionColumns } = useQuestionColumns();
     // 设置 题目标签
-    let { setLabels } = useSetLabels(labelList);
+    let { editLabels } = useEditLabels(labelList, getQuestion);
     //#endregion
     // 删除题目 功能
     let { delQuestion, cancelDelQuestion } = useDelQuestion(getQuestion);
@@ -241,7 +241,7 @@ export default {
       // 数据加载状态
       isLoading,
       // 设置题目标签
-      setLabels,
+      editLabels,
       // 分页配置项
       configPage,
       changePagenum,

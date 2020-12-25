@@ -6,7 +6,7 @@ export function useAddFIBR(addModalVisible) {
   const confirmAddFIBR = () => {
     console.log(111111);
     // 关闭FIBR模态框
-    addModalVisible.ro = false;
+    addModalVisible.fibr = false;
   };
   // 取消添加FIBR题目
   const cancelAddFIBR = () => {
