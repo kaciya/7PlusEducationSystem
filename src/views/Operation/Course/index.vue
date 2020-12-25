@@ -2,7 +2,7 @@
   <a-layout-content>
     <!-- 面包屑 start -->
     <Crumbs
-      :crumbName="[{ name: '运营管理' }, { name: '课程服务', route: '/operation/course' }]"
+      :crumbName="[{ name: '运营管理' }, { name: '课程服务' }]"
     />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
