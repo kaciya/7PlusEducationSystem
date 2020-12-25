@@ -3,6 +3,8 @@ import NProgress from "nprogress"; //引入进度条
 import "nprogress/nprogress.css"; //引入进度条样式
 import Login from "@/views/Login";
 import Home from "@/views/Home";
+// 由于懒加载页面太多的话会造成webpack热更新太慢，所以开发环境不使用懒加载，只有生产环境使用懒加载
+const _import = process.env.NODE_ENV === 'development' ? file => require('@/views/' + file).default : file => () => import('@/views/' + file)
 // NProgress配置
 NProgress.configure({ showSpinner: false }); //禁用进度环
 
@@ -21,7 +23,7 @@ const routes = [
   // 404
   {
     path: "/404",
-    component: () => import(/* webpackChunkName: "404" */ "@/views/404"),
+    component: () => _import("404"),
     hidden: true
   },
   // 主页
@@ -40,7 +42,7 @@ const routes = [
       {
         path: "/home/main",
         name: "HomeMain",
-        component: () => import("@/views/HomeMain"),
+        component: () => _import("HomeMain"),
         meta: {
           pathName: "/home/main",
           keepAlive: true
@@ -51,7 +53,7 @@ const routes = [
       // 用户列表
       {
         path: "/user/user-list",
-        component: () => import("@/views/UserManage/UserList"),
+        component: () => _import("UserManage/UserList"),
         meta: {
           pathName: "/user/user-list",
           keepAlive: true
@@ -60,7 +62,7 @@ const routes = [
       // 用户详情
       {
         path: "/user/details/:id",
-        component: () => import("@/views/UserManage/UserDetails"),
+        component: () => _import("UserManage/UserDetails"),
         meta: {
           pathName: "/user/user-list",
           keepAlive: true
@@ -72,7 +74,7 @@ const routes = [
       // 词库分类
       {
         path: "/word/category",
-        component: () => import("@/views/Word/WordCategory"),
+        component: () => _import("Word/WordCategory"),
         meta: {
           pathName: "/word/category"
         }
@@ -80,7 +82,7 @@ const routes = [
       // 词库
       {
         path: "/word/page",
-        component: () => import("@/views/Word/WordPage"),
+        component: () => _import("Word/WordPage"),
         meta: {
           pathName: "/word/page"
         }
@@ -90,7 +92,7 @@ const routes = [
       // 标签管理
       {
         path: "/question/label",
-        component: () => import("@/views/Question/QuestionLabel"),
+        component: () => _import("Question/QuestionLabel"),
         meta: {
           pathName: "/question/label"
         }
@@ -98,7 +100,7 @@ const routes = [
       // 听力题库
       {
         path: "/question/listening",
-        component: () => import("@/views/Question/Listening"),
+        component: () => _import("Question/Listening"),
         meta: {
           pathName: "/question/listening"
         }
@@ -106,7 +108,7 @@ const routes = [
       // 口语题库
       {
         path: "/question/speaking",
-        component: () => import("@/views/Question/Speaking"),
+        component: () => _import("Question/Speaking"),
         meta: {
           pathName: "/question/speaking"
         }
@@ -114,7 +116,7 @@ const routes = [
       // 阅读题库
       {
         path: "/question/reading",
-        component: () => import("@/views/Question/Reading"),
+        component: () => _import("Question/Reading"),
         meta: {
           pathName: "/question/reading"
         }
@@ -122,7 +124,7 @@ const routes = [
       // 写作题库
       {
         path: "/question/writing",
-        component: () => import("@/views/Question/Writing"),
+        component: () => _import("Question/Writing"),
         meta: {
           pathName: "/question/writing"
         }
@@ -133,7 +135,7 @@ const routes = [
       {
         path: "/topic/page",
         name: "TopicPage",
-        component: () => import("@/views/SevenPlusCircle"),
+        component: () => _import("SevenPlusCircle"),
         meta: {
           pathName: "/topic/page",
           keepAlive: true
@@ -143,7 +145,7 @@ const routes = [
       {
         path: "/topic/article/:id",
         name: "TopicArticle",
-        component: () => import("@/views/SevenPlusCircle/ArticleDetails"),
+        component: () => _import("SevenPlusCircle/ArticleDetails"),
         meta: {
           pathName: "/topic/page"
         }
@@ -154,7 +156,7 @@ const routes = [
       {
         path: "/sub/feedback",
         name: "SubFeedback",
-        component: () => import("@/views/Sub/SubFeedback"),
+        component: () => _import("Sub/SubFeedback"),
         meta: {
           pathName: "/sub/feedback"
         }
@@ -163,7 +165,7 @@ const routes = [
       {
         path: "/sub/contact",
         name: "SubContact",
-        component: () => import("@/views/Sub/SubContact"),
+        component: () => _import("Sub/SubContact"),
         meta: {
           pathName: "/sub/contact"
         }
@@ -173,7 +175,7 @@ const routes = [
       // 公告
       {
         path: "/platform/notice",
-        component: () => import("@/views/PlatFormManage"),
+        component: () => _import("PlatFormManage"),
         meta: {
           pathName: "/platform/notice"
         }
@@ -183,7 +185,7 @@ const routes = [
       {
         // 参数管理
         path: "/operation/param",
-        component: () => import("@/views/Operation/Parameter"),
+        component: () => _import("Operation/Parameter"),
         meta: {
           pathName: "/operation/param"
         }
@@ -191,7 +193,7 @@ const routes = [
       {
         // 师咨信息
         path: "/operation/teacher",
-        component: () => import("@/views/Operation/TeacherInfo"),
+        component: () => _import("Operation/TeacherInfo"),
         meta: {
           pathName: "/operation/teacher"
         }
@@ -199,7 +201,7 @@ const routes = [
       {
         // 课程服务
         path: "/operation/course",
-        component: () => import("@/views/Operation/Course"),
+        component: () => _import("Operation/Course"),
         meta: {
           pathName: "/operation/course"
         }
@@ -207,7 +209,7 @@ const routes = [
       {
         // 互动练习
         path: "/operation/exercise",
-        component: () => import("@/views/Operation/Exercise"),
+        component: () => _import("Operation/Exercise"),
         meta: {
           pathName: "/operation/exercise"
         }
@@ -215,7 +217,7 @@ const routes = [
       {
         // 课程服务
         path: "/operation/course",
-        component: () => import("@/views/Operation/Course"),
+        component: () => _import("Operation/Course"),
         meta: {
           pathName: "/operation/course"
         }
@@ -224,7 +226,7 @@ const routes = [
       {
         // 文章列表
         path: "/operation/article",
-        component: () => import("@/views/Operation/Article"),
+        component: () => _import("Operation/Article"),
         meta: {
           pathName: "/operation/article"
         }
@@ -232,7 +234,7 @@ const routes = [
       {
         // 关于PTE
         path: "/operation/about",
-        component: () => import("@/views/Operation/AboutPTE"),
+        component: () => _import("Operation/AboutPTE"),
         meta: {
           pathName: "/operation/about"
         }
@@ -240,7 +242,7 @@ const routes = [
       {
         // 常见问题
         path: "/operation/problem",
-        component: () => import("@/views/Operation/Problem"),
+        component: () => _import("Operation/Problem"),
         meta: {
           pathName: "/operation/problem"
         }
@@ -248,7 +250,7 @@ const routes = [
 
       {
         path: "/operation/guide",
-        component: () => import("@/views/Operation/Guide"),
+        component: () => _import("Operation/Guide"),
         meta: {
           pathName: "/operation/guide"
         }
@@ -259,7 +261,7 @@ const routes = [
       {
         path: "/sys/role",
         name: "SysRole",
-        component: () => import("@/views/Sys/SysRole"),
+        component: () => _import("Sys/SysRole"),
         meta: {
           pathName: "/sys/role"
         }
@@ -268,7 +270,7 @@ const routes = [
       {
         path: "/sys/role/add",
         name: "SysRoleAdd",
-        component: () => import("@/views/Sys/SysRoleAdd"),
+        component: () => _import("Sys/SysRoleAdd"),
         meta: {
           pathName: "/sys/role"
         }
@@ -277,7 +279,7 @@ const routes = [
       {
         path: "/sys/role/edit/:id",
         name: "SysRoleEdit",
-        component: () => import("@/views/Sys/SysRoleEdit"),
+        component: () => _import("Sys/SysRoleEdit"),
         meta: {
           pathName: "/sys/role"
         }
@@ -286,7 +288,7 @@ const routes = [
       {
         path: "/sys/user",
         name: "SysUser",
-        component: () => import("@/views/Sys/SysUser"),
+        component: () => _import("Sys/SysUser"),
         meta: {
           pathName: "/sys/user"
         }
@@ -295,7 +297,7 @@ const routes = [
       {
         path: "/sys/log",
         name: "SysLog",
-        component: () => import("@/views/Sys/SysLog"),
+        component: () => _import("Sys/SysLog"),
         meta: {
           pathName: "/sys/log"
         }
@@ -333,7 +335,9 @@ router.beforeEach((to, from, next) => {
       name: "Login"
     });
   } else {
+    // to.path级数
     const toDepth = to.path.split("/").length;
+    // from.path级数
     const fromDepth = from.path.split("/").length;
     // 判断后退时 是否缓存
     if (toDepth < fromDepth) {
