@@ -77,6 +77,7 @@
             questionType="hcs"
           ></AddMCSModal>
           <AddMCMModal :addModalVisible="addModalVisible"></AddMCMModal>
+          <AddHIWModal :addModalVisible="addModalVisible"></AddHIWModal>
           <!-- 添加题目模态框 end -->
         </template>
         <!-- 操作区域 end -->
@@ -205,6 +206,22 @@
       <!-- 查看wfd -->
       <GetWFDModal :getModalVisible="getModalVisible"></GetWFDModal>
       <GetFIBModal :getModalVisible="getModalVisible"></GetFIBModal>
+      <GetMCSModal
+        :getModalVisible="getModalVisible"
+        questionType="mcm"
+      ></GetMCSModal>
+      <GetMCSModal
+        :getModalVisible="getModalVisible"
+        questionType="mcs"
+      ></GetMCSModal>
+      <GetMCSModal
+        :getModalVisible="getModalVisible"
+        questionType="smw"
+      ></GetMCSModal>
+      <GetMCSModal
+        :getModalVisible="getModalVisible"
+        questionType="hcs"
+      ></GetMCSModal>
       <!-- 查看题目模态框 end -->
     </a-card>
     <!-- 主体Main end -->
@@ -230,6 +247,8 @@ import AddFIBModal from "@/components/Question/FIB/AddFIB";
 import AddMCSModal from "@/components/Question/MCS/AddMCS";
 // 引入 添加mcm题目模态框
 import AddMCMModal from "@/components/Question/MCM/AddMCM";
+// 引入 添加hiw题目模态框
+import AddHIWModal from "@/components/Question/HIW/AddHIW";
 //#endregion
 
 //#region 编辑题目模态框
@@ -248,8 +267,10 @@ import EditMCSModal from "@/components/Question/MCS/EditMCS";
 //#region 查看题目模态框
 // 引入 查看wfd题目模态框
 import GetWFDModal from "@/components/Question/WFD/GetWFD";
-// 引入 查看wfd题目模态框
+// 引入 查看fib题目模态框
 import GetFIBModal from "@/components/Question/FIB/GetFIB";
+// 引入 查看mcs、mcm、smw、hcs题目模态框
+import GetMCSModal from "@/components/Question/MCS/GetMCS";
 //#endregion
 
 // 导入 题目列表 列配置
@@ -409,6 +430,8 @@ export default {
     AddMCSModal,
     // 添加mcm题目模态框
     AddMCMModal,
+    // 添加hiw题目模态框
+    AddHIWModal,
     //#endregion
 
     //#region 编辑题目模态框
@@ -427,6 +450,7 @@ export default {
     //#region 查看题目模态框
     GetWFDModal,
     GetFIBModal,
+    GetMCSModal,
     //#endregion
   },
 };
