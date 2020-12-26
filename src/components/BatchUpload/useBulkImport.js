@@ -6,7 +6,7 @@ import { useDownload } from "./useDownload";
 // 引入 axios
 import axios from "axios";
 
-export const useBatchWord = uploadFile => {
+export const useBulkImport = uploadFile => {
   //#region 批量上传模态框数据
   const bulkUpload = reactive({
     visible: false,

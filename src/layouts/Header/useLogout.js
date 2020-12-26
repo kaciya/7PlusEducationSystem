@@ -31,6 +31,8 @@ export const useLogout = () => {
             if (res.success) {
               // 移除token
               window.localStorage.removeItem("token");
+              // 移除vuex中的用户信息
+              window.localStorage.removeItem("vuex");
               // 调回登录页
               router.push("/login");
               // 提示退出成功
