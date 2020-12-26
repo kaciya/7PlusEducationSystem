@@ -10,15 +10,12 @@
     <a-dropdown>
       <!-- 用户账户 -->
       <div class="user">
-        <a-avatar
-          size="small"
-          src="https://img2.woyaogexing.com/2020/12/09/cbfae31998fb4c50ae3981274a7551d8!400x400.jpeg"
-        >
+        <a-avatar size="small" :src="userInfos.avatar">
           <template #icon>
             <UserOutlined />
           </template>
         </a-avatar>
-        <span class="user-name">Admin</span>
+        <span class="user-name">{{ userInfos.username }}</span>
       </div>
       <!-- 下拉menu -->
       <template #overlay>
@@ -41,14 +38,14 @@ import { useGetUserInfo } from "./useGetUserInfo";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  UserOutlined
+  UserOutlined,
 } from "@ant-design/icons-vue";
 export default {
   // 导入组件
   components: {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
-    UserOutlined
+    UserOutlined,
   },
   // setup响应api入口
   setup() {
@@ -72,9 +69,10 @@ export default {
       collapsed, //侧边栏状态
       setCollapsed, //操作侧边栏状态
       dropdownClick, //下拉菜单点击
-      handleLogout //退出登录
+      handleLogout, //退出登录
+      userInfos, //用户信息
     };
-  }
+  },
 };
 </script>
 
