@@ -5,7 +5,7 @@
       :crumbName="[
         { name: '运营管理' },
         { name: '参数管理' },
-        { name: '师资管理', route: '/operation/teacher' }
+        { name: '师资管理'}
       ]"
     />
     <!-- 面包屑 end -->

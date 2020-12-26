@@ -18,7 +18,6 @@ export const useGetExerciseList = () => {
   const getExercise = () => {
     httpGet(exercise.GetExerciseList)
       .then(res => {
-        console.log(res);
         if (res.code === 200) {
           exerciseData.data = res.data;
         }

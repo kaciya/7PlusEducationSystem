@@ -4,7 +4,7 @@
     <Crumbs
       :crumbName="[
         { name: '运营管理' },
-        { name: '参数管理', route: '/operation/param' }
+        { name: '参数管理'}
       ]"
     />
     <!-- 面包屑 end -->

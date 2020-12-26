@@ -30,6 +30,24 @@ export const exercise = {
   UpdateExerciseContent: "interactive/update"
 };
 
+export const campus = {
+  // 获取介绍列表
+  GetIntroList: "school/introduce",
+  // 更新介绍列表
+  UpdateIntroList: "school/introduce/update",
+  // 获取校区数据列表
+  GetCampuTableList: "school/campus/list",
+  // 添加校区列表
+  AddCampuTableList: "school/campus/add",
+  // 修改校区列表
+  EditCampuTableList: "school/campus/update",
+  // 删除校区列表
+  DelCampuTableList: (id) => `school/campus/${id}`,
+  // 获取校区风采列表
+  GetCampStyleList: "school/campus/style/list"
+}
+
+
 // 文章列表
 export const article = {
   // 获取文章列表
