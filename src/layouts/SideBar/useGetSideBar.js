@@ -156,7 +156,7 @@ export const useGetSideBar = () => {
         {
           id: 175,
           authName: "校区管理(官网)",
-          path: "xqgl"
+          path: "operation/campus"
         },
         {
           id: 176,
