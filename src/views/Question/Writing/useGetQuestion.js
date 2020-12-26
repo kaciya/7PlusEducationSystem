@@ -58,6 +58,12 @@ export function useGetQuestion() {
           questionList.value = data.records;
           // 记录数据库中的数据总数
           configPage.total = data.total;
+          // 判断是否超出最后一页，如果超出，重新请求
+          // 此处注意data.pages!=0是为了避免出现因为没数据不停重复请求的情况
+          if (data.current > data.pages && data.pages != 0) {
+            configPage.current = data.pages;
+            getQuestion();
+          }
           // 关闭加载状态
           isLoading.value = false;
         }

@@ -9,6 +9,7 @@ import { httpGet } from "@/utils/http";
 /**
  * 导出
  * @param {*} category 当前题型分类
+ * @param {*} getQuestion 刷新页面
  */
 export function useShowModal(category, getQuestion) {
   // 添加模态框的显示隐藏
@@ -24,42 +25,19 @@ export function useShowModal(category, getQuestion) {
     addModalVisible[category.value.toLowerCase()] = true;
   };
 
-  // 查看模态框的显示隐藏
-  const getModalVisible = reactive({
-    // 题型分类
-    swt: false,
-    we: false
-  });
+  // 题目的详情，向下注入
+  const questionDetail = ref({});
+  provide("questionDetail", questionDetail);
 
-  // 显示查看题目模态框
-  const showGetModal = () => {
-    // 显示模态框
-    getModalVisible[category.value.toLowerCase()] = true;
-  };
-
-  // 编辑模态框的显示隐藏
-  const editModalVisible = reactive({
-    // 题型分类
-    swt: false,
-    we: false
-  });
-
-  // 编辑题目的详情，向下注入
-  const editDetail = ref({});
-  provide("editDetail", editDetail);
-
-  // 显示编辑题目模态框
-  const showEditModal = id => {
-    // console.log(id);
-    // 根据题目id获取题目详情
+  // 根据题目id获取题目详情
+  const getQuestionDetail = (id, callback) => {
     httpGet(write.GetQuestion(category.value.toLowerCase()) + "/" + id)
       .then(res => {
-        // console.log(res);
         if (res.success) {
           // 记录题目详情
-          editDetail.value = res.data;
-          // 显示模态框
-          editModalVisible[category.value.toLowerCase()] = true;
+          questionDetail.value = res.data;
+          // 回调函数 （打开模态框）
+          callback();
         } else {
           // 失败时提示
           message.error(res.message);
@@ -70,9 +48,37 @@ export function useShowModal(category, getQuestion) {
       .catch(err => {
         console.log(err);
       });
-    // console.log(editDetail);
   };
 
+  // 编辑模态框的显示隐藏
+  const editModalVisible = reactive({
+    // 题型分类
+    swt: false,
+    we: false
+  });
+
+  // 显示编辑题目模态框
+  const showEditModal = id => {
+    getQuestionDetail(id, () => {
+      // 显示模态框
+      editModalVisible[category.value.toLowerCase()] = true;
+    });
+  };
+
+  // 查看模态框的显示隐藏
+  const getModalVisible = reactive({
+    // 题型分类
+    swt: false,
+    we: false
+  });
+
+  // 显示查看题目模态框
+  const showGetModal = id => {
+    getQuestionDetail(id, () => {
+      // 显示模态框
+      getModalVisible[category.value.toLowerCase()] = true;
+    });
+  };
   // 返回
   return {
     // 添加
