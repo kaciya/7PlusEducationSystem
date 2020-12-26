@@ -6,7 +6,7 @@ import { useDownload } from "./useDownload";
 // 引入 axios
 import axios from "axios";
 
-export const useBatchWord = uploadFile => {
+export const useBulkImport = uploadFile => {
   //#region 批量上传模态框数据
   const bulkUpload = reactive({
     visible: false,
@@ -42,7 +42,7 @@ export const useBatchWord = uploadFile => {
       // 判断文件格式是否是xls、xlsx
       let isXlsOrXlsx =
         bulkUpload.fileList[0].type ==
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
         bulkUpload.fileList[0].type == "application/vnd.ms-excel";
       if (isXlsOrXlsx) {
         // 创建formdata

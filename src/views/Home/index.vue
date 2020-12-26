@@ -29,9 +29,9 @@
 
 <script>
 // 导入侧边栏组件
-import SideBar from "@/components/SideBar";
+import SideBar from "@/layouts/SideBar";
 // 导入顶部栏组件
-import Header from "@/components/Header";
+import Header from "@/layouts/Header";
 //
 import { onDeactivated } from "vue";
 
