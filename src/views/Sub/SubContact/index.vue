@@ -176,7 +176,7 @@ export default {
     /**
      * editManage 点击操作中的处理方法
      */
-    const { editManage } = useEditContactManage();
+    const { editManage } = useEditContactManage(getContactData);
     //#endregion
 
     //#region 在Mounted 获取列表

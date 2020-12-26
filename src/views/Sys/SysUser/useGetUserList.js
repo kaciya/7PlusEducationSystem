@@ -1,5 +1,5 @@
-//导入 reactive 对象
-import { reactive } from "vue";
+//导入 vue中 对象
+import { computed } from "vue";
 
 //导入 API 接口
 import { sys } from "@/api/sysUserAPI";
@@ -8,10 +8,10 @@ import { sys } from "@/api/sysUserAPI";
 import { httpGet } from "@/utils/http";
 
 //#region 定义方法  获取账号列表
-export const useGetUserList = sysUsersTable => {
+export const useGetUserList = (sysUsersTable,store) => {
 
   //获取localStorage中的用户信息
-  const userInfos = JSON.parse(window.localStorage.getItem("userInfos"));
+  const userInfos = computed(() => store.state.AuthStore.userInfos);
 
   //#region 根据后台接口地址发送请求获取权限组数据
   const getUserList = () => {
