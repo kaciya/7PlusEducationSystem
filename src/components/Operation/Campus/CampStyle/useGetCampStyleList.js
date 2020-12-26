@@ -15,6 +15,7 @@ export const useGetCampStyleList = () => {
     // 发送ajax请求
     httpGet(campus.GetCampStyleList)
       .then(res => {
+        console.log(res);
         // 判断数据是否获取成功
         if (res.success === true) {
           // 存入数据
