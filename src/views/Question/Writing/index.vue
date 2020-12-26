@@ -83,7 +83,7 @@
         <!-- 题目标签选择器 end -->
         <!-- 题目操作区 start -->
         <template #operation="{ record }">
-          <a-button type="primary" size="small" @click="showGetModal"
+          <a-button type="primary" size="small" @click="showGetModal(record.id)"
             >查看</a-button
           >
           <a-button
@@ -186,20 +186,18 @@ export default {
     //#endregion
     // 删除题目 功能
     let { delQuestion, cancelDelQuestion } = useDelQuestion(getQuestion);
-    //#region 添加 功能
-    // 显示添加模态框
-    let { addModalVisible, showAddModal } = useShowModal(category, getQuestion);
-    //#endregion
-    //#region 查看 功能
-    // 显示查看模态框
-    let { getModalVisible, showGetModal } = useShowModal(category);
-    //#endregion
-    //#region 编辑 功能
-    // 显示编辑模态框
-    let { editModalVisible, showEditModal } = useShowModal(
-      category,
-      getQuestion
-    );
+    //#region 显示模态框 功能
+    let {
+      // 添加
+      addModalVisible,
+      showAddModal,
+      // 查看
+      getModalVisible,
+      showGetModal,
+      // 编辑
+      editModalVisible,
+      showEditModal
+    } = useShowModal(category, getQuestion);
     //#endregion
     return {
       //#region 渲染分页表格

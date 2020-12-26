@@ -67,7 +67,7 @@ export default {
     // 获取父组件的刷新题目列表的方法
     const getQuestion = inject("getQuestion");
     // 获取要编辑的题目详情
-    const editDetail = inject("editDetail");
+    const editDetail = inject("questionDetail");
     // 标签列表
     const { labelList } = useGetLabels();
     // 编辑SWT题目

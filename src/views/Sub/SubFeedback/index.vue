@@ -180,7 +180,7 @@ export default {
     /**
      * editManage 点击操作中的处理方法
      */
-    const { editManage } = useEditFeedbackManage();
+    const { editManage } = useEditFeedbackManage(getFeedbackData);
     //#endregion
 
     //在Mounted 获取列表
