@@ -1,11 +1,9 @@
 <template>
 <div>
 <!-- 页头 start -->
-  <a-page-header style="padding-left: 0;padding-right: 0">
-    <a-row>
-      <a-col :span="24"><a-button type="primary" style="float: right" @click="showAddModal">添加校区</a-button></a-col>
-    </a-row>
-  </a-page-header>
+  <a-row style="margin-bottom: 15px">
+    <a-col :span="24"><a-button type="primary" style="float: right" @click="showAddModal">添加校区</a-button></a-col>
+  </a-row>
 <!-- 页头 end -->
   <!-- 校区列表 start -->
   <a-table
