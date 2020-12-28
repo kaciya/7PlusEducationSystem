@@ -1,6 +1,6 @@
 //#region 登录校验
 import { reactive } from "vue";
-export const userLoginRules = () => {
+export const useLoginRules = () => {
   // 登录表单数据校验规则
   const loginRules = reactive({
     // 用户名
