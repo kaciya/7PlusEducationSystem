@@ -4,7 +4,7 @@
     <Crumbs :crumbName="[{ name: '题库管理' }, { name: '听力题库' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
-    <a-card style="min-height: 93%">
+    <a-card style="min-height: 93%; min-width: 1208px">
       <!-- 题型选择 start -->
       <a-radio-group
         v-model:value="category"
@@ -89,6 +89,14 @@
         :pagination="questionPagination"
         @change="changePagenum"
       >
+        <template #titleAudio="{ text }">
+          <a-tooltip placement="bottomLeft">
+            <template #title>
+              {{ text }}
+            </template>
+            {{ text }}
+          </a-tooltip>
+        </template>
         <!-- 题目标签选择器 start -->
         <template #labels="{ record }">
           <!-- 设置标签时，将 题目id和选中标签 传给功能函数 -->
@@ -129,6 +137,7 @@
             >编辑</a-button
           >
           <a-popconfirm
+            placement="topRight"
             title="确定删除这个题目吗？"
             @confirm="delQuestion(record.id)"
             @cancel="cancelDelQuestion"
