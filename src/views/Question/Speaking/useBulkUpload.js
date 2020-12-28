@@ -1,98 +1,38 @@
 //#region 批量上传功能
-// 引入 提示功能
-import { message } from "ant-design-vue";
 // 引入响应式API
-import { reactive } from "vue";
-// 引入post请求
-// import { httpPost } from "@/utils/http";
-// 引入 axios
-import axios from "axios";
+import {
+  reactive, watch
+} from "vue";
 // 引入接口配置
-import { speak } from "@/api/questionSpeakAPI";
+import {
+  speak
+} from "@/api/questionSpeakAPI";
 
-export function useBulkUpload() {
-  // 批量上传模态框的显示与隐藏
-  const bulkUpload = reactive({
-    visible: false,
-    fileList: []
-  });
+export function useBulkUpload(category, getQuestion) {
+  /** 批量导入数据
+   *   uploadTitle: 模态框标签
+   *   templateName: 下载模板名称(不含后缀)
+   *   uploadUrl: 上传路径
+   *   downloadUrl: 下载模板路径
+   *   uploadData: 同步数据方法
+   */
+  const uploadFile = reactive({
+    uploadTitle: "批量上传",
+    templateName: `题库${category.value}`,
+    uploadUrl: speak.BulkUpload(category.value.toLowerCase()),
+    downloadUrl: speak.DownloadTemplate(category.value.toLowerCase()),
+    getData: getQuestion,
+  })
 
-  // 显示批量上传模态框
-  function showBulkUpload() {
-    bulkUpload.visible = true;
-  }
-
-  // 文件改变时
-  function bulkUploadChange(info) {
-    let fileList = [...info.fileList];
-    // 限制只要一个文件 （取最后一个）
-    fileList = fileList.slice(-1);
-    bulkUpload.fileList = fileList;
-  }
-
-  // 文件上传前
-  function beforeBulkUpload(file) {
-    // 阻止默认的上传行为
-    return false;
-  }
-
-  // 点击上传功能
-  function clickBulkUpload() {
-    // 如果用户没有选择文件
-    if (bulkUpload.fileList.length == 0) {
-      // 提示用户选择文件
-      message.error("请选择文件");
-    } else {
-      // 判断文件格式是否是xls、xlsx
-      let isXlsOrXlsx =
-        bulkUpload.fileList[0].type ==
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
-        bulkUpload.fileList[0].type == "application/vnd.ms-excel";
-      if (isXlsOrXlsx) {
-        // 创建formdata
-        const formData = new FormData();
-        formData.append("files", bulkUpload.fileList[0]);
-        // 提交表单
-        axios
-          .post(
-            "http://pte.admin.api.banyuge.com/admin" + speak.BulkUpload("ra"),
-            formData,
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-                Token: window.sessionStorage.getItem("token")
-              }
-            }
-          )
-          .then(res => {
-            console.log(res);
-          })
-          .catch(err => {
-            console.log(err);
-          });
-        // 清空
-        bulkUpload.fileList = [];
-      } else {
-        // 提示用户文件格式须是xls、xlsx
-        message.error("文件格式必须是xls、xlsx");
-      }
-    }
-  }
-
-  // 取消上传功能
-  function cancelBulkUpload() {
-    // 清空
-    bulkUpload.fileList = [];
-    message.warning("已取消上传");
-  }
+  // 监听category的变化 修改批量上传所需数据
+  watch(category, () => {
+    uploadFile.templateName = `题库${category.value}`;
+    uploadFile.uploadUrl = speak.BulkUpload(category.value.toLowerCase());
+    uploadFile.downloadUrl = speak.DownloadTemplate(category.value.toLowerCase());
+  })
 
   return {
-    bulkUpload,
-    showBulkUpload,
-    bulkUploadChange,
-    beforeBulkUpload,
-    clickBulkUpload,
-    cancelBulkUpload
+    uploadFile
   };
 }
 //#endregion

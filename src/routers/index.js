@@ -205,6 +205,14 @@ const routes = [
         }
       },
       {
+        // 校区管理
+        path: "/operation/campus",
+        component: () => import("@/views/Operation/Campus"),
+        meta: {
+          pathName: "/operation/campus"
+        }
+      },
+      {
         // 互动练习
         path: "/operation/exercise",
         component: () => import("@/views/Operation/Exercise"),

@@ -6,7 +6,7 @@ import questionAPI from "@/api/questionAPI";
 // 引入提示框
 import { message } from "ant-design-vue";
 
-export function useUploadAudio(addSST) {
+export function useUploadAudio(addSST, uploadAudioList) {
   // 上传音频
   const uploadAudio = reactive({
     // 地址
@@ -14,9 +14,6 @@ export function useUploadAudio(addSST) {
     // 请求头
     headers: { Token: window.localStorage.getItem("token") }
   });
-
-  // 上传音频
-  const uploadAudioList = ref([]);
 
   // 切换上传音频
   const changeUploadAudio = info => {
@@ -36,7 +33,6 @@ export function useUploadAudio(addSST) {
   // 导出
   return {
     uploadAudio,
-    uploadAudioList,
     changeUploadAudio
   };
 }

@@ -1,14 +1,20 @@
 //导入 reactive 对象
-import { reactive } from "vue";
+import {
+  reactive
+} from "vue";
 
 //导入 API接口
-import { contact } from "@/api/subUserAPI";
+import {
+  contact
+} from "@/api/subUserAPI";
 
 //导入 GET请求方法
-import { httpGet } from "@/utils/http";
+import {
+  httpGet
+} from "@/utils/http";
 
 //#region 获取 用户提交 联系记录列表
-export const useGetContactList = contactTable => {
+export const useGetContactList = (contactTable) => {
   //#region 分页参数
   const contactPagination = reactive({
     //列表所在页数
@@ -24,8 +30,27 @@ export const useGetContactList = contactTable => {
   });
   //#endregion
 
+  //获取查询数据
+  const searchData = reactive({});
+
   //#region 根据后台接口地址发送请求联系记录
-  const getContactData = params => {
+  const getContactData = getParam => {
+    //创建变量params 将请求需要的参数传递给后台
+    let params = reactive({
+      pageNum: contactPagination.current,
+      pageSize: contactPagination.pageSize
+    });
+
+    //判断获取到的参数是否为空
+    if (getParam) {
+      //获取查询数据
+      searchData.data = getParam;
+      //不为空则 添加到 params对象中
+      params.endDate = getParam.endDate;
+      params.startDate = getParam.startDate;
+      params.status = getParam.status;
+    }
+
     //请求接口: /admin/contact/page
     httpGet(contact.GetContactList, params)
       .then(res => {
@@ -37,8 +62,8 @@ export const useGetContactList = contactTable => {
           contactPagination.total = res.data.total;
         }
       })
-      .catch(error => {
-        throw error;
+      .catch(err => {
+        throw err;
       });
   };
   //#endregion
@@ -48,8 +73,9 @@ export const useGetContactList = contactTable => {
     //点击下一页后 将分页参数中的 当前页 和 一页显示的数据改变
     contactPagination.current = pagination.current;
     contactPagination.pageSize = pagination.pageSize;
+
     //刷新列表
-    getContactData();
+    getContactData(searchData.data);
   };
   //#endregion
 

@@ -36,7 +36,6 @@
               </a-form-item>
             </a-col>
             <a-col :span="3" :offset="15">
-              <a-button class="header-btn"> 重置 </a-button>
               <a-button type="primary" class="header-btn"> 提交 </a-button>
             </a-col>
           </a-row>

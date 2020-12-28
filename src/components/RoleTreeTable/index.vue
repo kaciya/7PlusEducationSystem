@@ -9,8 +9,9 @@
     <template #permissionType="{ record }">
       <!-- 一级渲染 -->
       <a-checkbox
+        v-model:checked="record.isChecked"
         :value="record.permissionId"
-        @change="getCheckedChild($event, record)"
+        @change="getleafChecked($event, record)"
       >
         {{ record.name }}
       </a-checkbox>
@@ -21,20 +22,34 @@
     <!-- 渲染权限名称 -->
     <template #permissionName="{ record }">
       <!-- 二/三级渲染 -->
-      <a-row v-for="childItem in record.child" :key="childItem.permissionId">
+      <a-row
+        v-for="(childItem, index) in record.child"
+        :class="[
+          index != 0 ? 'tree' : '',
+          childItem.length != 1 ? 'tree-centre' : '',
+          index == record.child.length - 1 ? 'tree-bottom' : '',
+        ]"
+        :key="childItem.permissionId"
+      >
         <!-- 二级渲染 -->
         <a-col :span="6">
-          <a-checkbox v-model:checked="checkedData.checkedOneChildModel">
+          <a-checkbox
+            v-model:checked="childItem.isChecked"
+            :value="childItem.permissionId"
+            @change="getChildChecked($event, childItem)"
+          >
             {{ childItem.name }}
           </a-checkbox>
         </a-col>
         <!-- 二级渲染 end -->
         <!-- 三级渲染 -->
-        <a-col :span="12">
+        <a-col :span="18">
           <a-checkbox
-            v-model:checked="childsItem.checkedSecondChildModel"
             v-for="childsItem in childItem.child"
             :key="childsItem.permissionId"
+            v-model:checked="childsItem.isChecked"
+            :value="childsItem.permissionId"
+            @change="getRootChecked($event, childsItem)"
           >
             {{ childsItem.name }}
           </a-checkbox>
@@ -51,6 +66,9 @@
 // 引入 钩子函数
 import { onMounted } from "vue";
 
+// 引入公共储存库
+import { useStore } from "vuex";
+
 // 获取 权限组-添加 中后台返回的 权限组列表
 import { useGetTable } from "./useGetTable";
 
@@ -63,12 +81,20 @@ import { useGetTreeChecked } from "./useGetTreeChecked";
 export default {
   // setup响应api入口
   setup() {
+    // 使用储存库
+    const store = useStore();
+
     //#region 获取 导入方法中返回的 子方法和参数
     const { rolePermissionTable } = useTableColums();
 
     const { getRolePermissions } = useGetTable(rolePermissionTable);
 
-    const { checkedData, getCheckedChild } = useGetTreeChecked();
+    const {
+      checkedData,
+      getleafChecked,
+      getChildChecked,
+      getRootChecked,
+    } = useGetTreeChecked(rolePermissionTable);
     //#endregion
 
     //在Mounted 获取列表
@@ -82,11 +108,30 @@ export default {
       rolePermissionTable,
       //权限组 复选框选中项对象
       checkedData,
-      //递归实现 对子数据选中方法
-      getCheckedChild
+      //递归实现 对子节点选中方法
+      getChildChecked,
+      //递归实现 对叶子节点选中方法
+      getleafChecked,
+      //递归实现 对根节点选中方法
+      getRootChecked,
     };
-  }
+  },
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+// 树形列表样式
+.tree {
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.tree-centre {
+  padding-bottom: 16px;
+}
+
+// 列表末尾项边距
+.tree-bottom {
+  padding-bottom: 0px;
+}
+</style>

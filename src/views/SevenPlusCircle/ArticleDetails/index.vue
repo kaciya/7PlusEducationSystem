@@ -39,16 +39,14 @@
           </a-row>
         </a-col>
         <a-col :span="19" class="article-content">
-          <div>
+          <p>
             <span><StarOutlined /> 收藏 {{ publisher.favouriteCount }}</span>
             <span><ReadOutlined /> 阅读 {{ publisher.readCount }}</span>
-          </div>
-          <p v-html="publisher.content"></p>
+          </p>
+          <div v-html="publisher.content"></div>
         </a-col>
       </a-row>
       <!-- 文章内容 end  -->
-
-      <!-- 评论 start -->
       <a-row class="article-comment">
         <a-col :span="24">
           <div>
@@ -58,7 +56,7 @@
           </div>
         </a-col>
       </a-row>
-      <!-- 评论 end -->
+      <!-- 评论 start -->
       <a-row class="comment-content" v-for="item in commentList" :key="item.id">
         <a-col :span="2">
           <div class="reviewers">
@@ -68,9 +66,46 @@
         <a-col :span="22">
           <p>{{ item.userName }}</p>
           <p>回复{{ item.userName }}：{{ item.content }}</p>
-          <p>{{ item.createTime }}</p>
+          <p>
+            {{ item.createTime }}
+            <a
+              v-if="item.status == 1"
+              style="margin-left: 10px; color: red"
+              @click="topicShieldModal(item.id)"
+            >
+              屏蔽
+            </a>
+            <a
+              v-else
+              style="margin-left: 10px; color: red"
+              @click="topicShowModal(item.id)"
+            >
+              显示
+            </a>
+          </p>
         </a-col>
       </a-row>
+      <!-- 评论 end -->
+      <!-- 屏蔽模态框 start -->
+      <a-modal
+        v-model:visible="topicShieldVisible"
+        title="屏蔽"
+        @ok="confirmShieldModal"
+        @cancel="cancelShieldModal"
+      >
+        <a-row>
+          <a-col :span="24">
+            <span> 请输入屏蔽理由 </span>
+          </a-col>
+        </a-row>
+        <a-row :style="{ marginTop: '15px' }">
+          <a-col :span="24">
+            <a-input v-model:value="shielFrameValue"></a-input>
+          </a-col>
+        </a-row>
+      </a-modal>
+      <!-- 屏蔽模态框 end  -->
+      <!-- 分页 start -->
       <a-pagination
         showSizeChanger
         v-model:current="pageNum"
@@ -78,6 +113,7 @@
         :pageSizeOptions="pageSizeOptions"
         @change="commentPaging"
       />
+      <!-- 分页 end -->
     </a-card>
   </a-layout-content>
 </template>
@@ -90,6 +126,8 @@ import { useGetArticle } from "./useGetArticle";
 // 引入文章评论
 import { useGetComment } from "./useGetComment";
 import { useCommentPaging } from "./useCommentPaging";
+// 引入屏蔽显示功能
+import { useSetCommentShieldShow } from "./useSetCommentShieldShow";
 // 导入router
 import { useRoute } from "vue-router";
 // 引入icon图标
@@ -121,6 +159,16 @@ export default {
       pageNum
     );
 
+    // 屏蔽显示评论内容
+    const {
+      topicShieldVisible, // 屏蔽模态框
+      topicShieldModal, // 显示屏蔽模态框
+      shielFrameValue, // 双向绑定屏蔽理由输入框
+      confirmShieldModal, // 屏蔽框确认
+      cancelShieldModal, // 关闭模态框清空并提示
+      topicShowModal // 显示框及确认
+    } = useSetCommentShieldShow(getComment);
+
     return {
       getArticleDetails,
       publisher,
@@ -129,7 +177,14 @@ export default {
       commentTotal,
       pageNum,
       pageSizeOptions,
-      commentPaging
+      commentPaging,
+      // 屏蔽显示评论内容
+      topicShieldVisible,
+      shielFrameValue,
+      topicShieldModal,
+      confirmShieldModal,
+      cancelShieldModal,
+      topicShowModal
     };
   },
   // 使用组件
@@ -182,14 +237,14 @@ export default {
   }
 }
 .article-content {
-  div {
+  > p {
     height: 30px;
     border-bottom: 1px solid #eee;
     span:last-child {
       margin-left: 10px;
     }
   }
-  > p {
+  > div {
     margin-top: 10px;
   }
 }

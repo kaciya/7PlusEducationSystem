@@ -1,19 +1,26 @@
-//#region 添加SST题型
+//#region 查看RA题型
 // 引入响应式API
-import { ref } from "vue";
+import {
+  ref, reactive
+} from "vue";
 
 export function useGetRA() {
-  // 表单ref
-  const getRARef = ref(null);
+  // 题目详情布局
+  const layout = reactive({
+    labelCol: {
+      span: 2
+    },
+    wrapperCol: {
+      span: 22,
+    },
+  })
 
-  // 查看RA题目详情
-  function getRADetail(id) {
-    console.log(id);
-  }
+  // 音频播放器ref
+  const audioPlayerRef = ref(null);
 
   return {
-    getRARef,
-    getRADetail
+    layout,
+    audioPlayerRef
   };
 }
 //#endregion

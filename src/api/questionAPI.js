@@ -6,6 +6,10 @@ export default {
   DelQuestion: "/question",
   // 上传音频
   UploadAudio: "/oss/upload",
+  // 上传音频至题目
+  UploadAudioUrl: "/question/upload/audio",
   // 语音合成
-  AudioSynthetic: "/question/audio/synthetic"
+  AudioSynthetic: "/question/audio/synthetic",
+  // 修改标签
+  EditLabels: "/question/updateLabel"
 };

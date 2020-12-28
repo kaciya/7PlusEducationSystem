@@ -5,12 +5,12 @@
       :crumbName="[
         {
           route: '',
-          name: '平台管理',
+          name: '平台管理'
         },
         {
           route: '',
-          name: '公告管理',
-        },
+          name: '公告管理'
+        }
       ]"
     ></Crumbs>
     <!-- 面包屑 end -->
@@ -34,7 +34,7 @@
                 <span>公告状态：</span>
               </a-col>
               <a-col :span="17">
-                <a-select v-model:value="noticeStatus" placeholder="全部">
+                <a-select v-model:value="noticeStatus">
                   <a-select-option value=""> 全部 </a-select-option>
                   <a-select-option value="1"> 已发布 </a-select-option>
                   <a-select-option value="0"> 已结束 </a-select-option>
@@ -80,6 +80,7 @@
             >
               <a-form :model="addModel" :rules="addRules" ref="addFormRef">
                 <a-form-item
+                  has-feedback
                   :labelCol="{ span: 3 }"
                   :wrapperCol="{ span: 21 }"
                   label="公告标题："
@@ -100,7 +101,7 @@
                     format="YYYY-MM-DD HH:mm:ss"
                     :disabled-date="disabledDate"
                     :show-time="{
-                      defaultValue: moment('00:00:00', 'HH:mm:ss'),
+                      defaultValue: moment('00:00:00', 'HH:mm:ss')
                     }"
                     v-model:value="addModel.endDate"
                   />
@@ -113,7 +114,9 @@
                 >
                   <ckeditor
                     :editor="editor"
+                    :config="editorConfig"
                     v-model="addModel.noticeContent"
+                    @ready="onReady"
                   ></ckeditor>
                 </a-form-item>
               </a-form>
@@ -130,38 +133,35 @@
           :pagination="tablePagination"
           @change="tablePageChange"
         >
-          <template #status="{ text }">
-            <span v-if="text.status == 1">已发布</span>
+          <template #status="{ record }">
+            <span v-if="record.status == 1">已发布</span>
             <span v-else>已结束</span>
           </template>
-          <template #operation="{ text }">
-            <div v-if="text.status == 1">
+          <template #operation="{ record }">
+            <div v-if="record.status == 1">
               <a-button
+                size="small"
                 class="modify-btn"
                 type="primary"
                 style="margin-right: 10px"
-                @click="editShowModal(text)"
+                @click="editShowModal(record)"
                 >编辑</a-button
               >
               <a-popconfirm
                 title="此操作将永久删除该用户, 是否继续?"
-                ok-text="确认"
-                cancel-text="取消"
-                @confirm="delOneNotice(text.id)"
+                @confirm="delOneNotice(record.id)"
                 @cancel="cancelDel"
               >
-                <a-button type="danger"> 删除 </a-button>
+                <a-button size="small" type="danger"> 删除 </a-button>
               </a-popconfirm>
             </div>
             <div v-else>
               <a-popconfirm
                 title="此操作将永久删除该用户, 是否继续?"
-                ok-text="确认"
-                cancel-text="取消"
-                @confirm="delOneNotice(text.id)"
+                @confirm="delOneNotice(record.id)"
                 @cancel="cancelDel"
               >
-                <a-button type="danger"> 删除 </a-button>
+                <a-button size="small" type="danger"> 删除 </a-button>
               </a-popconfirm>
             </div>
           </template>
@@ -172,11 +172,12 @@
           v-model:visible="editVisible"
           title="编辑公告"
           width="950px"
-          :afterClose="editCloselModal"
+          @cancel="editCloselModal"
           @ok="editConfirmModal"
         >
           <a-form :model="editModel" :rules="editRules" ref="editFormRef">
             <a-form-item
+              has-feedback
               :labelCol="{ span: 3 }"
               :wrapperCol="{ span: 21 }"
               label="公告标题："
@@ -197,7 +198,7 @@
                 format="YYYY-MM-DD HH:mm:ss"
                 :disabled-date="disabledDate"
                 :show-time="{
-                  defaultValue: moment('00:00:00', 'HH:mm:ss'),
+                  defaultValue: moment('00:00:00', 'HH:mm:ss')
                 }"
                 v-model:value="editModel.endDate"
               />
@@ -208,11 +209,11 @@
               label="公告内容："
               name="noticeContent"
             >
-              <!-- @ready="onReady" -->
               <ckeditor
                 :editor="editor"
                 :config="editorConfig"
                 v-model="editModel.noticeContent"
+                @ready="onReady"
               ></ckeditor>
             </a-form-item>
           </a-form>
@@ -244,66 +245,63 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 // 中文化富文本
 import "@ckeditor/ckeditor5-build-classic/build/translations/zh-cn";
 // 上传图片处理文件
-// import MyUploadAdapter from "./MyUploadAdapter.js";
+import MyUploadAdapter from "./useUploadAdapter.js";
 // 引入日期处理
 import moment from "moment";
 export default {
   setup() {
     // 数据列表
-    // getNoticeData：获取数据
-    // noticeData：数据列表
-    // tablePagination：分页
-    const { getNoticeData, noticeData, tablePagination } = useNoticeDataList();
+    const {
+      noticeData, // 数据列表
+      noticeTitle, // 分页
+      noticeStatus, // 公告标题
+      noticeUserName, // 公告状态
+      tablePagination, // 公告发布人员
+      clearInput, // 清空输入框
+      getNoticeData // 获取数据
+    } = useNoticeDataList();
 
     // columns：表格列的配置
     const { columns } = useGetNoticeColumns();
 
-    // 查询重置
-    const {
-      noticeTitle, // 输入查询
-      noticeStatus, // 公告状态
-      noticeUserName, // 发布人员对象
-      noticeReset, // 重置
-      noticeRead, // 查询
-      noticeModel, // 查询存下的输入框内容
-    } = useGetNoticeList(getNoticeData, tablePagination);
-
     // 点击切换页面
-    const tablePageChange = (pagination) => {
+    const tablePageChange = pagination => {
       tablePagination.current = pagination.current;
       tablePagination.pageSize = pagination.pageSize;
       // 重新渲染
-      getNoticeData(
-        noticeModel.status,
-        noticeModel.title,
-        noticeModel.username
-      );
+      getNoticeData();
     };
+
+    // 查询重置
+    const {
+      noticeReset, // 重置
+      noticeRead // 查询
+    } = useGetNoticeList(getNoticeData, clearInput, tablePagination);
 
     // 添加公告
     const {
       addVisible, // 模态框绑定
-      addShowModal, // 显示添加模态框
       addModel, // 表单内容
+      addShowModal, // 显示添加模态框
       addRules, // 校验规则
-      addCloselModal, // 关闭模态框
-      addConfirmModal, // 确认添加
       addFormRef, // 表单ref
+      addCloselModal, // 关闭模态框
+      addConfirmModal // 确认添加
     } = useAddNotice(getNoticeData);
 
     // 编辑公告
     const {
       editVisible, // 模态框绑定
-      editShowModal, // 显示编辑模态框
       editModel, // 表单内容
+      editShowModal, // 显示编辑模态框
       editRules, // 校验规则
-      editCloselModal, // 关闭模态框
-      editConfirmModal, // 确认编辑
       editFormRef, // 表单ref
+      editCloselModal, // 关闭模态框
+      editConfirmModal // 确认编辑
     } = useEditNotice(getNoticeData);
 
     // 日期选择设置
-    const disabledDate = (current) => {
+    const disabledDate = current => {
       // 不能选择今天和今天之前的日期
       return current && current < moment().endOf("day");
     };
@@ -317,45 +315,45 @@ export default {
 
     // 中文化富文本
     const editorConfig = ref({
-      language: "zh-cn",
+      language: "zh-cn"
     });
 
-    // const onReady = (editor) => {
-    //   // 自定义上传图片插件
-    //   editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
-    //     return new MyUploadAdapter(loader);
-    //   };
-    // };
+    // 图片上传
+    const onReady = editor => {
+      // 自定义上传图片插件
+      editor.plugins.get("FileRepository").createUploadAdapter = loader => {
+        return new MyUploadAdapter(loader);
+      };
+    };
     return {
       // 数据列表
-      getNoticeData,
       noticeData,
-      tablePagination,
-      columns,
-      tablePageChange,
-      // 查询重置
       noticeTitle,
       noticeStatus,
       noticeUserName,
+      tablePagination,
+      getNoticeData,
+      columns,
+      tablePageChange,
+      // 查询重置
       noticeReset,
       noticeRead,
-      noticeModel,
       // 添加公告
       addVisible,
-      addShowModal,
       addModel,
+      addShowModal,
       addRules,
+      addFormRef,
       addCloselModal,
       addConfirmModal,
-      addFormRef,
       // 编辑
       editVisible,
-      editShowModal,
       editModel,
+      editShowModal,
       editRules,
+      editFormRef,
       editCloselModal,
       editConfirmModal,
-      editFormRef,
       // 日期选择设置
       disabledDate,
       moment,
@@ -367,13 +365,14 @@ export default {
       editor,
       // 中文化富文本
       editorConfig,
-      // onReady,
+      // 图片上传
+      onReady
     };
   },
   // 使用组件
   components: {
-    Crumbs,
-  },
+    Crumbs
+  }
 };
 </script>
 
@@ -391,9 +390,6 @@ export default {
   .ant-select {
     width: 100%;
   }
-  .ant-btn {
-    width: 70px;
-  }
   .right {
     text-align: right;
   }
@@ -405,5 +401,11 @@ export default {
 }
 .border {
   border: 1px solid #ddd;
+}
+</style>
+
+<style>
+.ck-editor__editable {
+  min-height: 400px;
 }
 </style>

@@ -4,7 +4,7 @@ import { httpGet } from "@/utils/http";
 // 导入接口配置文件
 import question from "@/api/questionAPI";
 // 引入响应式API
-import { ref, onMounted } from "vue";
+import { ref, reactive, onMounted, provide } from "vue";
 
 export function useGetQuestion() {
   // 当前题目分类
@@ -19,12 +19,19 @@ export function useGetQuestion() {
   // 题目列表
   const questionList = ref([]);
 
-  // 总条数
-  const total = ref(0);
-
-  // 记录当前页码，每页条数
-  const pagenum = ref(1);
-  const pagesize = ref(10);
+  // 分页器配置
+  const questionPagination = reactive({
+    // 总页数
+    total: 0,
+    // 页码
+    current: 1,
+    // 每页多少条
+    pageSize: 10,
+    // 显示每页多少条设置器
+    showSizeChanger: true,
+    // 每页允许显示多少条
+    pageSizeOptions: ["10"],
+  })
 
   /**
    * 获取题目
@@ -32,7 +39,7 @@ export function useGetQuestion() {
    */
   const getQuestion = (goFirstPage) => {
     if (goFirstPage) {
-      pagenum.value = 1;
+      questionPagination.current = 1;
     }
     // 开启加载状态
     isLoading.value = true;
@@ -43,10 +50,10 @@ export function useGetQuestion() {
       // 标签
       labelId: labelId.value,
       // 页码
-      pageNum: pagenum.value,
+      pageNum: questionPagination.current,
       // 分页大小
-      pageSize: pagesize.value,
-      // 类型  1.听
+      pageSize: questionPagination.pageSize,
+      // 类型  2.口语
       type: 2,
     }).then((res) => {
       let { success, data } = res;
@@ -56,11 +63,11 @@ export function useGetQuestion() {
         questionList.value = data.records;
         console.log(data);
         // 记录数据库中的数据总数
-        total.value = data.total;
+        questionPagination.total = data.total;
         // 判断是否超出最后一页，如果超出，重新请求
         // 此处注意data.pages!=0是为了避免出现因为没数据不停重复请求的情况
         if (data.current > data.pages && data.pages != 0) {
-          pagenum.value = data.pages;
+          questionPagination.current = data.pages;
           getQuestion();
         }
         // 关闭加载状态
@@ -71,11 +78,14 @@ export function useGetQuestion() {
     })
   };
 
+  // 向后代组件提供获取题目列表的方法
+  provide("getQuestion", getQuestion);
+
   // 跳转页码时
   const changePagenum = ({ current, pageSize }) => {
     // 根据分页器的 page, size 刷新页面
-    pagenum.value = current;
-    pagesize.value = pageSize;
+    questionPagination.current = current;
+    questionPagination.pageSize = pageSize;
     getQuestion();
   }
 
@@ -86,14 +96,12 @@ export function useGetQuestion() {
   });
 
   return {
-    pagenum,
-    pagesize,
+    questionPagination,
     category,
     labelId,
     getQuestion,
     questionList,
     isLoading,
-    total,
     changePagenum
   };
 }

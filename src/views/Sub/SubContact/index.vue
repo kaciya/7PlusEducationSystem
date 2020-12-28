@@ -129,7 +129,7 @@ export default {
   // 使用组件
   components: {
     Crumbs,
-    LineOutlined
+    LineOutlined,
   },
 
   // setup响应api入口
@@ -160,9 +160,9 @@ export default {
       headerData,
       changeDateConfirm,
       changeDate,
-      changeStatus
+      changeStatus,
     } = useContactHeader();
-    
+
     /**
      * searchClick 查询 日期范围 和状态匹配列表项方法
      */
@@ -176,7 +176,7 @@ export default {
     /**
      * editManage 点击操作中的处理方法
      */
-    const { editManage } = useEditContactManage();
+    const { editManage } = useEditContactManage(getContactData);
     //#endregion
 
     //#region 在Mounted 获取列表
@@ -208,10 +208,10 @@ export default {
       //点击操作中的处理方法
       editManage,
       //点击下一页方法
-      pageChange
+      pageChange,
     };
     //#endregion
-  }
+  },
 };
 </script>
 

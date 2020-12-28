@@ -18,7 +18,7 @@
       <a-form-item label="编号" name="no" hasFeedback>
         <a-input v-model:value="addWFD.model.no" />
       </a-form-item>
-      <a-form-item label="题目" name="title">
+      <a-form-item label="题目" name="title" hasFeedback>
         <a-input v-model:value="addWFD.model.title" />
       </a-form-item>
       <a-form-item label="标签选择" name="labelIds">
@@ -47,7 +47,9 @@
       </a-form-item>
       <a-form-item label="题目原文" name="titleText">
         <a-textarea v-model:value="addWFD.model.titleText" :rows="4" />
-        <a-button type="primary" @click="audioSynthetic">转换为音频</a-button>
+        <a-button type="primary" @click="audioSynthetic" :loading="synthesizing"
+          >转换为音频</a-button
+        >
       </a-form-item>
       <a-form-item label="答案参考" name="answer">
         <a-textarea v-model:value="addWFD.model.answer" :rows="3" />
@@ -67,6 +69,8 @@ import { inject } from "vue";
 import { CheckCircleTwoTone } from "@ant-design/icons-vue";
 // 引入 添加WFD题目 功能
 import { addWFD, useAddWFD } from "./useAddWFD";
+// 引入 上传音频列表
+import { useUploadAudioList } from "@/components/Question/SST/AddSST/useUploadAudioList";
 // 引入 上传音频 功能
 import { useUploadAudio } from "@/components/Question/SST/AddSST/useUploadAudio";
 // 引入 标签列表 功能
@@ -86,6 +90,9 @@ export default {
     // 标签列表
     const { labelList } = useGetLabels();
 
+    // 上传音频列表
+    const { uploadAudioList } = useUploadAudioList();
+
     // 添加WFD题目
     const {
       addWFD,
@@ -93,15 +100,19 @@ export default {
       changeLabels,
       confirmAddWFD,
       cancelAddWFD,
-    } = useAddWFD(addModalVisible, getQuestion);
+    } = useAddWFD(addModalVisible, getQuestion, uploadAudioList);
 
     // 上传音频功能
-    const { uploadAudio, uploadAudioList, changeUploadAudio } = useUploadAudio(
-      addWFD
+    const { uploadAudio, changeUploadAudio } = useUploadAudio(
+      addWFD,
+      uploadAudioList
     );
 
     // 音频合成功能
-    const { audioSynthetic } = useAudioSynthetic(addWFD, uploadAudioList);
+    const { synthesizing, audioSynthetic } = useAudioSynthetic(
+      addWFD,
+      uploadAudioList
+    );
 
     // 返回
     return {
@@ -113,6 +124,8 @@ export default {
       uploadAudioList,
       // 改变上传音频
       changeUploadAudio,
+      // 音频合成状态
+      synthesizing,
       // 音频合成功能
       audioSynthetic,
       // 添加题目的表单数据和校验规则

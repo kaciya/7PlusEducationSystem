@@ -8,6 +8,9 @@ import { message } from "ant-design-vue";
 // 引入日期处理
 import moment from "moment";
 export const useEditNotice = getNoticeData => {
+  // 编辑模态框
+  const editVisible = ref(false);
+
   // 表单内容
   const editModel = reactive({
     noticeTitle: "",
@@ -21,17 +24,18 @@ export const useEditNotice = getNoticeData => {
   // 公告状态
   const editNoticeStatus = ref("");
 
-  // 编辑模态框
-  const editVisible = ref(false);
-
   // 显示编辑模态框
-  const editShowModal = text => {
+  const editShowModal = record => {
+    // 显示模态框
     editVisible.value = true;
-    editNoticeId.value = text.id;
-    editNoticeStatus.value = text.status;
-    editModel.noticeTitle = text.title;
-    editModel.endDate = moment(text.createTime, "YYYY-MM-DD HH:mm:ss");
-    editModel.noticeContent = text.content;
+    // id
+    editNoticeId.value = record.id;
+    // 状态
+    editNoticeStatus.value = record.status;
+    // 输入框回显
+    editModel.noticeTitle = record.title;
+    editModel.endDate = moment(record.createTime, "YYYY-MM-DD HH:mm:ss");
+    editModel.noticeContent = record.content;
   };
 
   // 校验规则
@@ -66,7 +70,7 @@ export const useEditNotice = getNoticeData => {
   // 表单ref
   const editFormRef = ref(null);
 
-  // 关闭编辑模态框
+  // 关闭编辑模态框清空输入框
   const editCloselModal = () => {
     editFormRef.value.resetFields();
   };
@@ -89,7 +93,8 @@ export const useEditNotice = getNoticeData => {
         });
         httpPost(notice.EditNotice, param)
           .then(res => {
-            if (res.code == 200) {
+            let { success } = res;
+            if (success) {
               message.success("编辑成功");
               editVisible.value = false;
               // 重新渲染
@@ -97,21 +102,21 @@ export const useEditNotice = getNoticeData => {
             }
           })
           .catch(err => {
-            console.log(err);
+            throw new Error(err);
           });
       })
       .catch(error => {
-        console.log("error", error);
+        throw new Error(error);
       });
   };
 
   return {
     editVisible,
-    editShowModal,
     editModel,
+    editShowModal,
     editRules,
+    editFormRef,
     editCloselModal,
-    editConfirmModal,
-    editFormRef
+    editConfirmModal
   };
 };

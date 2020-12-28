@@ -97,8 +97,7 @@
           :columns="sysUsersTable.colums"
           :data-source="sysUsersTable.data"
           row-Key="userId"
-          :pagination="userPagination"
-          @change="pageChange"
+          :pagination="false"
         >
           <template #index="{ index }">
             {{ index + 1 }}
@@ -148,6 +147,9 @@ import Crumbs from "@/components/Crumbs";
 // 引入 钩子函数
 import { onMounted } from "vue";
 
+//引入储存库
+import { useStore } from "vuex";
+
 // 获取 账号管理 后台请求的 列表数据
 import { useGetUserList } from "./useGetUserList";
 
@@ -176,6 +178,9 @@ export default {
 
   // setup响应api入口
   setup() {
+    //设置储存库
+    const store = useStore();
+
     //#region 获取 导入方法中返回的 子方法和参数
     /**
      * sysUsersTable 账号列表 表格数据
@@ -187,8 +192,9 @@ export default {
      * userPagination 分页参数
      * pageChange 点击下一页方法
      */
-    const { getUserList, userPagination, pageChange } = useGetUserList(
-      sysUsersTable
+    const { getUserList , userInfos } = useGetUserList(
+      sysUsersTable,
+      store
     );
 
     /**
@@ -239,7 +245,7 @@ export default {
     onMounted(() => {
       getUserList();
       getPermissions();
-      resetUserPwd(1);
+      resetUserPwd(userInfos.value.userId);
     });
 
     //#region 返回参数
@@ -256,8 +262,6 @@ export default {
       sysUserRules,
       //渲染表格
       getUserList,
-      //分页参数
-      userPagination,
       //显示删除模态框方法
       showDelConfirm,
       //改变启用状态方法
@@ -274,8 +278,6 @@ export default {
       addUserCancel,
       //重置账号密码回调
       resetUserPwd,
-      //点击下一页方法
-      pageChange,
     };
     //#endregion
   }

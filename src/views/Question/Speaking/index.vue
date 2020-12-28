@@ -50,11 +50,15 @@
         <!-- 操作区域 start -->
         <template #extra>
           <!-- 批量上传按钮（只在SST和WED中存在） -->
-          <a-button
+          <BatchUpload
+            v-if="category == 'RA' || category == 'RS' || category == 'ASQ'"
+            :uploadFile="uploadFile"
+          />
+          <!-- <a-button
             v-if="category == 'RA' || category == 'RS' || category == 'ASQ'"
             @click="showBulkUpload"
-            >批量上传</a-button
-          >
+            >批量上传
+          </a-button> -->
           <!-- 添加题目按钮 -->
           <a-button type="primary" @click="showAddModal">添加</a-button>
           <!-- 添加题目模态框 -->
@@ -64,42 +68,6 @@
       </a-page-header>
       <!-- 题目列表头部 end -->
 
-      <!-- 批量上传模态框 start -->
-      <a-modal
-        v-model:visible="bulkUpload.visible"
-        title="批量上传"
-        centered
-        okText="上传"
-        @ok="clickBulkUpload"
-        @cancel="cancelBulkUpload"
-      >
-        <!-- 批量上传 -->
-        <a-upload
-          v-model:fileList="bulkUpload.fileList"
-          :beforeUpload="beforeBulkUpload"
-          @change="bulkUploadChange"
-        >
-          <a-button> <upload-outlined /> 选择文件 </a-button>
-        </a-upload>
-        <!-- 说明提示 -->
-        <a-alert type="info" show-icon style="margin-top: 10px">
-          <template #message>
-            <p style="margin: 0px">
-              说明：<br />1. 文件格式必须是xls、xlsx <br />2.
-              单词字段对应列数据不能为空
-            </p>
-          </template>
-        </a-alert>
-        <!-- 模板下载 -->
-        <p style="margin-top: 5px">
-          模版下载：
-          <a-button type="link">
-            <a :href="downloadTemplateUrl">题库SST.xlsx</a>
-          </a-button>
-        </p>
-      </a-modal>
-      <!-- 批量上传模态框 end -->
-
       <!-- 题目列表 start -->
       <a-table
         bordered
@@ -107,11 +75,7 @@
         :data-source="questionList"
         row-key="id"
         :loading="isLoading"
-        :pagination="{
-          total: total,
-          showSizeChanger: true,
-          showQuickJumper: true
-        }"
+        :pagination="questionPagination"
         @change="changePagenum"
       >
         <template #pics="{ record }">
@@ -146,13 +110,8 @@
           <a-button type="primary" size="small" @click="showGetModal(record.id)"
             >查看</a-button
           >
-          <a-button
-            type="primary"
-            size="small"
-            style="margin-left: 10px"
-            @click="uploadAudio(record.id, 'audioUrl')"
-            >上传音频</a-button
-          >
+          <!-- 上传音频按钮-->
+          <UploadAudioBtn :id="record.id"></UploadAudioBtn>
           <a-button
             type="primary"
             size="small"
@@ -160,15 +119,21 @@
             style="margin-left: 10px"
             >编辑</a-button
           >
-          <a-button type="danger" size="small" style="margin-left: 10px"
-            >删除</a-button
+          <a-popconfirm
+            title="确定删除这个题目吗？"
+            @confirm="delQuestion(record.id)"
+            @cancel="cancelDelQuestion"
           >
+            <a-button type="danger" style="margin-left: 10px" size="small">
+              删除
+            </a-button>
+          </a-popconfirm>
         </template>
         <!-- 题目操作区 end -->
         <!-- 题目列表 end -->
       </a-table>
       <!-- 查看模态框 -->
-      <GetRAModal />
+      <GetRAModal :getModalVisible="getModalVisible" />
     </a-card>
     <!-- 主体Main end -->
   </a-layout-content>
@@ -177,6 +142,10 @@
 <script>
 // 引入面包屑组件
 import Crumbs from "@/components/Crumbs";
+// 引入上传音频按钮组件
+import UploadAudioBtn from "@/components/Question/UploadAudioBtn";
+// 引入批量上传功能组件
+import BatchUpload from "@/components/BatchUpload";
 // 引入icons图标
 import { UploadOutlined } from "@ant-design/icons-vue";
 
@@ -195,63 +164,53 @@ import { useGetLabels } from "../QuestionLabel/useGetLables";
 import { useSetLabels } from "./useSetLabels";
 // 导入 打开批量上传模态框的功能
 import { useBulkUpload } from "./useBulkUpload";
-// 导入 模板下载功能
-import { useDownloadTemplate } from "./useDownloadTemplate";
-// 导入 上传音频功能
-import { useUploadAudio } from "./useUploadAudio";
 // 导入 显示查看题目模态框 功能
 import { useShowGetModal } from "./useShowGetModal";
 // 导入 显示添加题目模态框 功能
 import { useShowAddModal } from "./useShowAddModal";
+// 导入 删除题目功能
+import { useDelQuestion } from "./useDelQuestion";
 
 export default {
   // setup响应api入口
   setup() {
     // 渲染题目列表
-    let {
+    const {
+      questionPagination,
       category,
       labelId,
       getQuestion,
       questionList,
       isLoading,
-      total,
-      changePagenum
+      changePagenum,
     } = useGetQuestion();
 
     // 获取全部标签类型
-    let { labelList } = useGetLabels();
+    const { labelList } = useGetLabels();
 
     // 题目列表 列配置
-    let { questionColumns, questionColumns2 } = useQuestionColumns();
+    const { questionColumns, questionColumns2 } = useQuestionColumns();
 
     // 设置 题目标签
-    let { setLabels } = useSetLabels(labelList);
+    const { setLabels } = useSetLabels(labelList);
 
     // 批量上传 功能
-    let {
-      bulkUpload,
-      showBulkUpload,
-      bulkUploadChange,
-      beforeBulkUpload,
-      clickBulkUpload,
-      cancelBulkUpload,
-    } = useBulkUpload();
-
-    // 模板下载功能
-    let { downloadTemplateUrl } = useDownloadTemplate(category);
-
-    // 上传音频功能
-    let { uploadAudio } = useUploadAudio();
+    const { uploadFile } = useBulkUpload(category,getQuestion);
 
     // 显示查看模态框 功能
-    let { showGetModal } = useShowGetModal(category);
+    const { getModalVisible, showGetModal } = useShowGetModal(category);
 
     // 显示添加模态框 功能
-    let { showAddModal } = useShowAddModal(category);
+    const { showAddModal } = useShowAddModal(category);
+
+    // 删除题目 功能
+    let { delQuestion, cancelDelQuestion } = useDelQuestion(getQuestion);
 
     // 返回
     return {
       //#region 渲染表格
+      // 分页器配置
+      questionPagination,
       // 当前题目分类
       category,
       // 当前选择的标签筛选
@@ -267,8 +226,6 @@ export default {
       questionList,
       // 加载状态
       isLoading,
-      // 数据库中题目总条数
-      total,
       // 跳转页码时
       changePagenum,
       // 设置题目标签
@@ -276,34 +233,24 @@ export default {
       //#endregion
 
       //#region 批量上传功能
-      // 批量上传模态框
-      bulkUpload,
-      // 打开批量上传模态框
-      showBulkUpload,
-      // 批量上传文件改变时
-      bulkUploadChange,
-      // 文件上传前（阻止默认上传）
-      beforeBulkUpload,
-      // 点击上传
-      clickBulkUpload,
-      // 取消上传
-      cancelBulkUpload,
-      //#endregion
-
-      //#region 模板下载功能
-      downloadTemplateUrl,
-      //#endregion
-
-      //#region 上传音频功能
-      uploadAudio,
+      uploadFile,
       //#endregion
 
       //#region 显示查看模态框功能
+      // 查看模态框的显示隐藏
+      getModalVisible,
+      // 显示查看模态框
       showGetModal,
       //#endregion
 
       //#region 显示添加模态框功能
-      showAddModal
+      showAddModal,
+      //#endregion
+
+      //#region 删除题目功能
+      delQuestion,
+      // 取消删除
+      cancelDelQuestion,
       //#endregion
     };
   },
@@ -311,13 +258,17 @@ export default {
   components: {
     // 面包屑
     Crumbs,
+    // 上传音频按钮组件
+    UploadAudioBtn,
+    // 批量上传功能组件
+    BatchUpload,
     // 上传图标
     UploadOutlined,
     // 查看RA题目模态框
     GetRAModal,
     // 添加SST题目模态框
-    AddSSTModal
-  }
+    AddSSTModal,
+  },
 };
 </script>
 

@@ -34,7 +34,7 @@
                 <span>分类：</span>
               </a-col>
               <a-col :span="17">
-                <a-select v-model:value="topicSortStatus" placeholder="全部">
+                <a-select v-model:value="topicSortStatus">
                   <a-select-option value=""> 全部 </a-select-option>
                   <a-select-option
                     :value="item.id"
@@ -75,40 +75,43 @@
           <template #index="{ index }">
             <span>{{ index + 1 }}</span>
           </template>
-          <template #content="{ text }">
-            <span v-if="text.content">
-              {{ text.content }}
+          <template #content="{ record }">
+            <span v-if="record.content">
+              {{ record.content }}
             </span>
             <span v-else></span>
           </template>
-          <template #category="{ text }">
-            <span>{{ text.category }}</span>
+          <template #category="{ record }">
+            <span>{{ record.category }}</span>
           </template>
-          <template #about="{ text }">
-            <p>收藏：{{ text.favoriteCount }}</p>
-            <p>阅读：{{ text.readCount }}</p>
-            <p>评论：{{ text.commentCount }}</p>
+          <template #about="{ record }">
+            <p>收藏：{{ record.favoriteCount }}</p>
+            <p>阅读：{{ record.readCount }}</p>
+            <p>评论：{{ record.commentCount }}</p>
           </template>
-          <template #operation="{ text }">
+          <template #operation="{ record }">
             <a-button
+              size="small"
               type="primary"
               style="margin-right: 10px"
-              @click="checkArticle(text.id)"
+              @click="checkArticle(record.id)"
             >
               查看
             </a-button>
             <a-button
-              v-if="text.status == 1"
+              v-if="record.status == 1"
+              size="small"
               type="danger"
-              @click="topicShieldModal(text.id)"
+              @click="topicShieldModal(record.id)"
             >
               屏蔽
             </a-button>
             <a-button
               v-else
+              size="small"
               type="primary"
               class="pass-btn"
-              @click="topicShowModal(text.id)"
+              @click="topicShowModal(record.id)"
             >
               显示
             </a-button>
@@ -156,31 +159,31 @@ import { useGetTopicCategory } from "./useGetTopicCategory";
 import { useRouter } from "vue-router";
 export default {
   setup() {
-    // 数据列表
-    // getTopicData：获取数据
-    // topicData：表格内容
-    // tablePagination：分页
-    const { getTopicData, topicData, tablePagination } = useTopicDataList();
+    const {
+      topicData, // 表格内容
+      topicUserName, // 用户名称
+      topicSortStatus, // 分类
+      tablePagination, // 分页
+      clearInput, // 清空输入框
+      getTopicData // 获取数据
+    } = useTopicDataList();
 
     // 表格列的配置
     const { columns } = useGetTopicColumns();
-
-    // 查询重置
-    const {
-      topicUserName, // 用户名称输入框双向绑定
-      topicSortStatus, // 分类双向绑定
-      topicReset, // 重置
-      topicRead, // 查询
-      topicModel // 查询存下的输入框内容
-    } = useGetTopicList(getTopicData, tablePagination);
 
     // 点击切换页面
     const tablePageChange = pagination => {
       tablePagination.current = pagination.current;
       tablePagination.pageSize = pagination.pageSize;
       // 重新渲染
-      getTopicData(topicModel.username, topicModel.status);
+      getTopicData();
     };
+
+    // 查询重置
+    const {
+      topicReset, // 重置
+      topicRead // 查询
+    } = useGetTopicList(getTopicData, clearInput, tablePagination);
 
     // 屏蔽显示
     const {
@@ -207,17 +210,16 @@ export default {
 
     return {
       // 数据列表
-      getTopicData,
       topicData,
+      topicUserName,
+      topicSortStatus,
       tablePagination,
+      getTopicData,
       columns,
       tablePageChange,
       // 查询重置
-      topicUserName,
-      topicSortStatus,
       topicReset,
       topicRead,
-      topicModel,
       // 屏蔽显示
       topicShieldVisible,
       topicShieldModal,
