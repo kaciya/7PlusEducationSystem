@@ -52,12 +52,7 @@
 
         <!-- 操作区域 start -->
         <template #extra>
-          <!-- 批量上传按钮（只在SST和WFD中存在） -->
-          <a-button
-            v-if="category == 'WFD' || category == 'SST'"
-            @click="showBulkUpload"
-            >批量上传</a-button
-          >
+          <BatchUpload :uploadFile="bulkUpload"></BatchUpload>
           <!-- 添加题目按钮 -->
           <a-button type="primary" @click="showAddModal">添加</a-button>
           <!-- 添加题目模态框 start -->
@@ -83,42 +78,6 @@
         <!-- 操作区域 end -->
       </a-page-header>
       <!-- 题目列表头部 end -->
-
-      <!-- 批量上传模态框 start -->
-      <a-modal
-        v-model:visible="bulkUpload.visible"
-        title="批量上传"
-        centered
-        okText="上传"
-        @ok="clickBulkUpload"
-        @cancel="cancelBulkUpload"
-      >
-        <!-- 批量上传 -->
-        <a-upload
-          v-model:fileList="bulkUpload.fileList"
-          :beforeUpload="beforeBulkUpload"
-          @change="bulkUploadChange"
-        >
-          <a-button> <upload-outlined /> 选择文件 </a-button>
-        </a-upload>
-        <!-- 说明提示 -->
-        <a-alert type="info" show-icon style="margin-top: 10px">
-          <template #message>
-            <p style="margin: 0px">
-              说明：<br />1. 文件格式必须是xls、xlsx <br />2.
-              单词字段对应列数据不能为空
-            </p>
-          </template>
-        </a-alert>
-        <!-- 模板下载 -->
-        <p style="margin-top: 5px">
-          模版下载：
-          <a-button type="link">
-            <a :href="downloadTemplateUrl">题库SST.xlsx</a>
-          </a-button>
-        </p>
-      </a-modal>
-      <!-- 批量上传模态框 end -->
 
       <!-- 题目列表 start -->
       <a-table
@@ -184,18 +143,25 @@
       <!-- 题目列表 end -->
 
       <!-- 编辑题目模态框 start -->
+      <!-- 编辑sst -->
       <EditSSTModal :editModalVisible="editModalVisible"></EditSSTModal>
+      <!-- 编辑wfd -->
       <EditWFDModal :editModalVisible="editModalVisible"></EditWFDModal>
+      <!-- 编辑fib -->
       <EditFIBModal :editModalVisible="editModalVisible"></EditFIBModal>
+      <!-- 编辑mcm -->
       <EditMCMModal :editModalVisible="editModalVisible"></EditMCMModal>
+      <!-- 编辑mcs -->
       <EditMCSModal
         :editModalVisible="editModalVisible"
         questionType="mcs"
       ></EditMCSModal>
+      <!-- 编辑smw -->
       <EditMCSModal
         :editModalVisible="editModalVisible"
         questionType="smw"
       ></EditMCSModal>
+      <!-- 编辑hcs -->
       <EditMCSModal
         :editModalVisible="editModalVisible"
         questionType="hcs"
@@ -205,19 +171,24 @@
       <!-- 查看题目模态框 start -->
       <!-- 查看wfd -->
       <GetWFDModal :getModalVisible="getModalVisible"></GetWFDModal>
+      <!-- 查看fib -->
       <GetFIBModal :getModalVisible="getModalVisible"></GetFIBModal>
+      <!-- 查看mcm -->
       <GetMCSModal
         :getModalVisible="getModalVisible"
         questionType="mcm"
       ></GetMCSModal>
+      <!-- 查看mcs -->
       <GetMCSModal
         :getModalVisible="getModalVisible"
         questionType="mcs"
       ></GetMCSModal>
+      <!-- 查看smw -->
       <GetMCSModal
         :getModalVisible="getModalVisible"
         questionType="smw"
       ></GetMCSModal>
+      <!-- 查看hcs -->
       <GetMCSModal
         :getModalVisible="getModalVisible"
         questionType="hcs"
@@ -233,8 +204,8 @@
 import Crumbs from "@/components/Crumbs";
 // 引入上传音频按钮组件
 import UploadAudioBtn from "@/components/Question/UploadAudioBtn";
-// 引入icons图标
-import { UploadOutlined } from "@ant-design/icons-vue";
+// 引入批量上传按钮组件
+import BatchUpload from "@/components/BatchUpload";
 
 //#region 添加题目模态框
 // 引入 添加sst题目模态框
@@ -283,8 +254,6 @@ import { useGetLabels } from "../QuestionLabel/useGetLables";
 import { useEditLabels } from "./useEditLabels";
 // 导入 打开批量上传模态框的功能
 import { useBulkUpload } from "./useBulkUpload";
-// 导入 模板下载功能
-import { useDownloadTemplate } from "./useDownloadTemplate";
 // 导入 显示添加题目模态框 功能
 import { useShowModal } from "./useShowModal";
 // 导入 删除题目功能
@@ -310,23 +279,13 @@ export default {
     // 题目列表 列配置
     let { questionColumns } = useQuestionColumns();
 
+    // 批量上传按钮 配置对象
+    const { bulkUpload } = useBulkUpload(category, getQuestion);
+
     // 设置 题目标签
     let { editLabels } = useEditLabels(labelList, getQuestion);
 
-    // 批量上传 功能
-    let {
-      bulkUpload,
-      showBulkUpload,
-      bulkUploadChange,
-      beforeBulkUpload,
-      clickBulkUpload,
-      cancelBulkUpload,
-    } = useBulkUpload();
-
-    // 模板下载功能
-    let { downloadTemplateUrl } = useDownloadTemplate(category);
-
-    // 显示添加模态框 功能
+    // 显示添加、编辑、查看模态框 功能
     let {
       addModalVisible,
       showAddModal,
@@ -365,22 +324,7 @@ export default {
       //#endregion
 
       //#region 批量上传功能
-      // 批量上传模态框
       bulkUpload,
-      // 打开批量上传模态框
-      showBulkUpload,
-      // 批量上传文件改变时
-      bulkUploadChange,
-      // 文件上传前（阻止默认上传）
-      beforeBulkUpload,
-      // 点击上传
-      clickBulkUpload,
-      // 取消上传
-      cancelBulkUpload,
-      //#endregion
-
-      //#region 模板下载功能
-      downloadTemplateUrl,
       //#endregion
 
       //#region 显示添加模态框功能
@@ -415,10 +359,10 @@ export default {
   components: {
     // 面包屑
     Crumbs,
-    // 上传图标
-    UploadOutlined,
     // 上传音频按钮组件
     UploadAudioBtn,
+    // 批量上传按钮组件
+    BatchUpload,
     //#region 添加题目模态框
     // 添加SST题目模态框
     AddSSTModal,

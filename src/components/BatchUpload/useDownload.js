@@ -1,4 +1,5 @@
 import axios from "axios";
+import { message } from "ant-design-vue";
 
 export const useDownload = () => {
   const download = (fileName, url) => {
@@ -28,6 +29,10 @@ export const useDownload = () => {
       link.click();
       // 删除a标签
       document.body.removeChild(link);
+    }).catch(err => {
+      if (err.response.status == 403) {
+        message.error("没有访问权限")
+      }
     });
   };
 
