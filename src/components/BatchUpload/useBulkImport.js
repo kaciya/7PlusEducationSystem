@@ -65,9 +65,9 @@ export const useBulkImport = uploadFile => {
         })
           .then(res => {
             // 判断是否添加
-            if (res.data.success && res.data.data) {
+            if (res.data.success) {
               // 判断是否全部添加
-              if (res.data.data.failUrl) {
+              if (res.data.data && res.data.data.failUrl) {
                 message.warning("存在错误，请打开excel表格查看");
                 // 进入新连接下载表格查看错误
                 window.open(res.data.data.failUrl);
