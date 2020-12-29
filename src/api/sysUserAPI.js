@@ -21,7 +21,9 @@ export const sys = {
   //添加账号
   AddUser: "/sys/user/add",
   //重置账号密码
-  ResetUser: "/sys/user/resetPwd"
+  ResetUser: "/sys/user/resetPwd",
+  //[初登录]修改密码
+  UpdatePwd: "/sys/user/updatePwd"
 };
 
 //关于 操作日志 接口
