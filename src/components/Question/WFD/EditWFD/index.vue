@@ -33,7 +33,7 @@
         </a-checkbox-group>
         <!-- 题目标签复选框 end -->
       </a-form-item>
-      <a-form-item label="题目音频">
+      <a-form-item label="题目音频" name="titleAudio">
         <!-- 上传音频 start -->
         <a-upload
           :action="uploadAudio.url"

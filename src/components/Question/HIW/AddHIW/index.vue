@@ -34,7 +34,7 @@
         <!-- 题目标签复选框 end -->
       </a-form-item>
 
-      <a-form-item label="题目音频">
+      <a-form-item label="题目音频" name="titleAudio">
         <!-- 上传音频 start -->
         <a-upload
           :action="uploadAudio.url"
@@ -111,6 +111,8 @@
 import { inject } from "vue";
 // 引入图标
 import { CheckCircleTwoTone } from "@ant-design/icons-vue";
+// 引入 添加HIW题目表单数据
+import { useAddHIWForm } from "./useAddHIWForm";
 // 引入 添加HIW题目 功能
 import { addHIW, useAddHIW } from "./useAddHIW";
 // 引入 上传音频列表
@@ -139,27 +141,35 @@ export default {
     // 上传音频列表
     const { uploadAudioList } = useUploadAudioList();
 
-    // 添加HIW题目
-    const {
-      addHIW,
-      addHIWRef,
-      allTitleText,
-      changeLabels,
-      confirmAddHIW,
-      cancelAddHIW,
-    } = useAddHIW(addModalVisible, getQuestion, uploadAudioList);
-
-    // 上传音频功能
-    const { uploadAudio, changeUploadAudio } = useUploadAudio(
-      addHIW,
-      uploadAudioList
-    );
+    // 添加HIW题目表单数据
+    const { addHIW } = useAddHIWForm();
 
     // 音频合成功能
     const { synthesizing, audioSynthetic } = useAudioSynthetic(
       addHIW,
       uploadAudioList,
       "titleQuestion"
+    );
+
+    // 添加HIW题目
+    const {
+      addHIWRef,
+      allTitleText,
+      changeLabels,
+      confirmAddHIW,
+      cancelAddHIW,
+    } = useAddHIW(
+      addHIW,
+      addModalVisible,
+      getQuestion,
+      uploadAudioList,
+      audioSynthetic
+    );
+
+    // 上传音频功能
+    const { uploadAudio, changeUploadAudio } = useUploadAudio(
+      addHIW,
+      uploadAudioList
     );
 
     // 设置错误展示功能
@@ -170,7 +180,7 @@ export default {
       cancelSetWrong,
       confirmSetWrong,
       removeSetWrong,
-    } = useSetWrong(allTitleText);
+    } = useSetWrong();
 
     // 返回
     return {

@@ -18,37 +18,41 @@ export function useAudioSynthetic(addSST, uploadAudioList, titleField = 'titleTe
 
   // 音频合成
   const audioSynthetic = () => {
-    // 判断题目文本是否有内容
-    if (addSST.model[titleField].trim().length != 0) {
-      // 有内容
-      // 开启合成状态
-      synthesizing.value = true;
-      // 发起合成音频的请求
-      httpPost(questionAPI.AudioSynthetic, {
-        // 题目文本
-        text: addSST.model[titleField]
-      }).then((res) => {
-        if (res.success) {
-          // 关闭合成状态
-          synthesizing.value = false;
-          // 提示用户转换音频成功
-          message.success("转换音频成功, 此音频将为题目音频");
-          // 保存题目音频
-          addSST.model.titleAudio = res.data.fileUrl;
-          // 清空上传音频列表
-          uploadAudioList.value = []
-        }
-        else {
-          message.error(res.message);
-        }
-      }).catch((err) => {
-        console.log(err);
-      })
-    }
-    else {
-      // 提示用户输入题目原文内容才可以转换音频
-      message.error("请您输入题目原文")
-    }
+    return new Promise((resolve) => {
+      // 判断题目文本是否有内容
+      if (addSST.model[titleField].trim().length != 0) {
+        // 有内容
+        // 开启合成状态
+        synthesizing.value = true;
+        // 发起合成音频的请求
+        httpPost(questionAPI.AudioSynthetic, {
+          // 题目文本
+          text: addSST.model[titleField]
+        }).then((res) => {
+          if (res.success) {
+            // 关闭合成状态
+            synthesizing.value = false;
+            // 提示用户转换音频成功
+            message.success("转换音频成功, 此音频将为题目音频");
+            // 保存题目音频
+            addSST.model.titleAudio = res.data.fileUrl;
+            // 转换成功
+            resolve();
+            // 清空上传音频列表
+            uploadAudioList.value = []
+          }
+          else {
+            message.error(res.message);
+          }
+        }).catch((err) => {
+          console.log(err);
+        })
+      }
+      else {
+        // 提示用户输入题目原文内容才可以转换音频
+        message.error("请您输入题目原文")
+      }
+    })
   }
 
   return {

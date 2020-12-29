@@ -118,8 +118,10 @@ import {
   PlusOutlined,
   MinusCircleOutlined,
 } from "@ant-design/icons-vue";
+// 引入 添加MCS题目表单数据
+import { useAddMCSForm } from "./useAddMCSForm";
 // 引入 添加MCS题目 功能
-import { addMCS, useAddMCS } from "./useAddMCS";
+import { useAddMCS } from "./useAddMCS";
 // 引入 上传音频列表
 import { useUploadAudioList } from "@/components/Question/SST/AddSST/useUploadAudioList";
 // 引入 上传音频 功能
@@ -145,25 +147,34 @@ export default {
     // 上传音频列表
     const { uploadAudioList } = useUploadAudioList();
 
+    // 添加MCS题目表单数据
+    const { addMCS } = useAddMCSForm();
+
+    // 音频合成功能
+    const { synthesizing, audioSynthetic } = useAudioSynthetic(
+      addMCS,
+      uploadAudioList
+    );
+
     // 添加MCS题目
     const {
-      addMCS,
       addMCSRef,
       changeLabels,
       addChoices,
       delChoices,
       confirmAddMCS,
       cancelAddMCS,
-    } = useAddMCS(addModalVisible, getQuestion, questionType, uploadAudioList);
+    } = useAddMCS(
+      addMCS,
+      addModalVisible,
+      getQuestion,
+      questionType,
+      uploadAudioList,
+      audioSynthetic
+    );
 
     // 上传音频功能
     const { uploadAudio, changeUploadAudio } = useUploadAudio(
-      addMCS,
-      uploadAudioList
-    );
-
-    // 音频合成功能
-    const { synthesizing, audioSynthetic } = useAudioSynthetic(
       addMCS,
       uploadAudioList
     );

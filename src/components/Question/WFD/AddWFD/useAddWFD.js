@@ -1,6 +1,6 @@
 //#region 添加WFD题型
 // 引入响应式API
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 // 引入提示框
 import { message } from "ant-design-vue";
 // 导入 post 请求
@@ -13,43 +13,7 @@ import { listen } from '@/api/questionListenAPI';
  * @param {*} addModalVisible 添加模态框的显示与隐藏
  * @param {*} emit setup中触发事件的方法
  */
-export function useAddWFD(addModalVisible, getQuestion, uploadAudioList) {
-  // 表单数据 校验规则
-  const addWFD = reactive({
-    model: {
-      // 编号
-      no: "",
-      // 题目
-      title: "",
-      // 标签选择
-      labelIds: [],
-      // 题目音频
-      titleAudio: "",
-      // 题目原文
-      titleText: "",
-      // 答案参考
-      answer: "",
-      // 备注
-      remark: ""
-    },
-    // 校验规则
-    rules: {
-      // 编号
-      no: [
-        { required: true, whitespace: true, message: '题目编号必须填写', trigger: 'blur' },
-      ],
-      // 题目
-      title: [
-        {
-          required: true,
-          whitespace: true,
-          message: "题目必须填写",
-          trigger: "blur"
-        }
-      ]
-    },
-  });
-
+export function useAddWFD(addWFD, addModalVisible, getQuestion, uploadAudioList, audioSynthetic) {
   // 表单ref
   const addWFDRef = ref(null);
 
@@ -65,7 +29,12 @@ export function useAddWFD(addModalVisible, getQuestion, uploadAudioList) {
   // 添加WFD题目
   const confirmAddWFD = () => {
     // 先校验
-    addWFDRef.value.validate().then(() => {
+    addWFDRef.value.validate().then(async () => {
+      // 有原文内容且没有上传音频
+      if (addWFD.model.titleText.trim().length > 0 && addWFD.model.titleAudio.length == 0) {
+        // 自动将原文转音频
+        await audioSynthetic();
+      }
       // 发送添加题目请求
       httpPost(listen.AddQuestion('wfd'), addWFD.model).then((res) => {
         if (res.success == true) {

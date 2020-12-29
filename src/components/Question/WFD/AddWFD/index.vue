@@ -33,7 +33,7 @@
         </a-checkbox-group>
         <!-- 题目标签复选框 end -->
       </a-form-item>
-      <a-form-item label="题目音频">
+      <a-form-item label="题目音频" name="titleAudio">
         <!-- 上传音频 start -->
         <a-upload
           :action="uploadAudio.url"
@@ -67,8 +67,10 @@
 import { inject } from "vue";
 // 引入图标
 import { CheckCircleTwoTone } from "@ant-design/icons-vue";
+// 引入 添加WFD题目表单数据
+import { useAddWFDForm } from "./useAddWFDForm";
 // 引入 添加WFD题目 功能
-import { addWFD, useAddWFD } from "./useAddWFD";
+import { useAddWFD } from "./useAddWFD";
 // 引入 上传音频列表
 import { useUploadAudioList } from "@/components/Question/SST/AddSST/useUploadAudioList";
 // 引入 上传音频 功能
@@ -93,23 +95,26 @@ export default {
     // 上传音频列表
     const { uploadAudioList } = useUploadAudioList();
 
-    // 添加WFD题目
-    const {
-      addWFD,
-      addWFDRef,
-      changeLabels,
-      confirmAddWFD,
-      cancelAddWFD,
-    } = useAddWFD(addModalVisible, getQuestion, uploadAudioList);
+    // 添加WFD题目表单数据
+    const { addWFD } = useAddWFDForm();
 
-    // 上传音频功能
-    const { uploadAudio, changeUploadAudio } = useUploadAudio(
+    // 音频合成功能
+    const { synthesizing, audioSynthetic } = useAudioSynthetic(
       addWFD,
       uploadAudioList
     );
 
-    // 音频合成功能
-    const { synthesizing, audioSynthetic } = useAudioSynthetic(
+    // 添加WFD题目
+    const { addWFDRef, changeLabels, confirmAddWFD, cancelAddWFD } = useAddWFD(
+      addWFD,
+      addModalVisible,
+      getQuestion,
+      uploadAudioList,
+      audioSynthetic
+    );
+
+    // 上传音频功能
+    const { uploadAudio, changeUploadAudio } = useUploadAudio(
       addWFD,
       uploadAudioList
     );
