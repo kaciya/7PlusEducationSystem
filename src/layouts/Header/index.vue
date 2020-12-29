@@ -24,6 +24,47 @@
         </a-menu>
       </template>
     </a-dropdown>
+    <!-- 初始登录-修改密码-模态框 -->
+    <a-modal
+      title="修改初始密码"
+      :maskClosable="false"
+      :closable="false"
+      :cancelButtonProps="{ disabled: true }"
+      :visible="editPwdForm.visible"
+      :confirm-loading="editPwdForm.loading"
+      @ok="editPwdSubmit"
+    >
+      <!-- 修改密码-表单 start -->
+      <a-form
+        v-bind="editPwdForm.layout"
+        :model="editPwdForm.model"
+        :rules="editPwdForm.rules"
+        ref="editPwdRef"
+      >
+        <a-form-item has-feedback label="旧密码" name="oldPwd">
+          <a-input
+            autocomplete="off"
+            v-model:value="editPwdForm.model.oldPwd"
+          />
+        </a-form-item>
+        <a-form-item has-feedback label="新密码" name="newPwd">
+          <a-input
+            type="password"
+            autocomplete="off"
+            v-model:value="editPwdForm.model.newPwd"
+          />
+        </a-form-item>
+        <a-form-item has-feedback label="确认密码" name="checkPwd">
+          <a-input
+            type="password"
+            autocomplete="off"
+            v-model:value="editPwdForm.model.checkPwd"
+            @keyup.enter="editPwdSubmit"
+          />
+        </a-form-item>
+      </a-form>
+      <!-- 修改密码-表单 end -->
+    </a-modal>
   </a-layout-header>
 </template>
 
@@ -34,6 +75,10 @@ import { useSetCollapsed } from "./useSetCollapsed";
 import { useLogout } from "./useLogout";
 // 导入用户信息
 import { useGetUserInfo } from "./useGetUserInfo";
+// 导入修改密码表单
+import { useEditPwdForm } from "./useEditPwdForm";
+// 导入修改密码表单提交
+import { useEditPwdSubmit } from "./useEditPwdSubmit";
 // 引入图标icons
 import {
   MenuUnfoldOutlined,
@@ -52,17 +97,17 @@ export default {
     // 侧边栏状态
     const { collapsed, setCollapsed } = useSetCollapsed();
     // 退出登录
-    const { handleLogout } = useLogout();
+    const { handleLogout, dropdownClick, backLogin } = useLogout();
     // 用户信息
     const { userInfos } = useGetUserInfo();
-
-    //#region 下拉菜单
-    function dropdownClick({ key }) {
-      if (key == "logout") {
-        handleLogout();
-      }
-    }
-    //#endregion
+    // 修改密码表单
+    const { editPwdForm, editPwdRef } = useEditPwdForm();
+    // 修改密码表单提交
+    const { editPwdSubmit } = useEditPwdSubmit(
+      editPwdForm,
+      editPwdRef,
+      backLogin
+    );
 
     // 返回
     return {
@@ -71,6 +116,9 @@ export default {
       dropdownClick, //下拉菜单点击
       handleLogout, //退出登录
       userInfos, //用户信息
+      editPwdForm, //修改密码表单
+      editPwdRef, //修改密码Ref
+      editPwdSubmit, //修改密码提交
     };
   },
 };
