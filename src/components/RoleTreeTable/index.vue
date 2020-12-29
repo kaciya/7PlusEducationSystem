@@ -11,6 +11,7 @@
       <a-checkbox
         v-model:checked="record.isChecked"
         :value="record.permissionId"
+        :indeterminate="record.indeterminate"
         @change="getleafChecked($event, record)"
       >
         {{ record.name }}
@@ -36,6 +37,7 @@
           <a-checkbox
             v-model:checked="childItem.isChecked"
             :value="childItem.permissionId"
+            :indeterminate="childItem.indeterminate"
             @change="getChildChecked($event, childItem)"
           >
             {{ childItem.name }}
@@ -79,11 +81,9 @@ import { useTableColums } from "./useTableColums";
 import { useGetTreeChecked } from "./useGetTreeChecked";
 
 export default {
-  // setup响应api入口
-  setup() {
-    // 使用储存库
-    const store = useStore();
 
+  // setup响应api入口
+  setup(props , { emit } ) {
     //#region 获取 导入方法中返回的 子方法和参数
     const { rolePermissionTable } = useTableColums();
 
@@ -94,6 +94,7 @@ export default {
       getleafChecked,
       getChildChecked,
       getRootChecked,
+      getTreeCheckedKeys
     } = useGetTreeChecked(rolePermissionTable);
     //#endregion
 
@@ -101,6 +102,10 @@ export default {
     onMounted(() => {
       getRolePermissions();
     });
+
+    //将方法传给父组件
+     // 使用储存库
+    emit("getTreeCheckedKeys" , getTreeCheckedKeys);
 
     //返回参数
     return {
@@ -114,6 +119,8 @@ export default {
       getleafChecked,
       //递归实现 对根节点选中方法
       getRootChecked,
+      //递归实现 获取选中的复选框的值
+      getTreeCheckedKeys,
     };
   },
 };

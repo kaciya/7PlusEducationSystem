@@ -5,7 +5,7 @@
       :crumbName="[
         { name: '权限管理' },
         { name: '权限组', route: '/sys/role' },
-        { name: '添加' }
+        { name: '添加' },
       ]"
     />
     <!-- 面包屑 end -->
@@ -36,7 +36,13 @@
               </a-form-item>
             </a-col>
             <a-col :span="3" :offset="15">
-              <a-button type="primary" class="header-btn"> 提交 </a-button>
+              <a-button
+                type="primary"
+                class="header-btn"
+                @click="addRoleConfirm"
+              >
+                提交
+              </a-button>
             </a-col>
           </a-row>
         </a-form>
@@ -64,10 +70,13 @@ import RoleTreeTable from "@/components/RoleTreeTable";
 import { useAddRole } from "./useAddRole";
 
 export default {
+  //注册emit
+  emits: ['getTreeCheckedKeys'],
+
   // 使用组件
   components: {
     Crumbs,
-    RoleTreeTable
+    RoleTreeTable,
   },
 
   // setup响应api入口
@@ -77,20 +86,24 @@ export default {
     /**
      * addRoleRules 添加表单校验规则
      * addRoleForm 表单数据模型对象
+     * addRoleConfirm 提交表单事件
      */
-    const { addRoleRules, addRoleForm } = useAddRole();
+    const { addRoleRules, addRoleForm, addRoleConfirm } = useAddRole();
 
     //#endregion
+
 
     //#region 返回参数
     return {
       //添加表单校验规则
       addRoleRules,
       //表单数据模型对象
-      addRoleForm
+      addRoleForm,
+      //提交表单事件
+      addRoleConfirm,
     };
     //#endregion
-  }
+  },
 };
 </script>
 
