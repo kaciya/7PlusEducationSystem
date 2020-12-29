@@ -1,3 +1,11 @@
+// 参数管理
+export const param = {
+  // 获取数据列表
+  GetDataList: "system/params",
+  // 修改数据列表
+  EditDataList: "system/param/update"
+}
+
 // 师资管理
 export const teacherInfo = {
   // 师资列表
