@@ -57,7 +57,7 @@ export function useAddSWT(addModalVisible, questionType, getQuestion) {
       message.warn("每题标签最多可以选择三个");
     }
   };
-  // 添加MCM题目
+  // 添加SWT题目
   const confirmAddSWT = () => {
     // 校验
     addSWTRef.value

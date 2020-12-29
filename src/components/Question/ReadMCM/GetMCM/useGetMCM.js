@@ -1,21 +1,20 @@
-//#region 查看MCM题型
-// 引入提示框
-import { message } from "ant-design-vue";
-export function useGetMCM(getModalVisible) {
-  // 查看MCM题目
-  const confirmGetMCM = () => {
-    console.log(111111);
-    // 关闭MCM模态框
-    getModalVisible.mcm = false;
-  };
-  // 取消查看MCM题目
-  const cancelGetMCM = () => {
-    // 提示用户
-    message.warn("取消查看MCM题目");
-  };
+//#region 查看mcs题目详情
+// 引入vueAPI
+import { ref, watch } from "vue";
+export function useGetMCM(getModalVisible, questionType, questionDetail) {
+  // mcs题目详情
+  const getMCS = ref({});
+
+  // 监听获取的题目详情
+  watch(questionDetail, val => {
+    // 获取mcs题目时赋值给getMCS
+    if (getModalVisible[questionType]) {
+      getMCS.value = val;
+    }
+  });
+
   return {
-    confirmGetMCM,
-    cancelGetMCM
+    getMCS
   };
 }
 //#endregion
