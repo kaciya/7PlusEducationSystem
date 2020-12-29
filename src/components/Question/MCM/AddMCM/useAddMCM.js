@@ -34,6 +34,10 @@ export function useAddMCM(addModalVisible, getQuestion, uploadAudioList) {
         {
           content: "",
           key: "A"
+        },
+        {
+          content: "",
+          key: "B"
         }
       ],
       // 题目解析
@@ -110,6 +114,10 @@ export function useAddMCM(addModalVisible, getQuestion, uploadAudioList) {
             {
               content: "",
               key: "A"
+            },
+            {
+              content: "",
+              key: "B"
             }
           ];
           // 清除音频上传列表
@@ -138,6 +146,10 @@ export function useAddMCM(addModalVisible, getQuestion, uploadAudioList) {
       {
         content: "",
         key: "A"
+      },
+      {
+        content: "",
+        key: "B"
       }
     ];
     // 清除音频上传列表

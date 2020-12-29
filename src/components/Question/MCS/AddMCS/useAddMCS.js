@@ -34,6 +34,10 @@ export function useAddMCS(addModalVisible, getQuestion, questionType, uploadAudi
         {
           content: "",
           key: "A"
+        },
+        {
+          content: "",
+          key: "B"
         }
       ],
       // 题目解析
@@ -106,10 +110,16 @@ export function useAddMCS(addModalVisible, getQuestion, questionType, uploadAudi
           // 重置表单
           addMCSRef.value.resetFields();
           // 手动重置
-          addMCS.model.choices = [{
-            content: "",
-            key: "A"
-          }];
+          addMCS.model.choices = [
+            {
+              content: "",
+              key: "A"
+            },
+            {
+              content: "",
+              key: "B"
+            }
+          ];
           // 清除音频上传列表
           uploadAudioList.value = []
         }
@@ -132,10 +142,16 @@ export function useAddMCS(addModalVisible, getQuestion, questionType, uploadAudi
     // 重置表单
     addMCSRef.value.resetFields();
     // 手动重置
-    addMCS.model.choices = [{
-      content: "",
-      key: "A"
-    }];
+    addMCS.model.choices = [
+      {
+        content: "",
+        key: "A"
+      },
+      {
+        content: "",
+        key: "B"
+      }
+    ];
     // 清除音频上传列表
     uploadAudioList.value = []
   };
