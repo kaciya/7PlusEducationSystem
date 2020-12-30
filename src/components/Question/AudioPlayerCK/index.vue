@@ -1,16 +1,8 @@
 <template>
+  <!-- 音频播发器-查看 -->
   <div class="audio-wrapper">
-    <div
-      :style="{
-        position: 'absolute',
-        top: '-100px',
-        left: '80px',
-      }"
-    >
-      <audio controls :ref="dom.audio" :src="audioUrl"></audio>
-    </div>
     <!-- 音频 -->
-    <!-- <audio :ref="dom.audio" :src="audioUrl"></audio> -->
+    <audio :ref="dom.audio" :src="audioUrl"></audio>
     <!-- 播放器 -->
     <a-row>
       <a-col :span="4" class="audio-left">
@@ -26,12 +18,37 @@
           <span :ref="dom.audioDurTime">00:00</span>
         </div>
       </a-col>
-      <a-col :span="19" class="audio-right">
+      <a-col :span="15" class="audio-right">
         <!-- 播放进度条 -->
         <div class="progress-bar-bg" :ref="dom.progressBarBg">
           <i :ref="dom.progressDot"></i>
           <div class="progress-bar" :ref="dom.progressBar"></div>
         </div>
+      </a-col>
+      <a-col :span="4" class="audio-control">
+        <a-space :size="10">
+          <!-- 播放速度选择 -->
+          <a-select
+            v-model:value="audio.playbackSpeed"
+            size="small"
+            class="speed-control"
+            @change="speedChange"
+          >
+            <a-select-option value="2.0"> 2.0 X </a-select-option>
+            <a-select-option value="1.5"> 1.5 X </a-select-option>
+            <a-select-option value="1.0"> 1.0 X </a-select-option>
+          </a-select>
+          <!-- 声音选择 -->
+          <a-select
+            v-model:value="audio.playbackVoice"
+            size="small"
+            class="voice-control"
+          >
+            <a-select-option value="OV"> 原声 </a-select-option>
+            <a-select-option value="US"> US </a-select-option>
+            <a-select-option value="AU"> AU </a-select-option>
+          </a-select></a-space
+        >
       </a-col>
     </a-row>
   </div>
@@ -44,6 +61,8 @@ import { PlayCircleFilled, PauseCircleFilled } from "@ant-design/icons-vue";
 import { usePlayControl } from "./usePlayControl";
 // 导入音频进度条调节控制
 import { useProgressBarControl } from "./useProgressBarControl";
+// 导入音频播放速度控制
+import { usePlaybackSpeed } from "./usePlaybackSpeed";
 export default {
   props: ["audioUrl"],
   setup() {
@@ -57,6 +76,8 @@ export default {
     } = usePlayControl();
     // 进度条调节 功能
     useProgressBarControl(dom, updateProgress);
+    // 音频播放速度调节 功能
+    const { speedChange } = usePlaybackSpeed(dom);
 
     return {
       // DOM对象
@@ -67,6 +88,8 @@ export default {
       playPauseSwitch,
       // 还原音频播放 功能
       audioEnded,
+      // 播放速度调节 功能
+      speedChange,
     };
   },
   components: { PlayCircleFilled, PauseCircleFilled },
@@ -75,7 +98,7 @@ export default {
 
 <style lang="scss" scoped>
 // 定义通用高度
-$height: 38px;
+$height: 40px;
 /* 音频播放器 */
 .audio-wrapper {
   height: $height;
@@ -91,7 +114,7 @@ $height: 38px;
   .audio-btn {
     float: left;
     height: 100%;
-    padding: 2px 6px 0 12px;
+    padding: 2px 8px 0 12px;
     // display: initial; /* 解除与app的样式冲突 */
     cursor: pointer;
   }
@@ -106,7 +129,8 @@ $height: 38px;
 .audio-right {
   float: left;
   height: $height;
-  padding-left: 12px;
+  padding-left: 2px;
+  margin-left: -14px;
 
   /* 总进度条  */
   .progress-bar-bg {
@@ -145,6 +169,31 @@ $height: 38px;
     height: 8px;
     border-radius: 8px;
     background-color: #64b9aa;
+  }
+}
+
+// 音频播放控制
+.audio-control {
+  padding-left: 20px;
+
+  // 播放速度调节
+  .speed-control {
+    width: 72px;
+    color: #999;
+  }
+
+  // 播放声音调节
+  .voice-control {
+    width: 80px;
+    color: #000;
+  }
+}
+</style>
+<style lang="scss">
+// 播放速度选择器
+.speed-control {
+  .ant-select-arrow {
+    font-size: 10px;
   }
 }
 </style>
