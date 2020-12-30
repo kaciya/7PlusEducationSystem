@@ -8,7 +8,7 @@ import { message } from "ant-design-vue";
 export const useEditWord = getWordData => {
   //#region 输入框数据
   const editModel = reactive({
-    wordCategory: "",
+    wordCategory: null,
     wordName: ""
   });
   //#endregion
@@ -23,6 +23,7 @@ export const useEditWord = getWordData => {
     wordId.value = record.id;
     // 回显数据
     editModel.wordName = record.word;
+    editModel.wordCategory = record.typeName;
   };
   //#endregion
   // 表格ref相当于$refs

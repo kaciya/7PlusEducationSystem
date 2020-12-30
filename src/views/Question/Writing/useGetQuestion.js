@@ -30,8 +30,6 @@ export function useGetQuestion() {
   });
   // 获取题目
   const getQuestion = goFirstPage => {
-    // console.log(category);
-    // console.log(labelId);
     // 开启加载状态
     isLoading.value = true;
     if (goFirstPage) {
@@ -75,6 +73,7 @@ export function useGetQuestion() {
 
   // 向后代组件提供获取题目列表的方法
   provide("getQuestion", getQuestion);
+
   // 跳转页码
   const changePagenum = pagination => {
     configPage.current = pagination.current;
