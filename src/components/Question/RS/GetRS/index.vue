@@ -1,10 +1,10 @@
 <template>
-  <!-- 查看RA题目详情模态框 -->
+  <!-- 查看RS题目详情模态框 -->
   <a-modal
     title="查看"
     :footer="null"
     :maskClosable="false"
-    v-model:visible="getModalVisible.ra"
+    v-model:visible="getModalVisible.rs"
     class="check-modal"
     @cancel="closeModal"
   >
@@ -45,16 +45,16 @@
 // 导入音频播放器
 import AudioPlayerCK from "@/components/Question/AudioPlayerCK";
 // 导入获取模态框
-import { useGetRA } from "./useGetRA";
+import { useGetRS } from "./useGetRS";
 // 导入关闭模态框
-import { useCloseGetRA } from "./useCloseGetRA";
+import { useCloseGetRS } from "./useCloseGetRS";
 export default {
   props: ["getModalVisible"],
   setup() {
     // 获取题目详情
-    const { layout, questionDetail, audioPlayerRef } = useGetRA();
+    const { layout, questionDetail, audioPlayerRef } = useGetRS();
     // 关闭模态框
-    const { closeModal } = useCloseGetRA(audioPlayerRef);
+    const { closeModal } = useCloseGetRS(audioPlayerRef);
 
     return {
       // 表单布局
@@ -74,37 +74,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-// 查看模态框-common
-.check-modal {
-  width: 1080px !important;
-
-  // 模态框body
-  .ant-modal-body {
-    padding-top: 14px;
-    padding-bottom: 40px;
-    padding-left: 40px;
-  }
-
-  // 横向表格
-  .ant-form-item {
-    margin-bottom: 4px;
-  }
-
-  // 表单label
-  .ant-form-item-label {
-    padding-right: 10px;
-  }
-
-  // 标签
-  .ant-tag-blue {
-    padding: 2px 24px;
-  }
-
-  // 使用该音频
-  .ant-tag-has-color {
-    padding: 4px 14px;
-    border-radius: 6px;
-  }
-}
-</style>
+<style lang="scss"></style>
