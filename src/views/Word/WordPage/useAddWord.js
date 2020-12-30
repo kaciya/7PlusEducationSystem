@@ -17,7 +17,7 @@ export const useAddWord = getWordData => {
   //#region 输入框内容
   const addModel = reactive({
     wordName: "",
-    wordCategory: ""
+    wordCategory: null
   });
   //#endregion
   //#region 输入框校验
