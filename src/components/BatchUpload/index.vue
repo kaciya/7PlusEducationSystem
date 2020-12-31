@@ -8,7 +8,6 @@
     <a-modal
       v-model:visible="bulkUpload.visible"
       :title="uploadFile.uploadTitle"
-      centered
       @ok="clickBulkUpload"
       @cancel="cancelBulkUpload"
     >

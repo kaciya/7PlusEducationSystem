@@ -1,17 +1,17 @@
-//#region 查看ASQ题型
+//#region 查看RA题型
 // 引入响应式API
 import {
   ref, reactive, inject
 } from "vue";
 
-export function useGetASQ() {
+export function useGetRL() {
   // 题目详情布局
   const layout = reactive({
     labelCol: {
       span: 2
     },
     wrapperCol: {
-      span: 22,
+      span: 22
     },
   })
   // 获取[注入]查看详情
