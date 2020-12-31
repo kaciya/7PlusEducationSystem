@@ -15,7 +15,7 @@
       <a-card title="基本信息">
         <!-- 添加表单 -->
         <a-form
-          v-model:value="addRoleForm"
+          :model="addRoleForm"
           :rules="addRoleRules"
           ref="addRoleFormRef"
         >
@@ -51,7 +51,9 @@
       <!-- 基本信息 end -->
       <!-- 权限设置 -->
       <a-card title="权限设置">
-        <RoleTreeTable />
+        <!-- 给组件添加 ref 引用-->
+        <RoleTreeTable :getTreeChecked="getTreeChecked" @getDefKeys='getDefKeys'/>
+        <!-- 给组件添加 ref 引用 end-->
       </a-card>
       <!-- 权限设置 end -->
     </a-card>
@@ -70,9 +72,6 @@ import RoleTreeTable from "@/components/RoleTreeTable";
 import { useAddRole } from "./useAddRole";
 
 export default {
-  //注册emit
-  emits: ['getTreeCheckedKeys'],
-
   // 使用组件
   components: {
     Crumbs,
@@ -82,25 +81,32 @@ export default {
   // setup响应api入口
   setup() {
     //#region 获取 导入方法中返回的 子方法和参数
-
     /**
      * addRoleRules 添加表单校验规则
+     * addRoleFormRef 定义表单
      * addRoleForm 表单数据模型对象
      * addRoleConfirm 提交表单事件
+     * roleTreeRef 组件的 ref 引用
+     * getDefKeys 获取子组件传入的值
      */
-    const { addRoleRules, addRoleForm, addRoleConfirm } = useAddRole();
-
+    const { getTreeChecked , addRoleFormRef , addRoleRules , addRoleForm , addRoleConfirm , getDefKeys } = useAddRole();
+    
     //#endregion
-
 
     //#region 返回参数
     return {
+      //判断是否获取选中的权限ID
+      getTreeChecked,
+      //定义表单
+      addRoleFormRef,
       //添加表单校验规则
       addRoleRules,
       //表单数据模型对象
       addRoleForm,
       //提交表单事件
       addRoleConfirm,
+      // 获取子组件传入的值方法
+      getDefKeys,
     };
     //#endregion
   },

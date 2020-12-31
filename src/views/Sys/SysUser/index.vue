@@ -17,7 +17,6 @@
         <a-modal
           title="添加账号"
           v-model:visible="addUserVisible"
-          :confirm-loading="confirmLoading"
           :maskClosable="false"
         >
           <!-- 自定义 页脚 -->
@@ -215,7 +214,6 @@ export default {
     /**
      * sysUserRules 账号添加表单校验规则
      * addUserVisible 显示添加账号模态框
-     * confirmLoading 模态框确认时加载
      * sysUserForm 账号添加表单数据模型对象
      * showAddModal 显示添加账号模态框
      * addUserConfirm 添加账号确定回调
@@ -225,7 +223,6 @@ export default {
     const {
       sysUserRules,
       addUserVisible,
-      confirmLoading,
       sysUserForm,
       showAddModal,
       addUserConfirm,
@@ -268,8 +265,6 @@ export default {
       changeStatus,
       //显示添加账号模态框
       addUserVisible,
-      //模态框确认时加载
-      confirmLoading,
       //显示添加账号模态框
       showAddModal,
       //添加账号确定回调

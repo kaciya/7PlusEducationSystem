@@ -66,10 +66,7 @@
 </template>
 <script>
 // 引入 钩子函数
-import { onMounted } from "vue";
-
-// 引入公共储存库
-import { useStore } from "vuex";
+import { onMounted , watch } from "vue";
 
 // 获取 权限组-添加 中后台返回的 权限组列表
 import { useGetTable } from "./useGetTable";
@@ -81,9 +78,13 @@ import { useTableColums } from "./useTableColums";
 import { useGetTreeChecked } from "./useGetTreeChecked";
 
 export default {
+  //获取父级组件传入的参数
+  props: {
+    getTreeChecked: Boolean,
+  },
 
   // setup响应api入口
-  setup(props , { emit } ) {
+  setup(props , context) {
     //#region 获取 导入方法中返回的 子方法和参数
     const { rolePermissionTable } = useTableColums();
 
@@ -94,8 +95,8 @@ export default {
       getleafChecked,
       getChildChecked,
       getRootChecked,
-      getTreeCheckedKeys
-    } = useGetTreeChecked(rolePermissionTable);
+      getTreeCheckedKeys,
+    } = useGetTreeChecked(rolePermissionTable, props);
     //#endregion
 
     //在Mounted 获取列表
@@ -103,9 +104,22 @@ export default {
       getRolePermissions();
     });
 
-    //将方法传给父组件
-     // 使用储存库
-    emit("getTreeCheckedKeys" , getTreeCheckedKeys);
+    //监听父组件的参数
+    watch(
+      () => props.getTreeChecked,
+      () => {
+        //判断父组件传入的布尔值是否为true
+        if (props.getTreeChecked) {
+          //如果为true则执行查询方法
+          getTreeCheckedKeys(
+            rolePermissionTable.data,
+            checkedData.resultDefKeys
+          );
+          
+          context.emit('getDefKeys',checkedData.resultDefKeys);
+        }
+      }
+    );
 
     //返回参数
     return {

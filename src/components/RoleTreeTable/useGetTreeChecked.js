@@ -14,7 +14,6 @@ export const useGetTreeChecked = (rolePermissionTable) => {
     resultDefKeys: []
   });
 
-
   //#region 第一种情况: 从外向内  从 根节点 到 叶子节点 的选中
   //递归实现 对子选择项的选中方法
   const getleafChecked = (e, record) => {
@@ -219,7 +218,7 @@ export const useGetTreeChecked = (rolePermissionTable) => {
         //遍历此节点
         item.child.forEach(itemChild => {
           //判断子节点是否有未选中状态
-          if (!itemChild.isChecked  || itemChild.indeterminate) {
+          if (!itemChild.isChecked || itemChild.indeterminate) {
             //如果存在选中 则 设置布尔值为 false
             bool = false;
           }
