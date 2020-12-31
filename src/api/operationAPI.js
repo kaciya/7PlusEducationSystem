@@ -1,3 +1,11 @@
+// 参数管理
+export const param = {
+  // 获取数据列表
+  GetDataList: "system/params",
+  // 修改数据列表
+  EditDataList: "system/param/update"
+}
+
 // 师资管理
 export const teacherInfo = {
   // 师资列表
@@ -29,6 +37,30 @@ export const exercise = {
   // 更新互动练习内容
   UpdateExerciseContent: "interactive/update"
 };
+
+export const campus = {
+  // 获取介绍列表
+  GetIntroList: "school/introduce",
+  // 更新介绍列表
+  UpdateIntroList: "school/introduce/update",
+  // 获取校区数据列表
+  GetCampuTableList: "school/campus/list",
+  // 添加校区列表
+  AddCampuTableList: "school/campus/add",
+  // 修改校区列表
+  EditCampuTableList: "school/campus/update",
+  // 删除校区列表
+  DelCampuTableList: (id) => `school/campus/${id}`,
+  // 获取校区风采列表
+  GetCampStyleList: "school/campus/style/list",
+  // 添加校区风采
+  AddCampStyleList: "school/campus/style/add",
+  // 编辑校区风采
+  EditCampStyleList: "school/campus/style/update",
+  // 删除校区风采
+  DelCampStyleList: (id) => `school/campus/style/${id}`
+}
+
 
 // 文章列表
 export const article = {

@@ -11,9 +11,13 @@ import { createVNode } from "vue";
 import { ExclamationCircleOutlined } from "@ant-design/icons-vue";
 // 导入全局提示
 import { message } from "ant-design-vue";
+// 导入vuex
+import { useStore } from "vuex";
 // 导入router
 import { useRouter } from "vue-router";
 export const useLogout = () => {
+  // 使用vuex
+  const store = useStore();
   // 使用router
   const router = useRouter();
 
@@ -29,10 +33,8 @@ export const useLogout = () => {
         return new Promise(resolve => {
           httpPost(auth.UserLogout).then(res => {
             if (res.success) {
-              // 移除token
-              window.localStorage.removeItem("token");
-              // 调回登录页
-              router.push("/login");
+              // 返回登录页
+              backLogin();
               // 提示退出成功
               message.success("退出成功");
               // 结束加载
@@ -50,9 +52,31 @@ export const useLogout = () => {
     });
   }
 
+  //#region 下拉菜单
+  function dropdownClick({ key }) {
+    // 退出登录
+    if (key == "logout") {
+      handleLogout();
+    }
+  }
+  //#endregion
+
+  //#region 返回登录页功能
+  function backLogin() {
+    // 移除token
+    window.localStorage.removeItem("token");
+    // 移除vuex中的用户信息
+    store.commit('AuthStore/DEL_USERINFOS');
+    // 调回登录页
+    router.push("/login");
+  }
+  //#endregion
+
   // 返回
   return {
-    handleLogout //退出登录
+    handleLogout, //退出登录
+    dropdownClick, //下拉菜单点击
+    backLogin //返回登录页
   };
 };
 //#endregion

@@ -21,6 +21,7 @@
                 <a-input
                   placeholder="请输入登录账号"
                   size="large"
+                  autocomplete="off"
                   v-model:value="loginModel.username"
                 >
                   <template #prefix>
@@ -39,6 +40,7 @@
                   type="password"
                   placeholder="请输入登录密码"
                   size="large"
+                  autocomplete="off"
                   v-model:value="loginModel.password"
                   @keyup.enter="loginSubmit"
                   allow-clear
@@ -92,7 +94,7 @@
 // 引入icon图标
 import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
 // 导入表单校验方法
-import { userLoginRules } from "./userLoginRules";
+import { useLoginRules } from "./useLoginRules";
 // 导入表单登录方法
 import { useLoginSubmit } from "./useLoginSubmit";
 // 导入重置表单功能
@@ -105,10 +107,10 @@ export default {
       loginModel,
       loginSubmit,
       loginFormRef,
-      logining
+      logining,
     } = useLoginSubmit();
     // 表单校验
-    const { loginRules } = userLoginRules();
+    const { loginRules } = useLoginRules();
     // 重置表单
     const { resetForm } = useResetForm(loginFormRef);
     // 返回
@@ -124,13 +126,13 @@ export default {
       // 点击重置表单
       resetForm,
       // 正在登录的状态
-      logining
+      logining,
     };
   },
   components: {
     UserOutlined,
-    LockOutlined
-  }
+    LockOutlined,
+  },
 };
 </script>
 

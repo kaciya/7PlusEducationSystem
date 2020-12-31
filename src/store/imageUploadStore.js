@@ -22,7 +22,6 @@ export default {
     // 删除图片文件
     DEL_IMAGE_FILES(state) {
       state.fileList = null;
-      console.log(state.fileList);
     },
     // 设置图片地址
     SET_IMAGE_URL(state,payload) {
