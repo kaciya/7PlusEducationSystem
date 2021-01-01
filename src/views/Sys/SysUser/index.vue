@@ -96,6 +96,7 @@
           :columns="sysUsersTable.colums"
           :data-source="sysUsersTable.data"
           row-Key="userId"
+          :loading="isLoading"
           :pagination="false"
         >
           <template #index="{ index }">
@@ -187,11 +188,12 @@ export default {
     const { sysUsersTable } = useUserColums();
 
     /**
+     * isLoading 加载状态
      * getUserList 渲染表格
      * userPagination 分页参数
      * pageChange 点击下一页方法
      */
-    const { getUserList , userInfos } = useGetUserList(
+    const { isLoading , getUserList , userInfos } = useGetUserList(
       sysUsersTable,
       store
     );
@@ -253,6 +255,8 @@ export default {
       sysUserForm,
       //权限列表
       rolesPermissionsList,
+      //加载状态
+      isLoading,
       //添加表单
       addUserFormRef,
       //账号添加表单校验规则

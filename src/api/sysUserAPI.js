@@ -9,7 +9,9 @@ export const role = {
   //渲染权限列表
   GetRolesPermissions: "/role/permissions",
   //添加权限组
-  AddRoles: "/role/add"
+  AddRoles: "/role/add",
+  //权限组详情
+  GetRoleDetail : "/role/detail"
 };
 
 //关于 账号管理 接口

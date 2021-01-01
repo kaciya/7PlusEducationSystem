@@ -51,6 +51,7 @@
           :columns="contactTable.colums"
           :data-source="contactTable.data"
           row-Key="id"
+          :loading="isLoading"
           :pagination="contactPagination"
           @change="pageChange"
         >
@@ -143,10 +144,11 @@ export default {
 
     /**
      * contactPagination 分页参数
+     * isLoading 加载状态
      * getContactData 渲染列表数据方法
      * pageChange 点击下一页方法
      */
-    const { contactPagination, getContactData, pageChange } = useGetContactList(
+    const { contactPagination, isLoading ,  getContactData, pageChange } = useGetContactList(
       contactTable
     );
 
@@ -193,6 +195,8 @@ export default {
       headerData,
       //分页参数
       contactPagination,
+      //加载状态
+      isLoading,
       //渲染列表数据方法
       getContactData,
       //选择项改变方法

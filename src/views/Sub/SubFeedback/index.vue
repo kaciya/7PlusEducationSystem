@@ -53,6 +53,7 @@
         :columns="feedbackTable.colums"
         :data-source="feedbackTable.data"
         row-Key="id"
+        :loading="isLoading"
         :pagination="feedbackPagination"
         @change="pageChange"
       >
@@ -147,11 +148,13 @@ export default {
      * feedbackPagination 分页参数
      * getFeedbackData 渲染表格数据方法
      * pageChange 点击下一页方法
+     * isLoading 加载列表
      */
     const {
       feedbackPagination,
       getFeedbackData,
-      pageChange
+      pageChange,
+      isLoading
     } = useGetFeedbackList(feedbackTable , searchData);
 
     /**
@@ -211,7 +214,9 @@ export default {
       //点击操作中的处理方法
       editManage,
       //点击下一页方法
-      pageChange
+      pageChange,
+      //加载状态
+      isLoading
     };
     //#endregion
   }

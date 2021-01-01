@@ -1,5 +1,6 @@
 //导入 reactive 对象
 import {
+  ref,
   reactive
 } from "vue";
 
@@ -15,6 +16,10 @@ import {
 
 //#region 获取 操作日志 数据列表
 export const useGetLogList = logTable => {
+
+  //创建加载状态 
+  const isLoading = ref(false);
+
   //#region
   const logPagination = reactive({
     //列表所在页数
@@ -50,6 +55,9 @@ export const useGetLogList = logTable => {
       params.username = getParam.username;
     }
 
+    //发送请求时 显示加载状态
+    isLoading.value = true;
+
     //请求接口: /admin/log/page
     httpGet(log.GetLogList, params)
       .then(res => {
@@ -58,6 +66,9 @@ export const useGetLogList = logTable => {
           logTable.logData = res.data.records;
           //获取分页总数量
           logPagination.total = res.data.total;
+
+          //请求成功后 取消加载状态
+          isLoading.value = false;
         }
       })
       .catch(err => {
@@ -78,8 +89,13 @@ export const useGetLogList = logTable => {
 
   //返回
   return {
+    //操作日志分页
     logPagination,
+    //加载状态
+    isLoading,
+    //获取操作日志数据方法
     getLogData,
+    //分页改变方法
     pageChange
   };
 };
