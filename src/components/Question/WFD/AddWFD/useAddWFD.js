@@ -31,7 +31,7 @@ export function useAddWFD(addWFD, addModalVisible, getQuestion, uploadAudioList,
     // 先校验
     addWFDRef.value.validate().then(async () => {
       // 有原文内容且没有上传音频
-      if (addWFD.model.titleText.trim().length > 0 && addWFD.model.titleAudio.length == 0) {
+      if (addWFD.model.answer.trim().length > 0 && addWFD.model.titleAudio.length == 0) {
         // 自动将原文转音频
         await audioSynthetic();
       }

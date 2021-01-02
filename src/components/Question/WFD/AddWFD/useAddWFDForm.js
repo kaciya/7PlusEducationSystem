@@ -13,9 +13,7 @@ export function useAddWFDForm() {
       labelIds: [],
       // 题目音频
       titleAudio: "",
-      // 题目原文
-      titleText: "",
-      // 答案参考
+      // 答案参考(答案参考就是题目原文)
       answer: "",
       // 备注
       remark: ""
