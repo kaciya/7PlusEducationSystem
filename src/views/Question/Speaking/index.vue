@@ -49,16 +49,10 @@
 
         <!-- 操作区域 start -->
         <template #extra>
-          <!-- 批量上传按钮（只在SST和WED中存在） -->
+          <!-- 批量上传组件（只在RA、RS和ASQ中存在） -->
           <BatchUpload
-            v-if="category == 'RA' || category == 'RS' || category == 'ASQ'"
             :uploadFile="uploadFile"
           />
-          <!-- <a-button
-            v-if="category == 'RA' || category == 'RS' || category == 'ASQ'"
-            @click="showBulkUpload"
-            >批量上传
-          </a-button> -->
           <!-- 添加题目按钮 -->
           <a-button type="primary" @click="showAddModal">添加</a-button>
           <!-- 添加题目模态框 -->
@@ -195,7 +189,7 @@ export default {
     const { setLabels } = useSetLabels(labelList);
 
     // 批量上传 功能
-    const { uploadFile } = useBulkUpload(category,getQuestion);
+    const { uploadFile } = useBulkUpload(category, getQuestion);
 
     // 显示查看模态框 功能
     const { getModalVisible, showGetModal } = useShowGetModal(category);

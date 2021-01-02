@@ -1,3 +1,11 @@
+// 参数管理
+export const param = {
+  // 获取数据列表
+  GetDataList: "system/params",
+  // 修改数据列表
+  EditDataList: "system/param/update"
+}
+
 // 师资管理
 export const teacherInfo = {
   // 师资列表
@@ -44,7 +52,13 @@ export const campus = {
   // 删除校区列表
   DelCampuTableList: (id) => `school/campus/${id}`,
   // 获取校区风采列表
-  GetCampStyleList: "school/campus/style/list"
+  GetCampStyleList: "school/campus/style/list",
+  // 添加校区风采
+  AddCampStyleList: "school/campus/style/add",
+  // 编辑校区风采
+  EditCampStyleList: "school/campus/style/update",
+  // 删除校区风采
+  DelCampStyleList: (id) => `school/campus/style/${id}`
 }
 
 
