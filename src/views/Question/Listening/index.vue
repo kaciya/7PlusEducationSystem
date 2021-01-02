@@ -175,6 +175,8 @@
         :editModalVisible="editModalVisible"
         questionType="hcs"
       ></EditMCSModal>
+      <!-- 编辑hiw -->
+      <EditHIWModal :editModalVisible="editModalVisible"></EditHIWModal>
       <!-- 编辑题目模态框 end -->
 
       <!-- 查看题目模态框 start -->
@@ -202,6 +204,8 @@
         :getModalVisible="getModalVisible"
         questionType="hcs"
       ></GetMCSModal>
+      <!-- 查看hiw -->
+      <GetHIWModal :getModalVisible="getModalVisible"></GetHIWModal>
       <!-- 查看题目模态框 end -->
     </a-card>
     <!-- 主体Main end -->
@@ -242,6 +246,8 @@ import EditFIBModal from "@/components/Question/FIB/EditFIB";
 import EditMCMModal from "@/components/Question/MCM/EditMCM";
 // 引入 编辑mcs、smw、hcs题目模态框
 import EditMCSModal from "@/components/Question/MCS/EditMCS";
+// 引入 编辑hiw题目模态框
+import EditHIWModal from "@/components/Question/HIW/EditHIW";
 //#endregion
 
 //#region 查看题目模态框
@@ -251,6 +257,8 @@ import GetWFDModal from "@/components/Question/WFD/GetWFD";
 import GetFIBModal from "@/components/Question/FIB/GetFIB";
 // 引入 查看mcs、mcm、smw、hcs题目模态框
 import GetMCSModal from "@/components/Question/MCS/GetMCS";
+// 引入 查看hiw题目模态框
+import GetHIWModal from "@/components/Question/HIW/GetHIW";
 //#endregion
 
 // 导入 题目列表 列配置
@@ -398,12 +406,15 @@ export default {
     EditMCMModal,
     // mcs、smw、hcs
     EditMCSModal,
+    // hiw
+    EditHIWModal,
     //#endregion
 
     //#region 查看题目模态框
     GetWFDModal,
     GetFIBModal,
     GetMCSModal,
+    GetHIWModal,
     //#endregion
   },
 };
