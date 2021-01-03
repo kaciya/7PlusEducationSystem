@@ -4,7 +4,7 @@
     <Crumbs :crumbName="[{ name: '题库管理' }, { name: '听力题库' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
-    <a-card style="min-height: 93%">
+    <a-card style="min-height: 93%; min-width: 1208px">
       <!-- 题型选择 start -->
       <a-radio-group
         v-model:value="category"
@@ -89,6 +89,14 @@
         :pagination="questionPagination"
         @change="changePagenum"
       >
+        <template #titleAudio="{ text }">
+          <a-tooltip placement="bottomLeft">
+            <template #title>
+              {{ text }}
+            </template>
+            {{ text }}
+          </a-tooltip>
+        </template>
         <!-- 题目标签选择器 start -->
         <template #labels="{ record }">
           <!-- 设置标签时，将 题目id和选中标签 传给功能函数 -->
@@ -129,6 +137,7 @@
             >编辑</a-button
           >
           <a-popconfirm
+            placement="topRight"
             title="确定删除这个题目吗？"
             @confirm="delQuestion(record.id)"
             @cancel="cancelDelQuestion"
@@ -166,6 +175,8 @@
         :editModalVisible="editModalVisible"
         questionType="hcs"
       ></EditMCSModal>
+      <!-- 编辑hiw -->
+      <EditHIWModal :editModalVisible="editModalVisible"></EditHIWModal>
       <!-- 编辑题目模态框 end -->
 
       <!-- 查看题目模态框 start -->
@@ -193,6 +204,8 @@
         :getModalVisible="getModalVisible"
         questionType="hcs"
       ></GetMCSModal>
+      <!-- 查看hiw -->
+      <GetHIWModal :getModalVisible="getModalVisible"></GetHIWModal>
       <!-- 查看题目模态框 end -->
     </a-card>
     <!-- 主体Main end -->
@@ -233,6 +246,8 @@ import EditFIBModal from "@/components/Question/FIB/EditFIB";
 import EditMCMModal from "@/components/Question/MCM/EditMCM";
 // 引入 编辑mcs、smw、hcs题目模态框
 import EditMCSModal from "@/components/Question/MCS/EditMCS";
+// 引入 编辑hiw题目模态框
+import EditHIWModal from "@/components/Question/HIW/EditHIW";
 //#endregion
 
 //#region 查看题目模态框
@@ -242,6 +257,8 @@ import GetWFDModal from "@/components/Question/WFD/GetWFD";
 import GetFIBModal from "@/components/Question/FIB/GetFIB";
 // 引入 查看mcs、mcm、smw、hcs题目模态框
 import GetMCSModal from "@/components/Question/MCS/GetMCS";
+// 引入 查看hiw题目模态框
+import GetHIWModal from "@/components/Question/HIW/GetHIW";
 //#endregion
 
 // 导入 题目列表 列配置
@@ -389,15 +406,16 @@ export default {
     EditMCMModal,
     // mcs、smw、hcs
     EditMCSModal,
+    // hiw
+    EditHIWModal,
     //#endregion
 
     //#region 查看题目模态框
     GetWFDModal,
     GetFIBModal,
     GetMCSModal,
+    GetHIWModal,
     //#endregion
   },
 };
 </script>
-
-<style lang="scss" scoped></style>

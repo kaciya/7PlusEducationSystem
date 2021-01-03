@@ -1,30 +1,30 @@
 <template>
-  <!-- 添加HIW题目模态框 -->
+  <!-- 编辑HIW题目模态框 -->
   <a-modal
-    v-model:visible="addModalVisible.hiw"
-    title="添加"
-    @ok="confirmAddHIW"
-    @cancel="cancelAddHIW"
+    v-model:visible="editModalVisible.hiw"
+    title="编辑"
+    @ok="confirmEditHIW"
+    @cancel="cancelEditHIW"
     :maskClosable="false"
   >
-    <!-- 添加hiw题目表单 start -->
+    <!-- 编辑hiw题目表单 start -->
     <a-form
-      :model="addHIW.model"
-      :rules="addHIW.rules"
-      ref="addHIWRef"
+      :model="editHIW.model"
+      :rules="editHIW.rules"
+      ref="editHIWRef"
       :label-col="{ span: 4 }"
       :wrapper-col="{ span: 18 }"
     >
       <a-form-item label="编号" name="no" hasFeedback>
-        <a-input v-model:value="addHIW.model.no" />
+        <a-input v-model:value="editHIW.model.no" />
       </a-form-item>
       <a-form-item label="题目" name="title" hasFeedback>
-        <a-input v-model:value="addHIW.model.title" />
+        <a-input v-model:value="editHIW.model.title" />
       </a-form-item>
       <a-form-item label="标签选择" name="labelIds">
         <!-- 题目标签复选框 start -->
         <a-checkbox-group
-          v-model:value="addHIW.model.labelIds"
+          v-model:value="editHIW.model.labelIds"
           @change="changeLabels"
         >
           <a-checkbox :value="item.id" v-for="item in labelList" :key="item.id">
@@ -48,7 +48,7 @@
       </a-form-item>
       <!-- 题目原文 start -->
       <a-form-item label="题目原文" name="titleQuestion">
-        <a-textarea v-model:value="addHIW.model.titleQuestion" :rows="4" />
+        <a-textarea v-model:value="editHIW.model.titleQuestion" :rows="4" />
         <a-button type="primary" @click="audioSynthetic" :loading="synthesizing"
           >转换为音频</a-button
         >
@@ -68,10 +68,10 @@
       <!-- 题目问题 end -->
 
       <a-form-item label="备注" name="remark">
-        <a-textarea v-model:value="addHIW.model.remark" :rows="2" />
+        <a-textarea v-model:value="editHIW.model.remark" :rows="2" />
       </a-form-item>
     </a-form>
-    <!-- 添加hiw题目表单 end -->
+    <!-- 编辑hiw题目表单 end -->
 
     <!-- 编辑错误展示模态框 start -->
     <a-modal
@@ -111,10 +111,10 @@
 import { inject } from "vue";
 // 引入图标
 import { CheckCircleTwoTone } from "@ant-design/icons-vue";
-// 引入 添加HIW题目表单数据
-import { useAddHIWForm } from "./useAddHIWForm";
-// 引入 添加HIW题目 功能
-import { useAddHIW } from "./useAddHIW";
+// 引入 编辑HIW题目表单数据
+import { useEditHIWForm } from "./useEditHIWForm";
+// 引入 编辑HIW题目 功能
+import { useEditHIW } from "./useEditHIW";
 // 引入 上传音频列表
 import { useUploadAudioList } from "@/components/Question/SST/AddSST/useUploadAudioList";
 // 引入 上传音频 功能
@@ -124,16 +124,19 @@ import { useGetLabels } from "@/views/Question/QuestionLabel/useGetLables";
 // 引入 音频合成 功能
 import { useAudioSynthetic } from "@/components/Question/SST/AddSST/useAudioSynthetic";
 // 引入 设置错误展示 功能
-import { useSetWrong } from "./useSetWrong";
+import { useSetWrong } from "../AddHIW/useSetWrong";
 
 export default {
-  props: ["addModalVisible"],
+  props: ["editModalVisible"],
   setup(props) {
-    // 添加模态框的显示与隐藏
-    const { addModalVisible } = props;
+    // 编辑模态框的显示与隐藏
+    const { editModalVisible } = props;
 
     // 获取父组件的刷新题目列表的方法
     const getQuestion = inject("getQuestion");
+
+    // 获取要编辑的题目详情
+    const questionDetail = inject("questionDetail");
 
     // 标签列表
     const { labelList } = useGetLabels();
@@ -141,34 +144,35 @@ export default {
     // 上传音频列表
     const { uploadAudioList } = useUploadAudioList();
 
-    // 添加HIW题目表单数据
-    const { addHIW } = useAddHIWForm();
+    // 编辑HIW题目表单数据
+    const { editHIW } = useEditHIWForm();
 
     // 音频合成功能
     const { synthesizing, audioSynthetic } = useAudioSynthetic(
-      addHIW,
+      editHIW,
       uploadAudioList,
       "titleQuestion"
     );
 
-    // 添加HIW题目
+    // 编辑HIW题目
     const {
-      addHIWRef,
+      editHIWRef,
       allTitleText,
       changeLabels,
-      confirmAddHIW,
-      cancelAddHIW,
-    } = useAddHIW(
-      addHIW,
-      addModalVisible,
+      confirmEditHIW,
+      cancelEditHIW,
+    } = useEditHIW(
+      editHIW,
+      editModalVisible,
       getQuestion,
       uploadAudioList,
-      audioSynthetic
+      audioSynthetic,
+      questionDetail
     );
 
     // 上传音频功能
     const { uploadAudio, changeUploadAudio } = useUploadAudio(
-      addHIW,
+      editHIW,
       uploadAudioList
     );
 
@@ -196,18 +200,18 @@ export default {
       synthesizing,
       // 音频合成功能
       audioSynthetic,
-      // 添加题目的表单数据和校验规则
-      addHIW,
-      // 添加题目表单
-      addHIWRef,
+      // 编辑题目的表单数据和校验规则
+      editHIW,
+      // 编辑题目表单
+      editHIWRef,
       // 题目全部原文
       allTitleText,
       // 改变选择标签时
       changeLabels,
-      // 添加hiw题目
-      confirmAddHIW,
-      // 取消添加hiw题目
-      cancelAddHIW,
+      // 编辑hiw题目
+      confirmEditHIW,
+      // 取消编辑hiw题目
+      cancelEditHIW,
 
       //#region 设置错误展示功能
       // 设置错误展示模态框的显示与隐藏

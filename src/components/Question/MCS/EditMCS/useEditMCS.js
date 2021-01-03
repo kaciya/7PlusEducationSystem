@@ -34,6 +34,10 @@ export function useEditMCS(editModalVisible, getQuestion, questionDetail, questi
         {
           content: "",
           key: "A"
+        },
+        {
+          content: "",
+          key: "B"
         }
       ],
       // 题目解析
@@ -123,10 +127,16 @@ export function useEditMCS(editModalVisible, getQuestion, questionDetail, questi
           // 重置表单
           editMCSRef.value.resetFields();
           // 手动重置
-          editMCS.model.choices = [{
-            content: "",
-            key: "A"
-          }];
+          editMCS.model.choices = [
+            {
+              content: "",
+              key: "A"
+            },
+            {
+              content: "",
+              key: "B"
+            }
+          ];
           // 清除音频上传列表
           uploadAudioList.value = []
         }
@@ -149,10 +159,16 @@ export function useEditMCS(editModalVisible, getQuestion, questionDetail, questi
     // 重置表单
     editMCSRef.value.resetFields();
     // 手动重置
-    editMCS.model.choices = [{
-      content: "",
-      key: "A"
-    }];
+    editMCS.model.choices = [
+      {
+        content: "",
+        key: "A"
+      },
+      {
+        content: "",
+        key: "B"
+      }
+    ];
     // 清除音频上传列表
     uploadAudioList.value = []
   };
