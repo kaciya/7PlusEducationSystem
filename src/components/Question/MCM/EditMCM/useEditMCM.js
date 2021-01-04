@@ -34,6 +34,10 @@ export function useEditMCM(editModalVisible, getQuestion, questionDetail, upload
         {
           content: "",
           key: "A"
+        },
+        {
+          content: "",
+          key: "B"
         }
       ],
       // 题目解析
@@ -129,6 +133,10 @@ export function useEditMCM(editModalVisible, getQuestion, questionDetail, upload
             {
               content: "",
               key: "A"
+            },
+            {
+              content: "",
+              key: "B"
             }
           ];
           // 清除音频上传列表
@@ -157,6 +165,10 @@ export function useEditMCM(editModalVisible, getQuestion, questionDetail, upload
       {
         content: "",
         key: "A"
+      },
+      {
+        content: "",
+        key: "B"
       }
     ];
     // 清除音频上传列表

@@ -35,7 +35,7 @@
       <!-- 题目标签复选框 end -->
 
       <!-- 上传音频 start -->
-      <a-form-item label="题目音频">
+      <a-form-item label="题目音频" name="titleAudio">
         <a-upload
           :action="uploadAudio.url"
           :headers="uploadAudio.headers"

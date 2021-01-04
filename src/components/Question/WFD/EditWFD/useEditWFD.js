@@ -25,8 +25,6 @@ export function useEditWFD(editModalVisible, getQuestion, questionDetail, upload
       labelIds: [],
       // 题目音频
       titleAudio: "",
-      // 题目原文
-      titleText: "",
       // 答案参考
       answer: "",
       // 备注

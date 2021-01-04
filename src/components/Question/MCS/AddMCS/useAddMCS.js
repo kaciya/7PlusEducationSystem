@@ -1,6 +1,6 @@
 //#region 添加MCS题型
 // 引入响应式API
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 // 引入提示框
 import { message } from "ant-design-vue";
 // 导入 post 请求
@@ -13,54 +13,7 @@ import { listen } from "@/api/questionListenAPI";
  * @param {*} addModalVisible 添加模态框的显示与隐藏
  * @param {*} getQuestion 重新获取列表
  */
-export function useAddMCS(addModalVisible, getQuestion, questionType, uploadAudioList) {
-  // 表单数据 校验规则
-  const addMCS = reactive({
-    model: {
-      // 编号
-      no: "",
-      // 题目
-      title: "",
-      // 标签选择
-      labelIds: [],
-      // 题目音频
-      titleAudio: "",
-      // 题目原文
-      titleText: "",
-      // 题目问题
-      titleQuestion: "",
-      // 题目选项
-      choices: [
-        {
-          content: "",
-          key: "A"
-        }
-      ],
-      // 题目解析
-      titleAnalysis: "",
-      // 答案参考
-      answer: "",
-      // 备注
-      remark: ""
-    },
-    // 校验规则
-    rules: {
-      // 编号
-      no: [
-        {
-          required: true,
-          whitespace: true,
-          message: "题目编号必须填写",
-          trigger: "blur"
-        }
-      ],
-      // 题目
-      title: [
-        { required: true, whitespace: true, message: "题目必须填写", trigger: "blur" }
-      ]
-    }
-  });
-
+export function useAddMCS(addMCS, addModalVisible, getQuestion, questionType, uploadAudioList, audioSynthetic) {
   // 表单ref
   const addMCSRef = ref(null);
 
@@ -93,7 +46,12 @@ export function useAddMCS(addModalVisible, getQuestion, questionType, uploadAudi
   // 添加MCS题目
   const confirmAddMCS = () => {
     // 先校验
-    addMCSRef.value.validate().then(() => {
+    addMCSRef.value.validate().then(async () => {
+      // 有原文内容且没有上传音频
+      if (addMCS.model.titleText.trim().length > 0 && addMCS.model.titleAudio.length == 0) {
+        // 自动将原文转音频
+        await audioSynthetic();
+      }
       // 发送添加题目请求
       httpPost(listen.AddQuestion(questionType), addMCS.model).then((res) => {
         if (res.success == true) {
@@ -106,10 +64,16 @@ export function useAddMCS(addModalVisible, getQuestion, questionType, uploadAudi
           // 重置表单
           addMCSRef.value.resetFields();
           // 手动重置
-          addMCS.model.choices = [{
-            content: "",
-            key: "A"
-          }];
+          addMCS.model.choices = [
+            {
+              content: "",
+              key: "A"
+            },
+            {
+              content: "",
+              key: "B"
+            }
+          ];
           // 清除音频上传列表
           uploadAudioList.value = []
         }
@@ -132,10 +96,16 @@ export function useAddMCS(addModalVisible, getQuestion, questionType, uploadAudi
     // 重置表单
     addMCSRef.value.resetFields();
     // 手动重置
-    addMCS.model.choices = [{
-      content: "",
-      key: "A"
-    }];
+    addMCS.model.choices = [
+      {
+        content: "",
+        key: "A"
+      },
+      {
+        content: "",
+        key: "B"
+      }
+    ];
     // 清除音频上传列表
     uploadAudioList.value = []
   };

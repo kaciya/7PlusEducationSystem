@@ -1,4 +1,5 @@
 <template>
+  <!-- 音频播发器-查看 -->
   <div class="audio-wrapper">
     <!-- 音频 -->
     <audio :ref="dom.audio" :src="audioUrl"></audio>
@@ -154,7 +155,7 @@ $height: 40px;
       transform: translate(-50%, -50%);
       cursor: pointer;
     }
-    
+
     &:hover {
       i {
         border: 6px solid #fff;

@@ -50,11 +50,9 @@
         <!-- 操作区域 start -->
         <template #extra>
           <!-- 批量上传组件（只在RA、RS和ASQ中存在） -->
-          <BatchUpload
-            :uploadFile="uploadFile"
-          />
+          <BatchUpload :uploadFile="uploadFile" />
           <!-- 添加题目按钮 -->
-          <a-button type="primary" @click="showAddModal">添加</a-button>
+          <a-button type="primary">添加</a-button>
           <!-- 添加题目模态框 -->
           <!-- <AddSSTModal></AddSSTModal> -->
         </template>
@@ -84,7 +82,7 @@
             style="width: 100%"
             placeholder="请选择标签，最多可以选择3项"
             option-label-prop="label"
-            @change="setLabels(record.id, record.category, record.labels)"
+            @change="editLabels(record.id, record.labels)"
           >
             <!-- 渲染所有标签 -->
             <a-select-option
@@ -126,8 +124,16 @@
         <!-- 题目操作区 end -->
         <!-- 题目列表 end -->
       </a-table>
-      <!-- 查看模态框 -->
+      <!-- 查看模态框 start -->
+      <!-- 查看ra -->
       <GetRAModal :getModalVisible="getModalVisible" />
+      <!-- 查看rs -->
+      <GetRSModal :getModalVisible="getModalVisible" />
+      <!-- 查看rl -->
+      <GetRLModal :getModalVisible="getModalVisible" />
+      <!-- 查看asq -->
+      <GetASQModal :getModalVisible="getModalVisible" />
+      <!-- 查看模态框 end -->
     </a-card>
     <!-- 主体Main end -->
   </a-layout-content>
@@ -143,10 +149,16 @@ import BatchUpload from "@/components/BatchUpload";
 // 引入icons图标
 import { UploadOutlined } from "@ant-design/icons-vue";
 
+//#region 查看模态框
 // 引入 查看ra题目模态框
 import GetRAModal from "@/components/Question/RA/GetRA";
-// 引入 添加sst题目模态框
-import AddSSTModal from "@/components/Question/SST/AddSST";
+// 引入 查看rs题目模态框
+import GetRSModal from "@/components/Question/RS/GetRS";
+// 引入 查看rl题目模态框
+import GetRLModal from "@/components/Question/RL/GetRL";
+// 引入 查看asq题目模态框
+import GetASQModal from "@/components/Question/ASQ/GetASQ";
+//#endregion
 
 // 导入 题目列表 列配置
 import { useQuestionColumns } from "./useQuestionColumns";
@@ -155,13 +167,11 @@ import { useGetQuestion } from "./useGetQuestion";
 // 导入 获取 全部标签类型
 import { useGetLabels } from "../QuestionLabel/useGetLables";
 // 导入 设置题目标签功能
-import { useSetLabels } from "./useSetLabels";
+import { useEditLabels } from "./useEditLabels";
 // 导入 打开批量上传模态框的功能
 import { useBulkUpload } from "./useBulkUpload";
 // 导入 显示查看题目模态框 功能
-import { useShowGetModal } from "./useShowGetModal";
-// 导入 显示添加题目模态框 功能
-import { useShowAddModal } from "./useShowAddModal";
+import { useShowModal } from "./useShowModal";
 // 导入 删除题目功能
 import { useDelQuestion } from "./useDelQuestion";
 
@@ -186,16 +196,13 @@ export default {
     const { questionColumns, questionColumns2 } = useQuestionColumns();
 
     // 设置 题目标签
-    const { setLabels } = useSetLabels(labelList);
+    const { editLabels } = useEditLabels(labelList, getQuestion);
 
     // 批量上传 功能
     const { uploadFile } = useBulkUpload(category, getQuestion);
 
-    // 显示查看模态框 功能
-    const { getModalVisible, showGetModal } = useShowGetModal(category);
-
-    // 显示添加模态框 功能
-    const { showAddModal } = useShowAddModal(category);
+    // 显示模态框 功能
+    const { getModalVisible, showGetModal } = useShowModal(category);
 
     // 删除题目 功能
     let { delQuestion, cancelDelQuestion } = useDelQuestion(getQuestion);
@@ -223,7 +230,7 @@ export default {
       // 跳转页码时
       changePagenum,
       // 设置题目标签
-      setLabels,
+      editLabels,
       //#endregion
 
       //#region 批量上传功能
@@ -235,10 +242,6 @@ export default {
       getModalVisible,
       // 显示查看模态框
       showGetModal,
-      //#endregion
-
-      //#region 显示添加模态框功能
-      showAddModal,
       //#endregion
 
       //#region 删除题目功能
@@ -258,10 +261,16 @@ export default {
     BatchUpload,
     // 上传图标
     UploadOutlined,
+    //#region 查看模态框
     // 查看RA题目模态框
     GetRAModal,
-    // 添加SST题目模态框
-    AddSSTModal,
+    // 查看RS题目模态框
+    GetRSModal,
+    // 查看RL题目模态框
+    GetRLModal,
+    // 查看ASQ题目模态框
+    GetASQModal,
+    //#endregion
   },
 };
 </script>
