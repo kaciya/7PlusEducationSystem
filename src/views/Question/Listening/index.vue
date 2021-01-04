@@ -52,6 +52,9 @@
 
         <!-- 操作区域 start -->
         <template #extra>
+          <!-- 导出按钮 -->
+          <ExportBtn :questionType="1" :category="category"></ExportBtn>
+          <!-- 批量上传组件 -->
           <BatchUpload :uploadFile="bulkUpload"></BatchUpload>
           <!-- 添加题目按钮 -->
           <a-button type="primary" @click="showAddModal">添加</a-button>
@@ -219,6 +222,8 @@ import Crumbs from "@/components/Crumbs";
 import UploadAudioBtn from "@/components/Question/UploadAudioBtn";
 // 引入批量上传按钮组件
 import BatchUpload from "@/components/BatchUpload";
+// 引入导出按钮组件
+import ExportBtn from "@/components/Question/ExportBtn";
 
 //#region 添加题目模态框
 // 引入 添加sst题目模态框
@@ -380,6 +385,8 @@ export default {
     UploadAudioBtn,
     // 批量上传按钮组件
     BatchUpload,
+    // 导出按钮组件
+    ExportBtn,
     //#region 添加题目模态框
     // 添加SST题目模态框
     AddSSTModal,
