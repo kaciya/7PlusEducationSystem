@@ -13,7 +13,7 @@ import { listen } from '@/api/questionListenAPI';
  * @param {*} editModalVisible 编辑模态框的显示与隐藏
  * @param {*} getQuestion 重新获取列表
  */
-export function useEditFIB(editModalVisible, getQuestion, editDetail, uploadAudioList) {
+export function useEditFIB(editModalVisible, getQuestion, questionDetail, uploadAudioList) {
   // 表单数据 校验规则
   const editFIB = reactive({
     model: {
@@ -56,17 +56,23 @@ export function useEditFIB(editModalVisible, getQuestion, editDetail, uploadAudi
     },
   });
 
-  // 每次打开编辑模态框都会触发 editDetail的监听，
+  // 每次打开编辑模态框都会触发 questionDetail的监听，
   // 这时重新处理题目详情数据给编辑表单的modal
-  watch(editDetail, (val) => {
-    for (const key in val) {
-      if (key == "labels") {
-        // 标签特殊处理，将labels:[{id:1, name:'高频'}] map为 表单中的labelIds:['1']
-        editFIB.model.labelIds = val[key].map((value) => value.id);
-      }
-      else {
-        // 其它值直接赋值
-        editFIB.model[key] = val[key]
+  watch(questionDetail, (val) => {
+    // 这层判断是否是fib模态框开启，由于fibModel中titleText是数组，而其它model中titleText有的是字符串
+    // 但是questionDetail是同一个数据源注入下来，当我们先打开其它modal，然后打开fibModal时，questionDetail中titleText会从字符串变成数组，
+    // 此时其它模态框也在watch监听，一起变化，titleText绑定的框架输入控件就会报错
+    // 所以，我们需要控制监听questionDetail时，只在当前模态框打开时才重新给model赋值回显
+    if (editModalVisible.fib) {
+      for (const key in val) {
+        if (key == "labels") {
+          // 标签特殊处理，将labels:[{id:1, name:'高频'}] map为 表单中的labelIds:['1']
+          editFIB.model.labelIds = val[key].map((value) => value.id);
+        }
+        else {
+          // 其它值直接赋值
+          editFIB.model[key] = val[key]
+        }
       }
     }
   })

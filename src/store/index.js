@@ -29,7 +29,7 @@ export default createStore({
     // 配置数据持久化存储
     createPersistedState({
       // 使用sesstionStorage存储
-      storage: window.sessionStorage,
+      // storage: window.sessionStorage,
       // 设置只持久化AuthStore下面的userInfos数据
       paths: ['AuthStore.userInfos']
     })

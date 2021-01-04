@@ -13,7 +13,7 @@ import { listen } from "@/api/questionListenAPI";
  * @param {*} editModalVisible 编辑模态框的显示与隐藏
  * @param {*} getQuestion 重新获取列表
  */
-export function useEditMCM(editModalVisible, getQuestion, editDetail, uploadAudioList) {
+export function useEditMCM(editModalVisible, getQuestion, questionDetail, uploadAudioList) {
   // 表单数据 校验规则
   const editMCM = reactive({
     model: {
@@ -34,6 +34,10 @@ export function useEditMCM(editModalVisible, getQuestion, editDetail, uploadAudi
         {
           content: "",
           key: "A"
+        },
+        {
+          content: "",
+          key: "B"
         }
       ],
       // 题目解析
@@ -61,17 +65,19 @@ export function useEditMCM(editModalVisible, getQuestion, editDetail, uploadAudi
     }
   });
 
-  // 每次打开编辑模态框都会触发 editDetail的监听，
+  // 每次打开编辑模态框都会触发 questionDetail的监听，
   // 这时重新处理题目详情数据给编辑表单的modal
-  watch(editDetail, (val) => {
-    for (const key in val) {
-      if (key == "labels") {
-        // 标签特殊处理，将labels:[{id:1, name:'高频'}] map为 表单中的labelIds:['1']
-        editMCM.model.labelIds = val[key].map((value) => value.id);
-      }
-      else {
-        // 其它值直接赋值
-        editMCM.model[key] = val[key]
+  watch(questionDetail, (val) => {
+    if (editModalVisible.mcm) {
+      for (const key in val) {
+        if (key == "labels") {
+          // 标签特殊处理，将labels:[{id:1, name:'高频'}] map为 表单中的labelIds:['1']
+          editMCM.model.labelIds = val[key].map((value) => value.id);
+        }
+        else {
+          // 其它值直接赋值
+          editMCM.model[key] = val[key]
+        }
       }
     }
   })
@@ -127,6 +133,10 @@ export function useEditMCM(editModalVisible, getQuestion, editDetail, uploadAudi
             {
               content: "",
               key: "A"
+            },
+            {
+              content: "",
+              key: "B"
             }
           ];
           // 清除音频上传列表
@@ -155,6 +165,10 @@ export function useEditMCM(editModalVisible, getQuestion, editDetail, uploadAudi
       {
         content: "",
         key: "A"
+      },
+      {
+        content: "",
+        key: "B"
       }
     ];
     // 清除音频上传列表

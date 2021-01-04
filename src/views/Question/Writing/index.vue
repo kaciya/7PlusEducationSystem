@@ -45,7 +45,7 @@
         <!-- 下拉菜单区域 end -->
         <!-- 操作区域 start -->
         <template #extra>
-          <a-button type="primary"> 批量添加 </a-button>
+          <a-button type="primary"> 批量上传 </a-button>
           <a-button type="primary" @click="showAddModal"> 添加 </a-button>
         </template>
         <!-- 操作区域 end -->
@@ -68,7 +68,7 @@
             placeholder="请选择标签，最多可以选择3项"
             mode="multiple"
             v-model:value="record.labels"
-            @change="setLabels(record)"
+            @change="editLabels(record.id, record.labels)"
           >
             <!-- 渲染所有标签 -->
             <a-select-option
@@ -83,7 +83,7 @@
         <!-- 题目标签选择器 end -->
         <!-- 题目操作区 start -->
         <template #operation="{ record }">
-          <a-button type="primary" size="small" @click="showGetModal"
+          <a-button type="primary" size="small" @click="showGetModal(record.id)"
             >查看</a-button
           >
           <a-button
@@ -91,7 +91,7 @@
             size="small"
             class="modify-btn"
             style="margin-left: 10px"
-            @click="showEditModal"
+            @click="showEditModal(record.id)"
             >编辑</a-button
           >
           <a-popconfirm
@@ -109,16 +109,34 @@
       <!-- 题目列表 end -->
     </a-card>
     <!-- 添加题目模态框 start -->
-    <AddSWTModal :addModalVisible="addModalVisible"></AddSWTModal>
-    <AddWEModal :addModalVisible="addModalVisible"></AddWEModal>
+    <AddSWTModal
+      :addModalVisible="addModalVisible"
+      questionType="swt"
+    ></AddSWTModal>
+    <AddSWTModal
+      :addModalVisible="addModalVisible"
+      questionType="we"
+    ></AddSWTModal>
     <!-- 添加题目模态框 end -->
     <!-- 查看题目模态框 start -->
-    <GetSWTModal :getModalVisible="getModalVisible"></GetSWTModal>
-    <GetWEModal :getModalVisible="getModalVisible"></GetWEModal>
+    <GetSWTModal
+      :getModalVisible="getModalVisible"
+      questionType="swt"
+    ></GetSWTModal>
+    <GetSWTModal
+      :getModalVisible="getModalVisible"
+      questionType="we"
+    ></GetSWTModal>
     <!-- 查看题目模态框 end -->
     <!-- 编辑题目模态框 start -->
-    <EditSWTModal :editModalVisible="editModalVisible"></EditSWTModal>
-    <EditWEModal :editModalVisible="editModalVisible"></EditWEModal>
+    <EditSWTModal
+      :editModalVisible="editModalVisible"
+      questionType="swt"
+    ></EditSWTModal>
+    <EditSWTModal
+      :editModalVisible="editModalVisible"
+      questionType="we"
+    ></EditSWTModal>
     <!-- 编辑题目模态框 end -->
     <!-- 主体Main end -->
   </a-layout-content>
@@ -127,24 +145,12 @@
 <script>
 // 引入面包屑组件
 import Crumbs from "@/components/Crumbs";
-//#region 引入添加模态框组件
-// SWT题目模态框
+// 引入添加模态框组件
 import AddSWTModal from "@/components/Question/SWT/AddSWT";
-// WE题目模态框
-import AddWEModal from "@/components/Question/WE/AddWE";
-//#endregion
-//#region 引入查看模态框组件
-// SWT题目模态框
+// 引入查看模态框组件
 import GetSWTModal from "@/components/Question/SWT/GetSWT";
-// WE题目模态框
-import GetWEModal from "@/components/Question/WE/GetWE";
-//#endregion
-//#region 引入编辑模态框组件
-// SWT题目模态框
+// 引入编辑模态框组件
 import EditSWTModal from "@/components/Question/SWT/EditSWT";
-// WE题目模态框
-import EditWEModal from "@/components/Question/WE/EditWE";
-//#endregion
 // 导入 获取题目列表
 import { useGetQuestion } from "./useGetQuestion";
 // 导入 获取全部标签类型
@@ -152,7 +158,7 @@ import { useGetLabels } from "../QuestionLabel/useGetLables";
 // 导入 题目列表 列配置
 import { useQuestionColumns } from "./useQuestionColumns";
 // 导入 设置题目标签功能
-import { useSetLabels } from "./useSetLabels";
+import { useEditLabels } from "./useEditLabels";
 // 导入 删除题目功能
 import { useDelQuestion } from "./useDelQuestion";
 // 导入 显示模态框功能
@@ -176,21 +182,22 @@ export default {
     // 题目列表 列配置
     let { questionColumns } = useQuestionColumns();
     // 设置 题目标签
-    let { setLabels } = useSetLabels(labelList);
+    let { editLabels } = useEditLabels(labelList, getQuestion);
     //#endregion
     // 删除题目 功能
     let { delQuestion, cancelDelQuestion } = useDelQuestion(getQuestion);
-    //#region 添加 功能
-    // 显示添加模态框
-    let { addModalVisible, showAddModal } = useShowModal(category);
-    //#endregion
-    //#region 查看 功能
-    // 显示查看模态框
-    let { getModalVisible, showGetModal } = useShowModal(category);
-    //#endregion
-    //#region 编辑 功能
-    // 显示编辑模态框
-    let { editModalVisible, showEditModal } = useShowModal(category);
+    //#region 显示模态框 功能
+    let {
+      // 添加
+      addModalVisible,
+      showAddModal,
+      // 查看
+      getModalVisible,
+      showGetModal,
+      // 编辑
+      editModalVisible,
+      showEditModal
+    } = useShowModal(category, getQuestion);
     //#endregion
     return {
       //#region 渲染分页表格
@@ -209,7 +216,7 @@ export default {
       // 数据加载状态
       isLoading,
       // 设置题目标签
-      setLabels,
+      editLabels,
       // 分页配置项
       configPage,
       changePagenum,
@@ -248,24 +255,12 @@ export default {
   components: {
     // 面包屑
     Crumbs,
-    //#region 添加模态框组件
-    // SWT题目模态框
+    // 添加模态框组件
     AddSWTModal,
-    // WE题目模态框
-    AddWEModal,
-    //#endregion
-    //#region 查看模态框组件
-    // SWT题目模态框
+    // 查看模态框组件
     GetSWTModal,
-    // WE题目模态框
-    GetWEModal,
-    //#endregion
-    //#region 编辑模态框组件
-    // SWT题目模态框
+    // 编辑模态框组件
     EditSWTModal,
-    // WE题目模态框
-    EditWEModal,
-    //#endregion
   },
 };
 </script>

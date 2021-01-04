@@ -18,7 +18,7 @@
       <a-form-item label="编号" name="no" hasFeedback>
         <a-input v-model:value="addFIB.model.no" />
       </a-form-item>
-      <a-form-item label="题目" name="title">
+      <a-form-item label="题目" name="title" hasFeedback>
         <a-input v-model:value="addFIB.model.title" />
       </a-form-item>
       <a-form-item label="标签选择" name="labelIds">
@@ -33,7 +33,7 @@
         </a-checkbox-group>
         <!-- 题目标签复选框 end -->
       </a-form-item>
-      <a-form-item label="题目音频">
+      <a-form-item label="题目音频" name="titleAudio">
         <!-- 上传音频 start -->
         <a-upload
           :action="uploadAudio.url"
@@ -95,6 +95,8 @@ import {
   MinusCircleOutlined,
   PlusOutlined,
 } from "@ant-design/icons-vue";
+// 引入 添加FIB题目表单数据
+import { useAddFIBForm } from "./useAddFIBForm";
 // 引入 添加FIB题目 功能
 import { addFIB, useAddFIB } from "./useAddFIB";
 // 引入 上传音频列表
@@ -122,25 +124,33 @@ export default {
     // 上传音频列表
     const { uploadAudioList } = useUploadAudioList();
 
+    // 添加FIB题目表单数据
+    const { addFIB } = useAddFIBForm();
+
+    // 音频合成功能
+    const { synthesizing, audioSynthetic } = useAudioSynthetic(
+      addFIB,
+      uploadAudioList
+    );
+
     // 添加FIB题目
     const {
-      addFIB,
       addFIBRef,
       changeLabels,
       addTitleText,
       delTitleText,
       confirmAddFIB,
       cancelAddFIB,
-    } = useAddFIB(addModalVisible, getQuestion, uploadAudioList);
+    } = useAddFIB(
+      addFIB,
+      addModalVisible,
+      getQuestion,
+      uploadAudioList,
+      audioSynthetic
+    );
 
     // 上传音频功能
     const { uploadAudio, changeUploadAudio } = useUploadAudio(
-      addFIB,
-      uploadAudioList
-    );
-
-    // 音频合成功能
-    const { synthesizing, audioSynthetic } = useAudioSynthetic(
       addFIB,
       uploadAudioList
     );

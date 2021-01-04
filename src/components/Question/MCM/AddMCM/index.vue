@@ -18,7 +18,7 @@
       <a-form-item label="编号" name="no" hasFeedback>
         <a-input v-model:value="addMCM.model.no" />
       </a-form-item>
-      <a-form-item label="题目" name="title">
+      <a-form-item label="题目" name="title" hasFeedback>
         <a-input v-model:value="addMCM.model.title" />
       </a-form-item>
       <!-- 题目标签复选框 start -->
@@ -35,7 +35,7 @@
       <!-- 题目标签复选框 end -->
 
       <!-- 上传音频 start -->
-      <a-form-item label="题目音频">
+      <a-form-item label="题目音频" name="titleAudio">
         <a-upload
           :action="uploadAudio.url"
           :headers="uploadAudio.headers"
@@ -122,8 +122,10 @@ import {
   PlusOutlined,
   MinusCircleOutlined,
 } from "@ant-design/icons-vue";
+// 引入 添加MCM题目表单数据
+import { useAddMCMForm } from "./useAddMCMForm";
 // 引入 添加MCM题目 功能
-import { addMCM, useAddMCM } from "./useAddMCM";
+import { useAddMCM } from "./useAddMCM";
 // 引入 上传音频列表
 import { useUploadAudioList } from "@/components/Question/SST/AddSST/useUploadAudioList";
 // 引入 上传音频 功能
@@ -149,25 +151,33 @@ export default {
     // 上传音频列表
     const { uploadAudioList } = useUploadAudioList();
 
+    // 添加MCM题目表单数据
+    const { addMCM } = useAddMCMForm();
+
+    // 音频合成功能
+    const { synthesizing, audioSynthetic } = useAudioSynthetic(
+      addMCM,
+      uploadAudioList
+    );
+
     // 添加MCM题目
     const {
-      addMCM,
       addMCMRef,
       changeLabels,
       addChoices,
       delChoices,
       confirmAddMCM,
       cancelAddMCM,
-    } = useAddMCM(addModalVisible, getQuestion, uploadAudioList);
+    } = useAddMCM(
+      addMCM,
+      addModalVisible,
+      getQuestion,
+      uploadAudioList,
+      audioSynthetic
+    );
 
     // 上传音频功能
     const { uploadAudio, changeUploadAudio } = useUploadAudio(
-      addMCM,
-      uploadAudioList
-    );
-
-    // 音频合成功能
-    const { synthesizing, audioSynthetic } = useAudioSynthetic(
       addMCM,
       uploadAudioList
     );

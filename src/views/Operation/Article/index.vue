@@ -4,7 +4,7 @@
     <Crumbs
       :crumbName="[
         { name: '运营管理' },
-        { name: '文章列表(官网)', route: '#' }
+        { name: '文章列表(官网)' }
       ]"
     />
     <!-- 面包屑 end -->

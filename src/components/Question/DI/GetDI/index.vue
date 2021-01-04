@@ -6,19 +6,19 @@
     :footer="null"
     :maskClosable="false"
     class="check-modal"
-    v-model:visible="getModalVisible.ra"
+    v-model:visible="getModalVisible.di"
   >
     <a-form v-bind="layout">
       <a-form-item label="编号">
-        <span>{{ getModalVisible.detail["no"] }} </span>
+        <span>{{ getDetail["no"] }} </span>
       </a-form-item>
       <a-form-item label="题目">
-        <span>{{ getModalVisible.detail["title"] }}</span>
+        <span>{{ getDetail["title"] }}</span>
       </a-form-item>
       <a-form-item label="标签">
         <a-tag
           color="cyan"
-          v-for="item in getModalVisible.detail['labels']"
+          v-for="item in getDetail['labels']"
           :key="item.id"
           >{{ item.name }}</a-tag
         >
@@ -26,24 +26,26 @@
       <a-form-item label="题目图片">
         <img
           src="item"
-          v-for="(item, index) in getModalVisible.detail['pics']"
+          v-for="(item, index) in getDetail['pics']"
           :key="index"
         />
       </a-form-item>
       <a-form-item label="题目内容">
-        <span>{{ getModalVisible.detail["titleText"] }}</span>
+        <span>{{ getDetail["titleText"] }}</span>
       </a-form-item>
       <a-form-item label="题目解析">
-        <span>{{ getModalVisible.detail["titleAnalysis"] }}</span>
+        <span>{{ getDetail["titleAnalysis"] }}</span>
       </a-form-item>
       <a-form-item label="备注">
-        <span>{{ getModalVisible.detail["remark"] || "－" }}</span>
+        <span>{{ getDetail["remark"] || "－" }}</span>
       </a-form-item>
     </a-form>
   </a-modal>
 </template>
 
 <script>
+// 导入注入方法
+import { inject } from "vue";
 // 导入获取模态框
 import { useGetDI } from "./useGetDI";
 export default {
@@ -53,11 +55,13 @@ export default {
     const { getModalVisible } = props;
 
     // 获取题目详情
-    const { layout } = useGetDI();
+    const { layout, getDetail } = useGetDI();
 
     return {
       // 表单布局
       layout,
+      // 查看详情
+      getDetail,
     };
   },
 };

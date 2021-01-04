@@ -15,7 +15,7 @@ import {
 } from 'ant-design-vue';
 
 //#region 操作处理 点击事件
-export const useEditFeedbackManage = () => {
+export const useEditFeedbackManage = (getFeedbackData) => {
     //点击处理 将未处理 的 问题 更改为 已解决
     const editManage = (feedId) => {
         Modal.confirm({

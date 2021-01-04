@@ -1,6 +1,6 @@
 //#region 添加SST题型
 // 引入响应式API
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 // 引入提示框
 import { message } from "ant-design-vue";
 // 导入 post 请求
@@ -13,48 +13,7 @@ import { listen } from "@/api/questionListenAPI";
  * @param {*} addModalVisible 添加模态框的显示与隐藏
  * @param {*} getQuestion 重新获取列表
  */
-export function useAddSST(addModalVisible, getQuestion, uploadAudioList) {
-  // 表单数据 校验规则
-  const addSST = reactive({
-    model: {
-      // 编号
-      no: "",
-      // 题目
-      title: "",
-      // 标签选择
-      labelIds: [],
-      // 题目音频
-      titleAudio: "",
-      // 题目原文
-      titleText: "",
-      // 答案参考
-      answer: "",
-      // 备注
-      remark: ""
-    },
-    // 校验规则
-    rules: {
-      // 编号
-      no: [
-        {
-          required: true,
-          whitespace: true,
-          message: "题目编号必须填写",
-          trigger: "blur"
-        }
-      ],
-      // 题目
-      title: [
-        {
-          required: true,
-          whitespace: true,
-          message: "题目必须填写",
-          trigger: "blur"
-        }
-      ]
-    }
-  });
-
+export function useAddSST(addSST, addModalVisible, getQuestion, uploadAudioList, audioSynthetic) {
   // 表单ref
   const addSSTRef = ref(null);
 
@@ -71,7 +30,12 @@ export function useAddSST(addModalVisible, getQuestion, uploadAudioList) {
   // 添加SST题目
   const confirmAddSST = () => {
     // 先校验
-    addSSTRef.value.validate().then(() => {
+    addSSTRef.value.validate().then(async () => {
+      // 有原文内容且没有上传音频
+      if (addSST.model.titleText.trim().length > 0 && addSST.model.titleAudio.length == 0) {
+        // 自动将原文转音频
+        await audioSynthetic();
+      }
       // 发送添加题目请求
       httpPost(listen.AddQuestion('sst'), addSST.model).then((res) => {
         if (res.success == true) {

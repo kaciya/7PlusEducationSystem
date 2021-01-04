@@ -4,11 +4,10 @@
     <!-- 批量导入按钮 -->
     <a-button @click="showBulkUpload"> {{ uploadFile.uploadTitle }} </a-button>
 
-    <!-- 批量导入单词模态框start -->
+    <!-- 批量导入模态框start -->
     <a-modal
       v-model:visible="bulkUpload.visible"
       :title="uploadFile.uploadTitle"
-      centered
       @ok="clickBulkUpload"
       @cancel="cancelBulkUpload"
     >
@@ -47,13 +46,13 @@
         </a-col>
       </a-row>
     </a-modal>
-    <!-- 批量导入单词模态框end -->
+    <!-- 批量导入模态框end -->
   </span>
 </template>
 
 <script>
 // 批量导入单词
-import { useBatchWord } from "./useBatchWord";
+import { useBulkImport } from "./useBulkImport";
 // 引入icons图标
 import { UploadOutlined } from "@ant-design/icons-vue";
 export default {
@@ -63,17 +62,17 @@ export default {
   components: {
     UploadOutlined,
   },
-  setup(prop) {
-    // 批量导入单词
+  setup(props) {
+    // 批量导入功能
     const {
-      bulkUpload, // 上传数据
-      showBulkUpload, // 点击上传按钮
-      downloadTemplate, // 下载模板
+      bulkUpload, //上传数据
+      showBulkUpload, //点击上传按钮
+      downloadTemplate, //下载模板
       bulkUploadChange, //文件改变事件
       beforeBulkUpload, //文件上传前的回调
       cancelBulkUpload, //取消事件
       clickBulkUpload, //确定事件
-    } = useBatchWord(prop.uploadFile);
+    } = useBulkImport(props.uploadFile);
 
     return {
       bulkUpload,

@@ -18,7 +18,7 @@
       <a-form-item label="编号" name="no" hasFeedback>
         <a-input v-model:value="editMCM.model.no" />
       </a-form-item>
-      <a-form-item label="题目" name="title">
+      <a-form-item label="题目" name="title" hasFeedback>
         <a-input v-model:value="editMCM.model.title" />
       </a-form-item>
       <!-- 题目标签复选框 start -->
@@ -35,7 +35,7 @@
       <!-- 题目标签复选框 end -->
 
       <!-- 上传音频 start -->
-      <a-form-item label="题目音频">
+      <a-form-item label="题目音频" name="titleAudio">
         <a-upload
           :action="uploadAudio.url"
           :headers="uploadAudio.headers"
@@ -144,7 +144,7 @@ export default {
     const getQuestion = inject("getQuestion");
 
     // 获取要编辑的题目详情
-    const editDetail = inject("editDetail");
+    const questionDetail = inject("questionDetail");
 
     // 标签列表
     const { labelList } = useGetLabels();
@@ -161,7 +161,12 @@ export default {
       delChoices,
       confirmEditMCM,
       cancelEditMCM,
-    } = useEditMCM(editModalVisible, getQuestion, editDetail, uploadAudioList);
+    } = useEditMCM(
+      editModalVisible,
+      getQuestion,
+      questionDetail,
+      uploadAudioList
+    );
 
     // 上传音频功能
     const { uploadAudio, changeUploadAudio } = useUploadAudio(

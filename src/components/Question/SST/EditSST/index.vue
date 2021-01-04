@@ -16,10 +16,10 @@
       :wrapper-col="{ span: 18 }"
     >
       <a-form-item label="编号" name="no" hasFeedback>
-        <a-input v-model:value="editSST.model.no" disabled />
+        <a-input v-model:value="editSST.model.no" />
       </a-form-item>
-      <a-form-item label="题目" name="title">
-        <a-input v-model:value="editSST.model.title" disabled />
+      <a-form-item label="题目" name="title" hasFeedback>
+        <a-input v-model:value="editSST.model.title" />
       </a-form-item>
       <a-form-item label="标签选择" name="labelIds">
         <!-- 题目标签复选框 start -->
@@ -33,7 +33,7 @@
         </a-checkbox-group>
         <!-- 题目标签复选框 end -->
       </a-form-item>
-      <a-form-item label="题目音频">
+      <a-form-item label="题目音频" name="titleAudio">
         <!-- 上传音频 start -->
         <a-upload
           :action="uploadAudio.url"
@@ -46,11 +46,7 @@
         <!-- 上传音频 end -->
       </a-form-item>
       <a-form-item label="题目原文" name="titleText">
-        <a-textarea
-          v-model:value="editSST.model.titleText"
-          disabled
-          :rows="4"
-        />
+        <a-textarea v-model:value="editSST.model.titleText" :rows="4" />
         <a-button type="primary" @click="audioSynthetic" :loading="synthesizing"
           >转换为音频</a-button
         >
@@ -97,7 +93,7 @@ export default {
     const getQuestion = inject("getQuestion");
 
     // 获取要编辑的题目详情
-    const editDetail = inject("editDetail");
+    const questionDetail = inject("questionDetail");
 
     // 标签列表
     const { labelList } = useGetLabels();
@@ -112,7 +108,12 @@ export default {
       changeLabels,
       confirmEditSST,
       cancelEditSST,
-    } = useEditSST(editModalVisible, getQuestion, editDetail, uploadAudioList);
+    } = useEditSST(
+      editModalVisible,
+      getQuestion,
+      questionDetail,
+      uploadAudioList
+    );
 
     // 上传音频功能
     const { uploadAudio, changeUploadAudio } = useUploadAudio(

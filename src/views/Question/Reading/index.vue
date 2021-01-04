@@ -70,7 +70,7 @@
             placeholder="请选择标签，最多可以选择3项"
             mode="multiple"
             v-model:value="record.labels"
-            @change="setLabels(record)"
+            @change="editLabels(record.id, record.labels)"
           >
             <!-- 渲染所有标签 -->
             <a-select-option
@@ -86,7 +86,7 @@
         <!-- 题目操作区 start -->
         <template #operation="{ record }">
           <!-- 查看 -->
-          <a-button type="primary" size="small" @click="showGetModal"
+          <a-button type="primary" size="small" @click="showGetModal(record.id)"
             >查看</a-button
           >
           <!-- 编辑 -->
@@ -95,7 +95,7 @@
             size="small"
             class="modify-btn"
             style="margin-left: 10px"
-            @click="showEditModal"
+            @click="showEditModal(record.id)"
             >编辑</a-button
           >
           <!-- 删除 -->
@@ -124,8 +124,14 @@
     <GetFIBWModal :getModalVisible="getModalVisible"></GetFIBWModal>
     <GetFIBRModal :getModalVisible="getModalVisible"></GetFIBRModal>
     <GetROModal :getModalVisible="getModalVisible"></GetROModal>
-    <GetMCMModal :getModalVisible="getModalVisible"></GetMCMModal>
-    <GetMCSModal :getModalVisible="getModalVisible"></GetMCSModal>
+    <GetMCMModal
+      questionType="mcm"
+      :getModalVisible="getModalVisible"
+    ></GetMCMModal>
+    <GetMCMModal
+      questionType="mcs"
+      :getModalVisible="getModalVisible"
+    ></GetMCMModal>
     <!-- 查看题目模态框 end -->
     <!-- 编辑题目模态框 start -->
     <EditFIBWModal :editModalVisible="editModalVisible"></EditFIBWModal>
@@ -162,8 +168,6 @@ import GetFIBRModal from "@/components/Question/FIBR/GetFIBR";
 import GetROModal from "@/components/Question/RO/GetRO";
 // MCM题目模态框
 import GetMCMModal from "@/components/Question/ReadMCM/GetMCM";
-// MCS题目模态框
-import GetMCSModal from "@/components/Question/ReadMCS/GetMCS";
 //#endregion
 //#region 引入编辑模态框组件
 // FIBW题目模态框
@@ -184,7 +188,7 @@ import { useGetLabels } from "../QuestionLabel/useGetLables";
 // 导入 题目列表 列配置
 import { useQuestionColumns } from "./useQuestionColumns";
 // 导入 设置题目标签功能
-import { useSetLabels } from "./useSetLabels";
+import { useEditLabels } from "./useEditLabels";
 // 导入 删除题目功能
 import { useDelQuestion } from "./useDelQuestion";
 // 导入 显示模态框功能
@@ -208,21 +212,19 @@ export default {
     // 题目列表 列配置
     let { questionColumns } = useQuestionColumns();
     // 设置 题目标签
-    let { setLabels } = useSetLabels(labelList);
+    let { editLabels } = useEditLabels(labelList, getQuestion);
     //#endregion
     // 删除题目 功能
     let { delQuestion, cancelDelQuestion } = useDelQuestion(getQuestion);
-    //#region 添加 功能
-    // 显示添加模态框
-    let { addModalVisible, showAddModal } = useShowModal(category);
-    //#endregion
-    //#region 查看 功能
-    // 显示查看模态框
-    let { getModalVisible, showGetModal } = useShowModal(category);
-    //#endregion
-    //#region 编辑 功能
-    // 显示编辑模态框
-    let { editModalVisible, showEditModal } = useShowModal(category);
+    //#region 显示添加模态框功能
+    let {
+      addModalVisible,
+      showAddModal,
+      getModalVisible,
+      showGetModal,
+      editModalVisible,
+      showEditModal,
+    } = useShowModal(category, getQuestion);
     //#endregion
     return {
       //#region 渲染分页表格
@@ -241,7 +243,7 @@ export default {
       // 数据加载状态
       isLoading,
       // 设置题目标签
-      setLabels,
+      editLabels,
       // 分页配置项
       configPage,
       changePagenum,
@@ -301,8 +303,6 @@ export default {
     GetROModal,
     // MCM题目模态框
     GetMCMModal,
-    // MCS题目模态框
-    GetMCSModal,
     //#endregion
     //#region 编辑模态框组件
     // FIBW题目模态框

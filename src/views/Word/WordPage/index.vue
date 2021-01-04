@@ -117,7 +117,10 @@
           name="wordCategory"
         >
           <!-- 下拉选择器 -->
-          <a-select v-model:value="addModel.wordCategory">
+          <a-select
+            v-model:value="addModel.wordCategory"
+            placeholder="请选择所属类目"
+          >
             <a-select-option
               v-for="item in categoryData.data"
               :value="item.id"
@@ -161,7 +164,10 @@
           name="wordCategory"
         >
           <!-- 下拉选择器 -->
-          <a-select v-model:value="editModel.wordCategory">
+          <a-select
+            v-model:value="editModel.wordCategory"
+            placeholder="请选择所属类目"
+          >
             <a-select-option
               v-for="item in categoryData.data"
               :value="item.id"
@@ -208,9 +214,8 @@ import { useDelWord } from "./useDelWord";
 import { useEditWord } from "./useEditWord";
 //批量导入组件
 import BatchUpload from "@/components/BatchUpload";
-import { reactive } from "vue";
-// 引入接口配置
-import word from "@/api/wordPageAPI";
+// 批量上传参数
+import { useBulkUpload } from "./useBatchUpload";
 export default {
   // 使用组件
   components: {
@@ -260,21 +265,9 @@ export default {
       editOk, //点击确定事件
       editEmpty, // 模态框关闭事件
     } = useEditWord(getWordData);
-    // 批量导入数据
-    /**
-     *   uploadTitle: 模态框标签
-     *   templateName: 下载模板名称(不含后缀)
-     *   uploadUrl: 上传路径
-     *   downloadUrl: 下载模板路径
-     *   uploadData: 同步数据方法
-     */
-    const uploadFile = reactive({
-      uploadTitle: "批量导入单词",
-      templateName: "单词",
-      uploadUrl: word.AddWords,
-      downloadUrl: word.ExportTemplat,
-      getData: getWordData,
-    });
+    //#region 批量上传
+    const { uploadFile } = useBulkUpload(getWordData);
+    //#endregion
     return {
       //#region 获取（查询）数据
       wordModel,
@@ -298,8 +291,9 @@ export default {
       addRef,
       addEmpty,
       //#endregion
-      // 下拉菜单类目
+      //#region 下拉菜单类目
       categoryData,
+      //#endregion
       //#region 删除
       delWord,
       delWords,
@@ -314,8 +308,9 @@ export default {
       editOk,
       editEmpty,
       //#endregion
-      // 批量导入数据
+      //#region 批量导入数据
       uploadFile,
+      //#endregion
     };
   },
 };

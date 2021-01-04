@@ -21,7 +21,8 @@ export function useShowModal(category, getQuestion) {
     mcs: false,
     smw: false,
     hcs: false,
-    mcm: false
+    mcm: false,
+    hiw: false
   })
 
   // 显示添加题目模态框
@@ -38,26 +39,28 @@ export function useShowModal(category, getQuestion) {
     mcs: false,
     smw: false,
     hcs: false,
-    mcm: false
+    mcm: false,
+    hiw: false
   });
 
   // 编辑题目的详情，向下注入
-  const editDetail = ref({})
-  provide("editDetail", editDetail)
+  const questionDetail = ref({})
+  provide("questionDetail", questionDetail);
 
   /**
-   * 显示添加题目模态框
-   * @param {*} id 编辑题目的id
+   * 获取题目详情
+   * @param {*} id 题目id
+   * @param {*} callback 请求成功后的回调
    */
-  const showEditModal = (id) => {
+  const getQuestionDetail = (id, callback) => {
     // 根据题目id获取题目详情
     httpGet(listen.GetQuestion(category.value.toLowerCase()) + "/" + id).then((res) => {
       const { success, data } = res;
       if (success) {
         // 记录题目详情
-        editDetail.value = data;
-        // 打开sst模态框
-        editModalVisible[category.value.toLowerCase()] = true;
+        questionDetail.value = data;
+        // 回调函数 （打开模态框）
+        callback();
       }
       else {
         // 失败时提示
@@ -68,7 +71,41 @@ export function useShowModal(category, getQuestion) {
     }).catch((err) => {
       console.log(err);
     });
+  }
+
+  /**
+   * 显示添加题目模态框
+   * @param {*} id 编辑题目的id
+   */
+  const showEditModal = (id) => {
+    getQuestionDetail(id, () => {
+      // 打开sst模态框
+      editModalVisible[category.value.toLowerCase()] = true;
+    })
   };
+
+  // 查看模态框的显示与隐藏
+  const getModalVisible = reactive({
+    sst: false,
+    wfd: false,
+    fib: false,
+    mcs: false,
+    smw: false,
+    hcs: false,
+    mcm: false,
+    hiw: false
+  });
+
+  /**
+   * 显示查看题目模态框
+   * @param {*} id 题目id
+   */
+  const showGetModal = (id) => {
+    getQuestionDetail(id, () => {
+      // 打开sst模态框
+      getModalVisible[category.value.toLowerCase()] = true;
+    })
+  }
 
   // 返回
   return {
@@ -76,6 +113,8 @@ export function useShowModal(category, getQuestion) {
     showAddModal,
     editModalVisible,
     showEditModal,
+    getModalVisible,
+    showGetModal,
   };
 }
 //#endregion

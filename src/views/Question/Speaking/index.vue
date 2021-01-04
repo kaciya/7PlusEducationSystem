@@ -49,56 +49,16 @@
 
         <!-- 操作区域 start -->
         <template #extra>
-          <!-- 批量上传按钮（只在SST和WED中存在） -->
-          <a-button
-            v-if="category == 'RA' || category == 'RS' || category == 'ASQ'"
-            @click="showBulkUpload"
-            >批量上传
-          </a-button>
+          <!-- 批量上传组件（只在RA、RS和ASQ中存在） -->
+          <BatchUpload :uploadFile="uploadFile" />
           <!-- 添加题目按钮 -->
-          <a-button type="primary" @click="showAddModal">添加</a-button>
+          <a-button type="primary">添加</a-button>
           <!-- 添加题目模态框 -->
           <!-- <AddSSTModal></AddSSTModal> -->
         </template>
         <!-- 操作区域 end -->
       </a-page-header>
       <!-- 题目列表头部 end -->
-
-      <!-- 批量上传模态框 start -->
-      <a-modal
-        v-model:visible="bulkUpload.visible"
-        title="批量上传"
-        centered
-        okText="上传"
-        @ok="clickBulkUpload"
-        @cancel="cancelBulkUpload"
-      >
-        <!-- 批量上传 -->
-        <a-upload
-          v-model:fileList="bulkUpload.fileList"
-          :beforeUpload="beforeBulkUpload"
-          @change="bulkUploadChange"
-        >
-          <a-button> <upload-outlined /> 选择文件 </a-button>
-        </a-upload>
-        <!-- 说明提示 -->
-        <a-alert type="info" show-icon style="margin-top: 10px">
-          <template #message>
-            <p style="margin: 0px">
-              说明：<br />1. 文件格式必须是xls、xlsx <br />2.
-              单词字段对应列数据不能为空
-            </p>
-          </template>
-        </a-alert>
-        <!-- 模板下载 -->
-        <p style="margin-top: 5px">
-          模版下载：
-          <a-button type="link">
-            <a :href="downloadTemplateUrl">题库SST.xlsx</a>
-          </a-button>
-        </p>
-      </a-modal>
-      <!-- 批量上传模态框 end -->
 
       <!-- 题目列表 start -->
       <a-table
@@ -122,7 +82,7 @@
             style="width: 100%"
             placeholder="请选择标签，最多可以选择3项"
             option-label-prop="label"
-            @change="setLabels(record.id, record.category, record.labels)"
+            @change="editLabels(record.id, record.labels)"
           >
             <!-- 渲染所有标签 -->
             <a-select-option
@@ -164,8 +124,16 @@
         <!-- 题目操作区 end -->
         <!-- 题目列表 end -->
       </a-table>
-      <!-- 查看模态框 -->
+      <!-- 查看模态框 start -->
+      <!-- 查看ra -->
       <GetRAModal :getModalVisible="getModalVisible" />
+      <!-- 查看rs -->
+      <GetRSModal :getModalVisible="getModalVisible" />
+      <!-- 查看rl -->
+      <GetRLModal :getModalVisible="getModalVisible" />
+      <!-- 查看asq -->
+      <GetASQModal :getModalVisible="getModalVisible" />
+      <!-- 查看模态框 end -->
     </a-card>
     <!-- 主体Main end -->
   </a-layout-content>
@@ -176,13 +144,21 @@
 import Crumbs from "@/components/Crumbs";
 // 引入上传音频按钮组件
 import UploadAudioBtn from "@/components/Question/UploadAudioBtn";
+// 引入批量上传功能组件
+import BatchUpload from "@/components/BatchUpload";
 // 引入icons图标
 import { UploadOutlined } from "@ant-design/icons-vue";
 
+//#region 查看模态框
 // 引入 查看ra题目模态框
 import GetRAModal from "@/components/Question/RA/GetRA";
-// 引入 添加sst题目模态框
-import AddSSTModal from "@/components/Question/SST/AddSST";
+// 引入 查看rs题目模态框
+import GetRSModal from "@/components/Question/RS/GetRS";
+// 引入 查看rl题目模态框
+import GetRLModal from "@/components/Question/RL/GetRL";
+// 引入 查看asq题目模态框
+import GetASQModal from "@/components/Question/ASQ/GetASQ";
+//#endregion
 
 // 导入 题目列表 列配置
 import { useQuestionColumns } from "./useQuestionColumns";
@@ -191,15 +167,11 @@ import { useGetQuestion } from "./useGetQuestion";
 // 导入 获取 全部标签类型
 import { useGetLabels } from "../QuestionLabel/useGetLables";
 // 导入 设置题目标签功能
-import { useSetLabels } from "./useSetLabels";
+import { useEditLabels } from "./useEditLabels";
 // 导入 打开批量上传模态框的功能
 import { useBulkUpload } from "./useBulkUpload";
-// 导入 模板下载功能
-import { useDownloadTemplate } from "./useDownloadTemplate";
 // 导入 显示查看题目模态框 功能
-import { useShowGetModal } from "./useShowGetModal";
-// 导入 显示添加题目模态框 功能
-import { useShowAddModal } from "./useShowAddModal";
+import { useShowModal } from "./useShowModal";
 // 导入 删除题目功能
 import { useDelQuestion } from "./useDelQuestion";
 
@@ -224,26 +196,13 @@ export default {
     const { questionColumns, questionColumns2 } = useQuestionColumns();
 
     // 设置 题目标签
-    const { setLabels } = useSetLabels(labelList);
+    const { editLabels } = useEditLabels(labelList, getQuestion);
 
     // 批量上传 功能
-    const {
-      bulkUpload,
-      showBulkUpload,
-      bulkUploadChange,
-      beforeBulkUpload,
-      clickBulkUpload,
-      cancelBulkUpload,
-    } = useBulkUpload();
+    const { uploadFile } = useBulkUpload(category, getQuestion);
 
-    // 模板下载功能
-    const { downloadTemplateUrl } = useDownloadTemplate(category);
-
-    // 显示查看模态框 功能
-    const { getModalVisible, showGetModal } = useShowGetModal(category);
-
-    // 显示添加模态框 功能
-    const { showAddModal } = useShowAddModal(category);
+    // 显示模态框 功能
+    const { getModalVisible, showGetModal } = useShowModal(category);
 
     // 删除题目 功能
     let { delQuestion, cancelDelQuestion } = useDelQuestion(getQuestion);
@@ -271,26 +230,11 @@ export default {
       // 跳转页码时
       changePagenum,
       // 设置题目标签
-      setLabels,
+      editLabels,
       //#endregion
 
       //#region 批量上传功能
-      // 批量上传模态框
-      bulkUpload,
-      // 打开批量上传模态框
-      showBulkUpload,
-      // 批量上传文件改变时
-      bulkUploadChange,
-      // 文件上传前（阻止默认上传）
-      beforeBulkUpload,
-      // 点击上传
-      clickBulkUpload,
-      // 取消上传
-      cancelBulkUpload,
-      //#endregion
-
-      //#region 模板下载功能
-      downloadTemplateUrl,
+      uploadFile,
       //#endregion
 
       //#region 显示查看模态框功能
@@ -298,10 +242,6 @@ export default {
       getModalVisible,
       // 显示查看模态框
       showGetModal,
-      //#endregion
-
-      //#region 显示添加模态框功能
-      showAddModal,
       //#endregion
 
       //#region 删除题目功能
@@ -317,12 +257,20 @@ export default {
     Crumbs,
     // 上传音频按钮组件
     UploadAudioBtn,
+    // 批量上传功能组件
+    BatchUpload,
     // 上传图标
     UploadOutlined,
+    //#region 查看模态框
     // 查看RA题目模态框
     GetRAModal,
-    // 添加SST题目模态框
-    AddSSTModal,
+    // 查看RS题目模态框
+    GetRSModal,
+    // 查看RL题目模态框
+    GetRLModal,
+    // 查看ASQ题目模态框
+    GetASQModal,
+    //#endregion
   },
 };
 </script>

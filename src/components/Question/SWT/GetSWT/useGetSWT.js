@@ -1,21 +1,16 @@
 //#region 查看SWT题型
-// 引入提示框
-import { message } from "ant-design-vue";
-export function useGetSWT(getModalVisible) {
-  // 查看SWT题目
-  const confirmGetSWT = () => {
-    console.log(111111);
-    // 关闭SWT模态框
-    getModalVisible.swt = false;
-  };
-  // 取消查看SWT题目
-  const cancelGetSWT = () => {
-    // 提示用户
-    message.warn("取消查看SWT题目");
-  };
+// 引入vueAPI
+import { ref, watch } from "vue";
+export function useGetSWT(getModalVisible, questionType, getDetail) {
+  const getSWT = ref({});
+  // 监听获取的题目详情
+  watch(getDetail, val => {
+    if (getModalVisible[questionType]) {
+      getSWT.value = val;
+    }
+  });
   return {
-    confirmGetSWT,
-    cancelGetSWT
+    getSWT
   };
 }
 //#endregion

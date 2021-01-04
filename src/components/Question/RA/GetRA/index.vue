@@ -2,57 +2,74 @@
   <!-- 查看RA题目详情模态框 -->
   <a-modal
     title="查看"
-    :width="888"
     :footer="null"
     :maskClosable="false"
     v-model:visible="getModalVisible.ra"
     class="check-modal"
+    @cancel="closeModal"
   >
     <a-form v-bind="layout">
       <a-form-item label="编号">
-        <span>{{ getModalVisible.detail["no"] }} </span>
+        <span>{{ questionDetail["no"] }} </span>
       </a-form-item>
       <a-form-item label="题目">
-        <span>{{ getModalVisible.detail["title"] }}</span>
+        <span>{{ questionDetail["title"] }}</span>
       </a-form-item>
       <a-form-item label="标签">
         <a-tag
-          color="cyan"
-          v-for="item in getModalVisible.detail['labels']"
+          color="blue"
+          v-for="item in questionDetail['labels']"
           :key="item.id"
           >{{ item.name }}</a-tag
         >
       </a-form-item>
-      <a-form-item label="题目音频"></a-form-item>
+      <a-form-item label="题目音频">
+        <AudioPlayerCK
+          ref="audioPlayerRef"
+          v-if="questionDetail['titleAudio']"
+          :audioUrl="questionDetail['titleAudio']"
+        />
+        <a-tag color="purple" v-else>暂无音频</a-tag>
+      </a-form-item>
       <a-form-item label="题目原文">
-        <span>{{ getModalVisible.detail["titleText"] }}</span>
-        <div>
-          <a-tag color="#108ee9"> 已使用该音频 </a-tag>
-        </div>
+        <span>{{ questionDetail["titleText"] }}</span>
       </a-form-item>
       <a-form-item label="备注">
-        <span>{{ getModalVisible.detail["remark"] || "－" }}</span>
+        <span>{{ questionDetail["remark"] || "－" }}</span>
       </a-form-item>
     </a-form>
   </a-modal>
 </template>
 
 <script>
+// 导入音频播放器
+import AudioPlayerCK from "@/components/Question/AudioPlayerCK";
 // 导入获取模态框
 import { useGetRA } from "./useGetRA";
+// 导入关闭模态框
+import { useCloseGetRA } from "./useCloseGetRA";
 export default {
   props: ["getModalVisible"],
-  setup(props) {
-    // 查看模态框的显示与隐藏
-    const { getModalVisible } = props;
-
+  setup() {
     // 获取题目详情
-    const { layout } = useGetRA();
+    const { layout, questionDetail, audioPlayerRef } = useGetRA();
+    // 关闭模态框
+    const { closeModal } = useCloseGetRA(audioPlayerRef);
 
     return {
       // 表单布局
       layout,
+      // 题目详情
+      questionDetail,
+      // 音频播放器ref
+      audioPlayerRef,
+      // 关闭模态框
+      closeModal,
     };
+  },
+  components: {
+    // 音频播放器-查看
+    AudioPlayerCK,
   },
 };
 </script>
@@ -60,10 +77,13 @@ export default {
 <style lang="scss">
 // 查看模态框-common
 .check-modal {
+  width: 1080px !important;
+
   // 模态框body
   .ant-modal-body {
     padding-top: 14px;
     padding-bottom: 40px;
+    padding-left: 40px;
   }
 
   // 横向表格
@@ -71,8 +91,13 @@ export default {
     margin-bottom: 4px;
   }
 
+  // 表单label
+  .ant-form-item-label {
+    padding-right: 10px;
+  }
+
   // 标签
-  .ant-tag-cyan {
+  .ant-tag-blue {
     padding: 2px 24px;
   }
 

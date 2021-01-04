@@ -18,7 +18,7 @@
       <a-form-item label="编号" name="no" hasFeedback>
         <a-input v-model:value="editMCS.model.no" />
       </a-form-item>
-      <a-form-item label="题目" name="title">
+      <a-form-item label="题目" name="title" hasFeedback>
         <a-input v-model:value="editMCS.model.title" />
       </a-form-item>
       <!-- 题目标签复选框 start -->
@@ -82,7 +82,6 @@
           <PlusOutlined />编辑选项
         </a-button>
       </a-form-item>
-
       <!-- 题目选项 end -->
 
       <!-- 答案参考 start -->
@@ -140,7 +139,7 @@ export default {
     const getQuestion = inject("getQuestion");
 
     // 获取要编辑的题目详情
-    const editDetail = inject("editDetail");
+    const questionDetail = inject("questionDetail");
 
     // 标签列表
     const { labelList } = useGetLabels();
@@ -160,7 +159,7 @@ export default {
     } = useEditMCS(
       editModalVisible,
       getQuestion,
-      editDetail,
+      questionDetail,
       questionType,
       uploadAudioList
     );

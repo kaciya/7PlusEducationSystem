@@ -18,7 +18,7 @@
       <a-form-item label="编号" name="no" hasFeedback>
         <a-input v-model:value="addWFD.model.no" />
       </a-form-item>
-      <a-form-item label="题目" name="title">
+      <a-form-item label="题目" name="title" hasFeedback>
         <a-input v-model:value="addWFD.model.title" />
       </a-form-item>
       <a-form-item label="标签选择" name="labelIds">
@@ -33,7 +33,7 @@
         </a-checkbox-group>
         <!-- 题目标签复选框 end -->
       </a-form-item>
-      <a-form-item label="题目音频">
+      <a-form-item label="题目音频" name="titleAudio">
         <!-- 上传音频 start -->
         <a-upload
           :action="uploadAudio.url"
@@ -45,15 +45,13 @@
         </a-upload>
         <!-- 上传音频 end -->
       </a-form-item>
-      <a-form-item label="题目原文" name="titleText">
-        <a-textarea v-model:value="addWFD.model.titleText" :rows="4" />
+      <a-form-item label="答案参考" name="answer">
+        <a-textarea v-model:value="addWFD.model.answer" :rows="4" />
         <a-button type="primary" @click="audioSynthetic" :loading="synthesizing"
           >转换为音频</a-button
         >
       </a-form-item>
-      <a-form-item label="答案参考" name="answer">
-        <a-textarea v-model:value="addWFD.model.answer" :rows="3" />
-      </a-form-item>
+
       <a-form-item label="备注" name="remark">
         <a-textarea v-model:value="addWFD.model.remark" :rows="2" />
       </a-form-item>
@@ -67,8 +65,10 @@
 import { inject } from "vue";
 // 引入图标
 import { CheckCircleTwoTone } from "@ant-design/icons-vue";
+// 引入 添加WFD题目表单数据
+import { useAddWFDForm } from "./useAddWFDForm";
 // 引入 添加WFD题目 功能
-import { addWFD, useAddWFD } from "./useAddWFD";
+import { useAddWFD } from "./useAddWFD";
 // 引入 上传音频列表
 import { useUploadAudioList } from "@/components/Question/SST/AddSST/useUploadAudioList";
 // 引入 上传音频 功能
@@ -93,23 +93,27 @@ export default {
     // 上传音频列表
     const { uploadAudioList } = useUploadAudioList();
 
-    // 添加WFD题目
-    const {
-      addWFD,
-      addWFDRef,
-      changeLabels,
-      confirmAddWFD,
-      cancelAddWFD,
-    } = useAddWFD(addModalVisible, getQuestion, uploadAudioList);
-
-    // 上传音频功能
-    const { uploadAudio, changeUploadAudio } = useUploadAudio(
-      addWFD,
-      uploadAudioList
-    );
+    // 添加WFD题目表单数据
+    const { addWFD } = useAddWFDForm();
 
     // 音频合成功能
     const { synthesizing, audioSynthetic } = useAudioSynthetic(
+      addWFD,
+      uploadAudioList,
+      "answer"
+    );
+
+    // 添加WFD题目
+    const { addWFDRef, changeLabels, confirmAddWFD, cancelAddWFD } = useAddWFD(
+      addWFD,
+      addModalVisible,
+      getQuestion,
+      uploadAudioList,
+      audioSynthetic
+    );
+
+    // 上传音频功能
+    const { uploadAudio, changeUploadAudio } = useUploadAudio(
       addWFD,
       uploadAudioList
     );
