@@ -36,7 +36,7 @@ export function useExportQuestion(questionType) {
       link.style.display = "none";
       link.href = URL.createObjectURL(blob);
       // 设置文件名
-      link.setAttribute("download", `题目.xlsx`);
+      link.setAttribute("download", `${category.toUpperCase()}题目.xlsx`);
       // 添加a标签
       document.body.appendChild(link);
       // 点击
