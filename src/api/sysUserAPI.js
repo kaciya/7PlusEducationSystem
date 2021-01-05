@@ -11,7 +11,9 @@ export const role = {
   //添加权限组
   AddRoles: "/role/add",
   //权限组详情
-  GetRoleDetail : "/role/detail"
+  GetRoleDetail : "/role/detail",
+  //修改权限组
+  EditRole: "/role/update"
 };
 
 //关于 账号管理 接口

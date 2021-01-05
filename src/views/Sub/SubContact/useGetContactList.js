@@ -26,8 +26,6 @@ export const useGetContactList = (contactTable) => {
     current: 1,
     //现在一页显示多少条数据
     pageSize: 10,
-    //指定每页可以显示多少条
-    pageSizeOptions: ["10"],
     //一共多少条数据
     total: 0,
     // 允许改变每页条数

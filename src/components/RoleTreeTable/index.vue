@@ -116,6 +116,7 @@ export default {
             checkedData.resultDefKeys
           );
           
+          //将值传递给父组件
           context.emit('getDefKeys',checkedData.resultDefKeys);
         }
       }

@@ -55,7 +55,6 @@ export const useAddRole = () => {
 
     //定义方法 获取子组件传入的值
     const getDefKeys = (defKeys) => {
-        console.log(defKeys);
         addRoleForm.permissionIds = defKeys;
     }
 

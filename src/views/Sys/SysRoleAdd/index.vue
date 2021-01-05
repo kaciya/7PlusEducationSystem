@@ -68,7 +68,7 @@ import Crumbs from "@/components/Crumbs";
 // 引入 树形列表 组件
 import RoleTreeTable from "@/components/RoleTreeTable";
 
-// 获取 权限组-添加 中的 添加方法
+// 获取 权限组-添加 中的 方法
 import { useAddRole } from "./useAddRole";
 
 export default {
