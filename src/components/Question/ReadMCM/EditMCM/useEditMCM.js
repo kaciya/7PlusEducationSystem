@@ -3,7 +3,7 @@
 import { message } from "ant-design-vue";
 // 引入响应式API
 import { reactive, ref, watch } from "vue";
-// 导入听力题库接口配置
+// 导入阅读题库接口配置
 import { read } from "@/api/questionReadAPI";
 // 导入 post 请求
 import { httpPost } from "@/utils/http";
