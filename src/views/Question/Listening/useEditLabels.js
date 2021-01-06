@@ -18,7 +18,6 @@ export function useEditLabels(labelList, getQuestion) {
    * @param {*} checkedLabels 选中的标签
    */
   const editLabels = (id, checkedLabels) => {
-    if (!checkedLabels) return;
     // 限制用户只能选择最多三个标签
     if (checkedLabels.length >= 4) {
       message.warn("每题最多可选三个标签");

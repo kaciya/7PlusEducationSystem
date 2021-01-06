@@ -29,10 +29,7 @@
       <!-- 题目原文 start -->
       <a-form-item label="题目原文">
         <p style="font-size: 16px; line-height: 24px; padding-top: 6px">
-          you have enough happiness to make you sweet,enough trials to make you
-          strong,enough sorrow to keep you human,enough hope to make you happy?
-          Always put yourself in others’shoes.If you feel that it hurts you,it
-          probably hurts the other person, too.
+          {{ getWFD.answer }}
         </p>
       </a-form-item>
       <!-- 题目原文 end -->

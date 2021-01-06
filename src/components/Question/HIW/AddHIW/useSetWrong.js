@@ -1,6 +1,6 @@
 //#region 设置错误展示
-import { reactive, ref } from "vue";
-export function useSetWrong(allTitleText) {
+import { ref } from "vue";
+export function useSetWrong() {
   // 设置错误展示模态框的显示与隐藏
   const setWrongVisible = ref(false);
 

@@ -33,7 +33,7 @@
         </a-checkbox-group>
         <!-- 题目标签复选框 end -->
       </a-form-item>
-      <a-form-item label="题目音频">
+      <a-form-item label="题目音频" name="titleAudio">
         <!-- 上传音频 start -->
         <a-upload
           :action="uploadAudio.url"
@@ -71,6 +71,8 @@
 import { inject } from "vue";
 // 引入图标
 import { CheckCircleTwoTone } from "@ant-design/icons-vue";
+// 引入 添加SST题目表单数据
+import { useAddSSTForm } from "./useAddSSTForm";
 // 引入 添加SST题目 功能
 import { addSST, useAddSST } from "./useAddSST";
 // 引入 上传音频列表
@@ -98,23 +100,26 @@ export default {
     // 上传音频列表
     const { uploadAudioList } = useUploadAudioList();
 
-    // 添加SST题目
-    const {
-      addSST,
-      addSSTRef,
-      changeLabels,
-      confirmAddSST,
-      cancelAddSST,
-    } = useAddSST(addModalVisible, getQuestion, uploadAudioList);
+    // 使用表单数据
+    const { addSST } = useAddSSTForm();
 
-    // 上传音频功能
-    const { uploadAudio, changeUploadAudio } = useUploadAudio(
+    // 音频合成功能
+    const { synthesizing, audioSynthetic } = useAudioSynthetic(
       addSST,
       uploadAudioList
     );
 
-    // 音频合成功能
-    const { synthesizing, audioSynthetic } = useAudioSynthetic(
+    // 添加SST题目
+    const { addSSTRef, changeLabels, confirmAddSST, cancelAddSST } = useAddSST(
+      addSST,
+      addModalVisible,
+      getQuestion,
+      uploadAudioList,
+      audioSynthetic
+    );
+
+    // 上传音频功能
+    const { uploadAudio, changeUploadAudio } = useUploadAudio(
       addSST,
       uploadAudioList
     );

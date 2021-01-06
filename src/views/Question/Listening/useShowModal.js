@@ -59,7 +59,6 @@ export function useShowModal(category, getQuestion) {
       if (success) {
         // 记录题目详情
         questionDetail.value = data;
-        console.log(data);
         // 回调函数 （打开模态框）
         callback();
       }

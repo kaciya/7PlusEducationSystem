@@ -9,7 +9,6 @@ export function useGetWFD(questionDetail, getModalVisible) {
   watch(questionDetail, (val) => {
     // 获取wfd题目时赋值给getWFD
     if (getModalVisible.wfd) {
-      console.log(val);
       getWFD.value = val;
     }
   });
