@@ -16,10 +16,10 @@
       :wrapper-col="{ span: 18 }"
     >
       <a-form-item label="编号" name="no" hasFeedback>
-        <a-input v-model:value="editFIB.model.no" disabled />
+        <a-input v-model:value="editFIB.model.no" />
       </a-form-item>
       <a-form-item label="题目" name="title" hasFeedback>
-        <a-input v-model:value="editFIB.model.title" disabled />
+        <a-input v-model:value="editFIB.model.title" />
       </a-form-item>
       <a-form-item label="标签选择" name="labelIds">
         <!-- 题目标签复选框 start -->
@@ -33,7 +33,7 @@
         </a-checkbox-group>
         <!-- 题目标签复选框 end -->
       </a-form-item>
-      <a-form-item label="题目音频">
+      <a-form-item label="题目音频" name="titleAudio">
         <!-- 上传音频 start -->
         <a-upload
           :action="uploadAudio.url"

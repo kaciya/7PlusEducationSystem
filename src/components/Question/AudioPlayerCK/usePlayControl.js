@@ -104,7 +104,6 @@ export function usePlayControl() {
         dom.audioCurTime.value.innerText = transTime(0); //时长text归0
         // 播放按钮 还原暂停状态
         audio.isPaused = true;
-
     }
     //#endregion
 

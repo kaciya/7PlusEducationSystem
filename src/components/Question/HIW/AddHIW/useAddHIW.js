@@ -1,6 +1,6 @@
 //#region 添加HIW题型
 // 引入响应式API
-import { computed, reactive, ref } from "vue";
+import { computed, ref } from "vue";
 // 引入提示框
 import { message } from "ant-design-vue";
 // 导入 post 请求
@@ -13,36 +13,7 @@ import { listen } from '@/api/questionListenAPI';
  * @param {*} addModalVisible 添加模态框的显示与隐藏
  * @param {*} emit setup中触发事件的方法
  */
-export function useAddHIW(addModalVisible, getQuestion, uploadAudioList) {
-  // 表单数据 校验规则
-  const addHIW = reactive({
-    model: {
-      // 编号
-      no: "",
-      // 题目
-      title: "",
-      // 标签选择
-      labelIds: [],
-      // 题目音频
-      titleAudio: "",
-      // 题目问题
-      titleQuestion: "",
-      // 题目原文
-      titleText: []
-    },
-    // 校验规则
-    rules: {
-      // 编号
-      no: [
-        { required: true, whitespace: true, message: '题目编号必须填写', trigger: 'blur' },
-      ],
-      // 题目
-      title: [
-        { required: true, whitespace: true, message: "题目必须填写", trigger: "blur" }
-      ]
-    },
-  });
-
+export function useAddHIW(addHIW, addModalVisible, getQuestion, uploadAudioList, audioSynthetic) {
   // 表单ref
   const addHIWRef = ref(null);
 
@@ -64,7 +35,12 @@ export function useAddHIW(addModalVisible, getQuestion, uploadAudioList) {
   // 添加HIW题目
   const confirmAddHIW = () => {
     // 先校验
-    addHIWRef.value.validate().then(() => {
+    addHIWRef.value.validate().then(async () => {
+      // 有原文内容且没有上传音频
+      if (addHIW.model.titleQuestion.trim().length > 0 && addHIW.model.titleAudio.length == 0) {
+        // 自动将原文转音频
+        await audioSynthetic();
+      }
       // 整理表单 titleText字段，题目原文及对应错误展示信息
       addHIW.model.titleText = allTitleText.value.filter((val) => val.text);
       // 发送添加题目请求
@@ -104,7 +80,6 @@ export function useAddHIW(addModalVisible, getQuestion, uploadAudioList) {
   }
 
   return {
-    addHIW,
     addHIWRef,
     allTitleText,
     changeLabels,

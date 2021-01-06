@@ -117,7 +117,10 @@
           name="wordCategory"
         >
           <!-- 下拉选择器 -->
-          <a-select v-model:value="addModel.wordCategory">
+          <a-select
+            v-model:value="addModel.wordCategory"
+            placeholder="请选择所属类目"
+          >
             <a-select-option
               v-for="item in categoryData.data"
               :value="item.id"
@@ -161,7 +164,10 @@
           name="wordCategory"
         >
           <!-- 下拉选择器 -->
-          <a-select v-model:value="editModel.wordCategory">
+          <a-select
+            v-model:value="editModel.wordCategory"
+            placeholder="请选择所属类目"
+          >
             <a-select-option
               v-for="item in categoryData.data"
               :value="item.id"

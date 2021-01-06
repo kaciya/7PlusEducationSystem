@@ -1,7 +1,7 @@
 //#region 查看RA题型
 // 引入响应式API
 import {
-  ref, reactive
+  ref, reactive, inject
 } from "vue";
 
 export function useGetRA() {
@@ -14,12 +14,15 @@ export function useGetRA() {
       span: 22,
     },
   })
+  // 获取[注入]查看详情
+  const questionDetail = inject("speak/questionDetail");
 
   // 音频播放器ref
   const audioPlayerRef = ref(null);
 
   return {
     layout,
+    questionDetail,
     audioPlayerRef
   };
 }

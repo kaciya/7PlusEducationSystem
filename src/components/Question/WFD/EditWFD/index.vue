@@ -33,7 +33,7 @@
         </a-checkbox-group>
         <!-- 题目标签复选框 end -->
       </a-form-item>
-      <a-form-item label="题目音频">
+      <a-form-item label="题目音频" name="titleAudio">
         <!-- 上传音频 start -->
         <a-upload
           :action="uploadAudio.url"
@@ -45,15 +45,13 @@
         </a-upload>
         <!-- 上传音频 end -->
       </a-form-item>
-      <a-form-item label="题目原文" name="titleText">
-        <a-textarea v-model:value="editWFD.model.titleText" :rows="4" />
+      <a-form-item label="答案参考" name="answer">
+        <a-textarea v-model:value="editWFD.model.answer" :rows="4" />
         <a-button type="primary" @click="audioSynthetic" :loading="synthesizing"
           >转换为音频</a-button
         >
       </a-form-item>
-      <a-form-item label="答案参考" name="answer">
-        <a-textarea v-model:value="editWFD.model.answer" :rows="3" />
-      </a-form-item>
+
       <a-form-item label="备注" name="remark">
         <a-textarea v-model:value="editWFD.model.remark" :rows="2" />
       </a-form-item>
