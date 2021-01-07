@@ -223,7 +223,7 @@ export default {
       getModalVisible,
       showGetModal,
       editModalVisible,
-      showEditModal,
+      showEditModal
     } = useShowModal(category, getQuestion);
     //#endregion
     return {
