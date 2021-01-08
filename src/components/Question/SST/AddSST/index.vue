@@ -59,8 +59,12 @@
       </a-form-item>
       <a-divider />
       <a-row>
-        <a-col> <CheckCircleTwoTone /> 静听读写 </a-col>
+        <a-col>
+          <a-checkbox v-model:checked="addSST.model.isJtdx"></a-checkbox>
+          静听读写
+        </a-col>
       </a-row>
+      <a-form-item label="音频片段" v-if="addSST.model.isJtdx"></a-form-item>
     </a-form>
     <!-- 添加sst题目表单 end -->
   </a-modal>
@@ -69,8 +73,6 @@
 <script>
 // 引入注入方法
 import { inject } from "vue";
-// 引入图标
-import { CheckCircleTwoTone } from "@ant-design/icons-vue";
 // 引入 添加SST题目表单数据
 import { useAddSSTForm } from "./useAddSSTForm";
 // 引入 添加SST题目 功能
@@ -149,9 +151,6 @@ export default {
       // 取消添加sst题目
       cancelAddSST,
     };
-  },
-  components: {
-    CheckCircleTwoTone,
   },
 };
 </script>

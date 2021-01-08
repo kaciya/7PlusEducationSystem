@@ -44,7 +44,7 @@ export function useQuestionColumns() {
     {
       title: "操作",
       key: "operation",
-      width: "280px",
+      width: "300px",
       slots: { customRender: "operation" }
     }
   ]);

@@ -36,6 +36,8 @@ export function useAddSST(addSST, addModalVisible, getQuestion, uploadAudioList,
         // 自动将原文转音频
         await audioSynthetic();
       }
+      // 是否精听读写
+      addSST.model.isJtdx ? addSST.model.isJtdx = 1 : addSST.model.isJtdx = 0;
       // 发送添加题目请求
       httpPost(listen.AddQuestion('sst'), addSST.model).then((res) => {
         if (res.success == true) {
