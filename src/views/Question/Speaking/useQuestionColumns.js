@@ -14,13 +14,15 @@ export function useQuestionColumns() {
     },
     {
       title: "题目音频",
-      dataIndex: "titleAudio"
+      dataIndex: "titleAudio",
+      ellipsis: true,
+      slots: { customRender: "titleAudio" }
     },
     {
       title: "标签",
       key: "labels",
       slots: { customRender: "labels" },
-      width: "300px"
+      width: "250px"
     },
     {
       title: "最近更新时间",
@@ -37,7 +39,8 @@ export function useQuestionColumns() {
     {
       title: "操作",
       key: "operation",
-      slots: { customRender: "operation" }
+      slots: { customRender: "operation" },
+      width: "300px"
     }
   ]);
   // 题目列配置 题目音频->图片
@@ -53,13 +56,14 @@ export function useQuestionColumns() {
     {
       title: "图片",
       key: "pics",
+      width: 200,
       slots: { customRender: "pics" }
     },
     {
       title: "标签",
       key: "labels",
       slots: { customRender: "labels" },
-      width: "300px"
+      width: "250px"
     },
     {
       title: "最近更新时间",
@@ -76,7 +80,7 @@ export function useQuestionColumns() {
     {
       title: "操作",
       key: "operation",
-      slots: { customRender: "operation" }
+      slots: { customRender: "operation" },
     }
   ]);
 
