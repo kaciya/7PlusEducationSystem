@@ -74,7 +74,7 @@ import { CheckCircleTwoTone } from "@ant-design/icons-vue";
 // 引入 添加SST题目表单数据
 import { useAddSSTForm } from "./useAddSSTForm";
 // 引入 添加SST题目 功能
-import { addSST, useAddSST } from "./useAddSST";
+import { useAddSST } from "./useAddSST";
 // 引入 上传音频列表
 import { useUploadAudioList } from "./useUploadAudioList";
 // 引入 上传音频 功能

@@ -73,7 +73,6 @@ export function useAddSST(addSST, addModalVisible, getQuestion, uploadAudioList,
   };
 
   return {
-    addSST,
     addSSTRef,
     changeLabels,
     confirmAddSST,
