@@ -4,7 +4,7 @@
     <Crumbs :crumbName="[{ name: '题库管理' }, { name: '口语题库' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
-    <a-card style="min-height: 93%">
+    <a-card style="min-height: 93%; min-width: 1208px">
       <!-- 题型选择 start -->
       <a-radio-group
         v-model:value="category"
@@ -52,9 +52,14 @@
           <!-- 批量上传组件（只在RA、RS和ASQ中存在） -->
           <BatchUpload :uploadFile="uploadFile" />
           <!-- 添加题目按钮 -->
-          <a-button type="primary">添加</a-button>
+          <a-button type="primary" @click="showAddModal">添加</a-button>
           <!-- 添加题目模态框 -->
-          <!-- <AddSSTModal></AddSSTModal> -->
+          <!-- 添加题目模态框 start -->
+          <AddRAModal :addModalVisible="addModalVisible"></AddRAModal>
+          <!-- <AddRSModal :addModalVisible="addModalVisible"></AddRSModal> -->
+          <!-- <AddDIModal :addModalVisible="addModalVisible"></AddDIModal> -->
+          <!-- <AddRLModal :addModalVisible="addModalVisible"></AddRLModal> -->
+          <!-- <AddASQModal :addModalVisible="addModalVisible"></AddASQModal> -->
         </template>
         <!-- 操作区域 end -->
       </a-page-header>
@@ -70,8 +75,23 @@
         :pagination="questionPagination"
         @change="changePagenum"
       >
+        <!-- 题目音频 -->
+        <template #titleAudio="{ text }">
+          <a-tooltip placement="bottomLeft">
+            <template #title>
+              {{ text }}
+            </template>
+            {{ text }}
+          </a-tooltip>
+        </template>
+        <!-- 题目图片 -->
         <template #pics="{ record }">
-          <img :src="item" v-for="(item, index) in record.pics" :key="index" />
+          <img
+            :src="item"
+            v-for="(item, index) in record.pics"
+            :key="index"
+            class="describe-img"
+          />
         </template>
         <!-- 题目标签选择器 start -->
         <template #labels="{ record }">
@@ -129,6 +149,8 @@
       <GetRAModal :getModalVisible="getModalVisible" />
       <!-- 查看rs -->
       <GetRSModal :getModalVisible="getModalVisible" />
+      <!-- 查看di -->
+      <GetDIModal :getModalVisible="getModalVisible" />
       <!-- 查看rl -->
       <GetRLModal :getModalVisible="getModalVisible" />
       <!-- 查看asq -->
@@ -154,10 +176,25 @@ import { UploadOutlined } from "@ant-design/icons-vue";
 import GetRAModal from "@/components/Question/RA/GetRA";
 // 引入 查看rs题目模态框
 import GetRSModal from "@/components/Question/RS/GetRS";
+// 引入 查看di题目模态框
+import GetDIModal from "@/components/Question/DI/GetDI";
 // 引入 查看rl题目模态框
 import GetRLModal from "@/components/Question/RL/GetRL";
 // 引入 查看asq题目模态框
 import GetASQModal from "@/components/Question/ASQ/GetASQ";
+//#endregion
+
+//#region 添加题目模态框
+// 引入 添加ra题目模态框
+import AddRAModal from "@/components/Question/RA/AddRA";
+// 引入 添加rs题目模态框
+// import AddRSModal from "@/components/Question/RS/AddRS";
+// 引入 添加di题目模态框
+// import AddDIModal from "@/components/Question/DI/AddDI";
+// 引入 添加rl题目模态框
+// import AddRLModal from "@/components/Question/RL/AddRL";
+// 引入 添加asq题目模态框
+// import AddASQModal from "@/components/Question/ASQ/AddASQ";
 //#endregion
 
 // 导入 题目列表 列配置
@@ -202,7 +239,14 @@ export default {
     const { uploadFile } = useBulkUpload(category, getQuestion);
 
     // 显示模态框 功能
-    const { getModalVisible, showGetModal } = useShowModal(category);
+    const {
+      getModalVisible,
+      showGetModal,
+      addModalVisible,
+      showAddModal,
+      editModalVisible,
+      showEditModal,
+    } = useShowModal(category);
 
     // 删除题目 功能
     let { delQuestion, cancelDelQuestion } = useDelQuestion(getQuestion);
@@ -244,6 +288,20 @@ export default {
       showGetModal,
       //#endregion
 
+      //#region 显示添加模态框功能
+      // 添加模态框的显示与隐藏
+      addModalVisible,
+      // 显示添加模态框
+      showAddModal,
+      //#endregion
+
+      //#region 显示编辑模态框功能
+      // 编辑模态框的显示与隐藏
+      editModalVisible,
+      // 显示编辑模态框
+      showEditModal,
+      //#endregion
+
       //#region 删除题目功能
       delQuestion,
       // 取消删除
@@ -266,13 +324,32 @@ export default {
     GetRAModal,
     // 查看RS题目模态框
     GetRSModal,
+    // 查看DI题目模态框
+    GetDIModal,
     // 查看RL题目模态框
     GetRLModal,
     // 查看ASQ题目模态框
     GetASQModal,
     //#endregion
+
+    //#region 添加题目模态框
+    // 添加RA题目模态框
+    AddRAModal,
+    // 添加RS题目模态框
+    // AddRSModal,
+    // 添加DI题目模态框
+    // AddDIModal,
+    // 添加RL题目模态框
+    // AddRLModal,
+    // 添加ASQ题目模态框
+    // AddASQModal,
+    //#endregion
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.describe-img {
+  width: 100%;
+}
+</style>

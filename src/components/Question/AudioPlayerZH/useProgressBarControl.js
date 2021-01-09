@@ -11,7 +11,7 @@ export function useProgressBarControl(dom, updateProgress) {
         // 总进度条-DOM
         const progressBarBg = dom.progressBarBg.value;
         // 点击按下进度条跳到指定点播放
-        progressBarBg.addEventListener("click", (e) => {
+        progressBarBg.addEventListener("mousedown", (e) => {
             // 获取进度条的总宽度[number]
             const pgsWidth = parseFloat(window.getComputedStyle(progressBarBg, null).width.replace("px", ""));
             // 比例 = 点击处的偏移距离 / 总宽度 = 当前播放时长 / 总时长
