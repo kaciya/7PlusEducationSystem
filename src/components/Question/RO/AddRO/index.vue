@@ -52,7 +52,7 @@
       </a-form-item>
       <a-form-item label=" " :colon="false">
         <a-button type="dashed" style="width: 60%" @click="addChoices">
-          <PlusOutlined />添加选项
+          <PlusOutlined />添加段落
         </a-button>
       </a-form-item>
       <!-- 题目选项 end -->
