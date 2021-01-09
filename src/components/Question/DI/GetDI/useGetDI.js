@@ -15,11 +15,11 @@ export function useGetDI() {
     },
   })
   // 获取[注入]查看详情
-  const getDetail = inject("speak/getModalDetail");
+  const questionDetail = inject("speak/questionDetail");
 
   return {
     layout,
-    getDetail
+    questionDetail
   };
 }
 //#endregion
