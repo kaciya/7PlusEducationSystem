@@ -61,6 +61,9 @@ import Crumbs from "@/components/Crumbs";
 // 引入 树形列表 组件
 import RoleTreeTable from "@/components/RoleTreeTable";
 
+// 引入 钩子函数
+import { onMounted } from "vue";
+
 // 获取 权限组-编辑 中的 方法
 import { useEditRole } from "./useEditRole";
 
@@ -81,9 +84,14 @@ export default {
      * editRoleConfirm 提交表单事件
      * editRoleFormRef 定义表单
      */
-    const { getTreeChecked , editRoleRules , editRoleForm , editRoleConfirm , editRoleFormRef } = useEditRole();
+    const { getTreeChecked , editRoleRules , editRoleForm , editRoleConfirm , editRoleFormRef , getRolesDetail } = useEditRole();
 
     //#endregion
+
+    //在Mounted 获取回显信息
+    onMounted(() => {
+      getRolesDetail();
+    });
 
     //#region 返回参数
     return {

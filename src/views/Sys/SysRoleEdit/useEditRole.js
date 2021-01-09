@@ -56,6 +56,7 @@ export const useEditRole = () => {
         //发起请求 获取权限组详情
         httpGet(role.GetRoleDetail + "/" + roleId).then(res => {
                 if (res.success) {
+                    console.log(res);
                     //将获取到的权限回显到表单中
                     // editRoleForm.roleName = res.
                 }
@@ -112,7 +113,9 @@ export const useEditRole = () => {
         //定义表单
         editRoleFormRef,
         //提交事件
-        editRoleConfirm
+        editRoleConfirm,
+        //获取权限组详情
+        getRolesDetail
     }
 }
 //#endregion
