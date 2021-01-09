@@ -9,7 +9,7 @@
   :pagination="false"
   >
     <template #state="{ record }">
-      <a-switch :checked="Boolean(record.isDelete)" @change="changLinkList(record.id)"/>
+      <a-switch :checked="Boolean(record.status)" @change="changLinkList(record.id)"/>
     </template>
     <template #operational="{ record }">
       <a-button type="primary" size="small" @click="showEditModal(record.id)">修改</a-button>
