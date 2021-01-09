@@ -6,34 +6,40 @@ export function useQuestionColumns() {
   const questionColumns = reactive([
     {
       title: "编号",
-      dataIndex: "no"
+      dataIndex: "no",
+      ellipsis: true
     },
     {
       title: "题目",
-      dataIndex: "title"
+      dataIndex: "title",
+      ellipsis: true
     },
     {
       title: "标签",
       key: "labels",
       slots: { customRender: "labels" },
-      width: "300px"
+      width: "250px"
     },
     {
       title: "最近更新时间",
-      dataIndex: "updateTime"
+      dataIndex: "updateTime",
+      ellipsis: true
     },
     {
       title: "备注",
-      dataIndex: "remark"
+      dataIndex: "remark",
+      ellipsis: true
     },
     {
       title: "累计练习",
-      dataIndex: "totalNum"
+      dataIndex: "totalNum",
+      ellipsis: true
     },
     {
       title: "操作",
       key: "operation",
-      slots: { customRender: "operation" }
+      slots: { customRender: "operation" },
+      width: "280px"
     }
   ]);
   return {
