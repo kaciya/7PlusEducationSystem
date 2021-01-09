@@ -2,42 +2,42 @@
   <!-- 查看RA题目详情模态框 -->
   <a-modal
     title="查看"
-    :width="888"
     :footer="null"
     :maskClosable="false"
-    class="check-modal"
     v-model:visible="getModalVisible.di"
+    class="check-modal"
   >
     <a-form v-bind="layout">
       <a-form-item label="编号">
-        <span>{{ getDetail["no"] }} </span>
+        <span>{{ questionDetail["no"] }} </span>
       </a-form-item>
       <a-form-item label="题目">
-        <span>{{ getDetail["title"] }}</span>
+        <span>{{ questionDetail["title"] }}</span>
       </a-form-item>
       <a-form-item label="标签">
         <a-tag
           color="cyan"
-          v-for="item in getDetail['labels']"
+          v-for="item in questionDetail['labels']"
           :key="item.id"
           >{{ item.name }}</a-tag
         >
       </a-form-item>
       <a-form-item label="题目图片">
         <img
-          src="item"
-          v-for="(item, index) in getDetail['pics']"
+          :src="item"
+          v-for="(item, index) in questionDetail['pics']"
           :key="index"
+          class="describe-img"
         />
       </a-form-item>
       <a-form-item label="题目内容">
-        <span>{{ getDetail["titleText"] }}</span>
+        <span>{{ questionDetail["titleText"] }}</span>
       </a-form-item>
       <a-form-item label="题目解析">
-        <span>{{ getDetail["titleAnalysis"] }}</span>
+        <span>{{ questionDetail["titleAnalysis"] }}</span>
       </a-form-item>
       <a-form-item label="备注">
-        <span>{{ getDetail["remark"] || "－" }}</span>
+        <span>{{ questionDetail["remark"] || "－" }}</span>
       </a-form-item>
     </a-form>
   </a-modal>
@@ -50,22 +50,22 @@ import { inject } from "vue";
 import { useGetDI } from "./useGetDI";
 export default {
   props: ["getModalVisible"],
-  setup(props) {
-    // 查看模态框的显示与隐藏
-    const { getModalVisible } = props;
-
+  setup() {
     // 获取题目详情
-    const { layout, getDetail } = useGetDI();
+    const { layout, questionDetail } = useGetDI();
 
     return {
       // 表单布局
       layout,
       // 查看详情
-      getDetail,
+      questionDetail,
     };
   },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.describe-img {
+  width: 200px;
+}
 </style>
