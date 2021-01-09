@@ -244,6 +244,24 @@ const routes = [
           pathName: "/operation/article"
         }
       },
+      // 文章列表-添加
+      {
+        path: "/operation/article/add",
+        name: "AddArticle",
+        component: () => import("@/views/Operation/Article/AddArticle/index"),
+        meta: {
+          pathName: "/operation/article"
+        }
+      },
+      // 文章列表-编辑
+      {
+        path: "/operation/article/edit",
+        name: "EditArticle",
+        component: () => import("@/views/Operation/Article/EditArticle/index"),
+        meta: {
+          pathName: "/operation/article"
+        }
+      },
       {
         // 关于PTE
         path: "/operation/about",
