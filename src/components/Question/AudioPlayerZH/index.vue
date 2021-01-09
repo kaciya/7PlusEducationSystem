@@ -1,41 +1,40 @@
 <template>
   <!-- 音频播发器-转化音频 -->
-  <div class="audio-wrapper">
-    <div
-      :style="{
-        position: 'absolute',
-        top: '-100px',
-        left: '80px',
-      }"
-    >
-      <audio controls :ref="dom.audio" :src="audioUrl"></audio>
-    </div>
-    <!-- 音频 -->
-    <!-- <audio :ref="dom.audio" :src="audioUrl"></audio> -->
-    <!-- 播放器 -->
-    <a-row>
-      <a-col :span="4" class="audio-left">
-        <!-- 音频按钮 -->
-        <div class="audio-btn" @click="playPauseSwitch">
-          <PlayCircleFilled :style="audio.audioBtnCss" v-if="audio.isPaused" />
-          <PauseCircleFilled :style="audio.audioBtnCss" v-else />
-        </div>
-        <!-- 播放时间 -->
-        <div class="audio-time">
-          <span :ref="dom.audioCurTime">00:00</span>
-          <span> / </span>
-          <span :ref="dom.audioDurTime">00:00</span>
-        </div>
-      </a-col>
-      <a-col :span="19" class="audio-right">
-        <!-- 播放进度条 -->
-        <div class="progress-bar-bg" :ref="dom.progressBarBg">
-          <i :ref="dom.progressDot"></i>
-          <div class="progress-bar" :ref="dom.progressBar"></div>
-        </div>
-      </a-col>
-    </a-row>
-  </div>
+  <a-row>
+    <a-col :span="22" class="audio-wrapper">
+      <!-- 音频 -->
+      <audio :ref="dom.audio" :src="audioModel.titleAudio"></audio>
+      <!-- 播放器 -->
+      <a-row>
+        <a-col :span="5" class="audio-left">
+          <!-- 音频按钮 -->
+          <div class="audio-btn" @click="playPauseSwitch">
+            <PlayCircleFilled
+              :style="audio.audioBtnCss"
+              v-if="audio.isPaused"
+            />
+            <PauseCircleFilled :style="audio.audioBtnCss" v-else />
+          </div>
+          <!-- 播放时间 -->
+          <div class="audio-time">
+            <span :ref="dom.audioCurTime">00:00</span>
+            <span> / </span>
+            <span :ref="dom.audioDurTime">00:00</span>
+          </div>
+        </a-col>
+        <a-col :span="18" class="audio-right">
+          <!-- 播放进度条 -->
+          <div class="progress-bar-bg" :ref="dom.progressBarBg">
+            <i :ref="dom.progressDot"></i>
+            <div class="progress-bar" :ref="dom.progressBar"></div>
+          </div>
+        </a-col>
+      </a-row>
+    </a-col>
+    <a-col :span="2" class="audio-control">
+      <a-button class="audio-del" @click="delAudio">删除</a-button>
+    </a-col>
+  </a-row>
 </template>
 
 <script>
@@ -45,9 +44,11 @@ import { PlayCircleFilled, PauseCircleFilled } from "@ant-design/icons-vue";
 import { usePlayControl } from "./usePlayControl";
 // 导入音频进度条调节控制
 import { useProgressBarControl } from "./useProgressBarControl";
+// 移除音频播放器
+import { useDelAudio } from "./useDelAudio";
 export default {
-  props: ["audioUrl"],
-  setup() {
+  props: ["audioModel"],
+  setup(props) {
     // 播放控制 功能
     const {
       dom,
@@ -58,6 +59,8 @@ export default {
     } = usePlayControl();
     // 进度条调节 功能
     useProgressBarControl(dom, updateProgress);
+    // 移除音频播发器
+    const { delAudio } = useDelAudio(props.audioModel);
 
     return {
       // DOM对象
@@ -68,6 +71,8 @@ export default {
       playPauseSwitch,
       // 还原音频播放 功能
       audioEnded,
+      // 移除音频播发器
+      delAudio,
     };
   },
   components: { PlayCircleFilled, PauseCircleFilled },
@@ -76,11 +81,12 @@ export default {
 
 <style lang="scss" scoped>
 // 定义通用高度
-$height: 38px;
+$height: 36px;
 /* 音频播放器 */
 .audio-wrapper {
   height: $height;
-  margin: 4px auto;
+  margin: 4px 0;
+  line-height: $height;
   border-radius: 10px;
   color: #fff;
   background-color: rgba(26, 188, 156, 0.55);
@@ -107,7 +113,7 @@ $height: 38px;
 .audio-right {
   float: left;
   height: $height;
-  padding-left: 12px;
+  padding-left: 14px;
 
   /* 总进度条  */
   .progress-bar-bg {
@@ -115,7 +121,7 @@ $height: 38px;
     border-radius: 8px;
     background-color: #c0ece4;
     position: relative;
-    top: 16px;
+    top: 14px;
     cursor: pointer;
 
     /* 进度点 */
@@ -146,6 +152,14 @@ $height: 38px;
     height: 8px;
     border-radius: 8px;
     background-color: #64b9aa;
+  }
+}
+
+/* 移除音频 */
+.audio-control {
+  .audio-del {
+    color: red;
+    margin-left: 8px;
   }
 }
 </style>
