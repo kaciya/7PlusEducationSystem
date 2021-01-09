@@ -115,8 +115,6 @@ export function useEditMCM(editModalVisible, getQuestion, questionDetail, upload
   const confirmEditMCM = () => {
     // 先校验
     editMCMRef.value.validate().then(() => {
-      // 后台问题，标签设置为空时，会导致页面请求失败
-      if (editMCM.model.labelIds.length == 0) return;
       // 发送编辑题目请求
       httpPost(listen.EditQuestion('mcm'), editMCM.model).then((res) => {
         if (res.success == true) {
