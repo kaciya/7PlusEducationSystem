@@ -1,10 +1,11 @@
-import { reactive, ref } from "vue";
+import { reactive, ref, createVNode } from "vue";
 // 导入接口
 import notice from "@/api/noticeAPI";
 // 导入请求方法
 import { httpPost } from "@/utils/http";
 // 引入提示方法
-import { message } from "ant-design-vue";
+import { message, Modal } from "ant-design-vue";
+import { ExclamationCircleOutlined } from "@ant-design/icons-vue";
 // 引入日期处理
 import moment from "moment";
 export const useAddNotice = getNoticeData => {
@@ -15,7 +16,8 @@ export const useAddNotice = getNoticeData => {
   const addModel = reactive({
     noticeTitle: "",
     endDate: null,
-    noticeContent: ""
+    noticeContent: "",
+    status: undefined
   });
 
   // 显示添加模态框
@@ -42,6 +44,14 @@ export const useAddNotice = getNoticeData => {
         trigger: "blur"
       }
     ],
+    status: [
+      {
+        type: "string",
+        required: true,
+        message: "状态不能为空",
+        trigger: "blur"
+      }
+    ],
     noticeContent: [
       {
         required: true,
@@ -65,30 +75,41 @@ export const useAddNotice = getNoticeData => {
     addFormRef.value
       .validate()
       .then(res => {
-        let { noticeTitle, endDate, noticeContent } = res;
-        // 转换日期格式
-        endDate = moment(res.endDate).format("YYYY-MM-DD HH:mm:ss");
-        // 转JSON格式
-        const param = JSON.stringify({
-          content: noticeContent,
-          endTime: endDate,
-          status: 1,
-          title: noticeTitle
+        // 二次确认
+        Modal.confirm({
+          title: "确认提示",
+          icon: createVNode(ExclamationCircleOutlined),
+          content: "您是否确定发布公告",
+          onOk() {
+            let { noticeTitle, endDate, noticeContent, status } = res;
+            // 转换日期格式
+            endDate = moment(res.endDate).format("YYYY-MM-DD HH:mm:ss");
+            // 转JSON格式
+            const param = JSON.stringify({
+              content: noticeContent,
+              endTime: endDate,
+              status: Number(status),
+              title: noticeTitle
+            });
+            // 发起添加请求
+            httpPost(notice.AddNotice, param)
+              .then(res => {
+                let { success } = res;
+                if (success) {
+                  message.success("添加成功");
+                  addVisible.value = false;
+                  // 重新渲染
+                  getNoticeData();
+                }
+              })
+              .catch(err => {
+                throw new Error(err);
+              });
+          },
+          onCancel() {
+            message.info("已取消");
+          }
         });
-        // 发起添加请求
-        httpPost(notice.AddNotice, param)
-          .then(res => {
-            let { success } = res;
-            if (success) {
-              message.success("添加成功");
-              addVisible.value = false;
-              // 重新渲染
-              getNoticeData();
-            }
-          })
-          .catch(err => {
-            throw new Error(err);
-          });
       })
       .catch(error => {
         throw new Error(error);

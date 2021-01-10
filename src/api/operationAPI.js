@@ -83,7 +83,13 @@ export const article = {
   // 获取文章列表
   GetArticleList: "article/page",
   // 开启/关闭文章
-  SetArticleState: "article/status"
+  SetArticleState: "article/status",
+  // 添加文章列表
+  AddArticleList: "article/add",
+  // 编辑文章列表
+  EditArticleList: "article/update",
+  // 删除文章列表
+  DelArticleList: (id) => `article/${id}`
 };
 
 // 关于PTE

@@ -1,6 +1,7 @@
 <template>
   <!-- 编辑FIB题目模态框 -->
   <a-modal
+    class="modify-modal"
     v-model:visible="editModalVisible.fib"
     title="编辑"
     @ok="confirmEditFIB"
@@ -76,6 +77,11 @@
         <a-button type="dashed" style="width: 60%" @click="editTitleText">
           <PlusOutlined />添加原文填空
         </a-button>
+        <!-- 音频播放器-转化 -->
+        <AudioPlayerZH
+          :audioModel="editFIB.model"
+          v-if="editFIB.model.titleAudio"
+        />
       </a-form-item>
       <!-- 备注 -->
       <a-form-item label="备注" name="remark">
@@ -90,11 +96,9 @@
 // 引入注入方法
 import { inject } from "vue";
 // 引入图标
-import {
-  CheckCircleTwoTone,
-  MinusCircleOutlined,
-  PlusOutlined,
-} from "@ant-design/icons-vue";
+import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons-vue";
+// 引入 音频播放器 组件
+import AudioPlayerZH from "@/components/Question/AudioPlayerZH";
 // 引入 编辑FIB题目 功能
 import { editFIB, useEditFIB } from "./useEditFIB";
 // 引入 上传音频列表
@@ -184,18 +188,9 @@ export default {
     };
   },
   components: {
-    CheckCircleTwoTone,
+    AudioPlayerZH,
     MinusCircleOutlined,
     PlusOutlined,
   },
 };
 </script>
-
-<style scoped lang="scss">
-#labelIds {
-  // 让本模态框中的标签复选框换行时保持对齐
-  .ant-checkbox-wrapper:nth-child(6n) {
-    margin-left: 0px;
-  }
-}
-</style>

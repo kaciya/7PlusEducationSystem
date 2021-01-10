@@ -183,6 +183,8 @@
       <!-- 编辑题目模态框 end -->
 
       <!-- 查看题目模态框 start -->
+      <!-- 查看sst -->
+      <GetSSTModal :getModalVisible="getModalVisible"></GetSSTModal>
       <!-- 查看wfd -->
       <GetWFDModal :getModalVisible="getModalVisible"></GetWFDModal>
       <!-- 查看fib -->
@@ -264,6 +266,8 @@ import GetFIBModal from "@/components/Question/FIB/GetFIB";
 import GetMCSModal from "@/components/Question/MCS/GetMCS";
 // 引入 查看hiw题目模态框
 import GetHIWModal from "@/components/Question/HIW/GetHIW";
+// 引入 查看sst题目模态框
+import GetSSTModal from "@/components/Question/SST/GetSST";
 //#endregion
 
 // 导入 题目列表 列配置
@@ -422,6 +426,7 @@ export default {
     GetFIBModal,
     GetMCSModal,
     GetHIWModal,
+    GetSSTModal,
     //#endregion
   },
 };

@@ -1,6 +1,7 @@
 <template>
   <!-- 添加FIB题目模态框 -->
   <a-modal
+    class="add-modal"
     v-model:visible="addModalVisible.fib"
     title="添加"
     @ok="confirmAddFIB"
@@ -76,6 +77,11 @@
         <a-button type="dashed" style="width: 60%" @click="addTitleText">
           <PlusOutlined />添加原文填空
         </a-button>
+        <!-- 音频播放器-转化 -->
+        <AudioPlayerZH
+          :audioModel="addFIB.model"
+          v-if="addFIB.model.titleAudio"
+        />
       </a-form-item>
       <!-- 备注 -->
       <a-form-item label="备注" name="remark">
@@ -90,11 +96,9 @@
 // 引入注入方法
 import { inject } from "vue";
 // 引入图标
-import {
-  CheckCircleTwoTone,
-  MinusCircleOutlined,
-  PlusOutlined,
-} from "@ant-design/icons-vue";
+import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons-vue";
+// 引入 音频播放器 组件
+import AudioPlayerZH from "@/components/Question/AudioPlayerZH";
 // 引入 添加FIB题目表单数据
 import { useAddFIBForm } from "./useAddFIBForm";
 // 引入 添加FIB题目 功能
@@ -186,18 +190,9 @@ export default {
     };
   },
   components: {
-    CheckCircleTwoTone,
     MinusCircleOutlined,
     PlusOutlined,
+    AudioPlayerZH,
   },
 };
 </script>
-
-<style scoped lang="scss">
-#labelIds {
-  // 让本模态框中的标签复选框换行时保持对齐
-  .ant-checkbox-wrapper:nth-child(6n) {
-    margin-left: 0px;
-  }
-}
-</style>

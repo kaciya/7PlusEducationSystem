@@ -1,6 +1,7 @@
 <template>
   <!-- 添加SST题目模态框 -->
   <a-modal
+    class="add-modal"
     v-model:visible="addModalVisible.sst"
     title="添加"
     @ok="confirmAddSST"
@@ -50,6 +51,11 @@
         <a-button type="primary" @click="audioSynthetic" :loading="synthesizing"
           >转换为音频</a-button
         >
+        <!-- 音频播放器-转化 -->
+        <AudioPlayerZH
+          :audioModel="addSST.model"
+          v-if="addSST.model.titleAudio"
+        />
       </a-form-item>
       <a-form-item label="答案参考" name="answer">
         <a-textarea v-model:value="addSST.model.answer" :rows="3" />
@@ -59,8 +65,12 @@
       </a-form-item>
       <a-divider />
       <a-row>
-        <a-col> <CheckCircleTwoTone /> 静听读写 </a-col>
+        <a-col>
+          <a-checkbox v-model:checked="addSST.model.isJtdx"></a-checkbox>
+          静听读写
+        </a-col>
       </a-row>
+      <a-form-item label="音频片段" v-if="addSST.model.isJtdx"></a-form-item>
     </a-form>
     <!-- 添加sst题目表单 end -->
   </a-modal>
@@ -69,12 +79,12 @@
 <script>
 // 引入注入方法
 import { inject } from "vue";
-// 引入图标
-import { CheckCircleTwoTone } from "@ant-design/icons-vue";
+// 引入 音频播放器 组件
+import AudioPlayerZH from "@/components/Question/AudioPlayerZH";
 // 引入 添加SST题目表单数据
 import { useAddSSTForm } from "./useAddSSTForm";
 // 引入 添加SST题目 功能
-import { addSST, useAddSST } from "./useAddSST";
+import { useAddSST } from "./useAddSST";
 // 引入 上传音频列表
 import { useUploadAudioList } from "./useUploadAudioList";
 // 引入 上传音频 功能
@@ -151,16 +161,14 @@ export default {
     };
   },
   components: {
-    CheckCircleTwoTone,
+    AudioPlayerZH,
   },
 };
 </script>
 
-<style scoped lang="scss">
-#labelIds {
-  // 让本模态框中的标签复选框换行时保持对齐
-  .ant-checkbox-wrapper:nth-child(6n) {
-    margin-left: 0px;
-  }
+<style lang="scss">
+.add-modal,
+.modify-modal {
+  width: 880px !important;
 }
 </style>

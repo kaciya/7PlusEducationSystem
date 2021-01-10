@@ -64,7 +64,7 @@
           </div>
         </a-col>
         <a-col :span="22">
-          <p>{{ item.userName }}</p>
+          <p>{{ item.originalUserName }}</p>
           <p>回复{{ item.userName }}：{{ item.content }}</p>
           <p>
             {{ item.createTime }}

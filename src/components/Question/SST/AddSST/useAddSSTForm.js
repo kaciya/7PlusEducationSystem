@@ -19,7 +19,18 @@ export function useAddSSTForm() {
       // 答案参考
       answer: "",
       // 备注
-      remark: ""
+      remark: "",
+      // 是否精听读写
+      isJtdx: false,
+      // 音频片段
+      audioClips: [
+        {
+          content: "",
+          id: 0,
+          name: "",
+          url: ""
+        }
+      ]
     },
     // 校验规则
     rules: {
