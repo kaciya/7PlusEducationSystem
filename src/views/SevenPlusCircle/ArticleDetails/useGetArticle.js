@@ -14,7 +14,8 @@ export const useGetArticle = id => {
     favouriteCount: "", // 文章收藏数量
     readCount: "", // 文章阅读数量
     content: "", // 文章内容
-    commentCount: "" // 文章评论数量
+    commentCount: "", // 文章评论数量
+    originalUserName: "" // 原始评论用户名
   });
 
   // 获取文章详情
@@ -31,6 +32,7 @@ export const useGetArticle = id => {
         publisher.readCount = data.readCount;
         publisher.content = data.content;
         publisher.commentCount = data.commentCount;
+        publisher.originalUserName = data.originalUserName;
       })
       .catch(err => {
         throw new Error(err);

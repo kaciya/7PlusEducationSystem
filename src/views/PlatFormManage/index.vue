@@ -109,6 +109,20 @@
                 <a-form-item
                   :labelCol="{ span: 3 }"
                   :wrapperCol="{ span: 21 }"
+                  label="状态："
+                  name="status"
+                >
+                  <a-select
+                    v-model:value="addModel.status"
+                    placeholder="请选择"
+                  >
+                    <a-select-option value="1"> 已发布 </a-select-option>
+                    <a-select-option value="0"> 已结束 </a-select-option>
+                  </a-select>
+                </a-form-item>
+                <a-form-item
+                  :labelCol="{ span: 3 }"
+                  :wrapperCol="{ span: 21 }"
                   label="公告内容："
                   name="noticeContent"
                 >
@@ -172,7 +186,7 @@
           v-model:visible="editVisible"
           title="编辑公告"
           width="950px"
-          @cancel="editCloselModal"
+          :afterClose="editCloselModal"
           @ok="editConfirmModal"
         >
           <a-form :model="editModel" :rules="editRules" ref="editFormRef">
@@ -202,6 +216,17 @@
                 }"
                 v-model:value="editModel.endDate"
               />
+            </a-form-item>
+            <a-form-item
+              :labelCol="{ span: 3 }"
+              :wrapperCol="{ span: 21 }"
+              label="状态："
+              name="status"
+            >
+              <a-select v-model:value="editModel.status" placeholder="请选择">
+                <a-select-option value="1"> 已发布 </a-select-option>
+                <a-select-option value="0"> 已结束 </a-select-option>
+              </a-select>
             </a-form-item>
             <a-form-item
               :labelCol="{ span: 3 }"
