@@ -1,31 +1,31 @@
 <template>
-  <!-- 添加RS题目模态框 -->
+  <!-- 添加RL题目模态框 -->
   <a-modal
-    v-model:visible="addModalVisible.rs"
+    v-model:visible="addModalVisible.rl"
     title="添加"
     class="add-modal"
     :maskClosable="false"
-    @ok="confirmAddRS"
-    @cancel="cancelAddRS"
+    @ok="confirmAddRL"
+    @cancel="cancelAddRL"
   >
-    <!-- 添加RS题目表单 start -->
+    <!-- 添加RL题目表单 start -->
     <a-form
-      :model="addRS.model"
-      :rules="addRS.rules"
-      ref="addRSRef"
+      :model="addRL.model"
+      :rules="addRL.rules"
+      ref="addRLRef"
       :label-col="{ span: 4 }"
       :wrapper-col="{ span: 18 }"
     >
       <a-form-item label="编号" name="no" hasFeedback>
-        <a-input v-model:value="addRS.model.no" />
+        <a-input v-model:value="addRL.model.no" />
       </a-form-item>
       <a-form-item label="题目" name="title" hasFeedback>
-        <a-input v-model:value="addRS.model.title" />
+        <a-input v-model:value="addRL.model.title" />
       </a-form-item>
       <a-form-item label="标签选择" name="labelIds">
         <!-- 题目标签复选框 start -->
         <a-checkbox-group
-          v-model:value="addRS.model.labelIds"
+          v-model:value="addRL.model.labelIds"
           @change="changeLabels"
         >
           <a-checkbox :value="item.id" v-for="item in labelList" :key="item.id">
@@ -47,22 +47,35 @@
         <!-- 上传音频 end -->
       </a-form-item>
       <a-form-item label="题目原文" name="titleText">
-        <a-textarea v-model:value="addRS.model.titleText" :rows="4" />
+        <a-textarea v-model:value="addRL.model.titleText" :rows="4" />
         <a-button type="primary" @click="audioSynthetic" :loading="synthesizing"
           >转换为音频</a-button
         >
         <!-- 音频播放器-转化 -->
         <AudioPlayerZH
-          :audioModel="addRS.model"
-          v-if="addRS.model.titleAudio"
+          :audioModel="addRL.model"
+          v-if="addRL.model.titleAudio"
         />
       </a-form-item>
-
-      <a-form-item label="备注" name="remark">
-        <a-textarea v-model:value="addRS.model.remark" :rows="2" />
+      <a-form-item label="答案参考" name="answer">
+        <a-textarea v-model:value="addRL.model.answer" :rows="3" />
       </a-form-item>
+      <a-form-item label="备注" name="remark">
+        <a-textarea v-model:value="addRL.model.remark" :rows="2" />
+      </a-form-item>
+      <a-divider />
+      <a-row>
+        <a-col> <CheckCircleTwoTone /> 精听读写 </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24"
+          ><AudioPlayerJTDX
+            :audioModel="addRL.model"
+            v-if="addRL.model.titleAudio"
+        /></a-col>
+      </a-row>
     </a-form>
-    <!-- 添加RS题目表单 end -->
+    <!-- 添加RL题目表单 end -->
   </a-modal>
 </template>
 
@@ -71,10 +84,10 @@
 import { inject } from "vue";
 // 引入图标
 import { CheckCircleTwoTone } from "@ant-design/icons-vue";
-// 引入 添加RS题目表单数据
-import { useAddRSForm } from "./useAddRSForm";
-// 引入 添加RS题目 功能
-import { useAddRS } from "./useAddRS";
+// 引入 添加RL题目表单数据
+import { useAddRLForm } from "./useAddRLForm";
+// 引入 添加RL题目 功能
+import { addRL, useAddRL } from "./useAddRL";
 // 引入 上传音频列表
 import { useUploadAudioList } from "@/components/Question/SST/AddSST/useUploadAudioList";
 // 引入 上传音频 功能
@@ -85,8 +98,11 @@ import { useGetLabels } from "@/views/Question/QuestionLabel/useGetLables";
 import { useAudioSynthetic } from "@/components/Question/SST/AddSST/useAudioSynthetic";
 // 引入 音频播放器-转化
 import AudioPlayerZH from "@/components/Question/AudioPlayerZH";
+// 引入 音频播放器-精听读写
+import AudioPlayerJTDX from "@/components/Question/AudioPlayerJTDX";
 
 export default {
+  // 接收父组件传来的数据
   props: ["addModalVisible"],
   setup(props) {
     // 添加模态框的显示与隐藏
@@ -101,18 +117,18 @@ export default {
     // 上传音频列表
     const { uploadAudioList } = useUploadAudioList();
 
-    // 添加RS题目表单数据
-    const { addRS } = useAddRSForm();
+    // 使用表单数据
+    const { addRL } = useAddRLForm();
 
     // 音频合成功能
     const { synthesizing, audioSynthetic } = useAudioSynthetic(
-      addRS,
+      addRL,
       uploadAudioList
     );
 
-    // 添加RS题目
-    const { addRSRef, changeLabels, confirmAddRS, cancelAddRS } = useAddRS(
-      addRS,
+    // 添加RL题目
+    const { addRLRef, changeLabels, confirmAddRL, cancelAddRL } = useAddRL(
+      addRL,
       addModalVisible,
       getQuestion,
       uploadAudioList,
@@ -121,7 +137,7 @@ export default {
 
     // 上传音频功能
     const { uploadAudio, changeUploadAudio } = useUploadAudio(
-      addRS,
+      addRL,
       uploadAudioList
     );
 
@@ -140,25 +156,26 @@ export default {
       // 音频合成功能
       audioSynthetic,
       // 添加题目的表单数据和校验规则
-      addRS,
+      addRL,
       // 添加题目表单
-      addRSRef,
+      addRLRef,
       // 改变选择标签时
       changeLabels,
-      // 添加RS题目
-      confirmAddRS,
-      // 取消添加RS题目
-      cancelAddRS,
+      // 添加RL题目
+      confirmAddRL,
+      // 取消添加RL题目
+      cancelAddRL,
     };
   },
   components: {
     CheckCircleTwoTone,
     AudioPlayerZH,
+    AudioPlayerJTDX,
   },
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 #labelIds {
   // 让本模态框中的标签复选框换行时保持对齐
   .ant-checkbox-wrapper:nth-child(6n) {

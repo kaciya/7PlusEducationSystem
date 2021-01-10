@@ -1,4 +1,4 @@
-//#region 添加RS题型
+//#region 添加RL题型
 // 引入响应式API
 import { ref } from "vue";
 // 引入提示框
@@ -9,43 +9,44 @@ import { httpPost } from "@/utils/http";
 import { speak } from '@/api/questionSpeakAPI';
 
 /**
- * 导出添加RS题型 功能
+ * 导出添加RL题型 功能
  * @param {*} addModalVisible 添加模态框的显示与隐藏
- * @param {*} emit setup中触发事件的方法
+ * @param {*} getQuestion 重新获取列表
  */
-export function useAddRS(addRS, addModalVisible, getQuestion, uploadAudioList, audioSynthetic) {
+export function useAddRL(addRL, addModalVisible, getQuestion, uploadAudioList, audioSynthetic) {
   // 表单ref
-  const addRSRef = ref(null);
+  const addRLRef = ref(null);
 
   // 改变选择标签时
-  const changeLabels = (checkedValue) => {
+  const changeLabels = checkedValue => {
     // 限制只能选择三个标签
     if (checkedValue.length > 3) {
+      // 去掉第一个
       checkedValue.shift();
       message.warn("每题标签最多可以选择三个");
     }
-  }
+  };
 
-  // 添加RS题目
-  const confirmAddRS = () => {
+  // 添加RL题目
+  const confirmAddRL = () => {
     // 先校验
-    addRSRef.value.validate().then(async () => {
+    addRLRef.value.validate().then(async () => {
       // 有原文内容且没有上传音频
-      if (addRS.model.titleText.trim().length > 0 && addRS.model.titleAudio.length == 0) {
+      if (addRL.model.titleText.trim().length > 0 && addRL.model.titleAudio.length == 0) {
         // 自动将原文转音频
         await audioSynthetic();
       }
       // 发送添加题目请求
-      httpPost(speak.AddQuestion('rs'), addRS.model).then((res) => {
+      httpPost(speak.AddQuestion('rl'), addRL.model).then((res) => {
         if (res.success == true) {
           // 提示用户添加成功
           message.success("添加题目成功");
           // 刷新页面
-          getQuestion();
-          // 关闭RS模态框
-          addModalVisible.rs = false;
+          getQuestion()
+          // 关闭RL模态框
+          addModalVisible.rl = false;
           // 重置表单
-          addRSRef.value.resetFields();
+          addRLRef.value.resetFields();
           // 清除音频上传列表
           uploadAudioList.value = []
         }
@@ -55,28 +56,28 @@ export function useAddRS(addRS, addModalVisible, getQuestion, uploadAudioList, a
         }
       }).catch((err) => {
         console.log(err);
-      })
-    }).catch((err) => {
+      });
+    }).catch(err => {
       console.log(err);
     });
   };
 
-  // 取消添加RS题目
-  const cancelAddRS = () => {
+  // 取消添加RL题目
+  const cancelAddRL = () => {
     // 提示用户
-    message.warn('取消添加rs题目');
+    message.warn("取消添加rl题目");
     // 重置表单
-    addRSRef.value.resetFields();
+    addRLRef.value.resetFields();
     // 清除音频上传列表
     uploadAudioList.value = []
-  }
+  };
 
   return {
-    addRS,
-    addRSRef,
+    addRL,
+    addRLRef,
     changeLabels,
-    confirmAddRS,
-    cancelAddRS
-  }
+    confirmAddRL,
+    cancelAddRL
+  };
 }
 //#endregion
