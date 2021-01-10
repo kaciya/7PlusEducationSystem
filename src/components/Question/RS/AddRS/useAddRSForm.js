@@ -1,9 +1,9 @@
-//#region 添加RA题目表单数据
+//#region 添加RS题目表单数据
 import { reactive } from "vue"
 
-export function useAddRAForm() {
+export function useAddRSForm() {
   // 表单数据 校验规则
-  const addRA = reactive({
+  const addRS = reactive({
     model: {
       // 编号
       no: "",
@@ -36,6 +36,6 @@ export function useAddRAForm() {
     },
   });
   return {
-    addRA
+    addRS
   }
 }

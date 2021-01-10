@@ -1,31 +1,31 @@
 <template>
-  <!-- 添加RA题目模态框 -->
+  <!-- 添加RS题目模态框 -->
   <a-modal
-    v-model:visible="addModalVisible.ra"
+    v-model:visible="addModalVisible.rs"
     title="添加"
     class="add-modal"
     :maskClosable="false"
-    @ok="confirmAddRA"
-    @cancel="cancelAddRA"
+    @ok="confirmAddRS"
+    @cancel="cancelAddRS"
   >
-    <!-- 添加ra题目表单 start -->
+    <!-- 添加RS题目表单 start -->
     <a-form
-      :model="addRA.model"
-      :rules="addRA.rules"
-      ref="addRARef"
+      :model="addRS.model"
+      :rules="addRS.rules"
+      ref="addRSRef"
       :label-col="{ span: 4 }"
       :wrapper-col="{ span: 18 }"
     >
       <a-form-item label="编号" name="no" hasFeedback>
-        <a-input v-model:value="addRA.model.no" />
+        <a-input v-model:value="addRS.model.no" />
       </a-form-item>
       <a-form-item label="题目" name="title" hasFeedback>
-        <a-input v-model:value="addRA.model.title" />
+        <a-input v-model:value="addRS.model.title" />
       </a-form-item>
       <a-form-item label="标签选择" name="labelIds">
         <!-- 题目标签复选框 start -->
         <a-checkbox-group
-          v-model:value="addRA.model.labelIds"
+          v-model:value="addRS.model.labelIds"
           @change="changeLabels"
         >
           <a-checkbox :value="item.id" v-for="item in labelList" :key="item.id">
@@ -47,22 +47,22 @@
         <!-- 上传音频 end -->
       </a-form-item>
       <a-form-item label="题目原文" name="titleText">
-        <a-textarea v-model:value="addRA.model.titleText" :rows="4" />
+        <a-textarea v-model:value="addRS.model.titleText" :rows="4" />
         <a-button type="primary" @click="audioSynthetic" :loading="synthesizing"
           >转换为音频</a-button
         >
         <!-- 音频播放器-转化 -->
         <AudioPlayerZH
-          :audioModel="addRA.model"
-          v-if="addRA.model.titleAudio"
+          :audioModel="addRS.model"
+          v-if="addRS.model.titleAudio"
         />
       </a-form-item>
 
       <a-form-item label="备注" name="remark">
-        <a-textarea v-model:value="addRA.model.remark" :rows="2" />
+        <a-textarea v-model:value="addRS.model.remark" :rows="2" />
       </a-form-item>
     </a-form>
-    <!-- 添加ra题目表单 end -->
+    <!-- 添加RS题目表单 end -->
   </a-modal>
 </template>
 
@@ -71,10 +71,10 @@
 import { inject } from "vue";
 // 引入图标
 import { CheckCircleTwoTone } from "@ant-design/icons-vue";
-// 引入 添加RA题目表单数据
-import { useAddRAForm } from "./useAddRAForm";
-// 引入 添加RA题目 功能
-import { useAddRA } from "./useAddRA";
+// 引入 添加RS题目表单数据
+import { useAddRSForm } from "./useAddRSForm";
+// 引入 添加RS题目 功能
+import { useAddRS } from "./useAddRS";
 // 引入 上传音频列表
 import { useUploadAudioList } from "@/components/Question/SST/AddSST/useUploadAudioList";
 // 引入 上传音频 功能
@@ -101,18 +101,18 @@ export default {
     // 上传音频列表
     const { uploadAudioList } = useUploadAudioList();
 
-    // 添加RA题目表单数据
-    const { addRA } = useAddRAForm();
+    // 添加RS题目表单数据
+    const { addRS } = useAddRSForm();
 
     // 音频合成功能
     const { synthesizing, audioSynthetic } = useAudioSynthetic(
-      addRA,
+      addRS,
       uploadAudioList
     );
 
-    // 添加RA题目
-    const { addRARef, changeLabels, confirmAddRA, cancelAddRA } = useAddRA(
-      addRA,
+    // 添加RS题目
+    const { addRSRef, changeLabels, confirmAddRS, cancelAddRS } = useAddRS(
+      addRS,
       addModalVisible,
       getQuestion,
       uploadAudioList,
@@ -121,7 +121,7 @@ export default {
 
     // 上传音频功能
     const { uploadAudio, changeUploadAudio } = useUploadAudio(
-      addRA,
+      addRS,
       uploadAudioList
     );
 
@@ -140,15 +140,15 @@ export default {
       // 音频合成功能
       audioSynthetic,
       // 添加题目的表单数据和校验规则
-      addRA,
+      addRS,
       // 添加题目表单
-      addRARef,
+      addRSRef,
       // 改变选择标签时
       changeLabels,
-      // 添加RA题目
-      confirmAddRA,
-      // 取消添加RA题目
-      cancelAddRA,
+      // 添加RS题目
+      confirmAddRS,
+      // 取消添加RS题目
+      cancelAddRS,
     };
   },
   components: {
@@ -164,10 +164,5 @@ export default {
   .ant-checkbox-wrapper:nth-child(6n) {
     margin-left: 0px;
   }
-}
-</style>
-<style lang="scss">
-.add-modal {
-  width: 880px !important;
 }
 </style>
