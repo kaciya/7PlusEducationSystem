@@ -17,7 +17,7 @@
         <a-form
           v-model:value="editRoleForm"
           :rules="editRoleRules"
-          ref="addRoleFormRef"
+          ref="editRoleFormRef"
         >
           <a-row>
             <a-col :span="6">
@@ -36,7 +36,7 @@
               </a-form-item>
             </a-col>
             <a-col :span="3" :offset="15">
-              <a-button type="primary" class="header-btn"> 提交 </a-button>
+              <a-button type="primary" class="header-btn" @click="editRoleConfirm"> 提交 </a-button>
             </a-col>
           </a-row>
         </a-form>
@@ -45,7 +45,8 @@
       <!-- 基本信息 end -->
       <!-- 权限设置 -->
       <a-card title="权限设置">
-        <RoleTreeTable />
+        <RoleTreeTable @getTreeChecked="getTreeChecked 
+       "/>
       </a-card>
       <!-- 权限设置 end -->
     </a-card>
@@ -60,7 +61,10 @@ import Crumbs from "@/components/Crumbs";
 // 引入 树形列表 组件
 import RoleTreeTable from "@/components/RoleTreeTable";
 
-//导入 SysRoleAdd 中的方法
+// 引入 钩子函数
+import { onMounted } from "vue";
+
+// 获取 权限组-编辑 中的 方法
 import { useEditRole } from "./useEditRole";
 
 export default {
@@ -74,19 +78,33 @@ export default {
     //#region 获取 导入方法中返回的 子方法和参数
 
     /**
+     * getTreeChecked 判断是否获取选中的权限ID
      * editRoleRules 编辑表单校验规则
      * editRoleForm 表单数据模型对象
+     * editRoleConfirm 提交表单事件
+     * editRoleFormRef 定义表单
      */
-    const { editRoleRules, editRoleForm } = useEditRole();
+    const { getTreeChecked , editRoleRules , editRoleForm , editRoleConfirm , editRoleFormRef , getRolesDetail } = useEditRole();
 
     //#endregion
 
+    //在Mounted 获取回显信息
+    onMounted(() => {
+      getRolesDetail();
+    });
+
     //#region 返回参数
     return {
+       //判断是否获取选中的权限ID
+      getTreeChecked,
       //编辑表单校验规则
       editRoleRules,
       //表单数据模型对象
       editRoleForm,
+      //定义表单
+      editRoleFormRef,
+      //提交事件
+      editRoleConfirm
     };
     //#endregion
   }
