@@ -53,6 +53,7 @@
           :columns="logTable.colums"
           :data-source="logTable.data"
           row-Key="id"
+          :loading="isLoading"
           :pagination="logPagination"
           @change="pageChange"
         >
@@ -105,11 +106,13 @@ export default {
      * logPagination 分页参数
      * getLogData 渲染操作日志列表
      * pageChange 点击下一页方法
+     * isLoading 加载状态
      */
     const {
       logPagination,
       getLogData,
-      pageChange
+      pageChange,
+      isLoading
     } = useGetLogList(logTable);
 
     /**
@@ -158,7 +161,9 @@ export default {
       //根据 时间范围 和 账号名称 查询方法
       searchClick,
       //点击下一页方法
-      pageChange
+      pageChange,
+      //加载状态
+      isLoading
     };
     //#endregion
   }

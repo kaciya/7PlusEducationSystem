@@ -3,7 +3,23 @@ export const param = {
   // 获取数据列表
   GetDataList: "system/params",
   // 修改数据列表
-  EditDataList: "system/param/update"
+  EditDataList: "system/param/update",
+  // 获取广告列表
+  GetAdList: (position) => `system/ad/${position}`,
+  // 禁用广告
+  ChangeAdList: (id) => `system/ad/status/${id}`,
+  // 添加广告
+  AddAdList: "system/ad/add",
+  // 修改广告
+  EditAdList: "system/ad/update",
+  // 删除广告
+  DelAdList: (id) => `system/ad/${id}`,
+  // 获取联系列表
+  GetLinkList: "system/contact/list",
+  // 更改联系列表状态
+  ChangeLinkList: (id) => `system/contact/status/${id}`,
+  // 修改联系方式
+  EditLinkList: "system/contact/update"
 }
 
 // 师资管理
@@ -67,7 +83,13 @@ export const article = {
   // 获取文章列表
   GetArticleList: "article/page",
   // 开启/关闭文章
-  SetArticleState: "article/status"
+  SetArticleState: "article/status",
+  // 添加文章列表
+  AddArticleList: "article/add",
+  // 编辑文章列表
+  EditArticleList: "article/update",
+  // 删除文章列表
+  DelArticleList: (id) => `article/${id}`
 };
 
 // 关于PTE

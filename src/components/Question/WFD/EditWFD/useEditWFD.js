@@ -76,8 +76,6 @@ export function useEditWFD(editModalVisible, getQuestion, questionDetail, upload
   const confirmEditWFD = () => {
     // 先校验
     editWFDRef.value.validate().then(() => {
-      // 后台问题，标签设置为空时，会导致页面请求失败
-      if (editWFD.model.labelIds.length == 0) return;
       // 发送编辑题目请求
       httpPost(listen.EditQuestion('wfd'), editWFD.model).then((res) => {
         if (res.success == true) {

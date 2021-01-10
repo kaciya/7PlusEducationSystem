@@ -1,21 +1,19 @@
 //#region 查看RO题型
-// 引入提示框
-import { message } from "ant-design-vue";
-export function useGetRO(getModalVisible) {
-  // 查看RO题目
-  const confirmGetRO = () => {
-    console.log(111111);
-    // 关闭RO模态框
-    getModalVisible.ro = false;
-  };
-  // 取消查看RO题目
-  const cancelGetRO = () => {
-    // 提示用户
-    message.warn("取消查看RO题目");
-  };
+// 引入vueAPI
+import { ref, watch } from "vue";
+export function useGetRO(getModalVisible, questionDetail) {
+  // mcs题目详情
+  const getRO = ref({});
+  // 监听获取的题目详情
+  watch(questionDetail, val => {
+    // console.log(val);
+    // 获取mcs题目时赋值给getMCS
+    if (getModalVisible.ro) {
+      getRO.value = val;
+    }
+  });
   return {
-    confirmGetRO,
-    cancelGetRO
+    getRO
   };
 }
 //#endregion

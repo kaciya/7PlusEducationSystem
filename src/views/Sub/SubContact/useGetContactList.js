@@ -1,5 +1,6 @@
 //导入 reactive 对象
 import {
+  ref,
   reactive
 } from "vue";
 
@@ -15,14 +16,16 @@ import {
 
 //#region 获取 用户提交 联系记录列表
 export const useGetContactList = (contactTable) => {
+  
+  //添加加载状态
+  const isLoading = ref(false);
+
   //#region 分页参数
   const contactPagination = reactive({
     //列表所在页数
     current: 1,
     //现在一页显示多少条数据
     pageSize: 10,
-    //指定每页可以显示多少条
-    pageSizeOptions: ["10"],
     //一共多少条数据
     total: 0,
     // 允许改变每页条数
@@ -51,6 +54,9 @@ export const useGetContactList = (contactTable) => {
       params.status = getParam.status;
     }
 
+    //获取数据时 加载状态开启
+    isLoading.value = true;
+
     //请求接口: /admin/contact/page
     httpGet(contact.GetContactList, params)
       .then(res => {
@@ -60,6 +66,9 @@ export const useGetContactList = (contactTable) => {
           contactTable.data = res.data.records;
           //获取分页总数量
           contactPagination.total = res.data.total;
+
+          //关闭加载状态
+          isLoading.value = false;
         }
       })
       .catch(err => {
@@ -83,6 +92,8 @@ export const useGetContactList = (contactTable) => {
   return {
     //分页参数
     contactPagination,
+    //加载状态
+    isLoading,
     //获取联系记录列表数据
     getContactData,
     //点击下一页方法
