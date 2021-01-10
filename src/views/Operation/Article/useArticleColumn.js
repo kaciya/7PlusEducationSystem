@@ -21,7 +21,9 @@ export const column = [
     width: "15%"
   },
   {
-    title: "发布人"
+    title: "发布人",
+    dataIndex: "username",
+    key: "username"
   },
   {
     title: "开启/关闭",
