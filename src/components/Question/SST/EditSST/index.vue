@@ -1,6 +1,7 @@
 <template>
   <!-- 编辑SST题目模态框 -->
   <a-modal
+    class="modify-modal"
     v-model:visible="editModalVisible.sst"
     title="编辑"
     @ok="confirmEditSST"
@@ -50,6 +51,11 @@
         <a-button type="primary" @click="audioSynthetic" :loading="synthesizing"
           >转换为音频</a-button
         >
+        <!-- 音频播放器-转化 -->
+        <AudioPlayerZH
+          :audioModel="editSST.model"
+          v-if="editSST.model.titleAudio"
+        />
       </a-form-item>
       <a-form-item label="答案参考" name="answer">
         <a-textarea v-model:value="editSST.model.answer" :rows="3" />
@@ -59,7 +65,7 @@
       </a-form-item>
       <a-divider />
       <a-row>
-        <a-col> <CheckCircleTwoTone /> 静听读写 </a-col>
+        <a-col> 静听读写 </a-col>
       </a-row>
     </a-form>
     <!-- 编辑sst题目表单 end -->
@@ -69,8 +75,8 @@
 <script>
 // 引入注入方法
 import { inject } from "vue";
-// 引入图标
-import { CheckCircleTwoTone } from "@ant-design/icons-vue";
+// 引入 音频播放器 组件
+import AudioPlayerZH from "@/components/Question/AudioPlayerZH";
 // 引入 编辑SST题目 功能
 import { editSST, useEditSST } from "./useEditSST";
 // 引入 上传音频列表
@@ -154,16 +160,7 @@ export default {
     };
   },
   components: {
-    CheckCircleTwoTone,
+    AudioPlayerZH,
   },
 };
 </script>
-
-<style scoped lang="scss">
-#labelIds {
-  // 让本模态框中的标签复选框换行时保持对齐
-  .ant-checkbox-wrapper:nth-child(6n) {
-    margin-left: 0px;
-  }
-}
-</style>

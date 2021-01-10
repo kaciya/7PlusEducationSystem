@@ -32,8 +32,6 @@ export function useEditLabels(labelList, getQuestion) {
           .id
       );
     });
-    // 后台问题，标签设置为空时，会导致页面请求失败
-    if (checkedLabels.length == 0) return;
     // 发起请求设置标签
     httpPost(questionAPI.EditLabels, {
       // 题目id

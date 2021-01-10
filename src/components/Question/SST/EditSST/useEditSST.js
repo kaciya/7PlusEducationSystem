@@ -84,8 +84,6 @@ export function useEditSST(editModalVisible, getQuestion, questionDetail, upload
   const confirmEditSST = () => {
     // 先校验
     editSSTRef.value.validate().then(() => {
-      // 后台问题，标签设置为空时，会导致页面请求失败
-      if (editSST.model.labelIds.length == 0) return;
       // 发送编辑题目请求
       httpPost(listen.EditQuestion('sst'), editSST.model).then((res) => {
         if (res.success == true) {
