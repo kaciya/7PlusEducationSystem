@@ -7,7 +7,7 @@ import { message } from "ant-design-vue";
 import { httpPost } from "@/utils/http";
 import { param } from "@/api/operationAPI";
 
-export const useAddAdPcList = (store,getAdPcList) => {
+export const useAddBannerList = (store,getBannerList) => {
   // 添加模态框状态
   const addModalVisible = ref(false);
   // 获取文件Url
@@ -30,7 +30,7 @@ export const useAddAdPcList = (store,getAdPcList) => {
     sort: ""
   })
   // 设置广告图位置
-  addModel.position = "home_banner";
+  addModel.position = "pc_banner";
   // 创建表单校验规则
   let validateSort = async (rule, value) => {
     // 转换值
@@ -78,7 +78,7 @@ export const useAddAdPcList = (store,getAdPcList) => {
               store.commit("ImageUploadStore/DEL_IMAGE_FILES");
               store.commit("ImageUploadStore/DEL_IMAGE_URL");
               // 重新获取数据
-              getAdPcList();
+              getBannerList();
             }
           })
           .catch(err => {
