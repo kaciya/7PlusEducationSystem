@@ -29,7 +29,9 @@
         <a-tab-pane key="6" tab="联系管理-官网">
           <Link></Link>
         </a-tab-pane>
-        <a-tab-pane key="7" tab="轮播图-官网">轮播图-官网</a-tab-pane>
+        <a-tab-pane key="7" tab="轮播图-官网">
+          <Banner></Banner>
+        </a-tab-pane>
         <a-tab-pane key="8" tab="学员海报-官网">
           <Poster></Poster>
         </a-tab-pane>
@@ -54,6 +56,8 @@ import More from "@/components/Operation/Param/More";
 import Mobile from "@/components/Operation/Param/Mobile";
 // 引入课程图-学习中心
 import Centers from "@/components/Operation/Param/Center";
+// 引入轮播图
+import Banner from "@/components/Operation/Param/Banner";
 // 引入学员海报-官网
 import Poster from "@/components/Operation/Param/Poster";
 
@@ -67,6 +71,7 @@ export default {
     More,
     Mobile,
     Centers,
+    Banner,
     Poster
   },
   // setup响应api入口
