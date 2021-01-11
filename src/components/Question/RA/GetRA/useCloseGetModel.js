@@ -1,5 +1,5 @@
 //#region 关闭查看模态框
-export function useCloseGetRA(audioPlayerRef) {
+export function useCloseGetModel(audioPlayerRef) {
     // 关闭查看模态框 方法
     const closeModal = () => {
         // console.log(audioPlayerRef.value);

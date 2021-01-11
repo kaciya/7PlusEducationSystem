@@ -42,19 +42,23 @@
 </template>
 
 <script>
+// 导入注入
+import { inject } from "vue";
 // 导入音频播放器
 import AudioPlayerCK from "@/components/Question/AudioPlayerCK";
 // 导入获取模态框
 import { useGetRA } from "./useGetRA";
 // 导入关闭模态框
-import { useCloseGetRA } from "./useCloseGetRA";
+import { useCloseGetModel } from "./useCloseGetModel";
 export default {
   props: ["getModalVisible"],
   setup() {
     // 获取题目详情
-    const { layout, questionDetail, audioPlayerRef } = useGetRA();
+    const { layout, audioPlayerRef } = useGetRA();
+    // 获取[注入]查看详情
+    const questionDetail = inject("speak/questionDetail");
     // 关闭模态框
-    const { closeModal } = useCloseGetRA(audioPlayerRef);
+    const { closeModal } = useCloseGetModel(audioPlayerRef);
 
     return {
       // 表单布局
