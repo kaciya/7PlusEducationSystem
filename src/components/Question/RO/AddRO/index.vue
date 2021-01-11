@@ -144,7 +144,7 @@ export default {
 }
 .install {
   position: absolute;
-  top: 200px;
-  left: 26px;
+  top: 214px;
+  left: 20px;
 }
 </style>
