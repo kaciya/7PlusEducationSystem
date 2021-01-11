@@ -30,7 +30,7 @@ export const useAddAdPcList = (store,getAdPcList) => {
     sort: ""
   })
   // 设置广告图位置
-  addModel.position = "pc_banner";
+  addModel.position = "home_banner";
   // 创建表单校验规则
   let validateSort = async (rule, value) => {
     // 转换值

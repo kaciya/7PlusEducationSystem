@@ -30,8 +30,9 @@
         :columns="teacherListData.columns"
         :data-source="teacherListData.data"
         :row-key="record => record.id"
-        :pagination="false"
+        :pagination="teacherPagination"
         :loading="loadState"
+        @change="pageChange"
         bordered
       >
         <template #index="{ index }">{{ index + 1 }}</template>
@@ -69,22 +70,6 @@
       </a-table>
       <!-- 表格 end -->
 
-      <!-- 分页器 start -->
-      <a-row>
-        <a-col :span="24">
-          <a-pagination
-            style="margin-top: 15px;float: right"
-            show-size-changer
-            v-model:current="pageNum"
-            v-model:pageSize="pageSize"
-            :total="teacherListData.total"
-            :page-size-options="pageSizeOptions"
-            @change="togglePage"
-            @show-size-change="showSizeChange"
-          />
-        </a-col>
-      </a-row>
-      <!-- 分页器 end -->
       <!-- 添加用户信息模态框 start -->
       <a-modal
         title="添加成员"
@@ -267,16 +252,13 @@ export default {
     teacherListData.columns = useTeacherColumns;
     // 分页
     const {
-      pageNum,
-      pageSize,
       loadState,
-      pageSizeOptions,
-      togglePage,
-      showSizeChange
+      teacherPagination,
+      pageChange
     } = getPagination();
 
     // 获取数据
-    useGetTeacherList(pageNum.value, pageSize.value, () => {
+    useGetTeacherList(teacherPagination, () => {
       loadState.value = false;
     });
 
@@ -287,8 +269,8 @@ export default {
     //#region 添加老师
     // 设置参数
     const addParams = {
-      pageNum,
-      pageSize,
+      pageNum: teacherPagination.pageNum,
+      pageSize: teacherPagination.pageSize,
       loadState,
       useGetTeacherList
     };
@@ -306,8 +288,8 @@ export default {
     //#region 编辑老师
     // 设置参数
     const editParams = {
-      pageNum,
-      pageSize,
+      pageNum: teacherPagination.pageNum,
+      pageSize: teacherPagination.pageSize,
       loadState,
       useGetTeacherList
     };
@@ -330,11 +312,8 @@ export default {
       //#region 获取列表数据以及分页
       teacherListData,
       loadState,
-      pageNum,
-      pageSize,
-      pageSizeOptions,
-      togglePage,
-      showSizeChange,
+      teacherPagination,
+      pageChange,
       //#endregion
       // 删除教师
       delSubmit,

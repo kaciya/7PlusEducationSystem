@@ -18,6 +18,7 @@
           :columns="rolesTable.colums"
           :data-source="rolesTable.data"
           row-Key="roleId"
+          :loading="isLoading"
           :pagination="false"
         >
           <!-- 配置 # index 索引 -->
@@ -105,13 +106,15 @@ export default {
      * pageChange 点击下一页方法
      * addRouter 权限组添加路由跳转
      * editRouter 权限组编辑路由跳转
+     * isLoading 加载状态
      */
     const {
       rolePagination,
       getRolesData,
       pageChange,
       addRouter,
-      editRouter
+      editRouter,
+      isLoading
     } = useGetRolesList(rolesTable);
 
     /**
@@ -144,6 +147,8 @@ export default {
       addRouter,
       //权限组编辑路由跳转
       editRouter,
+      //加载状态
+      isLoading
     };
     //#endregion
   }

@@ -12,7 +12,7 @@ export const useGetAdPcList = () => {
   // 获取数据
   const getAdPcList = () => {
     // 发送ajax请求
-    httpGet(param.GetAdList("PC_BANNER"))
+    httpGet(param.GetAdList("HOME_BANNER"))
       .then(res => {
         // 判断是否获取成功
         if (res.success) {

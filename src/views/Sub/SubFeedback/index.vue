@@ -34,9 +34,7 @@
             </a-form-item>
           </a-col>
           <a-col :span="4" :offset="4">
-            <a-button class="header-btn" @click="resetClick">
-              重置
-            </a-button>
+            <a-button class="header-btn" @click="resetClick"> 重置 </a-button>
             <a-button type="primary" class="header-btn" @click="searchClick">
               查询
             </a-button>
@@ -47,52 +45,63 @@
 
       <!-- 反馈列表card -->
       <a-card title="数据列表">
-      <!-- 数据列表 -->
-      <a-table
-        bordered
-        :columns="feedbackTable.colums"
-        :data-source="feedbackTable.data"
-        row-Key="id"
-        :pagination="feedbackPagination"
-        @change="pageChange"
-      >
-        <!-- 列表索引 -->
-        <template #index="{ index }">
-          {{ index + 1 }}
-        </template>
-        <!-- 列表索引 end -->
+        <!-- 数据列表 -->
+        <a-table
+          bordered
+          :columns="feedbackTable.colums"
+          :data-source="feedbackTable.data"
+          row-Key="id"
+          :loading="isLoading"
+          :pagination="feedbackPagination"
+          @change="pageChange"
+        >
+          <!-- 列表索引 -->
+          <template #index="{ index }">
+            {{ index + 1 }}
+          </template>
+          <!-- 列表索引 end -->
 
-        <!-- 图片 -->
-        <template #pics="{ record }">
-          <image :src="item" v-for="(item,index) in record.pics" :key="index"/>
-        </template>
-        <!-- 图片 end -->
+          <!-- 图片 -->
+          <template #pics="{ record }">
+            <image
+              :src="item"
+              v-for="(item, index) in record.pics"
+              :key="index"
+              style="margin: 5px"
+            />
+          </template>
+          <!-- 图片 end -->
 
-        <!-- 状态 -->
-        <template #status="{ record }">
-          <a-tag color="blue" v-if="record.status == 1"> 已解决 </a-tag>
-          <a-tag color="cyan" v-else-if="record.status == 0"> 未解决 </a-tag>
-        </template>
-        <!-- 状态 end -->
+          <!-- 状态 -->
+          <template #status="{ record }">
+            <a-tag color="blue" v-if="record.status == 1"> 已解决 </a-tag>
+            <a-tag color="cyan" v-else-if="record.status == 0"> 未解决 </a-tag>
+          </template>
+          <!-- 状态 end -->
 
-        <!-- 操作 -->
-        <template #operation="{ record }">
-          <a-button type="primary" size="small" v-if="record.status == 1" disabled>
-            <LineOutlined />
-          </a-button>
+          <!-- 操作 -->
+          <template #operation="{ record }">
+            <a-button
+              type="primary"
+              size="small"
+              v-if="record.status == 1"
+              disabled
+            >
+              <LineOutlined />
+            </a-button>
 
-          <a-button
-            type="primary"
-            size="small"
-            v-else-if="record.status == 0"
-            @click="editManage(record.id)"
-          >
-            处理
-          </a-button>
-        </template>
-        <!-- 操作 end -->
-      </a-table>
-      <!-- 数据列表 end -->
+            <a-button
+              type="primary"
+              size="small"
+              v-else-if="record.status == 0"
+              @click="editManage(record.id)"
+            >
+              处理
+            </a-button>
+          </template>
+          <!-- 操作 end -->
+        </a-table>
+        <!-- 数据列表 end -->
       </a-card>
       <!-- 反馈列表card end -->
     </a-card>
@@ -132,7 +141,7 @@ export default {
   // 使用组件
   components: {
     Crumbs,
-    LineOutlined
+    LineOutlined,
   },
 
   // setup响应api入口
@@ -147,12 +156,14 @@ export default {
      * feedbackPagination 分页参数
      * getFeedbackData 渲染表格数据方法
      * pageChange 点击下一页方法
+     * isLoading 加载列表
      */
     const {
       feedbackPagination,
       getFeedbackData,
-      pageChange
-    } = useGetFeedbackList(feedbackTable , searchData);
+      pageChange,
+      isLoading,
+    } = useGetFeedbackList(feedbackTable, searchData);
 
     /**
      * headerData 顶部 日期 与 状态 绑定数据对象
@@ -160,17 +171,20 @@ export default {
      * changeDate 日期选择器改变方法
      * changeDateConfirm 日期范围确定
      */
-    const { 
+    const {
       headerData,
       changeStatus,
       changeDate,
-      changeDateConfirm
+      changeDateConfirm,
     } = useFeedbackHeader();
 
     /**
      * searchClick 查询列表
      */
-    const { searchData,searchClick } = useSearchFeedback(getFeedbackData, headerData);
+    const { searchData, searchClick } = useSearchFeedback(
+      getFeedbackData,
+      headerData
+    );
 
     /**
      * resetClick 重置状态 和 时间范围
@@ -211,10 +225,12 @@ export default {
       //点击操作中的处理方法
       editManage,
       //点击下一页方法
-      pageChange
+      pageChange,
+      //加载状态
+      isLoading,
     };
     //#endregion
-  }
+  },
 };
 </script>
 

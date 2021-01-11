@@ -40,6 +40,11 @@ export const useGetTable = rolePermissionTable => {
        //返回 添加的此项属性 默认设置为false
        item.isChecked = false;
 
+       //判断如果 含有子节点的节点添加半选状态
+       if(item.child.length != 0){
+         item.indeterminate = false;
+       }
+
        //判断如果有子项
       if (item.child) {
         //递归获取子选项

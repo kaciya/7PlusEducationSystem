@@ -1,6 +1,7 @@
 <template>
   <!-- 编辑MCS题目模态框 -->
   <a-modal
+    class="modify-modal"
     v-model:visible="editModalVisible[questionType]"
     title="编辑"
     @ok="confirmEditMCS"
@@ -53,6 +54,11 @@
         <a-button type="primary" @click="audioSynthetic" :loading="synthesizing"
           >转换为音频</a-button
         >
+        <!-- 音频播放器-转化 -->
+        <AudioPlayerZH
+          :audioModel="editMCS.model"
+          v-if="editMCS.model.titleAudio"
+        />
       </a-form-item>
       <!-- 题目原文 end -->
 
@@ -112,11 +118,9 @@
 // 引入注入方法
 import { inject } from "vue";
 // 引入图标
-import {
-  CheckCircleTwoTone,
-  PlusOutlined,
-  MinusCircleOutlined,
-} from "@ant-design/icons-vue";
+import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons-vue";
+// 引入 音频播放器 组件
+import AudioPlayerZH from "@/components/Question/AudioPlayerZH";
 // 引入 编辑MCS题目 功能
 import { editMCS, useEditMCS } from "./useEditMCS";
 // 引入 上传音频列表
@@ -207,18 +211,9 @@ export default {
     };
   },
   components: {
-    CheckCircleTwoTone,
+    AudioPlayerZH,
     PlusOutlined,
     MinusCircleOutlined,
   },
 };
 </script>
-
-<style scoped lang="scss">
-#labelIds {
-  // 让本模态框中的标签复选框换行时保持对齐
-  .ant-checkbox-wrapper:nth-child(6n) {
-    margin-left: 0px;
-  }
-}
-</style>

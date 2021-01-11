@@ -1,4 +1,4 @@
-//导入 reactive 对象
+//导入 vue 对象
 import {
   ref,
   reactive
@@ -17,14 +17,15 @@ import {
 //#region 获取 用户提交 联系记录列表
 export const useGetFeedbackList = (feedbackTable) => {
 
+  //创建加载状态
+  const isLoading = ref(false);
+
   //#region 分页参数
   const feedbackPagination = reactive({
     //列表所在页数
     current: 1,
     //现在一页显示多少条数据
     pageSize: 10,
-    //指定每页可以显示多少条
-    pageSizeOptions: ["10"],
     //一共多少条数据
     total: 0,
     // 允许改变每页条数
@@ -52,6 +53,9 @@ export const useGetFeedbackList = (feedbackTable) => {
       params.status = getParam.status;
     }
 
+    //发起请求前 加载状态
+    isLoading.value = true;
+
     //请求接口: /admin/feedback/page
     httpGet(feedback.GetFeedbackList, params)
       .then(res => {
@@ -61,6 +65,9 @@ export const useGetFeedbackList = (feedbackTable) => {
           feedbackTable.data = res.data.records;
           //获取分页总数量
           feedbackPagination.total = res.data.total;
+
+          //加载成功后 取消加载状态
+          isLoading.value = false;
         }
       })
       .catch(err => {
@@ -84,6 +91,8 @@ export const useGetFeedbackList = (feedbackTable) => {
   return {
     //分页参数
     feedbackPagination,
+    //加载状态
+    isLoading,
     //反馈列表 数据
     getFeedbackData,
     //点击下一页方法
