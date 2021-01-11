@@ -4,6 +4,8 @@
     :columns="rolePermissionTable.colums"
     :data-source="rolePermissionTable.data"
     row-key="permissionId"
+    :loading="isLoading"
+    :pagination="false"
   >
     <!-- 渲染权限类型 -->
     <template #permissionType="{ record }">
@@ -81,6 +83,7 @@ export default {
   //获取父级组件传入的参数
   props: {
     getTreeChecked: Boolean,
+    getRoleList : Object,
   },
 
   // setup响应api入口
@@ -88,7 +91,7 @@ export default {
     //#region 获取 导入方法中返回的 子方法和参数
     const { rolePermissionTable } = useTableColums();
 
-    const { getRolePermissions } = useGetTable(rolePermissionTable);
+    const { isLoading , getRolePermissions } = useGetTable(rolePermissionTable , props);
 
     const {
       checkedData,
@@ -96,7 +99,7 @@ export default {
       getChildChecked,
       getRootChecked,
       getTreeCheckedKeys,
-    } = useGetTreeChecked(rolePermissionTable, props);
+    } = useGetTreeChecked(rolePermissionTable);
     //#endregion
 
     //在Mounted 获取列表
@@ -136,6 +139,8 @@ export default {
       getRootChecked,
       //递归实现 获取选中的复选框的值
       getTreeCheckedKeys,
+      //加载状态
+      isLoading
     };
   },
 };
