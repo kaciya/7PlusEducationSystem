@@ -85,14 +85,14 @@ export default {
 
   // 模态框body
   .ant-modal-body {
-    padding-top: 14px;
+    padding-top: 16px;
     padding-bottom: 40px;
     padding-left: 40px;
   }
 
   // 横向表格
   .ant-form-item {
-    margin-bottom: 4px;
+    margin-bottom: 16px;
   }
 
   // 表单label
