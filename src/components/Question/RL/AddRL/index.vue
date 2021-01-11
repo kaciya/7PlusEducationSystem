@@ -65,10 +65,14 @@
       </a-form-item>
       <a-divider />
       <a-row>
-        <a-col> <CheckCircleTwoTone /> 精听读写 </a-col>
+        <a-col>
+          <a-checkbox v-model:checked="addRL.model.isJtdx"></a-checkbox>
+          精听读写
+        </a-col>
       </a-row>
+      <!-- 精听读写 -->
       <a-row>
-        <a-col :span="24"
+        <a-col :span="24" v-show="addRL.model.isJtdx"
           ><AudioPlayerJTDX
             :audioModel="addRL.model"
             v-if="addRL.model.titleAudio"
@@ -168,7 +172,6 @@ export default {
     };
   },
   components: {
-    CheckCircleTwoTone,
     AudioPlayerZH,
     AudioPlayerJTDX,
   },
