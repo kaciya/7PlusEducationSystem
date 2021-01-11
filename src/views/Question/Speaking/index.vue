@@ -56,9 +56,9 @@
           <!-- 添加题目模态框 -->
           <!-- 添加题目模态框 start -->
           <AddRAModal :addModalVisible="addModalVisible"></AddRAModal>
-          <!-- <AddRSModal :addModalVisible="addModalVisible"></AddRSModal> -->
+          <AddRSModal :addModalVisible="addModalVisible"></AddRSModal>
           <!-- <AddDIModal :addModalVisible="addModalVisible"></AddDIModal> -->
-          <!-- <AddRLModal :addModalVisible="addModalVisible"></AddRLModal> -->
+          <AddRLModal :addModalVisible="addModalVisible"></AddRLModal>
           <!-- <AddASQModal :addModalVisible="addModalVisible"></AddASQModal> -->
         </template>
         <!-- 操作区域 end -->
@@ -188,11 +188,11 @@ import GetASQModal from "@/components/Question/ASQ/GetASQ";
 // 引入 添加ra题目模态框
 import AddRAModal from "@/components/Question/RA/AddRA";
 // 引入 添加rs题目模态框
-// import AddRSModal from "@/components/Question/RS/AddRS";
+import AddRSModal from "@/components/Question/RS/AddRS";
 // 引入 添加di题目模态框
 // import AddDIModal from "@/components/Question/DI/AddDI";
 // 引入 添加rl题目模态框
-// import AddRLModal from "@/components/Question/RL/AddRL";
+import AddRLModal from "@/components/Question/RL/AddRL";
 // 引入 添加asq题目模态框
 // import AddASQModal from "@/components/Question/ASQ/AddASQ";
 //#endregion
@@ -336,11 +336,11 @@ export default {
     // 添加RA题目模态框
     AddRAModal,
     // 添加RS题目模态框
-    // AddRSModal,
+    AddRSModal,
     // 添加DI题目模态框
     // AddDIModal,
     // 添加RL题目模态框
-    // AddRLModal,
+    AddRLModal,
     // 添加ASQ题目模态框
     // AddASQModal,
     //#endregion

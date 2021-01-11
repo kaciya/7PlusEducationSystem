@@ -4,8 +4,8 @@
     <Crumbs
       :crumbName="[
         { name: '权限管理' },
-        { name: '权限组', route: '/sys/role' },
-        { name: '编辑' }
+        { name: '权限组', route: '/sys/role/' + new Date().getTime() },
+        { name: '编辑' },
       ]"
     />
     <!-- 面包屑 end -->
@@ -15,7 +15,7 @@
       <a-card title="基本信息">
         <!-- 添加表单 -->
         <a-form
-          v-model:value="editRoleForm"
+          :model="editRoleForm"
           :rules="editRoleRules"
           ref="editRoleFormRef"
         >
@@ -36,7 +36,13 @@
               </a-form-item>
             </a-col>
             <a-col :span="3" :offset="15">
-              <a-button type="primary" class="header-btn" @click="editRoleConfirm"> 提交 </a-button>
+              <a-button
+                type="primary"
+                class="header-btn"
+                @click="editRoleConfirm"
+              >
+                提交
+              </a-button>
             </a-col>
           </a-row>
         </a-form>
@@ -45,8 +51,7 @@
       <!-- 基本信息 end -->
       <!-- 权限设置 -->
       <a-card title="权限设置">
-        <RoleTreeTable @getTreeChecked="getTreeChecked 
-       "/>
+        <RoleTreeTable :getTreeChecked="getTreeChecked" :getRoleList="getRoleList" @getDefKeys="getDefKeys" />
       </a-card>
       <!-- 权限设置 end -->
     </a-card>
@@ -71,21 +76,30 @@ export default {
   // 使用组件
   components: {
     Crumbs,
-    RoleTreeTable
+    RoleTreeTable,
   },
   // setup响应api入口
   setup() {
     //#region 获取 导入方法中返回的 子方法和参数
 
     /**
-     * getTreeChecked 判断是否获取选中的权限ID
+     * getTreeData 判断是否获取选中的权限ID
      * editRoleRules 编辑表单校验规则
      * editRoleForm 表单数据模型对象
      * editRoleConfirm 提交表单事件
      * editRoleFormRef 定义表单
+     * getDefKeys 获取子组件传入的值
      */
-    const { getTreeChecked , editRoleRules , editRoleForm , editRoleConfirm , editRoleFormRef , getRolesDetail } = useEditRole();
-
+    const {
+      getTreeChecked,
+      getRoleList,
+      editRoleRules,
+      editRoleForm,
+      editRoleConfirm,
+      editRoleFormRef,
+      getRolesDetail,
+      getDefKeys,
+    } = useEditRole();
     //#endregion
 
     //在Mounted 获取回显信息
@@ -95,8 +109,10 @@ export default {
 
     //#region 返回参数
     return {
-       //判断是否获取选中的权限ID
+      //判断是否获取选中的权限ID
       getTreeChecked,
+      //保存需要回显的权限列表
+      getRoleList,
       //编辑表单校验规则
       editRoleRules,
       //表单数据模型对象
@@ -104,10 +120,12 @@ export default {
       //定义表单
       editRoleFormRef,
       //提交事件
-      editRoleConfirm
+      editRoleConfirm,
+      //获取子组件传入的值方法
+      getDefKeys,
     };
     //#endregion
-  }
+  },
 };
 </script>
 

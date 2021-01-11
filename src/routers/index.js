@@ -290,7 +290,7 @@ const routes = [
       //#region 权限管理
       //权限组
       {
-        path: "/sys/role",
+        path: "/sys/role/:id",
         name: "SysRole",
         component: () => import("@/views/Sys/SysRole"),
         meta: {
@@ -308,7 +308,7 @@ const routes = [
       },
       //权限组编辑
       {
-        path: "/sys/role/edit/:id",
+        path: "/sys/role/edit/:time/:id",
         name: "SysRoleEdit",
         component: () => import("@/views/Sys/SysRoleEdit"),
         meta: {

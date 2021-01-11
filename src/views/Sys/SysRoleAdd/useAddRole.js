@@ -48,8 +48,7 @@ export const useAddRole = () => {
 
     //#region 定义表单数据模型对象
     const addRoleForm = reactive({
-        roleName: "",
-        permissionIds: []
+        roleName: ""
     });
     //#endregion
 
@@ -79,7 +78,7 @@ export const useAddRole = () => {
                         message.success(res.message);
 
                         //跳转页面
-                        router.push("/sys/role");
+                        router.push("/sys/role/"+ new Date().getTime());
                     }
                 })
                 .catch(err => {

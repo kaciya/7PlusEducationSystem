@@ -253,8 +253,6 @@ export const useGetTreeChecked = (rolePermissionTable) => {
     node.forEach(item => {
       //判断如果子节点与取消选中状态叶子节点的pid相同
       if (item.permissionId == record.pid) {
-        console.log(item);
-
         //创建 布尔值 判断 子节点中的 叶子节点 是否存在选中
         let bool = true;
         //遍历此节点
