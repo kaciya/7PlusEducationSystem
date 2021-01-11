@@ -190,7 +190,7 @@ export const useGetSideBar = () => {
         {
           id: 181,
           authName: "权限组",
-          path: "sys/role"
+          path: "sys/role/1"
         },
         {
           id: 182,
