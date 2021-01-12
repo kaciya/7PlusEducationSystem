@@ -24,6 +24,7 @@
       <a-menu-item class="menu-pri menu-home" :key="'/' + sideBarKeys[0]">
         <router-link to="/home/main" class="menu-link home-link">
           <HomeOutlined />
+           <!-- <a-icon type="home" /> -->
           <span class="home-text">首页</span>
         </router-link>
       </a-menu-item>
@@ -31,23 +32,73 @@
       <a-sub-menu class="menu-pri" v-for="item in sideBarList" :key="item.path">
         <template #title v-if="item.path == 'user'">
           <span>
-            <UserOutlined />
+            <TeamOutlined />
             <span>{{ item.authName }} </span>
           </span>
         </template>
+        <template #title v-else-if="item.path == 'word'">
+          <span>
+            <ScheduleOutlined />
+            <span>{{ item.authName }} </span>
+          </span>
+        </template>
+        <template #title v-else-if="item.path == 'question'">
+          <span>
+            <BarsOutlined />
+            <span>{{ item.authName }} </span>
+          </span>
+        </template>
+
+        <template #title v-else-if="item.path == 'topic'">
+          <span>
+            <CompassOutlined />
+            <span>{{ item.authName }} </span>
+          </span>
+        </template>
+
+        <template #title v-else-if="item.path == 'sub'">
+          <span>
+            <ContactsOutlined />
+            <span>{{ item.authName }} </span>
+          </span>
+        </template>
+
+        <template #title v-else-if="item.path == 'platform'">
+          <span>
+            <ControlOutlined />
+            <span>{{ item.authName }} </span>
+          </span>
+        </template>
+
+        <template #title v-else-if="item.path == 'operation'">
+          <span>
+            <InteractionOutlined />
+            <span>{{ item.authName }} </span>
+          </span>
+        </template>
+
+       <template #title v-else-if="item.path == 'sys'">
+          <span>
+            <ApartmentOutlined />
+            <span>{{ item.authName }} </span>
+          </span>
+        </template>
+
+
         <template #title v-else>
           <span>
-            <UserOutlined />
+            <ScheduleOutlined />
             <span>{{ item.authName }} </span>
           </span>
         </template>
+
         <a-menu-item
           class="menu-sec"
           v-for="subitem in item.children"
           :key="'/' + subitem.path"
         >
           <router-link :to="'/' + subitem.path" class="menu-link">
-            <span>{{ subitem.authName }}</span>
+          <AppstoreOutlined />  <span>{{ subitem.authName }}</span>
           </router-link>
         </a-menu-item>
       </a-sub-menu>
@@ -63,12 +114,31 @@ import { useSetSideBar } from "./useSetSideBar";
 // 导入共享collapsed方法
 import { useSetCollapsed } from "../Header/useSetCollapsed";
 // 导入图标icons
-import { HomeOutlined, UserOutlined } from "@ant-design/icons-vue";
+import {
+  HomeOutlined,
+  TeamOutlined,
+  ScheduleOutlined,
+  BarsOutlined,
+  CompassOutlined,
+  ContactsOutlined,
+  ControlOutlined,
+  InteractionOutlined,
+  ApartmentOutlined,
+  AppstoreOutlined
+} from "@ant-design/icons-vue";
 export default {
   // 导入组件
   components: {
     HomeOutlined,
-    UserOutlined
+    TeamOutlined,
+    ScheduleOutlined,
+    BarsOutlined,
+    CompassOutlined,
+    ContactsOutlined,
+    ControlOutlined,
+    InteractionOutlined,
+    ApartmentOutlined,
+    AppstoreOutlined
   },
   // setup响应api入口
   setup() {
@@ -90,9 +160,9 @@ export default {
       // 侧边栏的展开keys
       sideBarUnfoldKeys,
       // 只展开当前父菜单栏
-      onOpenChange
+      onOpenChange,
     };
-  }
+  },
 };
 </script>
 

@@ -4,7 +4,7 @@
     <Crumbs
       :crumbName="[
         { name: '权限管理' },
-        { name: '权限组', route: '/sys/role' },
+        { name: '权限组', route: '/sys/role/' + new Date().getTime() },
         { name: '添加' },
       ]"
     />
@@ -82,6 +82,7 @@ export default {
   setup() {
     //#region 获取 导入方法中返回的 子方法和参数
     /**
+     * getTreeChecked 判断是否获取选中的权限ID
      * addRoleRules 添加表单校验规则
      * addRoleFormRef 定义表单
      * addRoleForm 表单数据模型对象
