@@ -21,7 +21,6 @@ export const useColumns = () => {
             key: "audioTime",
             slots: { customRender: "audioTime" },
             align: "center"
-
         },
         {
             title: "操作",

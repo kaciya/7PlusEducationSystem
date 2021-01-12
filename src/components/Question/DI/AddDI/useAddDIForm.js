@@ -1,10 +1,13 @@
-//#region 添加RL题目的表单数据
+//#region 添加DI题目的表单数据
 // 引入响应式API
 import { reactive } from "vue";
 
-export function useAddRLForm() {
+export function useAddDIForm() {
+  // di题型-选择
+  const diTypeList = ["Picture", "Bar", "Pie", "Line", "mix", "table"];
+
   // 表单数据 校验规则
-  const addRL = reactive({
+  const addDI = reactive({
     model: {
       // 编号
       no: "",
@@ -12,27 +15,16 @@ export function useAddRLForm() {
       title: "",
       // 标签选择
       labelIds: [],
-      // 题目音频
-      titleAudio: "",
       // 题目原文
       titleText: "",
-      // 答案参考
-      answer: "",
+      // 题目解析
+      titleAnalysis: "",
       // 备注
       remark: "",
       // 题目图片
       pics: [],
-      // 是否精听读写
-      isJtdx: false,
-      // 音频片段
-      audioClips: [
-        {
-          "id": 0,
-          "name": "",
-          "url": "",
-          "content": ""
-        }
-      ],
+      // 类型选择
+      type: ""
     },
     // 校验规则
     rules: {
@@ -58,7 +50,8 @@ export function useAddRLForm() {
   });
 
   return {
-    addRL
+    diTypeList,
+    addDI
   }
 }
 //#endregion

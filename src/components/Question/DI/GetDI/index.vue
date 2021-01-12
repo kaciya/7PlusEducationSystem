@@ -16,7 +16,7 @@
       </a-form-item>
       <a-form-item label="标签">
         <a-tag
-          color="cyan"
+          color="blue"
           v-for="item in questionDetail['labels']"
           :key="item.id"
           >{{ item.name }}</a-tag
@@ -70,5 +70,6 @@ export default {
 <style lang="scss" scoped>
 .describe-img {
   width: 200px;
+  margin-right: 10px;
 }
 </style>
