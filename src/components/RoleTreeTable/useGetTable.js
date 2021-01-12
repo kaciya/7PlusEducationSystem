@@ -84,6 +84,7 @@ export const useGetTable = (rolePermissionTable, props) => {
   /**
    * 递归 将此权限组中所有权限  选中
    * @param {Object} node 原始数据列表 
+   * @param {Object} pids 所需要选中的权限组项 
    */
   const setRoleChecked = (node, pids) => {
     //遍历原数组对象
@@ -110,8 +111,8 @@ export const useGetTable = (rolePermissionTable, props) => {
 
   /**
    * 递归判断是否半选 父节点
-   * @param {*} node 
-   * @param {*} record 
+   * @param {*} node 权限组列表
+   * @param {*} record 权限组项
    */
   const setIndeterminate = (node , record) => {
     //遍历原数组对象

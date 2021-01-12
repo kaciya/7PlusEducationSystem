@@ -308,7 +308,7 @@ const routes = [
       },
       //权限组编辑
       {
-        path: "/sys/role/edit/:time/:id",
+        path: "/sys/role/edit/:id",
         name: "SysRoleEdit",
         component: () => import("@/views/Sys/SysRoleEdit"),
         meta: {
