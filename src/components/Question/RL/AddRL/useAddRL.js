@@ -1,6 +1,8 @@
 //#region 添加RL题型
 // 引入响应式API
-import { ref } from "vue";
+import { ref, computed } from "vue";
+// 导入vuex
+import { useStore } from "vuex";
 // 引入提示框
 import { message } from "ant-design-vue";
 // 导入 post 请求
@@ -14,8 +16,13 @@ import { speak } from '@/api/questionSpeakAPI';
  * @param {*} getQuestion 重新获取列表
  */
 export function useAddRL(addRL, addModalVisible, getQuestion, uploadAudioList, audioSynthetic) {
+  // 使用vuex
+  const store = useStore();
   // 表单ref
   const addRLRef = ref(null);
+
+  // 获取图片文件
+  const fileUrl = computed(() => store.state.ImageUploadStore.fileUrl);
 
   // 改变选择标签时
   const changeLabels = checkedValue => {
@@ -31,13 +38,22 @@ export function useAddRL(addRL, addModalVisible, getQuestion, uploadAudioList, a
   const confirmAddRL = () => {
     // 先校验
     addRLRef.value.validate().then(async () => {
+      // 判断用户是否上传了图片
+      if (fileUrl.value) {
+        // 设置表单图片url
+        addRL.model.pics = [fileUrl.value];
+      }
       // 有原文内容且没有上传音频
       if (addRL.model.titleText.trim().length > 0 && addRL.model.titleAudio.length == 0) {
         // 自动将原文转音频
         await audioSynthetic();
       }
+      // 请求参数[model]
+      const model = JSON.parse(JSON.stringify(addRL.model));
+      // 是否精听读写
+      model.isJtdx = model.isJtdx ? 1 : 0;
       // 发送添加题目请求
-      httpPost(speak.AddQuestion('rl'), addRL.model).then((res) => {
+      httpPost(speak.AddQuestion('rl'), model).then((res) => {
         if (res.success == true) {
           // 提示用户添加成功
           message.success("添加题目成功");
@@ -48,7 +64,10 @@ export function useAddRL(addRL, addModalVisible, getQuestion, uploadAudioList, a
           // 重置表单
           addRLRef.value.resetFields();
           // 清除音频上传列表
-          uploadAudioList.value = []
+          uploadAudioList.value = [];
+          // 清除公共储存库里面的文件信息
+          store.commit("ImageUploadStore/DEL_IMAGE_FILES");
+          store.commit("ImageUploadStore/DEL_IMAGE_URL");
         }
         else {
           // 添加失败，提示用户失败原因
@@ -69,7 +88,10 @@ export function useAddRL(addRL, addModalVisible, getQuestion, uploadAudioList, a
     // 重置表单
     addRLRef.value.resetFields();
     // 清除音频上传列表
-    uploadAudioList.value = []
+    uploadAudioList.value = [];
+    // 清除公共储存库里面的文件信息
+    store.commit("ImageUploadStore/DEL_IMAGE_FILES");
+    store.commit("ImageUploadStore/DEL_IMAGE_URL");
   };
 
   return {

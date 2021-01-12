@@ -34,6 +34,11 @@
         </a-checkbox-group>
         <!-- 题目标签复选框 end -->
       </a-form-item>
+      <a-form-item label="题目图片" :key="Math.random()">
+        <!-- 上传图片 -->
+        <ImageUpload />
+        <span class="pic-desc">图片上传5M以内</span>
+      </a-form-item>
       <a-form-item label="题目音频" name="titleAudio">
         <!-- 上传音频 start -->
         <a-upload
@@ -100,6 +105,8 @@ import { useUploadAudio } from "@/components/Question/SST/AddSST/useUploadAudio"
 import { useGetLabels } from "@/views/Question/QuestionLabel/useGetLables";
 // 引入 音频合成 功能
 import { useAudioSynthetic } from "@/components/Question/SST/AddSST/useAudioSynthetic";
+// 引入 图片上传
+import ImageUpload from "@/components/ImageUpload";
 // 引入 音频播放器-转化
 import AudioPlayerZH from "@/components/Question/AudioPlayerZH";
 // 引入 音频播放器-精听读写
@@ -172,6 +179,7 @@ export default {
     };
   },
   components: {
+    ImageUpload,
     AudioPlayerZH,
     AudioPlayerJTDX,
   },
@@ -184,5 +192,9 @@ export default {
   .ant-checkbox-wrapper:nth-child(6n) {
     margin-left: 0px;
   }
+}
+
+.add-modal .pic-desc {
+  color: #aaa;
 }
 </style>
