@@ -96,7 +96,7 @@ import { CheckCircleTwoTone } from "@ant-design/icons-vue";
 // 引入 添加RL题目表单数据
 import { useAddRLForm } from "./useAddRLForm";
 // 引入 添加RL题目 功能
-import { addRL, useAddRL } from "./useAddRL";
+import { useAddRL } from "./useAddRL";
 // 引入 上传音频列表
 import { useUploadAudioList } from "@/components/Question/SST/AddSST/useUploadAudioList";
 // 引入 上传音频 功能
