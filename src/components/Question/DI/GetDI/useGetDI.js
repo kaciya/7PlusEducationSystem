@@ -1,7 +1,7 @@
 //#region 查看RA题型
 // 引入响应式API
 import {
-  reactive, inject
+  reactive
 } from "vue";
 
 export function useGetDI() {
@@ -14,12 +14,9 @@ export function useGetDI() {
       span: 21,
     },
   })
-  // 获取[注入]查看详情
-  const questionDetail = inject("speak/questionDetail");
 
   return {
-    layout,
-    questionDetail
+    layout
   };
 }
 //#endregion

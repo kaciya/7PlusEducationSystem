@@ -56,10 +56,10 @@
           <!-- 添加题目模态框 -->
           <!-- 添加题目模态框 start -->
           <AddRAModal :addModalVisible="addModalVisible"></AddRAModal>
-          <!-- <AddRSModal :addModalVisible="addModalVisible"></AddRSModal> -->
+          <AddRSModal :addModalVisible="addModalVisible"></AddRSModal>
           <!-- <AddDIModal :addModalVisible="addModalVisible"></AddDIModal> -->
-          <!-- <AddRLModal :addModalVisible="addModalVisible"></AddRLModal> -->
-          <!-- <AddASQModal :addModalVisible="addModalVisible"></AddASQModal> -->
+          <AddRLModal :addModalVisible="addModalVisible"></AddRLModal>
+          <AddASQModal :addModalVisible="addModalVisible"></AddASQModal>
         </template>
         <!-- 操作区域 end -->
       </a-page-header>
@@ -129,6 +129,7 @@
             size="small"
             class="modify-btn"
             style="margin-left: 10px"
+            @click="showEditModal(record.id)"
             >编辑</a-button
           >
           <a-popconfirm
@@ -156,6 +157,19 @@
       <!-- 查看asq -->
       <GetASQModal :getModalVisible="getModalVisible" />
       <!-- 查看模态框 end -->
+
+      <!-- 编辑模态框 start -->
+      <!-- 编辑ra -->
+      <EditRAModal :editModalVisible="editModalVisible" />
+      <!-- 编辑rs -->
+      <EditRSModal :editModalVisible="editModalVisible" />
+      <!-- 编辑di -->
+      <!-- <EditDIModal :editModalVisible="editModalVisible" /> -->
+      <!-- 编辑rl -->
+      <EditRLModal :editModalVisible="editModalVisible" />
+      <!-- 编辑asq -->
+      <EditASQModal :editModalVisible="editModalVisible" />
+      <!-- 编辑模态框 end -->
     </a-card>
     <!-- 主体Main end -->
   </a-layout-content>
@@ -188,13 +202,26 @@ import GetASQModal from "@/components/Question/ASQ/GetASQ";
 // 引入 添加ra题目模态框
 import AddRAModal from "@/components/Question/RA/AddRA";
 // 引入 添加rs题目模态框
-// import AddRSModal from "@/components/Question/RS/AddRS";
+import AddRSModal from "@/components/Question/RS/AddRS";
 // 引入 添加di题目模态框
 // import AddDIModal from "@/components/Question/DI/AddDI";
 // 引入 添加rl题目模态框
-// import AddRLModal from "@/components/Question/RL/AddRL";
+import AddRLModal from "@/components/Question/RL/AddRL";
 // 引入 添加asq题目模态框
-// import AddASQModal from "@/components/Question/ASQ/AddASQ";
+import AddASQModal from "@/components/Question/ASQ/AddASQ";
+//#endregion
+
+//#region 编辑题目模态框
+// 引入 编辑ra题目模态框
+import EditRAModal from "@/components/Question/RA/EditRA";
+// 引入 编辑rs题目模态框
+import EditRSModal from "@/components/Question/RS/EditRS";
+// 引入 编辑di题目模态框
+// import EditDIModal from "@/components/Question/DI/EditDI";
+// 引入 编辑rl题目模态框
+import EditRLModal from "@/components/Question/RL/EditRL";
+// 引入 编辑asq题目模态框
+import EditASQModal from "@/components/Question/ASQ/EditASQ";
 //#endregion
 
 // 导入 题目列表 列配置
@@ -336,14 +363,27 @@ export default {
     // 添加RA题目模态框
     AddRAModal,
     // 添加RS题目模态框
-    // AddRSModal,
+    AddRSModal,
     // 添加DI题目模态框
     // AddDIModal,
     // 添加RL题目模态框
-    // AddRLModal,
+    AddRLModal,
     // 添加ASQ题目模态框
-    // AddASQModal,
+    AddASQModal,
     //#endregion
+
+    //#region 编辑题目模态框
+    // 编辑RA题目模态框
+    EditRAModal,
+    // 编辑RS题目模态框
+    EditRSModal,
+    // 编辑DI题目模态框
+    // EditDIModal,
+    // 编辑RL题目模态框
+    EditRLModal,
+    // 编辑ASQ题目模态框
+    EditASQModal,
+    // #endregion
   },
 };
 </script>

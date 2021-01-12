@@ -1,9 +1,9 @@
-//#region 添加RS题目表单数据
+//#region 添加ASQ题目表单数据
 import { reactive } from "vue"
 
-export function useAddRSForm() {
+export function useAddASQForm() {
   // 表单数据 校验规则
-  const addRS = reactive({
+  const addASQ = reactive({
     model: {
       // 编号
       no: "",
@@ -15,6 +15,8 @@ export function useAddRSForm() {
       titleAudio: "",
       // 题目原文
       titleText: "",
+      // 参考答案
+      answer: "",
       // 备注
       remark: ""
     },
@@ -36,6 +38,6 @@ export function useAddRSForm() {
     },
   });
   return {
-    addRS
+    addASQ
   }
 }

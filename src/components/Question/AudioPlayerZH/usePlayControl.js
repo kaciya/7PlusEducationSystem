@@ -32,7 +32,7 @@ export function usePlayControl() {
         // 监听音频时长的更改
         dom.audio.value.addEventListener('durationchange', () => {
             // 获取音频总时长
-            dom.audioDurTime.value.innerText = transTime(dom.audio.value.duration);
+            if (dom.audio.value) dom.audioDurTime.value.innerText = transTime(dom.audio.value.duration);
         })
     });
 

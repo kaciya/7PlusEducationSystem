@@ -5,7 +5,7 @@ import { ref } from "vue";
 import { message } from "ant-design-vue";
 // 导入 post 请求
 import { httpPost } from "@/utils/http";
-// 导入听力题库接口配置
+// 导入口语题库接口配置
 import { speak } from '@/api/questionSpeakAPI';
 
 /**

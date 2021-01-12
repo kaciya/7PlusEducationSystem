@@ -45,7 +45,8 @@
         <!-- 下拉菜单区域 end -->
         <!-- 操作区域 start -->
         <template #extra>
-          <a-button type="primary"> 批量上传 </a-button>
+          <!-- 批量上传组件 -->
+          <BatchUpload :uploadFile="bulkUpload"></BatchUpload>
           <a-button type="primary" @click="showAddModal"> 添加 </a-button>
         </template>
         <!-- 操作区域 end -->
@@ -145,6 +146,8 @@
 <script>
 // 引入面包屑组件
 import Crumbs from "@/components/Crumbs";
+// 引入批量上传按钮组件
+import BatchUpload from "@/components/BatchUpload";
 // 引入添加模态框组件
 import AddSWTModal from "@/components/Question/SWT/AddSWT";
 // 引入查看模态框组件
@@ -163,6 +166,8 @@ import { useEditLabels } from "./useEditLabels";
 import { useDelQuestion } from "./useDelQuestion";
 // 导入 显示模态框功能
 import { useShowModal } from "./useShowModal";
+// 导入 打开批量上传模态框的功能
+import { useBulkUpload } from "./useBulkUpload";
 export default {
   // setup相应api入口
   setup() {
@@ -183,6 +188,8 @@ export default {
     let { questionColumns } = useQuestionColumns();
     // 设置 题目标签
     let { editLabels } = useEditLabels(labelList, getQuestion);
+    // 批量上传按钮 配置对象
+    const { bulkUpload } = useBulkUpload(category, getQuestion);
     //#endregion
     // 删除题目 功能
     let { delQuestion, cancelDelQuestion } = useDelQuestion(getQuestion);
@@ -196,7 +203,7 @@ export default {
       showGetModal,
       // 编辑
       editModalVisible,
-      showEditModal
+      showEditModal,
     } = useShowModal(category, getQuestion);
     //#endregion
     return {
@@ -249,12 +256,18 @@ export default {
       // 显示编辑模态框
       showEditModal,
       //#endregion
+
+      //#region 批量上传功能
+      bulkUpload,
+      //#endregion
     };
   },
   // 使用组件
   components: {
     // 面包屑
     Crumbs,
+    // 批量上传按钮组件
+    BatchUpload,
     // 添加模态框组件
     AddSWTModal,
     // 查看模态框组件

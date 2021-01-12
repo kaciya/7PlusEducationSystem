@@ -1,4 +1,4 @@
-//#region 添加RS题型
+//#region 添加ASQ题型
 // 引入响应式API
 import { ref } from "vue";
 // 引入提示框
@@ -9,13 +9,13 @@ import { httpPost } from "@/utils/http";
 import { speak } from '@/api/questionSpeakAPI';
 
 /**
- * 导出添加RS题型 功能
+ * 导出添加ASQ题型 功能
  * @param {*} addModalVisible 添加模态框的显示与隐藏
  * @param {*} emit setup中触发事件的方法
  */
-export function useAddRS(addRS, addModalVisible, getQuestion, uploadAudioList, audioSynthetic) {
+export function useAddASQ(addASQ, addModalVisible, getQuestion, uploadAudioList, audioSynthetic) {
   // 表单ref
-  const addRSRef = ref(null);
+  const addASQRef = ref(null);
 
   // 改变选择标签时
   const changeLabels = (checkedValue) => {
@@ -26,26 +26,26 @@ export function useAddRS(addRS, addModalVisible, getQuestion, uploadAudioList, a
     }
   }
 
-  // 添加RS题目
-  const confirmAddRS = () => {
+  // 添加ASQ题目
+  const confirmAddASQ = () => {
     // 先校验
-    addRSRef.value.validate().then(async () => {
+    addASQRef.value.validate().then(async () => {
       // 有原文内容且没有上传音频
-      if (addRS.model.titleText.trim().length > 0 && addRS.model.titleAudio.length == 0) {
+      if (addASQ.model.titleText.trim().length > 0 && addASQ.model.titleAudio.length == 0) {
         // 自动将原文转音频
         await audioSynthetic();
       }
       // 发送添加题目请求
-      httpPost(speak.AddQuestion('rs'), addRS.model).then((res) => {
+      httpPost(speak.AddQuestion('asq'), addASQ.model).then((res) => {
         if (res.success == true) {
           // 提示用户添加成功
           message.success("添加题目成功");
           // 刷新页面
           getQuestion();
-          // 关闭RS模态框
-          addModalVisible.rs = false;
+          // 关闭ASQ模态框
+          addModalVisible.asq = false;
           // 重置表单
-          addRSRef.value.resetFields();
+          addASQRef.value.resetFields();
           // 清除音频上传列表
           uploadAudioList.value = []
         }
@@ -61,22 +61,22 @@ export function useAddRS(addRS, addModalVisible, getQuestion, uploadAudioList, a
     });
   };
 
-  // 取消添加RS题目
-  const cancelAddRS = () => {
+  // 取消添加ASQ题目
+  const cancelAddASQ = () => {
     // 提示用户
-    message.warn('取消添加rs题目');
+    message.warn('取消添加asq题目');
     // 重置表单
-    addRSRef.value.resetFields();
+    addASQRef.value.resetFields();
     // 清除音频上传列表
     uploadAudioList.value = []
   }
 
   return {
-    addRS,
-    addRSRef,
+    addASQ,
+    addASQRef,
     changeLabels,
-    confirmAddRS,
-    cancelAddRS
+    confirmAddASQ,
+    cancelAddASQ
   }
 }
 //#endregion

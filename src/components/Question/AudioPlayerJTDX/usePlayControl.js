@@ -25,10 +25,6 @@ export function usePlayControl() {
         audioBtnCss: "color: #fff; font-size: 18px",
         // 播放状态
         isPaused: true,
-        // 播放速度 默认1.0
-        playbackSpeed: "1.0",
-        // 播放声音 默认原声
-        playbackVoice: "OV"
     });
 
     // mounted周期 执行初始化
@@ -36,7 +32,7 @@ export function usePlayControl() {
         // 监听音频时长的更改
         dom.audio.value.addEventListener('durationchange', () => {
             // 获取音频总时长
-            if (dom.audio.value) dom.audioDurTime.value.innerText = transTime(dom.audio.value.duration);
+            dom.audioDurTime.value.innerText = transTime(dom.audio.value.duration);
         })
     });
 
@@ -56,6 +52,10 @@ export function usePlayControl() {
 
         // 判断当前是否为暂停状态
         if (dom.audio.value.paused) {
+            // 获取所有音频dom
+            const audios = document.querySelectorAll("audio");
+            // 暂停所有音频
+            for (let i = 0; i < audios.length; i++) audios[i].pause();
             // 播放音频
             dom.audio.value.play();
             // 音频为播放状态
