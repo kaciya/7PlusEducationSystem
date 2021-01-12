@@ -100,7 +100,7 @@
 // 引入注入方法
 import { inject } from "vue";
 // 引入 编辑RL题目 功能
-import { editRL, useEditRL } from "./useEditRL";
+import { useEditRL } from "./useEditRL";
 // 引入 上传音频列表
 import { useUploadAudioList } from "@/components/Question/SST/AddSST/useUploadAudioList";
 // 引入 上传音频 功能
