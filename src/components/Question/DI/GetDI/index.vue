@@ -52,7 +52,10 @@ export default {
   props: ["getModalVisible"],
   setup() {
     // 获取题目详情
-    const { layout, questionDetail } = useGetDI();
+    const { layout } = useGetDI();
+
+    // 获取[注入]查看详情
+    const questionDetail = inject("speak/questionDetail");
 
     return {
       // 表单布局

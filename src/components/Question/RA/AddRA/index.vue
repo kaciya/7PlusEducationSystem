@@ -167,7 +167,8 @@ export default {
 }
 </style>
 <style lang="scss">
-.add-modal {
+.add-modal,
+.modify-modal {
   width: 880px !important;
 }
 </style>

@@ -20,6 +20,8 @@ export function useAddRLForm() {
       answer: "",
       // 备注
       remark: "",
+      // 是否精听读写
+      isJtdx: false,
       // 音频片段
       audioClips: [
         {
