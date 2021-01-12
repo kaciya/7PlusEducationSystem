@@ -5,12 +5,12 @@
       :crumbName="[
         {
           route: '',
-          name: '平台管理'
+          name: '平台管理',
         },
         {
           route: '',
-          name: '公告管理'
-        }
+          name: '公告管理',
+        },
       ]"
     ></Crumbs>
     <!-- 面包屑 end -->
@@ -101,7 +101,7 @@
                     format="YYYY-MM-DD HH:mm:ss"
                     :disabled-date="disabledDate"
                     :show-time="{
-                      defaultValue: moment('00:00:00', 'HH:mm:ss')
+                      defaultValue: moment('00:00:00', 'HH:mm:ss'),
                     }"
                     v-model:value="addModel.endDate"
                   />
@@ -212,7 +212,7 @@
                 format="YYYY-MM-DD HH:mm:ss"
                 :disabled-date="disabledDate"
                 :show-time="{
-                  defaultValue: moment('00:00:00', 'HH:mm:ss')
+                  defaultValue: moment('00:00:00', 'HH:mm:ss'),
                 }"
                 v-model:value="editModel.endDate"
               />
@@ -224,8 +224,8 @@
               name="status"
             >
               <a-select v-model:value="editModel.status" placeholder="请选择">
-                <a-select-option value="1"> 已发布 </a-select-option>
-                <a-select-option value="0"> 已结束 </a-select-option>
+                <a-select-option :value="'1'"> 已发布 </a-select-option>
+                <a-select-option :value="'0'"> 已结束 </a-select-option>
               </a-select>
             </a-form-item>
             <a-form-item
@@ -283,14 +283,14 @@ export default {
       noticeUserName, // 公告状态
       tablePagination, // 公告发布人员
       clearInput, // 清空输入框
-      getNoticeData // 获取数据
+      getNoticeData, // 获取数据
     } = useNoticeDataList();
 
     // columns：表格列的配置
     const { columns } = useGetNoticeColumns();
 
     // 点击切换页面
-    const tablePageChange = pagination => {
+    const tablePageChange = (pagination) => {
       tablePagination.current = pagination.current;
       tablePagination.pageSize = pagination.pageSize;
       // 重新渲染
@@ -300,7 +300,7 @@ export default {
     // 查询重置
     const {
       noticeReset, // 重置
-      noticeRead // 查询
+      noticeRead, // 查询
     } = useGetNoticeList(getNoticeData, clearInput, tablePagination);
 
     // 添加公告
@@ -311,7 +311,7 @@ export default {
       addRules, // 校验规则
       addFormRef, // 表单ref
       addCloselModal, // 关闭模态框
-      addConfirmModal // 确认添加
+      addConfirmModal, // 确认添加
     } = useAddNotice(getNoticeData);
 
     // 编辑公告
@@ -322,11 +322,11 @@ export default {
       editRules, // 校验规则
       editFormRef, // 表单ref
       editCloselModal, // 关闭模态框
-      editConfirmModal // 确认编辑
+      editConfirmModal, // 确认编辑
     } = useEditNotice(getNoticeData);
 
     // 日期选择设置
-    const disabledDate = current => {
+    const disabledDate = (current) => {
       // 不能选择今天和今天之前的日期
       return current && current < moment().endOf("day");
     };
@@ -340,13 +340,13 @@ export default {
 
     // 中文化富文本
     const editorConfig = ref({
-      language: "zh-cn"
+      language: "zh-cn",
     });
 
     // 图片上传
-    const onReady = editor => {
+    const onReady = (editor) => {
       // 自定义上传图片插件
-      editor.plugins.get("FileRepository").createUploadAdapter = loader => {
+      editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
         return new MyUploadAdapter(loader);
       };
     };
@@ -391,13 +391,13 @@ export default {
       // 中文化富文本
       editorConfig,
       // 图片上传
-      onReady
+      onReady,
     };
   },
   // 使用组件
   components: {
-    Crumbs
-  }
+    Crumbs,
+  },
 };
 </script>
 
