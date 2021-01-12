@@ -1,6 +1,10 @@
 //#region 设置(操作)片段音频
 import { onMounted } from "vue";
 
+/**
+ * 音频片段的操作(设置)
+ * @author Gsgzs
+ */
 export function useSetFragment(fData) {
     // mounted时期
     onMounted(() => {
@@ -198,7 +202,7 @@ export function useSetFragment(fData) {
     function initAudioClip(index) {
         // 音频对象
         const audio = document.querySelector('.audio-main');
-        console.log(fData);
+        // console.log(fData);
         // 音频列表对象
         const fSObj = fData.source[index];
         // 音频片段对象
