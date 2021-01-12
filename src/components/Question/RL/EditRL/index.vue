@@ -34,6 +34,19 @@
         </a-checkbox-group>
         <!-- 题目标签复选框 end -->
       </a-form-item>
+      <a-form-item label="题目图片" :key="Math.random()">
+        <!-- 上传图片 -->
+        <ImageUpload />
+        <div class="pics" v-if="!fileUrl">
+          <img
+            :src="item"
+            v-for="item in editRL.model.pics"
+            :key="item"
+            style="width: 200px"
+          />
+        </div>
+        <span class="pic-desc">图片上传5M以内</span>
+      </a-form-item>
       <a-form-item label="题目音频" name="titleAudio">
         <!-- 上传音频 start -->
         <a-upload
@@ -96,6 +109,8 @@ import { useUploadAudio } from "@/components/Question/SST/AddSST/useUploadAudio"
 import { useGetLabels } from "@/views/Question/QuestionLabel/useGetLables";
 // 引入 音频合成 功能
 import { useAudioSynthetic } from "@/components/Question/SST/AddSST/useAudioSynthetic";
+// 引入 图片上传
+import ImageUpload from "@/components/ImageUpload";
 // 引入 音频播放器-转化
 import AudioPlayerZH from "@/components/Question/AudioPlayerZH";
 // 引入 音频播放器-精听读写
@@ -122,6 +137,7 @@ export default {
 
     // 编辑RL题目
     const {
+      fileUrl,
       editRL,
       editRLRef,
       changeLabels,
@@ -160,6 +176,8 @@ export default {
       synthesizing,
       // 音频合成功能
       audioSynthetic,
+      // 图片url
+      fileUrl,
       // 编辑题目的表单数据和校验规则
       editRL,
       // 编辑题目表单
@@ -173,8 +191,15 @@ export default {
     };
   },
   components: {
+    ImageUpload,
     AudioPlayerZH,
     AudioPlayerJTDX,
   },
 };
 </script>
+
+<style lang="scss">
+.add-modal .pic-desc {
+  color: #aaa;
+}
+</style>

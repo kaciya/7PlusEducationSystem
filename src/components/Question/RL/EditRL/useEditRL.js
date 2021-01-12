@@ -1,6 +1,8 @@
 //#region 编辑RL题型
 // 引入响应式API
-import { reactive, ref, watch } from "vue";
+import { reactive, ref, computed, watch } from "vue";
+// 导入vuex
+import { useStore } from "vuex";
 // 引入提示框
 import { message } from "ant-design-vue";
 // 导入 post 请求
@@ -14,6 +16,11 @@ import { speak } from "@/api/questionSpeakAPI";
  * @param {*} getQuestion 重新获取列表
  */
 export function useEditRL(editModalVisible, getQuestion, questionDetail, uploadAudioList) {
+  // 使用vuex
+  const store = useStore();
+  // 获取图片文件
+  const fileUrl = computed(() => store.state.ImageUploadStore.fileUrl);
+
   // 表单数据 校验规则
   const editRL = reactive({
     model: {
@@ -31,6 +38,8 @@ export function useEditRL(editModalVisible, getQuestion, questionDetail, uploadA
       answer: "",
       // 备注
       remark: "",
+      // 题目图片
+      pics: [],
       // 是否精听读写
       isJtdx: false,
       // 音频片段
@@ -69,6 +78,8 @@ export function useEditRL(editModalVisible, getQuestion, questionDetail, uploadA
         if (key == "labels") {
           // 标签特殊处理，将labels:[{id:1, name:'高频'}] map为 表单中的labelIds:['1']
           editRL.model.labelIds = val[key].map((value) => value.id);
+        } else if (key == "isJtdx") {
+          editRL.model.isJtdx = val[key] == 1 ? true : false;
         }
         else {
           // 其它值直接赋值
@@ -95,8 +106,17 @@ export function useEditRL(editModalVisible, getQuestion, questionDetail, uploadA
   const confirmEditRL = () => {
     // 先校验
     editRLRef.value.validate().then(() => {
+      // 判断用户是否上传了图片
+      if (fileUrl.value) {
+        // 设置表单图片url
+        editRL.model.pics = [fileUrl.value];
+      }
+      // 请求参数[model]
+      const model = JSON.parse(JSON.stringify(editRL.model));
+      // 是否精听读写
+      model.isJtdx = model.isJtdx ? 1 : 0;
       // 发送编辑题目请求
-      httpPost(speak.EditQuestion('rl'), editRL.model).then((res) => {
+      httpPost(speak.EditQuestion('rl'), model).then((res) => {
         if (res.success == true) {
           // 提示用户编辑成功
           message.success("编辑题目成功");
@@ -107,7 +127,10 @@ export function useEditRL(editModalVisible, getQuestion, questionDetail, uploadA
           // 重置表单
           editRLRef.value.resetFields();
           // 清除音频上传列表
-          uploadAudioList.value = []
+          uploadAudioList.value = [];
+          // 清除公共储存库里面的文件信息
+          store.commit("ImageUploadStore/DEL_IMAGE_FILES");
+          store.commit("ImageUploadStore/DEL_IMAGE_URL");
         }
         else {
           // 编辑失败，提示用户失败原因
@@ -128,10 +151,17 @@ export function useEditRL(editModalVisible, getQuestion, questionDetail, uploadA
     // 重置表单
     editRLRef.value.resetFields();
     // 清除音频上传列表
-    uploadAudioList.value = []
+    uploadAudioList.value = [];
+    // ⚡️用户体验
+    setTimeout(() => {
+      // 清除公共储存库里面的文件信息
+      store.commit("ImageUploadStore/DEL_IMAGE_FILES");
+      store.commit("ImageUploadStore/DEL_IMAGE_URL");
+    }, 200)
   };
 
   return {
+    fileUrl,
     editRL,
     editRLRef,
     changeLabels,
