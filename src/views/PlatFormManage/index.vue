@@ -224,8 +224,8 @@
               name="status"
             >
               <a-select v-model:value="editModel.status" placeholder="请选择">
-                <a-select-option value="1"> 已发布 </a-select-option>
-                <a-select-option value="0"> 已结束 </a-select-option>
+                <a-select-option :value="'1'"> 已发布 </a-select-option>
+                <a-select-option :value="'0'"> 已结束 </a-select-option>
               </a-select>
             </a-form-item>
             <a-form-item

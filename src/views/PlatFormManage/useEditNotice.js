@@ -32,12 +32,7 @@ export const useEditNotice = getNoticeData => {
           editModel.noticeTitle = data.title;
           editModel.endDate = moment(data.endTime, "YYYY-MM-DD HH:mm:ss");
           editModel.noticeContent = data.content;
-          if (data.status == "1") {
-            data.status = "已发布";
-          } else if (data.status == "0") {
-            data.status = "已结束";
-          }
-          editModel.status = data.status;
+          editModel.status = data.status.toString();
           // id
           editNoticeId.value = data.id;
           // 显示模态框
@@ -107,7 +102,7 @@ export const useEditNotice = getNoticeData => {
           id: editNoticeId.value,
           content: noticeContent,
           endTime: endDate,
-          status: status,
+          status: Number(status),
           title: noticeTitle
         });
         httpPost(notice.EditNotice, param)
