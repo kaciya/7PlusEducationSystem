@@ -13,6 +13,7 @@ export default {
   mutations: {
     // 设置用户信息
     SET_USERINFOS(state, payload) {
+      console.log(payload)
       state.userInfos = payload;
     },
     // 移除用户信息

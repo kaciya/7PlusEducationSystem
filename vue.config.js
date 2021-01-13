@@ -1,5 +1,6 @@
 module.exports = {
   lintOnSave: false,
+  productionSourceMap: false,
   devServer: {
     // 配置跨域
     proxy: {
@@ -20,6 +21,17 @@ module.exports = {
       return args;
     });
   },
+
+  // 引入外部资源
+  configureWebpack: {
+		externals: {
+			"vue": "Vue",
+			"vue-router": "VueRouter",
+      "vuex": "Vuex",
+      "axios": "axios",
+      "echarts": "echarts"
+		}
+	},
   // favicon图标配置
   pwa: {
     iconPaths: {
