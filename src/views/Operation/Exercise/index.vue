@@ -24,7 +24,7 @@
           <a-button
             type="primary"
             style="margin-left: 40px"
-            @click="editShow(record.id, record.name)"
+            @click="editShow(record)"
             size="small"
             class="modify-btn"
           >

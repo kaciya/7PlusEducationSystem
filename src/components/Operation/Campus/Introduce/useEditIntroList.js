@@ -10,16 +10,17 @@ import { message } from "ant-design-vue";
 export const useEditIntroList = (getIntroList) => {
   // 编辑模态框状态
   const editVisible = ref(false);
-  // 显示编辑模态框
-  const showEditModal = () => {
-    editVisible.value = true;
-  }
-  // 获取ref
-  const editRef = ref(null);
   // 创建表单数据
   const editModel = reactive({
     introduce: ""
   })
+  // 显示编辑模态框
+  const showEditModal = (record) => {
+    editVisible.value = true;
+    editModel.introduce = record.introduce;
+  }
+  // 获取ref
+  const editRef = ref(null);
   // 创建表单校验规则
   const editRule = {
     introduce: [
