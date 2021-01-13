@@ -21,8 +21,8 @@ message.config({
 import CKEditor from "@ckeditor/ckeditor5-vue";
 // 使用权限管理
 import "./permission";
-import action from "./directives/actions";
-app.directive('action',action)
+// import action from "./directives/actions";
+// app.directive('action',action)
 
 // 使用echarts
 import echarts from "echarts";
