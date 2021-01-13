@@ -79,7 +79,6 @@ export const useAddUser = getUserList => {
           //判断如果请求成功
           if (res.success) {
             //显示确认加载
-            confirmLoading.value = true;
             message.success(res.message);
             //关闭加载与弹窗
             addUserVisible.value = false;

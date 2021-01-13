@@ -33,7 +33,7 @@ export function useQuestionColumns() {
       dataIndex: "remark"
     },
     {
-      title: "练习次数",
+      title: "累计练习",
       dataIndex: "totalNum"
     },
     {
@@ -74,8 +74,8 @@ export function useQuestionColumns() {
       dataIndex: "remark"
     },
     {
-      title: "练习次数",
-      key: "totalNum"
+      title: "累计练习",
+      dataIndex: "totalNum"
     },
     {
       title: "操作",

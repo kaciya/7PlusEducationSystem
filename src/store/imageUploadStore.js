@@ -11,12 +11,12 @@ export default {
       // 文件列表
       fileList: null,
       // 储存返回的图片信息
-      fileUrl: null
+      fileUrl: ""
     }
   },
   mutations: {
     // 设置图片文件
-    SET_IMAGE_FILES(state,payload) {
+    SET_IMAGE_FILES(state, payload) {
       state.fileList = payload;
     },
     // 删除图片文件
@@ -24,7 +24,7 @@ export default {
       state.fileList = null;
     },
     // 设置图片地址
-    SET_IMAGE_URL(state,payload) {
+    SET_IMAGE_URL(state, payload) {
       state.fileUrl = payload;
     },
     // 删除图片地址

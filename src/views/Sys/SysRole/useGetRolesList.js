@@ -52,7 +52,7 @@ export const useGetRolesList = rolesTable => {
 
   //#region 编辑路由跳转
   const editRouter = roleId => {
-    router.push("/sys/role/edit/"+ new Date().getTime() + "/" + roleId);
+    router.push("/sys/role/edit/" + roleId);
   };
   //#endregion
 

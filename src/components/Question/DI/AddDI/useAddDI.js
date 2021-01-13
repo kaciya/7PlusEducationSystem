@@ -1,4 +1,4 @@
-//#region 添加RL题型
+//#region 添加DI题型
 // 引入响应式API
 import { ref, computed } from "vue";
 // 导入vuex
@@ -11,15 +11,15 @@ import { httpPost } from "@/utils/http";
 import { speak } from '@/api/questionSpeakAPI';
 
 /**
- * 导出添加RL题型 功能
+ * 导出添加DI题型 功能
  * @param {*} addModalVisible 添加模态框的显示与隐藏
  * @param {*} getQuestion 重新获取列表
  */
-export function useAddRL(addRL, addModalVisible, getQuestion, uploadAudioList, audioSynthetic) {
+export function useAddDI(addDI, addModalVisible, getQuestion) {
   // 使用vuex
   const store = useStore();
   // 表单ref
-  const addRLRef = ref(null);
+  const addDIRef = ref(null);
 
   // 获取图片文件
   const fileUrl = computed(() => store.state.ImageUploadStore.fileUrl);
@@ -34,37 +34,29 @@ export function useAddRL(addRL, addModalVisible, getQuestion, uploadAudioList, a
     }
   };
 
-  // 添加RL题目
-  const confirmAddRL = () => {
+  // 添加DI题目
+  const confirmAddDI = () => {
     // 先校验
-    addRLRef.value.validate().then(async () => {
+    addDIRef.value.validate().then(async () => {
       // 判断用户是否上传了图片
       if (fileUrl.value) {
         // 设置表单图片url
-        addRL.model.pics = [fileUrl.value];
-      }
-      // 有原文内容且没有上传音频
-      if (addRL.model.titleText.trim().length > 0 && addRL.model.titleAudio.length == 0) {
-        // 自动将原文转音频
-        await audioSynthetic();
+        addDI.model.pics = [fileUrl.value];
       }
       // 请求参数[model]
-      const model = JSON.parse(JSON.stringify(addRL.model));
-      // 是否精听读写
-      model.isJtdx = model.isJtdx ? 1 : 0;
+      const model = JSON.parse(JSON.stringify(addDI.model));
+      console.log(model);
       // 发送添加题目请求
-      httpPost(speak.AddQuestion('rl'), model).then((res) => {
+      httpPost(speak.AddQuestion('di'), model).then((res) => {
         if (res.success == true) {
           // 提示用户添加成功
           message.success("添加题目成功");
           // 刷新页面
           getQuestion()
-          // 关闭RL模态框
-          addModalVisible.rl = false;
+          // 关闭DI模态框
+          addModalVisible.di = false;
           // 重置表单
-          addRLRef.value.resetFields();
-          // 清除音频上传列表
-          uploadAudioList.value = [];
+          addDIRef.value.resetFields();
           // 清除公共储存库里面的文件信息
           store.commit("ImageUploadStore/DEL_IMAGE_FILES");
           store.commit("ImageUploadStore/DEL_IMAGE_URL");
@@ -81,25 +73,23 @@ export function useAddRL(addRL, addModalVisible, getQuestion, uploadAudioList, a
     });
   };
 
-  // 取消添加RL题目
-  const cancelAddRL = () => {
+  // 取消添加DI题目
+  const cancelAddDI = () => {
     // 提示用户
-    message.warn("取消添加rl题目");
+    message.warn("取消添加di题目");
     // 重置表单
-    addRLRef.value.resetFields();
-    // 清除音频上传列表
-    uploadAudioList.value = [];
+    addDIRef.value.resetFields();
     // 清除公共储存库里面的文件信息
     store.commit("ImageUploadStore/DEL_IMAGE_FILES");
     store.commit("ImageUploadStore/DEL_IMAGE_URL");
   };
 
   return {
-    addRL,
-    addRLRef,
+    addDI,
+    addDIRef,
     changeLabels,
-    confirmAddRL,
-    cancelAddRL
+    confirmAddDI,
+    cancelAddDI
   };
 }
 //#endregion
