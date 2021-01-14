@@ -8,16 +8,14 @@ import {
   role
 } from "@/api/sysUserAPI";
 
-// 引入 钩子函数
-import { watch } from "vue";
-
 //导入 GET请求方法
 import {
+  httpGet,
   httpPost
 } from "@/utils/http";
 
 //#region 横向树形图数据渲染
-export const useGetTable = (rolePermissionTable, props) => {
+export const useGetTable = (rolePermissionTable , props) => {
 
   //添加 加载状态
   const isLoading = ref(false);
@@ -39,8 +37,15 @@ export const useGetTable = (rolePermissionTable, props) => {
           //调用递归 方法
           setIsChecked(rolePermissionTable.data);
 
+          //判断是否存在父组件传入的权限组id
+          if(props.getRoleId){
+            //如果存在 则 调用 该方法 获取权限组 与 回显
+            getRoleChecked(props.getRoleId);
+          }
+
           //请求成功后 取消加载状态
           isLoading.value = false;
+
         }
       })
       .catch(err => {
@@ -48,14 +53,21 @@ export const useGetTable = (rolePermissionTable, props) => {
       });
   };
 
-  //监听父组件的参数
-  watch(
-    () => props.getRoleList,
-    (pids) => {
-      setRoleChecked(rolePermissionTable.data , pids);
-    }
-  );
 
+  //#region 获取权限组详情
+  const getRoleChecked = (roleId) => {
+    //发起请求 获取权限组详情
+    httpGet(role.GetRoleDetail + "/" + roleId).then(res => {
+        if (res.success) {
+          //将获取到的权限回显到表单中
+          setRoleChecked(rolePermissionTable.data, res.data.permissionIds);
+        }
+      })
+      .catch(err => {
+        throw err;
+      })
+  }
+  //#endregion
 
   /**
    * 递归 将所有选择项 添加 是否选中
@@ -91,12 +103,12 @@ export const useGetTable = (rolePermissionTable, props) => {
     node.forEach(item => {
       //遍历此权限组的id 将此id进行选中
       pids.forEach(id => {
-        if(item.permissionId == id){
+        if (item.permissionId == id) {
           //选中 id
           item.isChecked = true;
-          
+
           //判断父级是否半选
-          setIndeterminate(rolePermissionTable.data , item);
+          setIndeterminate(rolePermissionTable.data, item);
         }
       })
 
@@ -114,7 +126,7 @@ export const useGetTable = (rolePermissionTable, props) => {
    * @param {*} node 权限组列表
    * @param {*} record 权限组项
    */
-  const setIndeterminate = (node , record) => {
+  const setIndeterminate = (node, record) => {
     //遍历原数组对象
     node.forEach(item => {
       //判断如果子节点与选中的pid相同

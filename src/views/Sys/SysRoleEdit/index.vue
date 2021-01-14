@@ -51,7 +51,7 @@
       <!-- 基本信息 end -->
       <!-- 权限设置 -->
       <a-card title="权限设置">
-        <RoleTreeTable :getTreeChecked="getTreeChecked" :getRoleList="getRoleList" @getDefKeys="getDefKeys" />
+        <RoleTreeTable :getTreeChecked="getTreeChecked" :getRoleId="roleId" @getDefKeys="getDefKeys" />
       </a-card>
       <!-- 权限设置 end -->
     </a-card>
@@ -92,13 +92,13 @@ export default {
      */
     const {
       getTreeChecked,
-      getRoleList,
       editRoleRules,
       editRoleForm,
       editRoleConfirm,
       editRoleFormRef,
       getRolesDetail,
       getDefKeys,
+      roleId,
     } = useEditRole();
     //#endregion
 
@@ -109,10 +109,10 @@ export default {
 
     //#region 返回参数
     return {
+      //编辑项id
+      roleId,
       //判断是否获取选中的权限ID
       getTreeChecked,
-      //保存需要回显的权限列表
-      getRoleList,
       //编辑表单校验规则
       editRoleRules,
       //表单数据模型对象

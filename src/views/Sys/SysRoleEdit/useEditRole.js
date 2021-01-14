@@ -34,9 +34,6 @@ export const useEditRole = () => {
     //定义布尔值 判断是否获取选中的权限ID
     const getTreeChecked = ref(false);
 
-    //定义数组 保存需要回显的权限列表
-    const getRoleList = ref([]);
-
     //定义表单
     const editRoleFormRef = ref(null);
 
@@ -71,7 +68,6 @@ export const useEditRole = () => {
                 if (res.success) {
                     //将获取到的权限回显到表单中
                     editRoleForm.roleName = res.data.roleName;
-                    getRoleList.value = res.data.permissionIds; 
                 }
             })
             .catch(err => {
@@ -116,10 +112,10 @@ export const useEditRole = () => {
 
     //返回参数 和 方法
     return {
+        //编辑项id
+        roleId,
         //判断是否获取选中的权限ID
         getTreeChecked,
-        //保存需要回显的权限列表
-        getRoleList,
         //编辑表单校验规则
         editRoleRules,
         //表单数据模型对象
