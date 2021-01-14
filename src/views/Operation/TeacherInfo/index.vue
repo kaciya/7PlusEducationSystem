@@ -48,7 +48,7 @@
             type="primary"
             size="small"
             style="margin-right: 10px"
-            @click="showEditModal(record.id)"
+            @click="showEditModal(record)"
             class="modify-btn"
           >
             编辑

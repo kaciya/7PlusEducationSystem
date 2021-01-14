@@ -17,7 +17,7 @@
       <img :src="record.picImg" style="width: 30%">
     </template>
     <template #operational="{ record }">
-      <a-button type="primary" size="small" style="margin-right: 10px" @click="showEditModal(record.id)">编辑</a-button>
+      <a-button type="primary" size="small" style="margin-right: 10px" class="modify-btn" @click="showEditModal(record)">编辑</a-button>
       <a-popconfirm placement="topRight" title="您真的要删除么?" @confirm="delSubmit(record.id)">
         <a-button type="danger" size="small">删除</a-button>
       </a-popconfirm>

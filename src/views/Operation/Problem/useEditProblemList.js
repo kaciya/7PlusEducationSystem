@@ -23,6 +23,8 @@ export const useEditProblemList = getProblem => {
     editFormVisible.value = true;
     // 设置id
     editModel.id = record.id;
+    editModel.answer = record.answer;
+    editModel.question = record.question;
   };
 
   // 获取ref

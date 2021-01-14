@@ -16,19 +16,20 @@ export const useEditExercise = getExercise => {
   // 设置模态框按钮状态
   const confirmLoading = ref(false);
 
-  // 显示模态框
-  const editShow = (id, name) => {
-    editVisibility.value = true;
-    // 获取用户id
-    userId.value = id;
-    // 获取对象名称
-    objectName.value = name;
-  };
-
   // 获取表单的值
   const editMode = reactive({
     content: ""
   });
+
+  // 显示模态框
+  const editShow = (record) => {
+    editVisibility.value = true;
+    // 获取用户id
+    userId.value = record.id;
+    // 获取对象名称
+    objectName.value = record.name;
+    editMode.content = record.content;
+  };
 
   // 获取ref
   let exerciseEditRef = ref(null);
