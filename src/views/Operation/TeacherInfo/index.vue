@@ -246,6 +246,7 @@ export default {
     // 设置储存库
     const store = useStore();
 
+
     //#region 获取表格列
     const { column } = useTeacherColumns();
     //#endregion
@@ -254,11 +255,11 @@ export default {
     const { teacherList,loadState,teacherPagination,getTeacherList,onTableChange } = useGetTeacherList();
     //#endregion
 
+
     //#region 删除老师
     const { delSubmit,delCancel } = useDelTeacherList(getTeacherList);
     //#endregion
 
-    //#region 添加老师
     const {
       addLabelVisible,
       showModal,

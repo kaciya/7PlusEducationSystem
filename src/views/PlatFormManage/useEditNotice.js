@@ -2,7 +2,7 @@ import { reactive, ref } from "vue";
 // 导入接口
 import notice from "@/api/noticeAPI";
 // 导入请求方法
-import { httpPost } from "@/utils/http";
+import { httpPost, httpGet } from "@/utils/http";
 // 引入提示方法
 import { message } from "ant-design-vue";
 // 引入日期处理
@@ -15,31 +15,37 @@ export const useEditNotice = getNoticeData => {
   const editModel = reactive({
     noticeTitle: "",
     endDate: null,
-    noticeContent: ""
+    noticeContent: "",
+    status: undefined
   });
 
   // id
   const editNoticeId = ref("");
 
-  // 公告状态
-  const editNoticeStatus = ref("");
-
-  // 显示编辑模态框
+  // 显示编辑模态框并回显
   const editShowModal = record => {
-    // 显示模态框
-    editVisible.value = true;
-    // id
-    editNoticeId.value = record.id;
-    // 状态
-    editNoticeStatus.value = record.status;
-    // 输入框回显
-    editModel.noticeTitle = record.title;
-    editModel.endDate = moment(record.createTime, "YYYY-MM-DD HH:mm:ss");
-    editModel.noticeContent = record.content;
+    // 获取回显数据
+    httpGet(notice.ShowEdit + "/" + record.id)
+      .then(res => {
+        const { success, data } = res;
+        if (success) {
+          editModel.noticeTitle = data.title;
+          editModel.endDate = moment(data.endTime, "YYYY-MM-DD HH:mm:ss");
+          editModel.noticeContent = data.content;
+          editModel.status = data.status.toString();
+          // id
+          editNoticeId.value = data.id;
+          // 显示模态框
+          editVisible.value = true;
+        }
+      })
+      .catch(err => {
+        throw new Error(err);
+      });
   };
 
   // 校验规则
-  const editRules = ref({
+  const editRules = reactive({
     noticeTitle: [
       {
         required: true,
@@ -54,6 +60,14 @@ export const useEditNotice = getNoticeData => {
         type: "date",
         required: true,
         message: "截止时间不能为空",
+        trigger: "blur"
+      }
+    ],
+    status: [
+      {
+        type: "string",
+        required: true,
+        message: "状态不能为空",
         trigger: "blur"
       }
     ],
@@ -80,7 +94,7 @@ export const useEditNotice = getNoticeData => {
     editFormRef.value
       .validate()
       .then(res => {
-        let { noticeTitle, endDate, noticeContent } = res;
+        let { noticeTitle, endDate, noticeContent, status } = res;
         // 转换日期格式
         endDate = moment(res.endDate).format("YYYY-MM-DD HH:mm:ss");
         // 转JSON格式
@@ -88,7 +102,7 @@ export const useEditNotice = getNoticeData => {
           id: editNoticeId.value,
           content: noticeContent,
           endTime: endDate,
-          status: editNoticeStatus.value,
+          status: Number(status),
           title: noticeTitle
         });
         httpPost(notice.EditNotice, param)

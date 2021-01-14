@@ -7,5 +7,7 @@ export default {
   // 修改公告
   EditNotice: "/notice/update",
   // 删除公告
-  DelOneNotice: "/notice"
+  DelOneNotice: "/notice",
+  // 编辑回显
+  ShowEdit: "/notice/detail"
 };

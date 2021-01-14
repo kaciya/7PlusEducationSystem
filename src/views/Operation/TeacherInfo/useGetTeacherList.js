@@ -4,8 +4,11 @@
  * */
 
 // 引入http
-import { httpGet } from "@/utils/http";
+import {
+  httpGet
+} from "@/utils/http";
 // 引入api
+
 import { teacherInfo } from "@/api/operationAPI";
 import { onMounted, reactive, ref } from "vue";
 
@@ -58,8 +61,6 @@ export const useGetTeacherList = () => {
         loadState.value = false;
       })
   }
-
-  // 页码改变的回调
   // 页码改变的回调
   const onTableChange = (pagination) => {
     teacherPagination.current = pagination.current;
@@ -71,6 +72,7 @@ export const useGetTeacherList = () => {
   onMounted(() => {
     getTeacherList();
   })
+
 
   return {
     // 表格数据

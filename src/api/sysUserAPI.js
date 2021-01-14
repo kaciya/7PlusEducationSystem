@@ -7,7 +7,13 @@ export const role = {
   //更改启用状态
   EditRolesStatus: "/role/status",
   //渲染权限列表
-  GetRolesPermissions: "/role/permissions"
+  GetRolesPermissions: "/role/permissions",
+  //添加权限组
+  AddRoles: "/role/add",
+  //权限组详情
+  GetRoleDetail : "/role/detail",
+  //修改权限组
+  EditRole: "/role/update"
 };
 
 //关于 账号管理 接口

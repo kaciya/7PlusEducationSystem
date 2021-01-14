@@ -1,6 +1,7 @@
 <template>
   <!-- 添加WFD题目模态框 -->
   <a-modal
+    class="add-modal"
     v-model:visible="addModalVisible.wfd"
     title="添加"
     @ok="confirmAddWFD"
@@ -50,6 +51,11 @@
         <a-button type="primary" @click="audioSynthetic" :loading="synthesizing"
           >转换为音频</a-button
         >
+        <!-- 音频播放器-转化 -->
+        <AudioPlayerZH
+          :audioModel="addWFD.model"
+          v-if="addWFD.model.titleAudio"
+        />
       </a-form-item>
 
       <a-form-item label="备注" name="remark">
@@ -63,8 +69,8 @@
 <script>
 // 引入注入方法
 import { inject } from "vue";
-// 引入图标
-import { CheckCircleTwoTone } from "@ant-design/icons-vue";
+// 引入 音频播放器 组件
+import AudioPlayerZH from "@/components/Question/AudioPlayerZH";
 // 引入 添加WFD题目表单数据
 import { useAddWFDForm } from "./useAddWFDForm";
 // 引入 添加WFD题目 功能
@@ -145,16 +151,7 @@ export default {
     };
   },
   components: {
-    CheckCircleTwoTone,
+    AudioPlayerZH,
   },
 };
 </script>
-
-<style scoped lang="scss">
-#labelIds {
-  // 让本模态框中的标签复选框换行时保持对齐
-  .ant-checkbox-wrapper:nth-child(6n) {
-    margin-left: 0px;
-  }
-}
-</style>

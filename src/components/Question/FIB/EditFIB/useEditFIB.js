@@ -107,8 +107,6 @@ export function useEditFIB(editModalVisible, getQuestion, questionDetail, upload
   const confirmEditFIB = () => {
     // 先校验
     editFIBRef.value.validate().then(() => {
-      // 后台问题，标签设置为空时，会导致页面请求失败
-      if (editFIB.model.labelIds.length == 0) return;
       // 发送编辑题目请求
       httpPost(listen.EditQuestion('fib'), editFIB.model).then((res) => {
         if (res.success == true) {
@@ -141,6 +139,7 @@ export function useEditFIB(editModalVisible, getQuestion, questionDetail, upload
     message.warn('取消编辑fib题目');
     // 重置表单
     editFIBRef.value.resetFields();
+    editFIB.model.titleAudio = '';
     // 清除音频上传列表
     uploadAudioList.value = []
   }
