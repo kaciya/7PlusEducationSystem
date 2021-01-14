@@ -6,7 +6,7 @@ import { httpPost } from "@/utils/http";
 import { message } from "ant-design-vue";
 
 // 添加老师
-export const useAddTeacherList = (options,store) => {
+export const useAddTeacherList = (getTeacherList,store) => {
   // 模态框状态
   const addLabelVisible = ref(false);
   // 确定按钮loading
@@ -91,13 +91,7 @@ export const useAddTeacherList = (options,store) => {
               store.commit("ImageUploadStore/DEL_IMAGE_FILES");
               store.commit("ImageUploadStore/DEL_IMAGE_URL");
               // 重新获取数据
-              options.useGetTeacherList(
-                options.pageNum,
-                options.pageSize,
-                () => {
-                  options.loadState.value = false;
-                }
-              );
+              getTeacherList();
             }
           })
           .catch(err => {

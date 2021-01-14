@@ -6,10 +6,9 @@ import { computed, reactive, ref } from "vue";
 import { httpPost } from "@/utils/http";
 import { teacherInfo } from "@/api/operationAPI";
 import { message } from "ant-design-vue";
-import { useGetTeacherList } from "./useGetTeacherList";
 
 // 编辑老师
-export const useEditTeacherList = (options,store) => {
+export const useEditTeacherList = (getTeacherList,store) => {
   // 编辑模态的框状态
   const editLabelVisible = ref(false);
   // 设置模态框确定按钮的加载状态
@@ -104,13 +103,7 @@ export const useEditTeacherList = (options,store) => {
               store.commit("ImageUploadStore/DEL_IMAGE_URL");
               // 清除表单里面的值
               editRef.value.resetFields();
-              options.useGetTeacherList(
-                options.pageNum.value,
-                options.pageSize.value,
-                () => {
-                  options.loadState.value = false;
-                }
-              );
+              getTeacherList();
             }
           })
           .catch(err => {
