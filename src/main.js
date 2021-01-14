@@ -35,33 +35,33 @@ import {
   Divider,
   DatePicker
 } from "ant-design-vue";
-app.use(Button);
-app.use(Grid);
-app.use(Row);
-app.use(Col);
-app.use(ConfigProvider);
-app.use(Layout);
-app.use(Input);
-app.use(Switch);
-app.use(Tooltip);
-app.use(Form);
-app.use(Menu);
-app.use(Avatar);
-app.use(Dropdown);
-app.use(Card);
-app.use(PageHeader);
-app.use(Breadcrumb);
-app.use(Radio);
-app.use(Modal);
-app.use(Table);
-app.use(Popconfirm);
-app.use(Select);
-app.use(Upload);
-app.use(Alert);
-app.use(Tag);
-app.use(Checkbox);
-app.use(Divider);
-app.use(DatePicker)
+app.use(Button)
+  .use(Grid)
+  .use(Row)
+  .use(Col)
+  .use(ConfigProvider)
+  .use(Layout)
+  .use(Input)
+  .use(Switch)
+  .use(Tooltip)
+  .use(Form)
+  .use(Menu)
+  .use(Avatar)
+  .use(Dropdown)
+  .use(Card)
+  .use(PageHeader)
+  .use(Breadcrumb)
+  .use(Radio)
+  .use(Modal)
+  .use(Table)
+  .use(Popconfirm)
+  .use(Select)
+  .use(Upload)
+  .use(Alert)
+  .use(Tag)
+  .use(Checkbox)
+  .use(Divider)
+  .use(DatePicker);
 import "ant-design-vue/dist/antd.css";
 
 import "@/assets/styles/index.scss"; // global css
@@ -89,5 +89,5 @@ app.provide("$echarts", echarts);
 app
   .use(store)
   .use(router)
-  .use(CKEditor)
+  // .use(CKEditor)
   .mount("#app");
