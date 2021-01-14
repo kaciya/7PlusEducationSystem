@@ -5,10 +5,11 @@
     :columns="introList.column"
     :data-source="introList.data"
     :row-key="record => record.id"
+    :pagination="false"
     bordered
   >
-    <template #edit>
-      <a-button size="small" type="primary" @click="showEditModal">编辑</a-button>
+    <template #edit="{ record }">
+      <a-button size="small" type="primary" @click="showEditModal(record)" class="modify-btn">编辑</a-button>
     </template>
   </a-table>
   <!-- 柒加教育 end -->

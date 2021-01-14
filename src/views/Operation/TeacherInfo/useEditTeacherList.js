@@ -6,10 +6,9 @@ import { computed, reactive, ref } from "vue";
 import { httpPost } from "@/utils/http";
 import { teacherInfo } from "@/api/operationAPI";
 import { message } from "ant-design-vue";
-import { useGetTeacherList } from "./useGetTeacherList";
 
 // 编辑老师
-export const useEditTeacherList = (options,store) => {
+export const useEditTeacherList = (getTeacherList,store) => {
   // 编辑模态的框状态
   const editLabelVisible = ref(false);
   // 设置模态框确定按钮的加载状态
@@ -19,15 +18,6 @@ export const useEditTeacherList = (options,store) => {
   // 获取文件Url
   const fileUrl = computed(() => store.state.ImageUploadStore.fileUrl);
 
-  // 显示编辑模态框
-  const showEditModal = id => {
-    userId.value = id;
-    editLabelVisible.value = true;
-    // 清除公共储存库里面的文件信息
-    store.commit("ImageUploadStore/DEL_IMAGE_FILES");
-    store.commit("ImageUploadStore/DEL_IMAGE_URL");
-  };
-
   // 获取表单数据
   const editModel = reactive({
     name: "",
@@ -36,6 +26,20 @@ export const useEditTeacherList = (options,store) => {
     profiles: "",
     sort: ""
   });
+
+  // 显示编辑模态框
+  const showEditModal = record => {
+    userId.value = record.id;
+    editModel.name = record.name;
+    editModel.photo = record.photo;
+    editModel.position = record.position;
+    editModel.profiles = record.profiles;
+    editModel.sort = record.sort;
+    editLabelVisible.value = true;
+    // 清除公共储存库里面的文件信息
+    store.commit("ImageUploadStore/DEL_IMAGE_FILES");
+    store.commit("ImageUploadStore/DEL_IMAGE_URL");
+  };
 
   // 创建表单校验规则
   // 创建自定义校验规则
@@ -99,13 +103,7 @@ export const useEditTeacherList = (options,store) => {
               store.commit("ImageUploadStore/DEL_IMAGE_URL");
               // 清除表单里面的值
               editRef.value.resetFields();
-              options.useGetTeacherList(
-                options.pageNum.value,
-                options.pageSize.value,
-                () => {
-                  options.loadState.value = false;
-                }
-              );
+              getTeacherList();
             }
           })
           .catch(err => {

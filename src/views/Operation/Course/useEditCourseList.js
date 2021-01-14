@@ -26,6 +26,11 @@ export const useEditCourseList = getCourse => {
   // 显示模态框
   const showEdit = record => {
     courseId.value = record.id;
+    editModel.name = record.name;
+    editModel.introduce = record.introduce;
+    editModel.fit = record.fit;
+    editModel.trait = record.trait;
+    editModel.isShow = Boolean(record.isShow);
     editvisible.value = true;
   };
 
@@ -62,7 +67,7 @@ export const useEditCourseList = getCourse => {
           introduce,
           fit,
           trait,
-          isShow,
+          isShow: Number(isShow),
           id: courseId.value
         });
         // 判断是否操作成功

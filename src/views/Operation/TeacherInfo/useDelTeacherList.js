@@ -20,10 +20,7 @@ import {
 export const useDelTeacherList = (getTacherList) => {
 
   // 删除方法
-  const delSubmit = (id,
-    pageNum,
-    pageSize,
-    loadState) => {
+  const delSubmit = (id) => {
     // 发送请求
   httpDelete(teacherInfo.DelTeacherList + `/${id}`)
   .then(res => {
@@ -31,10 +28,8 @@ export const useDelTeacherList = (getTacherList) => {
       if (res.code === 200) {
         // 提示信息
         message.success(res.message);
-        // 执行回调
-        getTacherList(pageNum, pageSize, () => {
-          loadState = false;
-        });
+        // 重新获数据
+        getTacherList();
       }
     })
     .catch(err => {

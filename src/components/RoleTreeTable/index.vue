@@ -68,7 +68,7 @@
 </template>
 <script>
 // 引入 钩子函数
-import { onMounted , watch } from "vue";
+import { onMounted, watch } from "vue";
 
 // 获取 权限组-添加 中后台返回的 权限组列表
 import { useGetTable } from "./useGetTable";
@@ -83,16 +83,32 @@ export default {
   //获取父级组件传入的参数
   props: {
     getTreeChecked: Boolean,
-    getRoleList : Object,
+    getRoleId: String,
   },
 
   // setup响应api入口
-  setup(props , context) {
+  setup(props, context) {
     //#region 获取 导入方法中返回的 子方法和参数
+    /**
+     * rolePermissionTable 权限列表参数
+     */
     const { rolePermissionTable } = useTableColums();
 
-    const { isLoading , getRolePermissions } = useGetTable(rolePermissionTable , props);
+    /**
+     * isLoading 加载状态
+     * getRolePermissions 渲染权限列表
+     */
+    const { isLoading, getRolePermissions } = useGetTable(
+      rolePermissionTable , 
+      props);
 
+    /**
+     * checkedData 选中的权限id
+     * getleafChecked 获取叶子节点选中状态
+     * getChildChecked 获取子节点选中状态
+     * getRootChecked 获取根节点选中状态
+     * getTreeCheckedKeys 获取最后所有选中的权限id
+     */
     const {
       checkedData,
       getleafChecked,
@@ -104,7 +120,7 @@ export default {
 
     //在Mounted 获取列表
     onMounted(() => {
-      getRolePermissions();
+      getRolePermissions();    
     });
 
     //监听父组件的参数
@@ -118,9 +134,9 @@ export default {
             rolePermissionTable.data,
             checkedData.resultDefKeys
           );
-          
+
           //将值传递给父组件
-          context.emit('getDefKeys',checkedData.resultDefKeys);
+          context.emit("getDefKeys", checkedData.resultDefKeys);
         }
       }
     );
@@ -140,7 +156,7 @@ export default {
       //递归实现 获取选中的复选框的值
       getTreeCheckedKeys,
       //加载状态
-      isLoading
+      isLoading,
     };
   },
 };

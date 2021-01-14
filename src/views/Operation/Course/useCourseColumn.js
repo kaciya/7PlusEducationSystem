@@ -3,7 +3,7 @@ export const columns = [
   {
     title: "课程名称",
     dataIndex: "name",
-    width: "15%"
+    width: "10%"
   },
   {
     title: "课程介绍",
@@ -22,7 +22,7 @@ export const columns = [
   },
   {
     title: "操作",
-    width: "15%",
+    width: "20%",
     slots: { customRender: "operational" }
   }
 ];

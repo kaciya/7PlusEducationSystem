@@ -1,80 +1,90 @@
+/**
+ * @author Lemon
+ * 获取教室列表数据
+ * */
+
 // 引入http
 import {
   httpGet
 } from "@/utils/http";
 // 引入api
-import {
-  teacherInfo
-} from "@/api/operationAPI";
-import {
-  reactive,
-  ref
-} from "vue";
 
-// 创建表格数据
-export const teacherListData = reactive({});
+import { teacherInfo } from "@/api/operationAPI";
+import { onMounted, reactive, ref } from "vue";
 
-// 获取教师数据
-export const useGetTeacherList = (teacherPagination, callback) => {
-  // 获取数据
-  httpGet(teacherInfo.GetTacherList, {
-      pageNum : teacherPagination.current,
-      pageSize : teacherPagination.pageSize
-    })
-    .then(res => {
-      // 判断数据是否获取成功
-      if (res.code === 200) {
-        let { data } = res;
-        // 将数据设置到teacherListData上
-        teacherListData.data = data.records;
-        teacherPagination.total = data.total;
-        console.log(res);
-        //执行回调函数
-        callback();
-      }
-    })
-    .catch(err => {
-      throw err;
-    });
-};
-
-// 分页功能
-export const getPagination = () => {
-  // 页面是否在加载
-  const loadState = ref(true);
-  //#region 分页参数
+export const useGetTeacherList = () => {
+  // 创建数据
+  const teacherList = reactive({});
+  // 是否在加载中
+  const loadState = ref(false);
+  // 配置分页器
   const teacherPagination = reactive({
-    //列表所在页数
+    // 第几页
     current: 1,
-    //现在一页显示多少条数据
-    pageSize: 20,
-    //一共多少条数据
+    // 每页显示多少条
+    pageSize: 10,
+    // 每页允许显示多少条
+    pageSizeOptions: ["10"],
+    // 总数
     total: 0,
     // 允许改变每页条数
-    showSizeChanger: true
-  });
-  //#endregion
-
-  //#region 点击下一页方法
-  const pageChange = pagination => {
+    showSizeChanger: true,
+  })
+  // 获取教师列表数据
+  const getTeacherList = () => {
     loadState.value = true;
-
-    //点击下一页后 将分页参数中的 当前页 和 一页显示的数据改变
+    // 发送ajax请求
+    httpGet(teacherInfo.GetTacherList,{
+      pageNum: teacherPagination["current"],
+      pageSize: teacherPagination["pageSize"]
+    }).then(res => {
+      // 判断是否获取成功
+      if (res.success) {
+        // 设置表格数据
+        teacherList.data = res.data.records;
+        // 设置total
+        teacherPagination.total = res.data.total;
+        // 设置size
+        teacherPagination.pageSize = res.data.size;
+        // 设置当前页面
+        teacherPagination.current = res.data.current;
+        // 判断最后一页是否有数据 如果没有跳转前一页
+        if (res.data.current > res.data.pages && res.data.pages != 0) {
+          teacherPagination.current = res.data.pages;
+          getTeacherList();
+        }
+        loadState.value = false;
+      }
+    })
+      .catch(err => {
+        throw err;
+        loadState.value = false;
+      })
+  }
+  // 页码改变的回调
+  const onTableChange = (pagination) => {
     teacherPagination.current = pagination.current;
     teacherPagination.pageSize = pagination.pageSize;
-    // 重新获取分页数据
-    useGetTeacherList(teacherPagination, () => {
-      loadState.value = false;
-    });
-  };
-  //#endregion
+    getTeacherList();
+  }
+
+  // 钩子函数
+  onMounted(() => {
+    getTeacherList();
+  })
+
 
   return {
-    // 是否在加载数据
+    // 表格数据
+    teacherList,
+    // 列表是否在加载
     loadState,
-    //分页参数
+    // 分页配置项
     teacherPagination,
-    //点击下一页方法
-    pageChange
-  };
-};
+    // 页码改变的回调
+    onTableChange,
+    // 获取教师列表数据
+    getTeacherList
+  }
+}
+
