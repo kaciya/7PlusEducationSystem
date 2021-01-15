@@ -26,6 +26,7 @@ import {
   Breadcrumb,
   Radio,
   Table,
+  Tabs,
   Popconfirm,
   Select,
   Upload,
@@ -35,33 +36,34 @@ import {
   Divider,
   DatePicker
 } from "ant-design-vue";
-app.use(Button);
-app.use(Grid);
-app.use(Row);
-app.use(Col);
-app.use(ConfigProvider);
-app.use(Layout);
-app.use(Input);
-app.use(Switch);
-app.use(Tooltip);
-app.use(Form);
-app.use(Menu);
-app.use(Avatar);
-app.use(Dropdown);
-app.use(Card);
-app.use(PageHeader);
-app.use(Breadcrumb);
-app.use(Radio);
-app.use(Modal);
-app.use(Table);
-app.use(Popconfirm);
-app.use(Select);
-app.use(Upload);
-app.use(Alert);
-app.use(Tag);
-app.use(Checkbox);
-app.use(Divider);
-app.use(DatePicker)
+app.use(Button)
+  .use(Grid)
+  .use(Row)
+  .use(Col)
+  .use(ConfigProvider)
+  .use(Layout)
+  .use(Input)
+  .use(Switch)
+  .use(Tooltip)
+  .use(Form)
+  .use(Menu)
+  .use(Avatar)
+  .use(Dropdown)
+  .use(Card)
+  .use(PageHeader)
+  .use(Breadcrumb)
+  .use(Radio)
+  .use(Modal)
+  .use(Table)
+  .use(Popconfirm)
+  .use(Select)
+  .use(Upload)
+  .use(Alert)
+  .use(Tag)
+  .use(Checkbox)
+  .use(Divider)
+  .use(Tabs)
+  .use(DatePicker);
 import "ant-design-vue/dist/antd.css";
 
 import "@/assets/styles/index.scss"; // global css
@@ -75,16 +77,15 @@ message.config({
 
 // 使用富文本编辑器
 import CKEditor from "@ckeditor/ckeditor5-vue";
-// 使用权限管理
-import "./permission";
-// import action from "./directives/actions";
-// app.directive('action',action)
+
 
 // 使用echarts
 import echarts from "echarts";
 app.provide("$echarts", echarts);
 
-
+// 使用按钮级别的权限控制指令
+import hasObj from "./directives/has.js";
+app.directive('has', hasObj);
 
 app
   .use(store)

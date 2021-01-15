@@ -52,7 +52,7 @@
           <!-- 批量上传组件（只在RA、RS和ASQ中存在） -->
           <BatchUpload :uploadFile="uploadFile" />
           <!-- 添加题目按钮 -->
-          <a-button type="primary" @click="showAddModal">添加</a-button>
+          <a-button type="primary" @click="showAddModal" v-has="'question:speak:edit'">添加</a-button>
           <!-- 添加题目模态框 -->
           <!-- 添加题目模态框 start -->
           <AddRAModal :addModalVisible="addModalVisible"></AddRAModal>
@@ -119,7 +119,7 @@
 
         <!-- 题目操作区 start -->
         <template #operation="{ record }">
-          <a-button type="primary" size="small" @click="showGetModal(record.id)"
+          <a-button type="primary" size="small" @click="showGetModal(record.id)" v-has="'question:speak:detail'"
             >查看</a-button
           >
           <!-- 上传音频按钮-->
@@ -130,6 +130,7 @@
             class="modify-btn"
             style="margin-left: 10px"
             @click="showEditModal(record.id)"
+            v-has="'question:speak:edit'"
             >编辑</a-button
           >
           <a-popconfirm

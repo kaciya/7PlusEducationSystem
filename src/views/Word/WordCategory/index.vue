@@ -14,7 +14,7 @@
       >
         <template #extra>
           <!-- 添加标签按钮 -->
-          <a-button type="primary" @click="addCategory">添加分类</a-button>
+          <a-button type="primary" @click="addCategory" v-has="'word:type:edit'">添加分类</a-button>
         </template>
       </a-page-header>
       <!-- 页头 end -->
@@ -33,6 +33,7 @@
             size="small"
             @click="editCategory(record)"
             class="modify-btn"
+            v-has="'word:type:edit'"
           >
             修改
           </a-button>
