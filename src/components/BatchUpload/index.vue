@@ -2,7 +2,7 @@
   <!-- span防止出现两个根元素 -->
   <span>
     <!-- 批量导入按钮 -->
-    <a-button @click="showBulkUpload" v-has="'question:listen:import'"> {{ uploadFile.uploadTitle }} </a-button>
+    <a-button @click="showBulkUpload"> {{ uploadFile.uploadTitle }} </a-button>
 
     <!-- 批量导入模态框start -->
     <a-modal
