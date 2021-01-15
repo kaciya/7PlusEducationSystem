@@ -26,6 +26,7 @@ import {
   Breadcrumb,
   Radio,
   Table,
+  Tabs,
   Popconfirm,
   Select,
   Upload,
@@ -61,6 +62,7 @@ app.use(Button)
   .use(Tag)
   .use(Checkbox)
   .use(Divider)
+  .use(Tabs)
   .use(DatePicker);
 import "ant-design-vue/dist/antd.css";
 
@@ -75,19 +77,18 @@ message.config({
 
 // 使用富文本编辑器
 import CKEditor from "@ckeditor/ckeditor5-vue";
-// 使用权限管理
-import "./permission";
-// import action from "./directives/actions";
-// app.directive('action',action)
+
 
 // 使用echarts
 import echarts from "echarts";
 app.provide("$echarts", echarts);
 
-
+// 使用按钮级别的权限控制指令
+import hasObj from "./directives/has.js";
+app.directive('has', hasObj);
 
 app
   .use(store)
   .use(router)
-  // .use(CKEditor)
+  .use(CKEditor)
   .mount("#app");
