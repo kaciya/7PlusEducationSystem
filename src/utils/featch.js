@@ -82,6 +82,9 @@ instance.interceptors.response.use(
           }, 200);
         }, 100);
         return Promise.reject(error);
+      case 5106:
+        message.warning("您没有访问权限")
+        return Promise.reject(error);
     }
     //#endregion
     // 如果config不存在，或者retry选项没有设置，用reject
