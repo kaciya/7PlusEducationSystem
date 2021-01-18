@@ -1,10 +1,12 @@
 <template>
   <a-modal
+    class="get-modal"
     v-model:visible="getModalVisible[questionType]"
     title="查看"
     :maskClosable="false"
+    @cancel="closeModal"
   >
-    <a-form :label-col="{ span: 4 }" :wrapper-col="{ span: 17, offset: 1 }">
+    <a-form :label-col="{ span: 2 }" :wrapper-col="{ span: 22 }">
       <a-form-item label="编号">{{ getMCS.no }}</a-form-item>
       <a-form-item label="题目">{{ getMCS.title }}</a-form-item>
       <!-- 题目标签 start -->
@@ -18,10 +20,12 @@
 
       <!-- 题目音频 start -->
       <a-form-item label="题目音频">
-        <div v-if="getMCS.titleAudio">
-          <audio :src="getMCS.titleAudio" controls="controls"></audio>
-          <a-tag color="success">已使用该音频</a-tag>
-        </div>
+        <AudioPlayerCK
+          ref="audioPlayerRef"
+          v-if="getMCS.titleAudio"
+          :audioUrl="getMCS.titleAudio"
+        >
+        </AudioPlayerCK>
         <a-tag v-else>无音频</a-tag>
       </a-form-item>
       <!-- 题目音频 end -->
@@ -88,6 +92,10 @@
 import { inject } from "vue";
 // 引入查看题目详情功能
 import { useGetMCS } from "./useGetMCS";
+// 导入关闭模态框
+import { useCloseGetModel } from "@/components/Question/RA/GetRA/useCloseGetModel";
+// 导入音频播放器
+import AudioPlayerCK from "@/components/Question/AudioPlayerCK";
 
 export default {
   props: ["getModalVisible", "questionType"],
@@ -99,11 +107,23 @@ export default {
     const questionDetail = inject("questionDetail");
 
     // 查看题目详情功能
-    const { getMCS } = useGetMCS(questionDetail, getModalVisible, questionType);
+    const { getMCS, audioPlayerRef } = useGetMCS(
+      questionDetail,
+      getModalVisible,
+      questionType
+    );
+
+    // 关闭模态框
+    const { closeModal } = useCloseGetModel(audioPlayerRef);
 
     return {
       getMCS,
+      audioPlayerRef,
+      closeModal,
     };
+  },
+  components: {
+    AudioPlayerCK,
   },
 };
 </script>
