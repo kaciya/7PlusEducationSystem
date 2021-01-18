@@ -5,7 +5,7 @@
     <audio :ref="dom.audio" :src="audioUrl"></audio>
     <!-- 播放器 -->
     <a-row>
-      <a-col :span="4" class="audio-left">
+      <a-col :span="5" class="audio-left">
         <!-- 音频按钮 -->
         <div class="audio-btn" @click="playPauseSwitch">
           <PlayCircleFilled :style="audio.audioBtnCss" v-if="audio.isPaused" />
@@ -18,14 +18,14 @@
           <span :ref="dom.audioDurTime">00:00</span>
         </div>
       </a-col>
-      <a-col :span="15" class="audio-right">
+      <a-col :span="13" class="audio-right">
         <!-- 播放进度条 -->
         <div class="progress-bar-bg" :ref="dom.progressBarBg">
           <i :ref="dom.progressDot"></i>
           <div class="progress-bar" :ref="dom.progressBar"></div>
         </div>
       </a-col>
-      <a-col :span="4" class="audio-control">
+      <a-col :span="6" class="audio-control">
         <a-space :size="10">
           <!-- 播放速度选择 -->
           <a-select
@@ -129,7 +129,6 @@ $height: 40px;
 .audio-right {
   float: left;
   height: $height;
-  padding-left: 2px;
   margin-left: -14px;
 
   /* 总进度条  */
