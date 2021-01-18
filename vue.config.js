@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 module.exports = {
   lintOnSave: false,
   productionSourceMap: false,
@@ -24,14 +25,17 @@ module.exports = {
 
   // 引入外部资源
   configureWebpack: {
-		externals: {
-			"vue": "Vue",
-			"vue-router": "VueRouter",
+    externals: {
+      "vue": "Vue",
+      "vue-router": "VueRouter",
       "vuex": "Vuex",
       "axios": "axios",
       "echarts": "echarts"
-		}
-	},
+    },
+    plugins: [
+      new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn/)
+    ]
+  },
   // favicon图标配置
   pwa: {
     iconPaths: {
