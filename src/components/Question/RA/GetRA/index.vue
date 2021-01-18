@@ -81,7 +81,7 @@ export default {
 <style lang="scss">
 // 查看模态框-common
 .check-modal {
-  width: 1080px !important;
+  width: 880px !important;
 
   // 模态框body
   .ant-modal-body {

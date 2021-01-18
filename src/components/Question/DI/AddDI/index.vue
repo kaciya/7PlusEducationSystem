@@ -35,9 +35,9 @@
         <!-- 题目标签复选框 end -->
       </a-form-item>
       <!-- 类型选择 -->
-      <a-form-item label="类型" name="type">
-        <a-select v-model:value="addDI.model.type">
-          <a-select-option v-for="val in diTypeList" :key="val">
+      <a-form-item label="类型" name="diType">
+        <a-select v-model:value="addDI.model.diType">
+          <a-select-option v-for="val in diTypeList" :key="val.toLowerCase()">
             {{ val }}
           </a-select-option>
         </a-select>
