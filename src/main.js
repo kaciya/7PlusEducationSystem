@@ -34,7 +34,8 @@ import {
   Tag,
   Checkbox,
   Divider,
-  DatePicker
+  DatePicker,
+  Space
 } from "ant-design-vue";
 app.use(Button)
   .use(Grid)
@@ -63,7 +64,8 @@ app.use(Button)
   .use(Checkbox)
   .use(Divider)
   .use(Tabs)
-  .use(DatePicker);
+  .use(DatePicker)
+  .use(Space);
 import "ant-design-vue/dist/antd.css";
 
 import "@/assets/styles/index.scss"; // global css

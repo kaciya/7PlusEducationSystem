@@ -24,7 +24,7 @@ export function useAddDIForm() {
       // 题目图片
       pics: [],
       // 类型选择
-      type: ""
+      diType: ""
     },
     // 校验规则
     rules: {

@@ -25,6 +25,7 @@
         style="border: 1px solid rgb(235, 237, 240)"
         title="题目列表"
         :backIcon="false"
+        v-has="'question:speak:page'"
       >
         <!-- 利用tags插槽位置  -->
         <template #tags>
@@ -50,9 +51,16 @@
         <!-- 操作区域 start -->
         <template #extra>
           <!-- 批量上传组件（只在RA、RS和ASQ中存在） -->
-          <BatchUpload :uploadFile="uploadFile" />
+          <span v-has="'question:speak:import'"
+            ><BatchUpload :uploadFile="uploadFile"
+          /></span>
           <!-- 添加题目按钮 -->
-          <a-button type="primary" @click="showAddModal" v-has="'question:speak:edit'">添加</a-button>
+          <a-button
+            type="primary"
+            @click="showAddModal"
+            v-has="'question:speak:edit'"
+            >添加</a-button
+          >
           <!-- 添加题目模态框 -->
           <!-- 添加题目模态框 start -->
           <AddRAModal :addModalVisible="addModalVisible"></AddRAModal>
@@ -74,6 +82,7 @@
         :loading="isLoading"
         :pagination="questionPagination"
         @change="changePagenum"
+        v-has="'question:speak:page'"
       >
         <!-- 题目音频 -->
         <template #titleAudio="{ text }">
@@ -119,11 +128,20 @@
 
         <!-- 题目操作区 start -->
         <template #operation="{ record }">
-          <a-button type="primary" size="small" @click="showGetModal(record.id)" v-has="'question:speak:detail'"
+          <a-button
+            type="primary"
+            size="small"
+            @click="showGetModal(record.id)"
+            v-has="'question:speak:detail'"
             >查看</a-button
           >
           <!-- 上传音频按钮-->
-          <UploadAudioBtn :id="record.id"></UploadAudioBtn>
+          <span
+            ><UploadAudioBtn
+              :id="record.id"
+              v-has="'question:speak:edit'"
+            ></UploadAudioBtn
+          ></span>
           <a-button
             type="primary"
             size="small"
@@ -138,7 +156,12 @@
             @confirm="delQuestion(record.id)"
             @cancel="cancelDelQuestion"
           >
-            <a-button type="danger" style="margin-left: 10px" size="small">
+            <a-button
+              type="danger"
+              style="margin-left: 10px"
+              size="small"
+              v-has="'question:speak:delete'"
+            >
               删除
             </a-button>
           </a-popconfirm>
