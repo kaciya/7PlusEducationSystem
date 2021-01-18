@@ -50,6 +50,8 @@ export const useLoginSubmit = () => {
             message.success("登录成功");
             // 将 用户信息 存入共享库
             store.commit("AuthStore/SET_USERINFOS", res.data);
+            // 将 用户权限 存入共享库
+            store.commit("AuthStore/SET_PERMISSION", res.data.permissions);
             // 将 用户信息 存在本地
             window.localStorage.setItem("userInfos", JSON.stringify(res.data));
             // 跳转主页
