@@ -53,13 +53,16 @@ export function useEditSWT(
   });
   // 监听回显
   watch(editDetail, val => {
-    for (const key in val) {
-      if (key == "labels") {
-        // 标签特殊处理，将labels:[{id:1, name:'高频'}] map为 表单中的labelIds:['1']
-        editSWT.model.labelIds = val[key].map(value => value.id);
-      } else {
-        // 其它值直接赋值
-        editSWT.model[key] = val[key];
+    if (editModalVisible[questionType]) {
+      editSWT.model.labelIds = [];
+      for (const key in val) {
+        if (key == "labels") {
+          // 标签特殊处理，将labels:[{id:1, name:'高频'}] map为 表单中的labelIds:['1']
+          editSWT.model.labelIds = val[key].map(value => value.id);
+        } else {
+          // 其它值直接赋值
+          editSWT.model[key] = val[key];
+        }
       }
     }
   });

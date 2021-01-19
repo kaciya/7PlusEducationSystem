@@ -69,6 +69,7 @@ export function useEditFIBR(editModalVisible, editDetail, getQuestion) {
   });
   watch(editDetail, val => {
     if (editModalVisible.fibr) {
+      editFIBR.model.labelIds = [];
       for (const key in val) {
         if (key == "labels") {
           // 标签特殊处理，将labels:[{id:1, name:'高频'}] map为 表单中的labelIds:['1']

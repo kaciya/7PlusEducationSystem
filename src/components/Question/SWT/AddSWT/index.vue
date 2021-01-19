@@ -1,6 +1,7 @@
 <template>
   <!-- 添加SWT题目模态框 -->
   <a-modal
+    class="add-modal"
     title="添加"
     :maskClosable="false"
     v-model:visible="addModalVisible[questionType]"
@@ -74,7 +75,7 @@ export default {
       addSWTRef,
       changeLabels,
       confirmAddSWT,
-      cancelAddSWT
+      cancelAddSWT,
     } = useAddSWT(addModalVisible, questionType, getQuestion);
     return {
       // 标签列表
@@ -91,4 +92,10 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style lang="scss">
+.add-modal,
+.modify-modal,
+.check-modal {
+  width: 880px !important;
+}
+</style>

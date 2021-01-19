@@ -1,6 +1,7 @@
 <template>
   <!-- 添加RO题目模态框 -->
   <a-modal
+    class="add-modal"
     title="添加"
     :maskClosable="false"
     v-model:visible="addModalVisible.ro"
@@ -144,7 +145,14 @@ export default {
 }
 .install {
   position: absolute;
-  top: 214px;
-  left: 20px;
+  top: 200px;
+  left: 88px;
+}
+</style>
+<style lang="scss">
+.add-modal,
+.modify-modal,
+.check-modal {
+  width: 880px !important;
 }
 </style>

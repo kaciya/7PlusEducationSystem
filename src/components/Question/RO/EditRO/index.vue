@@ -1,6 +1,7 @@
 <template>
   <!-- 编辑RO题目模态框 -->
   <a-modal
+    class="modify-modal"
     title="编辑"
     :maskClosable="false"
     v-model:visible="editModalVisible.ro"
@@ -147,6 +148,13 @@ export default {
 .install {
   position: absolute;
   top: 200px;
-  left: 26px;
+  left: 88px;
+}
+</style>
+<style lang="scss">
+.add-modal,
+.modify-modal,
+.check-modal {
+  width: 880px !important;
 }
 </style>

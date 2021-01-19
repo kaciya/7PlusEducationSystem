@@ -1,6 +1,7 @@
 <template>
   <!-- 添加FIBW题目模态框 -->
   <a-modal
+    class="add-modal"
     title="添加"
     :maskClosable="false"
     v-model:visible="addModalVisible.fibw"
@@ -150,5 +151,12 @@ export default {
   top: 200px;
   left: 12px;
   color: rgba(0, 0, 0, 0.85);
+}
+</style>
+<style lang="scss">
+.add-modal,
+.modify-modal,
+.check-modal {
+  width: 880px !important;
 }
 </style>

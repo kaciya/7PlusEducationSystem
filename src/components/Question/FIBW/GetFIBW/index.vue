@@ -1,6 +1,7 @@
 <template>
   <!-- 查看FIBW题目模态框 -->
   <a-modal
+    class="check-modal"
     title="查看"
     :maskClosable="false"
     v-model:visible="getModalVisible.fibw"
@@ -31,4 +32,10 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style lang="scss">
+.add-modal,
+.modify-modal,
+.check-modal {
+  width: 880px !important;
+}
+</style>

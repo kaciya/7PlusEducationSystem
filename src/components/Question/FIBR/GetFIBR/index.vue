@@ -1,6 +1,7 @@
 <template>
   <!-- 查看FIBR题目模态框 -->
   <a-modal
+    class="check-modal"
     title="查看"
     :maskClosable="false"
     :footer="null"
@@ -80,8 +81,15 @@ export default {
 }
 .install {
   position: absolute;
-  top: 200px;
-  left: 12px;
+  top: 176px;
+  left: 58px;
   color: rgba(0, 0, 0, 0.85);
+}
+</style>
+<style lang="scss">
+.add-modal,
+.modify-modal,
+.check-modal {
+  width: 880px !important;
 }
 </style>
