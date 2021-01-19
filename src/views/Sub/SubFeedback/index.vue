@@ -95,6 +95,7 @@
               size="small"
               v-else-if="record.status == 0"
               @click="editManage(record.id)"
+              v-has="'feedback:handle'"
             >
               处理
             </a-button>
