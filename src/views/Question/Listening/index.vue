@@ -141,7 +141,9 @@
             >查看</a-button
           >
           <!-- 上传音频按钮-->
-          <UploadAudioBtn :id="record.id"></UploadAudioBtn>
+          <span v-has="'question:listen:edit'">
+            <UploadAudioBtn :id="record.id"></UploadAudioBtn>
+          </span>
           <a-button
             type="primary"
             style="margin-left: 10px"
