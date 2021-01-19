@@ -27,12 +27,12 @@
       <!-- 头部按钮 end -->
       <!-- 表格 start -->
       <a-table
-        :columns="teacherListData.columns"
-        :data-source="teacherListData.data"
+        :columns="column"
+        :data-source="teacherList.data"
         :row-key="record => record.id"
         :pagination="teacherPagination"
+        @change="onTableChange"
         :loading="loadState"
-        @change="pageChange"
         bordered
       >
         <template #index="{ index }">{{ index + 1 }}</template>
@@ -48,7 +48,7 @@
             type="primary"
             size="small"
             style="margin-right: 10px"
-            @click="showEditModal(record.id)"
+            @click="showEditModal(record)"
             class="modify-btn"
           >
             编辑
@@ -69,7 +69,6 @@
         </template>
       </a-table>
       <!-- 表格 end -->
-
       <!-- 添加用户信息模态框 start -->
       <a-modal
         title="添加成员"
@@ -222,7 +221,7 @@
 // 引入面包屑组件
 import Crumbs from "@/components/Crumbs";
 // 引入获取教师列表方法和分页方法
-import { useGetTeacherList, getPagination } from "./useGetTeacherList";
+import { useGetTeacherList } from "./useGetTeacherList";
 // 引入添加教师方法
 import { useAddTeacherList } from "./useAddTeacherList";
 // 引入删除教师方法
@@ -231,8 +230,6 @@ import { useDelTeacherList } from "./useDelTeacherList";
 import { useEditTeacherList } from "./useEditTeacherList";
 // 引入表格列
 import { useTeacherColumns } from "./useTeacherColumns";
-// 引入表格数据
-import { teacherListData } from "./useGetTeacherList";
 // 引入图片上传模块
 import ImageUpload from "@/components/ImageUpload";
 // 引入储存库
@@ -248,32 +245,21 @@ export default {
   setup() {
     // 设置储存库
     const store = useStore();
-    // 设置表格列
-    teacherListData.columns = useTeacherColumns;
-    // 分页
-    const {
-      loadState,
-      teacherPagination,
-      pageChange
-    } = getPagination();
 
-    // 获取数据
-    useGetTeacherList(teacherPagination, () => {
-      loadState.value = false;
-    });
 
-    //#region 删除老师
-    const { delSubmit,delCancel } = useDelTeacherList(useGetTeacherList);
+    //#region 获取表格列
+    const { column } = useTeacherColumns();
     //#endregion
 
-    //#region 添加老师
-    // 设置参数
-    const addParams = {
-      pageNum: teacherPagination.pageNum,
-      pageSize: teacherPagination.pageSize,
-      loadState,
-      useGetTeacherList
-    };
+    //#region 获取师资数据
+    const { teacherList,loadState,teacherPagination,getTeacherList,onTableChange } = useGetTeacherList();
+    //#endregion
+
+
+    //#region 删除老师
+    const { delSubmit,delCancel } = useDelTeacherList(getTeacherList);
+    //#endregion
+
     const {
       addLabelVisible,
       showModal,
@@ -282,17 +268,10 @@ export default {
       confirmLoading,
       addRef,
       handleSubmit
-    } = useAddTeacherList(addParams,store);
+    } = useAddTeacherList(getTeacherList,store);
     //#endregion
 
     //#region 编辑老师
-    // 设置参数
-    const editParams = {
-      pageNum: teacherPagination.pageNum,
-      pageSize: teacherPagination.pageSize,
-      loadState,
-      useGetTeacherList
-    };
     const {
       editLabelVisible,
       editModel,
@@ -302,18 +281,18 @@ export default {
       showEditModal,
       editCancel,
       editSubmit
-    } = useEditTeacherList(editParams,store);
+    } = useEditTeacherList(getTeacherList,store);
     //#endregion
 
     return {
-      // 获取数据方法
-      useGetTeacherList,
-      // 列表格式
+      //#region 列表格式
+      column,
+      //#endregion
       //#region 获取列表数据以及分页
-      teacherListData,
+      teacherList,
       loadState,
       teacherPagination,
-      pageChange,
+      onTableChange,
       //#endregion
       // 删除教师
       delSubmit,

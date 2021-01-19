@@ -22,9 +22,11 @@ export const useEditAboutList = getAboutData => {
   // 模态框状态
   const editVisible = ref(false);
   // 显示模态框
-  const showModify = id => {
+  const showModify = record => {
     editVisible.value = true;
-    editModel.id = id;
+    editModel.id = record.id;
+    editModel.title = record.title;
+    editModel.content = record.content;
   };
   // 获取ref
   const editRef = ref(null);

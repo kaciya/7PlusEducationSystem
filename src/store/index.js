@@ -31,7 +31,7 @@ export default createStore({
       // 使用sesstionStorage存储
       // storage: window.sessionStorage,
       // 设置只持久化AuthStore下面的userInfos数据
-      paths: ['AuthStore.userInfos']
+      paths: ['AuthStore']
     })
   ],
 });

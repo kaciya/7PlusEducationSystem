@@ -16,7 +16,7 @@
       </a-form-item>
       <a-form-item label="标签">
         <a-tag
-          color="cyan"
+          color="blue"
           v-for="item in questionDetail['labels']"
           :key="item.id"
           >{{ item.name }}</a-tag
@@ -52,7 +52,10 @@ export default {
   props: ["getModalVisible"],
   setup() {
     // 获取题目详情
-    const { layout, questionDetail } = useGetDI();
+    const { layout } = useGetDI();
+
+    // 获取[注入]查看详情
+    const questionDetail = inject("speak/questionDetail");
 
     return {
       // 表单布局
@@ -67,5 +70,6 @@ export default {
 <style lang="scss" scoped>
 .describe-img {
   width: 200px;
+  margin-right: 10px;
 }
 </style>

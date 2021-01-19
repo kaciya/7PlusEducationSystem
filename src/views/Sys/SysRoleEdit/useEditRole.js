@@ -11,13 +11,19 @@ import {
 
 //导入 GET请求方法
 import {
-    httpGet
+    httpGet,
+    httpPost
 } from "@/utils/http";
 
 // 导入router
 import {
     useRouter
 } from "vue-router";
+
+// 引入提示框
+import {
+    message
+} from "ant-design-vue";
 
 //#region 权限组编辑 功能
 export const useEditRole = () => {
@@ -46,19 +52,22 @@ export const useEditRole = () => {
 
     //#region 定义表单数据模型对象
     const editRoleForm = reactive({
-        roleName: "",
-        permissionIds: []
+        roleName: ""
     });
     //#endregion
+
+    //定义方法 获取子组件传入的值
+    const getDefKeys = (defKeys) => {
+        editRoleForm.permissionIds = defKeys;
+    }
 
     //#region 获取权限组详情
     const getRolesDetail = () => {
         //发起请求 获取权限组详情
         httpGet(role.GetRoleDetail + "/" + roleId).then(res => {
                 if (res.success) {
-                    console.log(res);
                     //将获取到的权限回显到表单中
-                    // editRoleForm.roleName = res.
+                    editRoleForm.roleName = res.data.roleName;
                 }
             })
             .catch(err => {
@@ -66,7 +75,6 @@ export const useEditRole = () => {
             })
     }
     //#endregion
-
 
 
     //#region 创建提交事件
@@ -91,7 +99,7 @@ export const useEditRole = () => {
                         message.success(res.message);
 
                         //跳转页面
-                        router.push("/sys/role");
+                        router.push("/sys/role/" + new Date().getTime());
                     }
                 })
                 .catch(err => {
@@ -104,6 +112,8 @@ export const useEditRole = () => {
 
     //返回参数 和 方法
     return {
+        //编辑项id
+        roleId,
         //判断是否获取选中的权限ID
         getTreeChecked,
         //编辑表单校验规则
@@ -115,7 +125,9 @@ export const useEditRole = () => {
         //提交事件
         editRoleConfirm,
         //获取权限组详情
-        getRolesDetail
+        getRolesDetail,
+        //获取子组件传入的值方法
+        getDefKeys
     }
 }
 //#endregion

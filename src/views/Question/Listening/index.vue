@@ -54,10 +54,17 @@
         <template #extra>
           <!-- 导出按钮 -->
           <ExportBtn :questionType="1" :category="category"></ExportBtn>
-          <!-- 批量上传组件 -->
-          <BatchUpload :uploadFile="bulkUpload"></BatchUpload>
+          <span v-has="'question:listen:import'">
+            <!-- 批量上传组件 -->
+            <BatchUpload :uploadFile="bulkUpload"></BatchUpload>
+          </span>
           <!-- 添加题目按钮 -->
-          <a-button type="primary" @click="showAddModal">添加</a-button>
+          <a-button
+            type="primary"
+            @click="showAddModal"
+            v-has="'question:listen:edit'"
+            >添加</a-button
+          >
           <!-- 添加题目模态框 start -->
           <AddSSTModal :addModalVisible="addModalVisible"></AddSSTModal>
           <AddWFDModal :addModalVisible="addModalVisible"></AddWFDModal>
@@ -126,7 +133,11 @@
 
         <!-- 题目操作区 start -->
         <template #operation="{ record }">
-          <a-button type="primary" size="small" @click="showGetModal(record.id)"
+          <a-button
+            type="primary"
+            size="small"
+            @click="showGetModal(record.id)"
+            v-has="'question:listen:detail'"
             >查看</a-button
           >
           <!-- 上传音频按钮-->
@@ -137,6 +148,7 @@
             class="modify-btn"
             size="small"
             @click="showEditModal(record.id)"
+            v-has="'question:listen:edit'"
             >编辑</a-button
           >
           <a-popconfirm
@@ -145,7 +157,11 @@
             @confirm="delQuestion(record.id)"
             @cancel="cancelDelQuestion"
           >
-            <a-button type="danger" style="margin-left: 10px" size="small"
+            <a-button
+              type="danger"
+              style="margin-left: 10px"
+              size="small"
+              v-has="'question:delete'"
               >删除</a-button
             >
           </a-popconfirm>

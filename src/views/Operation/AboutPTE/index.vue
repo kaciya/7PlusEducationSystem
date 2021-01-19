@@ -27,7 +27,7 @@
         <a-switch :checked="Boolean(record.state)" @click="stateChange(record.id)"/>
       </template>
       <template #operational="{ record }">
-        <a-button type="primary" style="margin-right: 15px" @click="showModify(record.id)" size="small" class="modify-btn">
+        <a-button type="primary" style="margin-right: 15px" @click="showModify(record)" size="small" class="modify-btn">
           编辑
         </a-button>
         <a-popconfirm placement="topRight" title="您真的要删除该项么?" @confirm="delSubmit(record.id)" @cancel="delCancel">

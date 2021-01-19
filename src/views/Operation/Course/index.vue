@@ -29,7 +29,7 @@
         <template #operational="{ record }">
           <a-button
             type="primary"
-            style="margin-right: 45px"
+            style="margin-right: 10px"
             @click="showEdit(record)"
             size="small"
             class="modify-btn"

@@ -102,8 +102,8 @@
         <!-- 操作 -->
         <template #operation="{ record }">
           <!-- 跳转到用户详情页面并传id -->
-          <a-button type="primary" size="small">
-            <router-link :to="'/user/details/' + record.id">查看</router-link>
+          <a-button type="primary" size="small" v-has="'user:detail'">
+            <router-link :to="'/user/details/' + record.id" >查看</router-link>
           </a-button>
         </template>
       </a-table>

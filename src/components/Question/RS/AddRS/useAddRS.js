@@ -1,21 +1,21 @@
-//#region 添加RA题型
+//#region 添加RS题型
 // 引入响应式API
 import { ref } from "vue";
 // 引入提示框
 import { message } from "ant-design-vue";
 // 导入 post 请求
 import { httpPost } from "@/utils/http";
-// 导入听力题库接口配置
+// 导入口语题库接口配置
 import { speak } from '@/api/questionSpeakAPI';
 
 /**
- * 导出添加RA题型 功能
+ * 导出添加RS题型 功能
  * @param {*} addModalVisible 添加模态框的显示与隐藏
  * @param {*} emit setup中触发事件的方法
  */
-export function useAddRA(addRA, addModalVisible, getQuestion, uploadAudioList, audioSynthetic) {
+export function useAddRS(addRS, addModalVisible, getQuestion, uploadAudioList, audioSynthetic) {
   // 表单ref
-  const addRARef = ref(null);
+  const addRSRef = ref(null);
 
   // 改变选择标签时
   const changeLabels = (checkedValue) => {
@@ -26,26 +26,26 @@ export function useAddRA(addRA, addModalVisible, getQuestion, uploadAudioList, a
     }
   }
 
-  // 添加RA题目
-  const confirmAddRA = () => {
+  // 添加RS题目
+  const confirmAddRS = () => {
     // 先校验
-    addRARef.value.validate().then(async () => {
+    addRSRef.value.validate().then(async () => {
       // 有原文内容且没有上传音频
-      if (addRA.model.titleText.trim().length > 0 && addRA.model.titleAudio.length == 0) {
+      if (addRS.model.titleText.trim().length > 0 && addRS.model.titleAudio.length == 0) {
         // 自动将原文转音频
         await audioSynthetic();
       }
       // 发送添加题目请求
-      httpPost(speak.AddQuestion('ra'), addRA.model).then((res) => {
+      httpPost(speak.AddQuestion('rs'), addRS.model).then((res) => {
         if (res.success == true) {
           // 提示用户添加成功
           message.success("添加题目成功");
           // 刷新页面
           getQuestion();
-          // 关闭ra模态框
-          addModalVisible.ra = false;
+          // 关闭RS模态框
+          addModalVisible.rs = false;
           // 重置表单
-          addRARef.value.resetFields();
+          addRSRef.value.resetFields();
           // 清除音频上传列表
           uploadAudioList.value = []
         }
@@ -61,22 +61,22 @@ export function useAddRA(addRA, addModalVisible, getQuestion, uploadAudioList, a
     });
   };
 
-  // 取消添加ra题目
-  const cancelAddRA = () => {
+  // 取消添加RS题目
+  const cancelAddRS = () => {
     // 提示用户
-    message.warn('取消添加ra题目');
+    message.warn('取消添加rs题目');
     // 重置表单
-    addRARef.value.resetFields();
+    addRSRef.value.resetFields();
     // 清除音频上传列表
     uploadAudioList.value = []
   }
 
   return {
-    addRA,
-    addRARef,
+    addRS,
+    addRSRef,
     changeLabels,
-    confirmAddRA,
-    cancelAddRA
+    confirmAddRS,
+    cancelAddRS
   }
 }
 //#endregion

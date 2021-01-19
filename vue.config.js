@@ -1,5 +1,7 @@
+const webpack = require('webpack')
 module.exports = {
   lintOnSave: false,
+  productionSourceMap: false,
   devServer: {
     // 配置跨域
     proxy: {
@@ -19,6 +21,20 @@ module.exports = {
       args[0].title = "柒加教育-后台管理";
       return args;
     });
+  },
+
+  // 引入外部资源
+  configureWebpack: {
+    externals: {
+      "vue": "Vue",
+      "vue-router": "VueRouter",
+      "vuex": "Vuex",
+      "axios": "axios",
+      "echarts": "echarts"
+    },
+    plugins: [
+      new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn/)
+    ]
   },
   // favicon图标配置
   pwa: {
