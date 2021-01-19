@@ -1,6 +1,7 @@
 <template>
   <!-- 添加MCM题目模态框 -->
   <a-modal
+    class="add-modal"
     title="添加"
     :maskClosable="false"
     v-model:visible="addModalVisible.mcm"
@@ -141,5 +142,10 @@ export default {
   },
 };
 </script>
-
-<style scoped lang="scss"></style>
+<style lang="scss">
+.add-modal,
+.modify-modal,
+.check-modal {
+  width: 880px !important;
+}
+</style>

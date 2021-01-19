@@ -17,15 +17,26 @@ export function useAddFIBW(addModalVisible, getQuestion) {
       title: "",
       // 标签选择
       labelIds: [],
+      // 题目原文
+      titleText: [
+        {
+          content: "hah",
+          key: "1"
+        },
+      ],
       // 题目选项
       choices: [
         {
-          content: "",
-          key: "1"
+          content: "fs",
+          key: "A"
         },
         {
-          content: "",
-          key: "2"
+          content: "fd",
+          key: "B"
+        },
+        {
+          content: "e",
+          key: "C"
         }
       ],
       // 答案参考
@@ -68,18 +79,28 @@ export function useAddFIBW(addModalVisible, getQuestion) {
       message.warn("每题标签最多可以选择三个");
     }
   };
+  // 添加填空
+  const addCalking = () => {
+    addFIBW.model.titleText.push({
+      content: "",
+      key: String(addFIBW.model.titleText.length + 1)
+    });
+  };
+  const delCalking = index => {
+    addFIBW.model.titleText.splice(index, 1);
+  };
   // 添加题目选项
   const addChoices = () => {
     addFIBW.model.choices.push({
       content: "",
       // A、B、C、D...
-      key: addFIBW.model.choices.length + 1
+      key: String.fromCharCode(addFIBW.model.choices.length + 65)
     });
   };
 
   // 删除题目选项
-  const delChoices = index => {
-    addFIBW.model.choices.splice(index, 1);
+  const delChoices = () => {
+    addFIBW.model.choices.pop();
     // 重置一下选项答案
     addFIBW.model.answer = [];
   };
@@ -98,6 +119,8 @@ export function useAddFIBW(addModalVisible, getQuestion) {
     addFIBW,
     addFIBWRef,
     changeLabels,
+    addCalking,
+    delCalking,
     addChoices,
     delChoices,
     confirmAddFIBW,
