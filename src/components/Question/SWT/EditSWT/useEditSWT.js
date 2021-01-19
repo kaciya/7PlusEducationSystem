@@ -80,7 +80,7 @@ export function useEditSWT(
       .validate()
       .then(() => {
         // 后台问题，标签设置为空时，会导致页面请求失败
-        if (editSWT.model.labelIds.length == 0) return;
+        // if (editSWT.model.labelIds.length == 0) return;
         // 发送添加题目请求
         httpPost(write.EditQuestion(questionType), editSWT.model)
           .then(res => {

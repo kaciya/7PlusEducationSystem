@@ -119,7 +119,7 @@ export function useEditFIBR(editModalVisible, editDetail, getQuestion) {
       .validate()
       .then(() => {
         // 后台问题，标签设置为空时，会导致页面请求失败
-        if (editFIBR.model.labelIds.length == 0) return;
+        // if (editFIBR.model.labelIds.length == 0) return;
         // 发送编辑题目请求
         httpPost(read.EditQuestion("fibr"), editFIBR.model)
           .then(res => {
