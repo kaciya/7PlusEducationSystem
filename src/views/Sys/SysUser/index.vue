@@ -9,7 +9,7 @@
       <a-card title="账号列表">
         <!-- 权限组card 右侧内容 -->
         <template #extra>
-          <a-button type="primary" @click="showAddModal"> 添加账号 </a-button>
+          <a-button type="primary" @click="showAddModal" v-has="'sys:user:edit'"> 添加账号 </a-button>
         </template>
         <!-- 权限组card 右侧内容 end -->
 
@@ -125,7 +125,7 @@
                 <p class="popconfirm-text-top">确定删除该操作员?</p>
                 <p class="popconfirm-text-bottom">删除后无法恢复数据</p>
               </template>
-              <a-button type="danger" size="small" class="operation-btn">
+              <a-button type="danger" size="small" class="operation-btn" v-has="'sys:user:delete'">
                 删除
               </a-button>
             </a-popconfirm>

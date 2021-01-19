@@ -27,8 +27,12 @@ export function useGetHIW(questionDetail, getModalVisible) {
     }
   });
 
+  // 音频播放器ref
+  const audioPlayerRef = ref(null);
+
   return {
-    getHIW
+    getHIW,
+    audioPlayerRef
   }
 }
 //#endregion

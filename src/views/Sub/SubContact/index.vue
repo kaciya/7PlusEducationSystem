@@ -84,6 +84,7 @@
               size="small"
               v-else-if="record.state == 0"
               @click="editManage(record.id)"
+              v-has="'contact:handle'"
             >
               处理
             </a-button>
