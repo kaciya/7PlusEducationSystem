@@ -20,24 +20,26 @@ export function useAddFIBW(addModalVisible, getQuestion) {
       // 题目原文
       titleText: [
         {
-          content: "hah",
+          content: "",
           key: "1"
-        },
+        }
       ],
       // 题目选项
       choices: [
-        {
-          content: "fs",
-          key: "A"
-        },
-        {
-          content: "fd",
-          key: "B"
-        },
-        {
-          content: "e",
-          key: "C"
-        }
+        [
+          {
+            content: "",
+            key: "A"
+          },
+          {
+            content: "",
+            key: "B"
+          },
+          {
+            content: "",
+            key: "C"
+          },
+        ]
       ],
       // 答案参考
       answer: [],
@@ -85,35 +87,112 @@ export function useAddFIBW(addModalVisible, getQuestion) {
       content: "",
       key: String(addFIBW.model.titleText.length + 1)
     });
+    addFIBW.model.choices.push([
+      {
+        content: "",
+        key: "A"
+      },
+      {
+        content: "",
+        key: "B"
+      },
+      {
+        content: "",
+        key: "C"
+      }
+    ]);
   };
-  const delCalking = index => {
-    addFIBW.model.titleText.splice(index, 1);
+  const delCalking = () => {
+    addFIBW.model.titleText.pop();
+    addFIBW.model.choices.pop();
   };
   // 添加题目选项
-  const addChoices = () => {
-    addFIBW.model.choices.push({
+  const addChoices = index => {
+    addFIBW.model.choices[index].push({
       content: "",
       // A、B、C、D...
-      key: String.fromCharCode(addFIBW.model.choices.length + 65)
+      key: String.fromCharCode(addFIBW.model.choices[index].length + 65)
     });
   };
 
   // 删除题目选项
-  const delChoices = () => {
-    addFIBW.model.choices.pop();
-    // 重置一下选项答案
-    addFIBW.model.answer = [];
+  const delChoices = index => {
+    addFIBW.model.choices[index].pop();
   };
   // 添加FIBW题目
   const confirmAddFIBW = () => {
-    console.log(addFIBW.model);
-    // 关闭FIBW模态框
-    addModalVisible.fibw = false;
+    addFIBWRef.value
+      .validate()
+      .then(() => {
+        // 发送添加题目请求
+        httpPost(read.AddQuestion("fibw"), addFIBW.model)
+          .then(res => {
+            // console.log(res);
+            if (res.success == true) {
+              // 提示用户添加成功
+              message.success("添加题目成功");
+              // 刷新页面
+              getQuestion();
+              // 关闭FIBW模态框
+              addModalVisible.fibw = false;
+              // 重置表单
+              addFIBWRef.value.resetFields();
+              // 因为没有对应的name 所以需要手动重置
+              addFIBW.model.choices = [
+                [
+                  {
+                    content: "",
+                    key: "A"
+                  },
+                  {
+                    content: "",
+                    key: "B"
+                  },
+                  {
+                    content: "",
+                    key: "C"
+                  },
+                ]
+              ];
+              addFIBW.model.titleText = [{ content: "", key: "1" }];
+              addFIBW.model.answer = [];
+            } else {
+              // 添加失败，提示用户失败原因
+              message.error(res.message);
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
   // 取消添加FIBW题目
   const cancelAddFIBW = () => {
     // 提示用户
-    message.warn("取消添加FIBW题目");
+    message.warn("取消添加fibw题目");
+    // 重置表单
+    addFIBWRef.value.resetFields();
+    addFIBW.model.choices = [
+      [
+        {
+          content: "",
+          key: "A"
+        },
+        {
+          content: "",
+          key: "B"
+        },
+        {
+          content: "",
+          key: "C"
+        },
+      ]
+    ];
+    addFIBW.model.titleText = [{ content: "", key: "1" }];
+    addFIBW.model.answer = [];
   };
   return {
     addFIBW,
