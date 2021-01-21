@@ -60,13 +60,13 @@ import { inject } from "vue";
 // 引入 查看FIBR题目 功能
 import { useGetFIBR } from "./useGetFIBR";
 export default {
-  props: ["getModalVisible", "questionType"],
+  props: ["getModalVisible"],
   setup(props) {
     // 查看模态框的显示与隐藏
     const { getModalVisible } = props;
     // 题目详情
     const questionDetail = inject("questionDetail");
-    // 查看MCM题目
+    // 查看FIBR题目
     const { getFIBR } = useGetFIBR(getModalVisible, questionDetail);
     return {
       getFIBR,
@@ -81,8 +81,8 @@ export default {
 }
 .install {
   position: absolute;
-  top: 176px;
-  left: 58px;
+  top: 200px;
+  left: 70px;
   color: rgba(0, 0, 0, 0.85);
 }
 </style>

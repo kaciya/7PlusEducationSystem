@@ -8,7 +8,7 @@
     @ok="confirmAddFIBW"
     @cancel="cancelAddFIBW"
   >
-    <!-- 添加ro题目表单 start -->
+    <!-- 添加fibw题目表单 start -->
     <a-form
       :model="addFIBW.model"
       :rules="addFIBW.rules"
@@ -36,12 +36,12 @@
         </a-checkbox-group>
       </a-form-item>
       <!-- 题目原文 start -->
-      <!-- <span class="install">题目原文：</span>
+      <span class="install">题目原文：</span>
       <a-form-item
         label=" "
         :colon="false"
         v-for="(item, index) in addFIBW.model.titleText"
-        :key="index"
+        :key="item.key"
       >
         <a-input v-model:value="item.content" style="width: 68%" />
         <a-tag color="#108ee9" style="margin: 0 10px">
@@ -49,16 +49,16 @@
         </a-tag>
         <MinusCircleOutlined
           v-if="index != 0 && index == addFIBW.model.titleText.length - 1"
-          @click="delCalking(index)"
+          @click="delCalking"
         />
       </a-form-item>
       <a-form-item label=" " :colon="false">
         <a-button type="dashed" style="width: 60%" @click="addCalking">
           <PlusOutlined />添加填空
         </a-button>
-      </a-form-item> -->
+      </a-form-item>
       <!-- 题目选项 -->
-      <!-- <a-form-item
+      <a-form-item
         label=" "
         :colon="false"
         v-for="(item, index) in addFIBW.model.titleText"
@@ -67,15 +67,32 @@
         <a-tag color="#108ee9" style="margin: 0 10px">
           选项{{ item.key }}
         </a-tag>
-        <br />
-        <a-radio-group
-          v-for="(item, index) in addFIBW.model.choices"
-          :key="index"
+        <a-button
+          type="dashed"
+          style="width: 20%; margin-right: 10px"
+          @click="addChoices(index)"
         >
-          <a-radio :value="item.key"> {{ item.key }} </a-radio>
-          <input type="text" style="width: 36%" />
+          <PlusOutlined />添加选项
+        </a-button>
+        <a-button type="dashed" style="width: 20%" @click="delChoices(index)">
+          <MinusCircleOutlined />移除选项
+        </a-button>
+        <br />
+        <a-radio-group v-model:value="addFIBW.model.answer[index]">
+          <a-row>
+            <a-col
+              style="max-width: 152px; margin-bottom: 10px"
+              v-for="(item, index) in addFIBW.model.choices[index]"
+              :key="index"
+            >
+              <a-radio :value="item.key">
+                {{ item.key }}
+              </a-radio>
+              <a-input v-model:value="item.content" style="width: 60%"
+            /></a-col>
+          </a-row>
         </a-radio-group>
-      </a-form-item> -->
+      </a-form-item>
       <!-- 题目原文 end -->
       <a-form-item label="题目解析" name="titleAnalysis">
         <a-textarea v-model:value="addFIBW.model.titleAnalysis" :rows="4" />
@@ -149,7 +166,7 @@ export default {
 .install {
   position: absolute;
   top: 200px;
-  left: 12px;
+  left: 70px;
   color: rgba(0, 0, 0, 0.85);
 }
 </style>
