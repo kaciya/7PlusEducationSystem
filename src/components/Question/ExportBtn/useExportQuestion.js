@@ -46,7 +46,7 @@ export function useExportQuestion(questionType) {
         document.body.removeChild(link);
       }
       else {
-        message.error(res.data);
+        message.error('导出失败');
       }
     }).catch((err) => {
       if (err.response.status == 403) {
