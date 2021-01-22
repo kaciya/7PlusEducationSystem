@@ -4,7 +4,7 @@
     <Crumbs
       :crumbName="[
         { name: '运营管理' },
-        { name: '文章列表(官网)' ,route: '/operation/article'},
+        { name: '文章列表(官网)', route: '/operation/article' },
         { name: '编辑文章' }
       ]"
     />
@@ -13,30 +13,53 @@
     <a-card style="min-height: 93%">
       <a-row>
         <a-col :span="16" :push="4">
-          <a-form
-            :model="editModel"
-            :rules="editRule"
-            ref="editRef"
-          >
-            <a-form-item label="标题" :wrapper-col="{span: 21}" :label-col="{span: 3}" name="title">
+          <a-form :model="editModel" :rules="editRule" ref="editRef">
+            <a-form-item
+              label="标题"
+              :wrapper-col="{ span: 21 }"
+              :label-col="{ span: 3 }"
+              name="title"
+            >
               <a-input v-model:value="editModel.title"></a-input>
             </a-form-item>
-            <a-form-item label="描述" :wrapper-col="{span: 21}" :label-col="{span: 3}" class="addForm" name="description">
-              <a-textarea showCount :maxlength="300" v-model:value="editModel.description"></a-textarea>
+            <a-form-item
+              label="描述"
+              :wrapper-col="{ span: 21 }"
+              :label-col="{ span: 3 }"
+              class="addForm"
+              name="description"
+            >
+              <a-textarea
+                showCount
+                :maxlength="300"
+                v-model:value="editModel.description"
+              ></a-textarea>
             </a-form-item>
-            <a-form-item label="封面图" :wrapper-col="{span: 21}" :label-col="{span: 3}" class="addForm" :key="editKey">
+            <a-form-item
+              label="封面图"
+              :wrapper-col="{ span: 21 }"
+              :label-col="{ span: 3 }"
+              class="addForm"
+              :key="editKey"
+            >
               <ImageUpload></ImageUpload>
               <div v-if="fileUrl === ''">
-                <img :src="editModel.picUrl" style="width: 40%">
+                <img :src="editModel.picUrl" style="width: 40%" />
               </div>
             </a-form-item>
-            <a-form-item label="内容" :wrapper-col="{span: 21}" :label-col="{span: 3}" name="content">
+            <a-form-item
+              label="内容"
+              :wrapper-col="{ span: 21 }"
+              :label-col="{ span: 3 }"
+              name="content"
+            >
               <ckeditor
                 :editor="editor"
                 :config="editorConfig"
                 style="height: 150px"
                 v-model="editModel.content"
-                @ready="onReady">
+                @ready="onReady"
+              >
               </ckeditor>
             </a-form-item>
           </a-form>
@@ -44,7 +67,12 @@
         <a-col :span="16" :push="4">
           <div style="float: right">
             <a-button @click="editReset">重置</a-button>
-            <a-button style="margin-left: 10px" type="primary" @click="editSubmit">提交</a-button>
+            <a-button
+              style="margin-left: 10px"
+              type="primary"
+              @click="editSubmit"
+              >提交</a-button
+            >
           </div>
         </a-col>
       </a-row>
@@ -86,7 +114,14 @@ export default {
     const store = useStore();
 
     //#region 添加文章方法
-    let { editRef,editModel,editKey,editRule,editReset,editSubmit } = useEditArticleList(store,router);
+    let {
+      editRef,
+      editModel,
+      editKey,
+      editRule,
+      editReset,
+      editSubmit
+    } = useEditArticleList(store, router);
     //#endregion
 
     //#region 文章回显
@@ -135,7 +170,7 @@ export default {
       editorConfig,
       onReady
       //#endregion
-    }
+    };
   }
 };
 </script>

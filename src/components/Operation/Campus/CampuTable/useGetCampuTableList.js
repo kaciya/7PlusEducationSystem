@@ -3,7 +3,7 @@
  * */
 import { onMounted, reactive } from "vue";
 import { httpGet } from "@/utils/http";
-import { campus } from "@/api/operationAPI"
+import { campus } from "@/api/operationAPI";
 
 export const useGetCampuTableList = () => {
   // 储存数据
@@ -21,15 +21,15 @@ export const useGetCampuTableList = () => {
       })
       .catch(err => {
         console.log(err);
-      })
-  }
+      });
+  };
 
   onMounted(() => {
     getCampuTableList();
-  })
+  });
 
   return {
     campuTableList,
     getCampuTableList
-  }
-}
+  };
+};

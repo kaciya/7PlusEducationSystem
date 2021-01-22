@@ -39,7 +39,7 @@ const routes = [
         component: () => import("@/views/HomeMain"),
         meta: {
           pathName: "/home/main",
-         
+
           keepAlive: true
         }
       },

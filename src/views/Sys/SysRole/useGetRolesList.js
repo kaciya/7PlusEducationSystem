@@ -1,7 +1,5 @@
 //导入 vue 对象
-import {
-  ref
-} from "vue";
+import { ref } from "vue";
 
 //导入 API接口
 import { role } from "@/api/sysUserAPI";
@@ -14,7 +12,6 @@ import { useRouter } from "vue-router";
 
 //#region 渲染权限组标签列表 和 表头
 export const useGetRolesList = rolesTable => {
-  
   //添加 加载状态
   const isLoading = ref(false);
 
@@ -23,7 +20,6 @@ export const useGetRolesList = rolesTable => {
 
   //#region 根据后台接口地址发送请求获取权限组数据
   const getRolesData = () => {
-    
     //请求前添加 加载状态
     isLoading.value = true;
 
@@ -65,7 +61,7 @@ export const useGetRolesList = rolesTable => {
     //权限组 添加 路由
     addRouter,
     //权限组 编辑 路由
-    editRouter,
+    editRouter
   };
 };
 //#endregion

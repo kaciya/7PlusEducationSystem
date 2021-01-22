@@ -72,7 +72,7 @@ export default {
       audio,
       playPauseSwitch,
       updateProgress,
-      audioEnded,
+      audioEnded
     } = usePlayControl();
     // 进度条调节 功能
     useProgressBarControl(dom, updateProgress);
@@ -89,10 +89,10 @@ export default {
       // 还原音频播放 功能
       audioEnded,
       // 播放速度调节 功能
-      speedChange,
+      speedChange
     };
   },
-  components: { PlayCircleFilled, PauseCircleFilled },
+  components: { PlayCircleFilled, PauseCircleFilled }
 };
 </script>
 

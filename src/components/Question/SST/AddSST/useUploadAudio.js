@@ -10,7 +10,7 @@ export function useUploadAudio(addSST, uploadAudioList) {
   // 上传音频
   const uploadAudio = reactive({
     // 地址
-    url: '/api' + questionAPI.UploadAudio,
+    url: "/api" + questionAPI.UploadAudio,
     // 请求头
     headers: { Token: window.localStorage.getItem("token") }
   });

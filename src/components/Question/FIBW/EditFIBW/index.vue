@@ -134,7 +134,7 @@ export default {
       editChoices,
       delChoices,
       confirmEditFIBW,
-      cancelEditFIBW,
+      cancelEditFIBW
     } = useEditFIBW(editModalVisible, editDetail, getQuestion);
     return {
       // 标签列表
@@ -149,15 +149,15 @@ export default {
       // 编辑FIBR题目
       confirmEditFIBW,
       // 取消编辑FIBR题目
-      cancelEditFIBW,
+      cancelEditFIBW
     };
   },
   components: {
     // 删除选项按钮
     MinusCircleOutlined,
     // 添加选项按钮
-    PlusOutlined,
-  },
+    PlusOutlined
+  }
 };
 </script>
 <style scoped lang="scss">

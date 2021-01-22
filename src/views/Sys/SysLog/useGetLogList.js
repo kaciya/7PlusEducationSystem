@@ -1,23 +1,15 @@
 //导入 reactive 对象
-import {
-  ref,
-  reactive
-} from "vue";
+import { ref, reactive } from "vue";
 
 //导入 API接口
-import {
-  log
-} from "@/api/sysUserAPI";
+import { log } from "@/api/sysUserAPI";
 
 //导入 GET请求方法
-import {
-  httpGet
-} from "@/utils/http";
+import { httpGet } from "@/utils/http";
 
 //#region 获取 操作日志 数据列表
 export const useGetLogList = logTable => {
-
-  //创建加载状态 
+  //创建加载状态
   const isLoading = ref(false);
 
   //#region

@@ -10,7 +10,7 @@ export const useBulkImport = uploadFile => {
   //#region 批量上传模态框数据
   const bulkUpload = reactive({
     visible: false,
-    fileList: [],
+    fileList: []
   });
   //#endregion
   //#region 显示批量上传模态框
@@ -42,7 +42,7 @@ export const useBulkImport = uploadFile => {
       // 判断文件格式是否是xls、xlsx
       let isXlsOrXlsx =
         bulkUpload.fileList[0].type ==
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
         bulkUpload.fileList[0].type == "application/vnd.ms-excel";
       if (isXlsOrXlsx) {
         // 创建formdata
@@ -60,8 +60,8 @@ export const useBulkImport = uploadFile => {
           // 请求头
           headers: {
             "Content-Type": "multipart/form-data",
-            Token: window.localStorage.getItem("token"),
-          },
+            Token: window.localStorage.getItem("token")
+          }
         })
           .then(res => {
             // 判断是否添加
@@ -119,6 +119,6 @@ export const useBulkImport = uploadFile => {
     bulkUploadChange,
     beforeBulkUpload,
     cancelBulkUpload,
-    clickBulkUpload,
+    clickBulkUpload
   };
 };

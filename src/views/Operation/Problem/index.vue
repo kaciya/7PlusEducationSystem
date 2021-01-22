@@ -2,21 +2,14 @@
   <a-layout-content>
     <!-- 面包屑 start -->
     <Crumbs
-      :crumbName="[
-        { name: '运营管理' },
-        { name: '常见问题(学习中心)'}
-      ]"
+      :crumbName="[{ name: '运营管理' }, { name: '常见问题(学习中心)' }]"
     />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
     <a-card style="min-height: 93%">
       <a-row>
         <a-col :span="24" style="margin-bottom: 15px">
-          <a-button
-            type="primary"
-            style="float: right"
-            @click="showAddForm"
-          >
+          <a-button type="primary" style="float: right" @click="showAddForm">
             添加问题
           </a-button>
         </a-col>
@@ -44,6 +37,7 @@
           <a-button type="danger" size="small" v-has="'issue:delete'">
             删除
           </a-button>
+
           </a-popconfirm>
         </template>
       </a-table>
@@ -175,7 +169,7 @@ export default {
     //#endregion
 
     //#region 删除问题方法
-    const { delSubmit,delCancel } = useDelProblem(getProblem);
+    const { delSubmit, delCancel } = useDelProblem(getProblem);
     //#endregion
 
     return {

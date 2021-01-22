@@ -36,6 +36,6 @@ export default {
       // 表格columns
       columns
     };
-  },
+  }
 };
 </script>

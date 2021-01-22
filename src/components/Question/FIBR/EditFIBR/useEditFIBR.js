@@ -202,7 +202,7 @@ export function useEditFIBR(editModalVisible, editDetail, getQuestion) {
     editChoices,
     delChoices,
     confirmEditFIBR,
-    cancelEditFIBR,
+    cancelEditFIBR
   };
 }
 //#endregion

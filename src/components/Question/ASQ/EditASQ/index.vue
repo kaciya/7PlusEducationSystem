@@ -108,7 +108,7 @@ export default {
       editASQRef,
       changeLabels,
       confirmEditASQ,
-      cancelEditASQ,
+      cancelEditASQ
     } = useEditASQ(
       editModalVisible,
       getQuestion,
@@ -151,11 +151,11 @@ export default {
       // 编辑ASQ题目
       confirmEditASQ,
       // 取消编辑ASQ题目
-      cancelEditASQ,
+      cancelEditASQ
     };
   },
   components: {
-    AudioPlayerZH,
-  },
+    AudioPlayerZH
+  }
 };
 </script>

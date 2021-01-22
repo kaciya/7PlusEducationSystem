@@ -274,7 +274,7 @@ export default {
       getQuestion,
       questionList,
       isLoading,
-      changePagenum,
+      changePagenum
     } = useGetQuestion();
 
     // 获取全部标签类型
@@ -296,7 +296,7 @@ export default {
       addModalVisible,
       showAddModal,
       editModalVisible,
-      showEditModal,
+      showEditModal
     } = useShowModal(category);
 
     // 删除题目 功能
@@ -356,7 +356,7 @@ export default {
       //#region 删除题目功能
       delQuestion,
       // 取消删除
-      cancelDelQuestion,
+      cancelDelQuestion
       //#endregion
     };
   },
@@ -406,9 +406,9 @@ export default {
     // 编辑RL题目模态框
     EditRLModal,
     // 编辑ASQ题目模态框
-    EditASQModal,
+    EditASQModal
     // #endregion
-  },
+  }
 };
 </script>
 

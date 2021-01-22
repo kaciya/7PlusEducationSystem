@@ -61,12 +61,12 @@ export const useEditAboutList = getAboutData => {
           })
           .catch(err => {
             throw err;
-          })
+          });
       })
       .catch(err => {
         throw err;
-      })
-  }
+      });
+  };
 
   // 点击取消后的回调函数
   const editCancel = () => {

@@ -54,7 +54,12 @@
               title="确定删除此权限组?"
               @confirm="showDelConfirm(record.roleId)"
             >
-              <a-button type="danger" size="small" class="operation-btn" v-has="'role:delete'">
+              <a-button
+                type="danger"
+                size="small"
+                class="operation-btn"
+                v-has="'role:delete'"
+              >
                 删除
               </a-button>
             </a-popconfirm>
@@ -91,7 +96,7 @@ import { useRolesColums } from "./useRolesColums";
 export default {
   // 组件
   components: {
-    Crumbs,
+    Crumbs
   },
 
   // setup响应api入口
@@ -116,7 +121,7 @@ export default {
       pageChange,
       addRouter,
       editRouter,
-      isLoading,
+      isLoading
     } = useGetRolesList(rolesTable);
 
     /**
@@ -150,10 +155,10 @@ export default {
       //权限组编辑路由跳转
       editRouter,
       //加载状态
-      isLoading,
+      isLoading
     };
     //#endregion
-  },
+  }
 };
 </script>
 

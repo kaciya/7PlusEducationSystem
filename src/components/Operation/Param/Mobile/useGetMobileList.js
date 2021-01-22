@@ -22,17 +22,17 @@ export const useGetMobileList = () => {
       })
       .catch(err => {
         throw err;
-      })
-  }
+      });
+  };
 
   onMounted(() => {
     getMobileList();
-  })
+  });
 
-  return{
+  return {
     // 数据
     mobileList,
     // 获取广告列表
     getMobileList
-  }
-}
+  };
+};

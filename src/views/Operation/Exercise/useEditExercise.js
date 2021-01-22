@@ -22,7 +22,7 @@ export const useEditExercise = getExercise => {
   });
 
   // 显示模态框
-  const editShow = (record) => {
+  const editShow = record => {
     editVisibility.value = true;
     // 获取用户id
     userId.value = record.id;

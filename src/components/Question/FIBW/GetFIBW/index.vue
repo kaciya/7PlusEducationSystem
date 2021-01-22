@@ -66,9 +66,9 @@ export default {
     // 查看FIBW题目
     const { getFIBW } = useGetFIBW(getModalVisible, questionDetail);
     return {
-      getFIBW,
+      getFIBW
     };
-  },
+  }
 };
 </script>
 <style scoped lang="scss">

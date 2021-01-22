@@ -87,9 +87,9 @@ export default {
     // 查看MCM题目
     const { getMCS } = useGetMCM(getModalVisible, questionType, questionDetail);
     return {
-      getMCS,
+      getMCS
     };
-  },
+  }
 };
 </script>
 

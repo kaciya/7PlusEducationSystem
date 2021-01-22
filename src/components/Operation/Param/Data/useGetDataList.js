@@ -22,17 +22,17 @@ export const useGetDataList = () => {
       })
       .catch(err => {
         throw err;
-      })
-  }
+      });
+  };
 
   onMounted(() => {
     getDataList();
-  })
+  });
 
   return {
     // 储存数据
     dataList,
     // 获取数据列表
     getDataList
-  }
-}
+  };
+};

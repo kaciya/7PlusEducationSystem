@@ -83,14 +83,14 @@ import { useEditPwdSubmit } from "./useEditPwdSubmit";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  UserOutlined,
+  UserOutlined
 } from "@ant-design/icons-vue";
 export default {
   // 导入组件
   components: {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
-    UserOutlined,
+    UserOutlined
   },
   // setup响应api入口
   setup() {
@@ -118,9 +118,9 @@ export default {
       userInfos, //用户信息
       editPwdForm, //修改密码表单
       editPwdRef, //修改密码Ref
-      editPwdSubmit, //修改密码提交
+      editPwdSubmit //修改密码提交
     };
-  },
+  }
 };
 </script>
 

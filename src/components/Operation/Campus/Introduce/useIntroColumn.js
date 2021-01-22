@@ -18,11 +18,11 @@ export const useIntroColumn = () => {
     },
     {
       title: "编辑",
-      slots: { customRender: 'edit' },
+      slots: { customRender: "edit" }
     }
   ];
 
   return {
     introColumn
-  }
-}
+  };
+};

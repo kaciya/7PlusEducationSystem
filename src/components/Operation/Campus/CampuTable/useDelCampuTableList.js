@@ -6,9 +6,9 @@ import { httpDelete } from "@/utils/http";
 import { campus } from "@/api/operationAPI";
 import { message } from "ant-design-vue";
 
-export const useDelCampuTableList = (getCampuTableList) => {
+export const useDelCampuTableList = getCampuTableList => {
   // 点击确定的回调函数
-  const delSubmit = (id) => {
+  const delSubmit = id => {
     // 发起ajax请求
     httpDelete(campus.DelCampuTableList(id))
       .then(res => {
@@ -24,10 +24,10 @@ export const useDelCampuTableList = (getCampuTableList) => {
       })
       .catch(err => {
         throw err;
-      })
-  }
+      });
+  };
 
   return {
     delSubmit
-  }
-}
+  };
+};

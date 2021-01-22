@@ -15,7 +15,7 @@ export function useExportQuestion(questionType) {
    * 导出题目
    * @param {*} category 题型分类
    */
-  const exportQuestion = (category) => {
+  const exportQuestion = category => {
     axios({
       method: "get",
       url: "/api" + questionAPI.ExportQuestion,
@@ -28,32 +28,35 @@ export function useExportQuestion(questionType) {
       },
       // 二级制流文件，一定要设置成blob
       responseType: "blob"
-    }).then(res => {
-      if (res.status == 200) {
-        //创建应该a标签
-        const link = document.createElement("a");
-        const blob = new Blob([res.data], { type: "application/vnd.ms-excel" });
-        // 隐藏a标签
-        link.style.display = "none";
-        link.href = URL.createObjectURL(blob);
-        // 设置文件名
-        link.setAttribute("download", `${category.toUpperCase()}题目.xlsx`);
-        // 添加a标签
-        document.body.appendChild(link);
-        // 点击
-        link.click();
-        // 删除a标签
-        document.body.removeChild(link);
-      }
-      else {
-        message.error('导出失败');
-      }
-    }).catch((err) => {
-      if (err.response.status == 403) {
-        message.error("没有访问权限")
-      }
     })
-  }
+      .then(res => {
+        if (res.status == 200) {
+          //创建应该a标签
+          const link = document.createElement("a");
+          const blob = new Blob([res.data], {
+            type: "application/vnd.ms-excel"
+          });
+          // 隐藏a标签
+          link.style.display = "none";
+          link.href = URL.createObjectURL(blob);
+          // 设置文件名
+          link.setAttribute("download", `${category.toUpperCase()}题目.xlsx`);
+          // 添加a标签
+          document.body.appendChild(link);
+          // 点击
+          link.click();
+          // 删除a标签
+          document.body.removeChild(link);
+        } else {
+          message.error("导出失败");
+        }
+      })
+      .catch(err => {
+        if (err.response.status == 403) {
+          message.error("没有访问权限");
+        }
+      });
+  };
 
   return { exportQuestion };
 }

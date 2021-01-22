@@ -49,13 +49,18 @@ export function useAddMCMForm() {
       ],
       // 题目
       title: [
-        { required: true, whitespace: true, message: "题目必须填写", trigger: "blur" }
+        {
+          required: true,
+          whitespace: true,
+          message: "题目必须填写",
+          trigger: "blur"
+        }
       ]
     }
   });
 
   return {
     addMCM
-  }
+  };
 }
 //#endregion

@@ -10,7 +10,7 @@ import { httpPost } from "@/utils/http";
 export function useAddSWT(addModalVisible, questionType, getQuestion) {
   const addSWT = reactive({
     // 表单数据对象
-    model:{
+    model: {
       // 编号
       no: "",
       // 题目
@@ -25,7 +25,7 @@ export function useAddSWT(addModalVisible, questionType, getQuestion) {
       remark: ""
     },
     // 表单验证规则
-    rules:{
+    rules: {
       // 编号
       no: [
         {

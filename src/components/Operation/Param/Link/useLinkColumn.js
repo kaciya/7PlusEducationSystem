@@ -25,15 +25,15 @@ export const useLinkColumn = () => {
     },
     {
       title: "启用/禁用",
-      slots: { customRender: 'state' },
+      slots: { customRender: "state" }
     },
     {
       title: "操作",
-      slots: { customRender: 'operational' },
+      slots: { customRender: "operational" }
     }
-  ]
+  ];
 
   return {
     linkColumn
-  }
-}
+  };
+};

@@ -24,7 +24,6 @@
       <a-menu-item class="menu-pri menu-home" :key="'/' + sideBarKeys[0]">
         <router-link to="/home/main" class="menu-link home-link">
           <HomeOutlined />
-           <!-- <a-icon type="home" /> -->
           <span class="home-text">首页</span>
         </router-link>
       </a-menu-item>
@@ -77,13 +76,12 @@
           </span>
         </template>
 
-       <template #title v-else-if="item.path == 'sys'">
+        <template #title v-else-if="item.path == 'sys'">
           <span>
             <ApartmentOutlined />
             <span>{{ item.authName }} </span>
           </span>
         </template>
-
 
         <template #title v-else>
           <span>
@@ -94,11 +92,12 @@
 
         <a-menu-item
           class="menu-sec"
+          :class="subitem.permission"
           v-for="subitem in item.children"
           :key="'/' + subitem.path"
         >
           <router-link :to="'/' + subitem.path" class="menu-link">
-          <AppstoreOutlined />  <span>{{ subitem.authName }}</span>
+            <AppstoreOutlined /> <span>{{ subitem.authName }}</span>
           </router-link>
         </a-menu-item>
       </a-sub-menu>
@@ -124,7 +123,7 @@ import {
   ControlOutlined,
   InteractionOutlined,
   ApartmentOutlined,
-  AppstoreOutlined
+  AppstoreOutlined,
 } from "@ant-design/icons-vue";
 export default {
   // 导入组件
@@ -138,7 +137,7 @@ export default {
     ControlOutlined,
     InteractionOutlined,
     ApartmentOutlined,
-    AppstoreOutlined
+    AppstoreOutlined,
   },
   // setup响应api入口
   setup() {
@@ -160,9 +159,9 @@ export default {
       // 侧边栏的展开keys
       sideBarUnfoldKeys,
       // 只展开当前父菜单栏
-      onOpenChange,
+      onOpenChange
     };
-  },
+  }
 };
 </script>
 
