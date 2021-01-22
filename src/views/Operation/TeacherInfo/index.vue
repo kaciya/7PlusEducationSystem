@@ -46,15 +46,23 @@
             style="margin-right: 10px"
             @click="showEditModal(record)"
             class="modify-btn"
+            v-has="'teacher:edit'"
           >
             编辑
           </a-button>
-          <a-popconfirm
-            placement="topRight"
-            title="您真的要删除该项么?"
-            @confirm="delSubmit(record.id, pageNum, pageSize, loadState)"
-            @cancel="delCancel"
+          <a-popconfirm placement="topRight" title="您真的要删除该项么?" @confirm="delSubmit(
+                record.id,
+                pageNum,
+                pageSize,
+                loadState
+              )" @cancel="delCancel">
+          <a-button
+            type="danger"
+            size="small"
+            v-has="'teacher:delete'"
+
           >
+          </a-button>
             <a-button type="danger" size="small">
               删除
             </a-button>

@@ -27,18 +27,16 @@
             @click="showEdit(record)"
             size="small"
             class="modify-btn"
+            v-has="'course:edit'"
           >
             编辑
           </a-button>
-          <a-popconfirm
-            placement="topRight"
-            title="您真的要删除该项么?"
-            @confirm="deleteCourseSubmit(record.id)"
-            @cancel="delCancel"
-          >
-            <a-button type="danger" size="small">
-              删除
-            </a-button>
+
+          <a-popconfirm placement="topRight" title="您真的要删除该项么?" @confirm="deleteCourseSubmit(record.id)" @cancel="delCancel">
+          <a-button type="danger" size="small" v-has="'course:delete'">
+            删除
+          </a-button>
+
           </a-popconfirm>
         </template>
       </a-table>
