@@ -51,10 +51,15 @@
         title="数据列表"
       >
         <template #extra>
-          <a-button @click="delWords" v-has="'word:delete'"> 批量删除 </a-button>
+          <a-button @click="delWords" v-has="'word:delete'">
+            批量删除
+          </a-button>
           <!-- 批量导入组件 -->
-          <Batch-upload :uploadFile="uploadFile"></Batch-upload>
-          <a-button @click="addWord" v-has="'word:import'"> 导入单词 </a-button>
+          <span v-has="'word:import'">
+            <Batch-upload :uploadFile="uploadFile"></Batch-upload>
+          </span>
+
+          <a-button @click="addWord" v-has="'word:edit'"> 导入单词 </a-button>
         </template>
       </a-page-header>
       <!-- 表格 -->
@@ -88,7 +93,12 @@
             title="您确定要删除这个单词吗？"
             @confirm="delWord(record.id)"
           >
-            <a-button type="danger" size="small" class="delete" v-has="'word:delete'">
+            <a-button
+              type="danger"
+              size="small"
+              class="delete"
+              v-has="'word:delete'"
+            >
               删除
             </a-button>
           </a-popconfirm>
