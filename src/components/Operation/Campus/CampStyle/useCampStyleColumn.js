@@ -7,21 +7,21 @@ export const useCampStyleColumn = () => {
   const campStyleColumn = [
     {
       title: "序号",
-      slots: { customRender: 'index' },
+      slots: { customRender: "index" },
       width: "10%"
     },
     {
       title: "图片",
-      slots: { customRender: 'image' },
+      slots: { customRender: "image" }
     },
     {
       title: "操作",
-      slots: { customRender: 'operational' },
+      slots: { customRender: "operational" },
       width: "20%"
     }
-  ]
+  ];
 
   return {
     campStyleColumn
   };
-}
+};

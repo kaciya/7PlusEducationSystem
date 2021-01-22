@@ -57,27 +57,31 @@ export function useEditDI(editModalVisible, getQuestion, questionDetail) {
       ],
       // 题目
       title: [
-        { required: true, whitespace: true, message: "题目必须填写", trigger: "blur" }
+        {
+          required: true,
+          whitespace: true,
+          message: "题目必须填写",
+          trigger: "blur"
+        }
       ]
     }
   });
 
   // 每次打开编辑模态框都会触发 questionDetail的监听，
   // 这时重新处理题目详情数据给编辑表单的modal
-  watch(questionDetail, (val) => {
+  watch(questionDetail, val => {
     if (editModalVisible.di) {
       for (const key in val) {
         if (key == "labels") {
           // 标签特殊处理，将labels:[{id:1, name:'高频'}] map为 表单中的labelIds:['1']
-          editDI.model.labelIds = val[key].map((value) => value.id);
-        }
-        else {
+          editDI.model.labelIds = val[key].map(value => value.id);
+        } else {
           // 其它值直接赋值
-          editDI.model[key] = val[key]
+          editDI.model[key] = val[key];
         }
       }
     }
-  })
+  });
 
   // 表单ref
   const editDIRef = ref(null);
@@ -95,39 +99,43 @@ export function useEditDI(editModalVisible, getQuestion, questionDetail) {
   // 编辑DI题目
   const confirmEditDI = () => {
     // 先校验
-    editDIRef.value.validate().then(() => {
-      // 判断用户是否上传了图片
-      if (fileUrl.value) {
-        // 设置表单图片url
-        editDI.model.pics = [fileUrl.value];
-      }
-      // 请求参数[model]
-      const model = JSON.parse(JSON.stringify(editDI.model));
-      // 发送编辑题目请求
-      httpPost(speak.EditQuestion('di'), model).then((res) => {
-        if (res.success == true) {
-          // 提示用户编辑成功
-          message.success("编辑题目成功");
-          // 刷新页面
-          getQuestion()
-          // 关闭DI模态框
-          editModalVisible.di = false;
-          // 重置表单
-          editDIRef.value.resetFields();
-          // 清除公共储存库里面的文件信息
-          store.commit("ImageUploadStore/DEL_IMAGE_FILES");
-          store.commit("ImageUploadStore/DEL_IMAGE_URL");
+    editDIRef.value
+      .validate()
+      .then(() => {
+        // 判断用户是否上传了图片
+        if (fileUrl.value) {
+          // 设置表单图片url
+          editDI.model.pics = [fileUrl.value];
         }
-        else {
-          // 编辑失败，提示用户失败原因
-          message.error(res.message);
-        }
-      }).catch((err) => {
+        // 请求参数[model]
+        const model = JSON.parse(JSON.stringify(editDI.model));
+        // 发送编辑题目请求
+        httpPost(speak.EditQuestion("di"), model)
+          .then(res => {
+            if (res.success == true) {
+              // 提示用户编辑成功
+              message.success("编辑题目成功");
+              // 刷新页面
+              getQuestion();
+              // 关闭DI模态框
+              editModalVisible.di = false;
+              // 重置表单
+              editDIRef.value.resetFields();
+              // 清除公共储存库里面的文件信息
+              store.commit("ImageUploadStore/DEL_IMAGE_FILES");
+              store.commit("ImageUploadStore/DEL_IMAGE_URL");
+            } else {
+              // 编辑失败，提示用户失败原因
+              message.error(res.message);
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      })
+      .catch(err => {
         console.log(err);
       });
-    }).catch(err => {
-      console.log(err);
-    });
   };
 
   // 取消编辑DI题目
@@ -141,7 +149,7 @@ export function useEditDI(editModalVisible, getQuestion, questionDetail) {
       // 清除公共储存库里面的文件信息
       store.commit("ImageUploadStore/DEL_IMAGE_FILES");
       store.commit("ImageUploadStore/DEL_IMAGE_URL");
-    }, 200)
+    }, 200);
   };
 
   return {

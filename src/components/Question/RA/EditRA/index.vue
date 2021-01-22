@@ -106,7 +106,7 @@ export default {
       editRARef,
       changeLabels,
       confirmEditRA,
-      cancelEditRA,
+      cancelEditRA
     } = useEditRA(
       editModalVisible,
       getQuestion,
@@ -149,11 +149,11 @@ export default {
       // 编辑RA题目
       confirmEditRA,
       // 取消编辑RA题目
-      cancelEditRA,
+      cancelEditRA
     };
   },
   components: {
-    AudioPlayerZH,
-  },
+    AudioPlayerZH
+  }
 };
 </script>

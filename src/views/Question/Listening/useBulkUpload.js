@@ -10,9 +10,11 @@ export function useBulkUpload(category, getQuestion) {
     uploadTitle: "批量导入",
     templateName: computed(() => "题库" + category.value),
     uploadUrl: computed(() => listen.BulkUpload(category.value.toLowerCase())),
-    downloadUrl: computed(() => listen.DownloadTemplate(category.value.toLowerCase())),
+    downloadUrl: computed(() =>
+      listen.DownloadTemplate(category.value.toLowerCase())
+    ),
     getData: getQuestion
-  })
+  });
 
   return {
     bulkUpload

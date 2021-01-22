@@ -77,7 +77,7 @@ export default {
       editSWTRef,
       changeLabels,
       confirmEditSWT,
-      cancelEditSWT,
+      cancelEditSWT
     } = useEditSWT(editModalVisible, questionType, editDetail, getQuestion);
     return {
       // 标签列表
@@ -88,9 +88,9 @@ export default {
       // 编辑SWT题目
       confirmEditSWT,
       // 取消编辑SWT题目
-      cancelEditSWT,
+      cancelEditSWT
     };
-  },
+  }
 };
 </script>
 

@@ -26,18 +26,18 @@ export const useGetLinkList = () => {
       })
       .catch(err => {
         throw err;
-      })
-  }
+      });
+  };
 
   // 挂载到钩子函数上
   onMounted(() => {
     getLinkList();
-  })
+  });
 
   return {
     // 储存数据
     linkList,
     // 获取数据列表
     getLinkList
-  }
-}
+  };
+};

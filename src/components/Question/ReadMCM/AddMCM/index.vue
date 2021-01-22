@@ -116,7 +116,7 @@ export default {
       addChoices,
       delChoices,
       confirmAddMCM,
-      cancelAddMCM,
+      cancelAddMCM
     } = useAddMCM(addModalVisible, getQuestion);
     return {
       // 标签列表
@@ -131,15 +131,15 @@ export default {
       // 添加MCM题目
       confirmAddMCM,
       // 取消添加MCM题目
-      cancelAddMCM,
+      cancelAddMCM
     };
   },
   components: {
     // 删除选项按钮
     MinusCircleOutlined,
     // 添加选项按钮
-    PlusOutlined,
-  },
+    PlusOutlined
+  }
 };
 </script>
 <style lang="scss">

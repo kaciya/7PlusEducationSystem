@@ -25,17 +25,17 @@ export const useGetMoreList = () => {
       })
       .catch(err => {
         throw err;
-      })
-  }
+      });
+  };
   // 使用钩子函数
   onMounted(() => {
     getMoreList();
-  })
+  });
 
   return {
     // 列表数据
     moreList,
     // 获取列表数据
     getMoreList
-  }
-}
+  };
+};

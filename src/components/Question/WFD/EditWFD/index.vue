@@ -106,7 +106,7 @@ export default {
       editWFDRef,
       changeLabels,
       confirmEditWFD,
-      cancelEditWFD,
+      cancelEditWFD
     } = useEditWFD(
       editModalVisible,
       getQuestion,
@@ -149,11 +149,11 @@ export default {
       // 编辑wfd题目
       confirmEditWFD,
       // 取消编辑wfd题目
-      cancelEditWFD,
+      cancelEditWFD
     };
   },
   components: {
-    AudioPlayerZH,
-  },
+    AudioPlayerZH
+  }
 };
 </script>

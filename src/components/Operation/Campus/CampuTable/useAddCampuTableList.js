@@ -5,9 +5,9 @@
 import { computed, reactive, ref } from "vue";
 import { httpPost } from "@/utils/http";
 import { campus } from "@/api/operationAPI";
-import { message } from "ant-design-vue"
+import { message } from "ant-design-vue";
 
-export const useAddCampuTableList = (getCampuTableList,store) => {
+export const useAddCampuTableList = (getCampuTableList, store) => {
   // 添加校区模态框状态
   const addModalVisible = ref(false);
   // 显示添加校区模态框
@@ -16,7 +16,7 @@ export const useAddCampuTableList = (getCampuTableList,store) => {
     // 清除公共储存库里面的文件信息
     store.commit("ImageUploadStore/DEL_IMAGE_FILES");
     store.commit("ImageUploadStore/DEL_IMAGE_URL");
-  }
+  };
   // 获取用户上传的文件
   const fileUrl = computed(() => store.state.ImageUploadStore.fileUrl);
   // 创建表单数据
@@ -24,31 +24,25 @@ export const useAddCampuTableList = (getCampuTableList,store) => {
     sort: "",
     name: "",
     picImg: "",
-    introduce: "",
-  })
+    introduce: ""
+  });
 
   // 获取ref
   const addRef = ref(null);
 
   // 创建表单校验规则
-  let sortValidate = (rule,value) => {
+  let sortValidate = (rule, value) => {
     // 判断是否是数字
     if (!Number(value)) {
       return Promise.reject("请输入输入一个正确的数字");
     }
-    return Promise.resolve()
-  }
+    return Promise.resolve();
+  };
   const addRule = {
-    sort: [
-      {validator: sortValidate,trigger: "blur"}
-    ],
-    name: [
-      {required: true,message: "名称必须填写",trigger: "blur"}
-    ],
-    introduce: [
-      {required: true,message: "介绍必须填写",trigger: "blur"}
-    ]
-  }
+    sort: [{ validator: sortValidate, trigger: "blur" }],
+    name: [{ required: true, message: "名称必须填写", trigger: "blur" }],
+    introduce: [{ required: true, message: "介绍必须填写", trigger: "blur" }]
+  };
 
   // 发送请求
   const addSubmit = () => {
@@ -62,7 +56,7 @@ export const useAddCampuTableList = (getCampuTableList,store) => {
           addModel.picImg = fileUrl.value;
         }
         // 发起ajax请求
-        httpPost(campus.AddCampuTableList,addModel)
+        httpPost(campus.AddCampuTableList, addModel)
           .then(res => {
             // 判断数据是否获取成功
             if (res.success === true) {
@@ -81,12 +75,12 @@ export const useAddCampuTableList = (getCampuTableList,store) => {
           })
           .catch(err => {
             throw err;
-          })
+          });
       })
       .catch(err => {
         throw err;
-      })
-  }
+      });
+  };
 
   // 点击取消时候的事件
   const addCancel = () => {
@@ -95,7 +89,7 @@ export const useAddCampuTableList = (getCampuTableList,store) => {
     // 清除公共储存库里面的文件信息
     store.commit("ImageUploadStore/DEL_IMAGE_FILES");
     store.commit("ImageUploadStore/DEL_IMAGE_URL");
-  }
+  };
 
   return {
     // 添加校区模态框状态
@@ -112,5 +106,5 @@ export const useAddCampuTableList = (getCampuTableList,store) => {
     addSubmit,
     // 点击取消的事件
     addCancel
-  }
-}
+  };
+};

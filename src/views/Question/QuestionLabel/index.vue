@@ -14,7 +14,12 @@
       >
         <template #extra>
           <!-- 添加标签按钮 -->
-          <a-button type="primary" @click="showAddLabel" v-has="'question:label:edit'">添加标签</a-button>
+          <a-button
+            type="primary"
+            @click="showAddLabel"
+            v-has="'question:label:edit'"
+            >添加标签</a-button
+          >
         </template>
       </a-page-header>
       <!-- 页头 end -->
@@ -65,7 +70,13 @@
               title="您确定要删除这个标签吗？"
               @confirm="delLabel(record.id)"
             >
-              <a-button type="danger" size="small" v-has="'question:label:delete'"> 删除 </a-button>
+              <a-button
+                type="danger"
+                size="small"
+                v-has="'question:label:delete'"
+              >
+                删除
+              </a-button>
             </a-popconfirm>
           </div>
         </template>
@@ -132,7 +143,7 @@ export default {
       addLabelModel,
       addLabelRules,
       addLabelRef,
-      cancelAddLabel,
+      cancelAddLabel
     } = useAddLabel(getLabels);
 
     // 删除标签功能
@@ -146,7 +157,7 @@ export default {
       editLabelRules,
       editFormRef,
       editLabel,
-      cancelEditLabel,
+      cancelEditLabel
     } = useEditLabel(getLabels);
 
     return {
@@ -193,13 +204,13 @@ export default {
       // 修改标签
       editLabel,
       // 取消修改标签
-      cancelEditLabel,
+      cancelEditLabel
       //#endregion
     };
   },
   components: {
-    Crumbs,
-  },
+    Crumbs
+  }
 };
 </script>
 

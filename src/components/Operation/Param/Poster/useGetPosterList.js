@@ -22,17 +22,17 @@ export const useGetPosterList = () => {
       })
       .catch(err => {
         throw err;
-      })
-  }
+      });
+  };
 
   onMounted(() => {
     getPosterList();
-  })
+  });
 
-  return{
+  return {
     // 数据
     posterList,
     // 获取广告列表
     getPosterList
-  }
-}
+  };
+};

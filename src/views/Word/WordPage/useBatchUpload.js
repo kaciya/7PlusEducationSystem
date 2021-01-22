@@ -16,11 +16,11 @@ export function useBulkUpload(getWordData) {
     templateName: "单词",
     uploadUrl: word.AddWords,
     downloadUrl: word.ExportTemplat,
-    getData: getWordData,
+    getData: getWordData
   });
 
   return {
-    uploadFile,
+    uploadFile
   };
 }
 //#endregion

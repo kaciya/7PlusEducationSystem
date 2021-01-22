@@ -38,19 +38,20 @@ export function useEditLabels(labelList, getQuestion) {
       id,
       // 选择的标签
       labelIds: checkedIds
-    }).then((res) => {
-      if (res.success) {
-        // 成功时提示用户
-        message.success('修改题目标签成功');
-        // 刷新列表
-        getQuestion()
-      }
-      else {
-        message.success(res.message);
-      }
-    }).catch((err) => {
-      console.log(err);
-    });
+    })
+      .then(res => {
+        if (res.success) {
+          // 成功时提示用户
+          message.success("修改题目标签成功");
+          // 刷新列表
+          getQuestion();
+        } else {
+          message.success(res.message);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   return {

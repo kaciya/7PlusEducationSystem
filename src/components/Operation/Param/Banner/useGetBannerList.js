@@ -22,17 +22,17 @@ export const useGetBannerList = () => {
       })
       .catch(err => {
         throw err;
-      })
-  }
+      });
+  };
 
   onMounted(() => {
     getBannerList();
-  })
+  });
 
-  return{
+  return {
     // 数据
     bannerList,
     // 获取广告列表
     getBannerList
-  }
-}
+  };
+};

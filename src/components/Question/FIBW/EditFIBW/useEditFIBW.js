@@ -42,7 +42,7 @@ export function useEditFIBW(editModalVisible, editDetail, getQuestion) {
           {
             content: "",
             key: "C"
-          },
+          }
         ]
       ],
       // 答案参考
@@ -169,7 +169,7 @@ export function useEditFIBW(editModalVisible, editDetail, getQuestion) {
                   {
                     content: "",
                     key: "C"
-                  },
+                  }
                 ]
               ];
               editFIBW.model.titleText = [
@@ -215,7 +215,7 @@ export function useEditFIBW(editModalVisible, editDetail, getQuestion) {
         {
           content: "",
           key: "C"
-        },
+        }
       ]
     ];
     editFIBW.model.titleText = [
@@ -239,7 +239,7 @@ export function useEditFIBW(editModalVisible, editDetail, getQuestion) {
     editChoices,
     delChoices,
     confirmEditFIBW,
-    cancelEditFIBW,
+    cancelEditFIBW
   };
 }
 //#endregion

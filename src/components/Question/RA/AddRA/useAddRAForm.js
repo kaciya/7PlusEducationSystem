@@ -1,5 +1,5 @@
 //#region 添加RA题目表单数据
-import { reactive } from "vue"
+import { reactive } from "vue";
 
 export function useAddRAForm() {
   // 表单数据 校验规则
@@ -22,7 +22,12 @@ export function useAddRAForm() {
     rules: {
       // 编号
       no: [
-        { required: true, whitespace: true, message: '题目编号必须填写', trigger: 'blur' },
+        {
+          required: true,
+          whitespace: true,
+          message: "题目编号必须填写",
+          trigger: "blur"
+        }
       ],
       // 题目
       title: [
@@ -33,9 +38,9 @@ export function useAddRAForm() {
           trigger: "blur"
         }
       ]
-    },
+    }
   });
   return {
     addRA
-  }
+  };
 }

@@ -10,14 +10,14 @@ export const useShowArticleList = () => {
   // 获取文章内容
   const articlContent = ref({});
   // 显示查看文章模态框状态
-  const showArticleModal = (record) => {
+  const showArticleModal = record => {
     articleModalVisible.value = true;
     articlContent.value = record;
-  }
+  };
   // 点击确定的回调
   const addOk = () => {
     articleModalVisible.value = false;
-  }
+  };
 
   return {
     // 查看文章模态框状态
@@ -28,5 +28,5 @@ export const useShowArticleList = () => {
     articlContent,
     // 点击确定的回调
     addOk
-  }
-}
+  };
+};

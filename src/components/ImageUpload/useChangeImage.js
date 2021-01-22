@@ -4,9 +4,9 @@
  * */
 import { message } from "ant-design-vue";
 
-export const useChangeImage = (store) => {
+export const useChangeImage = store => {
   // 上传文件改变时的状态
-  const changeImage = (file) => {
+  const changeImage = file => {
     // 结构数据
     let { status } = file.file;
     // 判断是否上传成功
@@ -17,14 +17,14 @@ export const useChangeImage = (store) => {
       if (data.success === true) {
         // 提示用户
         message.success(data.message);
-        const {fileUrl} = data.data;
+        const { fileUrl } = data.data;
         // 将图片地址保存到vuex
-        store.commit("ImageUploadStore/SET_IMAGE_URL",fileUrl);
+        store.commit("ImageUploadStore/SET_IMAGE_URL", fileUrl);
       }
     }
-  }
+  };
 
   return {
     changeImage
-  }
-}
+  };
+};

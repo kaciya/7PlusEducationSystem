@@ -62,9 +62,9 @@ export default {
     // 查看RO题目
     const { getRO } = useGetRO(getModalVisible, questionDetail);
     return {
-      getRO,
+      getRO
     };
-  },
+  }
 };
 </script>
 

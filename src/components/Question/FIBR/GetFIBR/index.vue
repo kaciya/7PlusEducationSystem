@@ -69,9 +69,9 @@ export default {
     // 查看FIBR题目
     const { getFIBR } = useGetFIBR(getModalVisible, questionDetail);
     return {
-      getFIBR,
+      getFIBR
     };
-  },
+  }
 };
 </script>
 

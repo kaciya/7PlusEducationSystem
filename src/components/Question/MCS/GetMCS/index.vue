@@ -119,12 +119,12 @@ export default {
     return {
       getMCS,
       audioPlayerRef,
-      closeModal,
+      closeModal
     };
   },
   components: {
-    AudioPlayerCK,
-  },
+    AudioPlayerCK
+  }
 };
 </script>
 

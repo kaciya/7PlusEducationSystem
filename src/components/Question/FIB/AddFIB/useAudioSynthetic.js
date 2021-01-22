@@ -3,7 +3,7 @@ import { ref } from "vue";
 // 导入 post 请求
 import { httpPost } from "@/utils/http";
 // 导入 音频合成 接口配置
-import questionAPI from '@/api/questionAPI';
+import questionAPI from "@/api/questionAPI";
 import { message } from "ant-design-vue";
 /**
  * 音频合成功能
@@ -16,9 +16,9 @@ export function useAudioSynthetic(addFIB, uploadAudioList) {
 
   // 音频合成
   const audioSynthetic = () => {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       // 获取全部题目原文
-      let titleText = '';
+      let titleText = "";
       addFIB.model.titleText.forEach(ele => {
         titleText += ele.text.trim() + " " + ele.answer.trim() + " ";
       });
@@ -30,34 +30,34 @@ export function useAudioSynthetic(addFIB, uploadAudioList) {
         httpPost(questionAPI.AudioSynthetic, {
           // 题目文本
           text: titleText
-        }).then((res) => {
-          if (res.success) {
-            synthesizing.value = false;
-            // 提示用户转换音频成功
-            message.success("转换音频成功, 此音频将为题目音频");
-            // 保存题目音频
-            addFIB.model.titleAudio = res.data.fileUrl;
-            resolve();
-            // 清空上传音频列表
-            uploadAudioList.value = []
-          }
-          else {
-            message.error(res.message);
-          }
-        }).catch((err) => {
-          console.log(err);
         })
-      }
-      else {
+          .then(res => {
+            if (res.success) {
+              synthesizing.value = false;
+              // 提示用户转换音频成功
+              message.success("转换音频成功, 此音频将为题目音频");
+              // 保存题目音频
+              addFIB.model.titleAudio = res.data.fileUrl;
+              resolve();
+              // 清空上传音频列表
+              uploadAudioList.value = [];
+            } else {
+              message.error(res.message);
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } else {
         // 提示用户输入题目原文内容才可以转换音频
-        message.error("请您输入题目原文")
+        message.error("请您输入题目原文");
       }
-    })
-  }
+    });
+  };
 
   return {
     synthesizing,
     audioSynthetic
-  }
+  };
 }
 //#endregion

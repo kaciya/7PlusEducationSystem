@@ -137,7 +137,7 @@ export default {
       editTitleText,
       delTitleText,
       confirmEditFIB,
-      cancelEditFIB,
+      cancelEditFIB
     } = useEditFIB(
       editModalVisible,
       getQuestion,
@@ -184,13 +184,13 @@ export default {
       // 编辑fib题目
       confirmEditFIB,
       // 取消编辑fib题目
-      cancelEditFIB,
+      cancelEditFIB
     };
   },
   components: {
     AudioPlayerZH,
     MinusCircleOutlined,
-    PlusOutlined,
-  },
+    PlusOutlined
+  }
 };
 </script>

@@ -10,5 +10,5 @@ export const speak = {
   // 添加题目
   AddQuestion: category => `/question/speak/${category}/add`,
   // 更新题目
-  EditQuestion: category => `/question/speak/${category}/update`,
+  EditQuestion: category => `/question/speak/${category}/update`
 };

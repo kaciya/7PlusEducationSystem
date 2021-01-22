@@ -116,7 +116,7 @@ export default {
       editChoices,
       delChoices,
       confirmEditRO,
-      cancelEditRO,
+      cancelEditRO
     } = useEditRO(editModalVisible, editDetail, getQuestion);
     return {
       // 标签列表
@@ -129,15 +129,15 @@ export default {
       // 编辑RO题目
       confirmEditRO,
       // 取消编辑RO题目
-      cancelEditRO,
+      cancelEditRO
     };
   },
   components: {
     // 删除选项按钮
     MinusCircleOutlined,
     // 添加选项按钮
-    PlusOutlined,
-  },
+    PlusOutlined
+  }
 };
 </script>
 

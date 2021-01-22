@@ -42,11 +42,10 @@ export default {
       // 上传音频文件列表
       uploadAudioList,
       // 上次音频变更
-      changeUploadAudio,
+      changeUploadAudio
     };
-  },
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

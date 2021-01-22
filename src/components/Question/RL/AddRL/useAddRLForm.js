@@ -27,12 +27,12 @@ export function useAddRLForm() {
       // 音频片段
       audioClips: [
         {
-          "id": 0,
-          "name": "",
-          "url": "",
-          "content": ""
+          id: 0,
+          name: "",
+          url: "",
+          content: ""
         }
-      ],
+      ]
     },
     // 校验规则
     rules: {
@@ -59,6 +59,6 @@ export function useAddRLForm() {
 
   return {
     addRL
-  }
+  };
 }
 //#endregion

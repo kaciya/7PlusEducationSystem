@@ -1,46 +1,65 @@
 <template>
-<div>
-  <!-- 表格 start -->
-  <a-table
-    :row-key="record => record.id"
-  :columns="linkColumn"
-  :data-source="linkList.data"
-  bordered
-  :pagination="false"
-  >
-    <template #state="{ record }">
-      <a-switch :checked="Boolean(record.status)" @change="changLinkList(record.id)"/>
-    </template>
-    <template #operational="{ record }">
-      <a-button type="primary" size="small" @click="showEditModal(record.id)">修改</a-button>
-    </template>
-  </a-table>
-  <!-- 表格 end -->
-  <!-- 编辑模态框 start -->
-  <a-modal
-    title="编辑联系列表"
-    v-model:visible="editModalVisible"
-    @cancel="editCancel"
-    @ok="editSubmit"
-  >
-  <a-form
-    :model="editModel"
-    :rules="editRule"
-    ref="editRef"
-  >
-    <a-form-item label="名称" name="name" hasFeedback :label-col="{span: 4}" :wrapper-col="{span:20}">
-      <a-input v-model:value="editModel.name"></a-input>
-    </a-form-item>
-    <a-form-item label="地址" name="address" hasFeedback :label-col="{span: 4}" :wrapper-col="{span:20}">
-      <a-input v-model:value="editModel.address"></a-input>
-    </a-form-item>
-    <a-form-item label="电话" name="telPhone" hasFeedback :label-col="{span: 4}" :wrapper-col="{span:20}">
-      <a-input v-model:value="editModel.telPhone"></a-input>
-    </a-form-item>
-  </a-form>
-  </a-modal>
-  <!-- 编辑模态框 end -->
-</div>
+  <div>
+    <!-- 表格 start -->
+    <a-table
+      :row-key="record => record.id"
+      :columns="linkColumn"
+      :data-source="linkList.data"
+      bordered
+      :pagination="false"
+    >
+      <template #state="{ record }">
+        <a-switch
+          :checked="Boolean(record.status)"
+          @change="changLinkList(record.id)"
+        />
+      </template>
+      <template #operational="{ record }">
+        <a-button type="primary" size="small" @click="showEditModal(record.id)"
+          >修改</a-button
+        >
+      </template>
+    </a-table>
+    <!-- 表格 end -->
+    <!-- 编辑模态框 start -->
+    <a-modal
+      title="编辑联系列表"
+      v-model:visible="editModalVisible"
+      @cancel="editCancel"
+      @ok="editSubmit"
+    >
+      <a-form :model="editModel" :rules="editRule" ref="editRef">
+        <a-form-item
+          label="名称"
+          name="name"
+          hasFeedback
+          :label-col="{ span: 4 }"
+          :wrapper-col="{ span: 20 }"
+        >
+          <a-input v-model:value="editModel.name"></a-input>
+        </a-form-item>
+        <a-form-item
+          label="地址"
+          name="address"
+          hasFeedback
+          :label-col="{ span: 4 }"
+          :wrapper-col="{ span: 20 }"
+        >
+          <a-input v-model:value="editModel.address"></a-input>
+        </a-form-item>
+        <a-form-item
+          label="电话"
+          name="telPhone"
+          hasFeedback
+          :label-col="{ span: 4 }"
+          :wrapper-col="{ span: 20 }"
+        >
+          <a-input v-model:value="editModel.telPhone"></a-input>
+        </a-form-item>
+      </a-form>
+    </a-modal>
+    <!-- 编辑模态框 end -->
+  </div>
 </template>
 
 <script>
@@ -60,7 +79,7 @@ export default {
     //#endregion
 
     //#region 获取联系列表
-    const { linkList,getLinkList } = useGetLinkList();
+    const { linkList, getLinkList } = useGetLinkList();
     //#endregion
 
     //#region 更改联系列表状态
@@ -68,7 +87,15 @@ export default {
     //#endregion
 
     //#region 编辑联系列表
-     const { editModalVisible,editRef,editModel,editRule,editCancel,editSubmit,showEditModal } = useEditLinkList(getLinkList);
+    const {
+      editModalVisible,
+      editRef,
+      editModel,
+      editRule,
+      editCancel,
+      editSubmit,
+      showEditModal
+    } = useEditLinkList(getLinkList);
     //#endregion
 
     return {
@@ -90,11 +117,9 @@ export default {
       editSubmit,
       editCancel
       //#endregion
-    }
+    };
   }
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

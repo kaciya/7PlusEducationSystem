@@ -1,11 +1,8 @@
 //导入 reactive 对象
-import {
-  reactive
-} from "vue";
+import { reactive } from "vue";
 
 //#region 复选框选中方法
-export const useGetTreeChecked = (rolePermissionTable) => {
-
+export const useGetTreeChecked = rolePermissionTable => {
   //复选框所需数据
   const checkedData = reactive({
     //复选框选中的所有id(只限于更改是否选中样式)
@@ -25,8 +22,7 @@ export const useGetTreeChecked = (rolePermissionTable) => {
       //调用方法 将选中该节点所包含的节点
       getLeafNode(record, checkedData.defKeys, false);
     }
-  }
-
+  };
 
   /**
    * 递归查询 叶子节点
@@ -59,13 +55,11 @@ export const useGetTreeChecked = (rolePermissionTable) => {
       //重新调用方法
       getLeafNode(item, defKeys, bool);
     });
-  }
+  };
   //#endregion
-
 
   //#region 第二种情况: 从中间到两边 从子节点 到 叶子节点 的选中 到 根节点的 半选中
   const getChildChecked = (e, record) => {
-
     //调用获取 根节点 递归方法
     const result = getRootNode(rolePermissionTable.data, record.permissionId);
 
@@ -81,14 +75,17 @@ export const useGetTreeChecked = (rolePermissionTable) => {
           //不存在则添加到最终结果中
           checkedData.defKeys.push(item);
         }
-      })
-
+      });
 
       //选中该项
       record.isChecked = true;
 
       //调用方法 选中复选框
-      editTreeRootChecked(rolePermissionTable.data, record, checkedData.defKeys);
+      editTreeRootChecked(
+        rolePermissionTable.data,
+        record,
+        checkedData.defKeys
+      );
     } else {
       //删除此复选框
       delDefKey(checkedData.defKeys, record.permissionId);
@@ -97,7 +94,7 @@ export const useGetTreeChecked = (rolePermissionTable) => {
       record.child.forEach(item => {
         item.isChecked = false;
         delDefKey(checkedData.defKeys, item.permissionId);
-      })
+      });
 
       //取消选中该项
       record.isChecked = false;
@@ -107,14 +104,12 @@ export const useGetTreeChecked = (rolePermissionTable) => {
       //调用方法 取消选中复选框
       editLeafUnChecked(rolePermissionTable.data, record, checkedData.defKeys);
     }
-  }
+  };
   //#endregion
-
 
   //#region 第三种情况: 从内向外 从 叶子节点 到 根节点 的选中
   //递归实现 对父选择项的选中方法
   const getRootChecked = (e, record) => {
-
     //调用递归方法
     const result = getRootNode(rolePermissionTable.data, record.permissionId);
 
@@ -127,15 +122,18 @@ export const useGetTreeChecked = (rolePermissionTable) => {
           //不存在则添加到最终结果中
           checkedData.defKeys.push(item);
         }
-      })
+      });
 
       //选中该项
       record.isChecked = true;
 
       //调用方法 将选中该节点所包含的节点
-      editTreeRootChecked(rolePermissionTable.data, record, checkedData.defKeys);
+      editTreeRootChecked(
+        rolePermissionTable.data,
+        record,
+        checkedData.defKeys
+      );
     } else {
-
       //取消选中该项
       record.isChecked = false;
       //重置此节点的半选状态
@@ -143,15 +141,13 @@ export const useGetTreeChecked = (rolePermissionTable) => {
 
       //调用方法 将取消选中该节点所包含的节点
       editLeafUnChecked(rolePermissionTable.data, record, checkedData.defKeys);
-
     }
-
-  }
+  };
 
   /**
    * 递归查询 根选择项
    * @param {Object} node  原始数据列表
-   * @param {Number} leafId 查找所需id 
+   * @param {Number} leafId 查找所需id
    * @param {Object} path 供递归使用 无须赋值
    */
   const getRootNode = (node, leafId, path) => {
@@ -183,13 +179,12 @@ export const useGetTreeChecked = (rolePermissionTable) => {
         }
       }
     }
-  }
+  };
   //#endregion
-
 
   //#region 根据索引删除此项
   /**
-   * 
+   *
    * @param {Object} defKeys  所有的key值
    * @param {Number} permissionId 需要删除的key
    */
@@ -198,9 +193,8 @@ export const useGetTreeChecked = (rolePermissionTable) => {
     const index = defKeys.indexOf(permissionId);
     //清空选中的id
     defKeys.splice(index, 1);
-  }
+  };
   //#endregion
-
 
   //#region 根据叶子节点 判断 父级是否半选  子集是否全选
   /**
@@ -222,7 +216,7 @@ export const useGetTreeChecked = (rolePermissionTable) => {
             //如果存在选中 则 设置布尔值为 false
             bool = false;
           }
-        })
+        });
 
         //判断父节点为 选中 或 半选
         item.isChecked = bool;
@@ -236,14 +230,13 @@ export const useGetTreeChecked = (rolePermissionTable) => {
       if (item.child) {
         editTreeRootChecked(item.child, record, defKeys);
       }
-    })
-  }
+    });
+  };
   //#endregion
 
-
-  //#region 找出叶子节点 判断是否存在叶子节点为选中状态 如果有选中状态 则父节点不会取消选中 
+  //#region 找出叶子节点 判断是否存在叶子节点为选中状态 如果有选中状态 则父节点不会取消选中
   /**
-   * 
+   *
    * @param {Object} node  原数组对象
    * @param {Object} record  此时获取的子节点
    * @param {Object} defKeys  保存的id值
@@ -259,10 +252,10 @@ export const useGetTreeChecked = (rolePermissionTable) => {
         item.child.forEach(itemChild => {
           //判断子元素是否存在选中状态 或半选状态
           if (itemChild.isChecked || itemChild.indeterminate) {
-            //如果存在选中 则 设置布尔值为 false 
+            //如果存在选中 则 设置布尔值为 false
             bool = false;
           }
-        })
+        });
 
         //删除此节点id
         delDefKey(defKeys, record.permissionId);
@@ -286,15 +279,13 @@ export const useGetTreeChecked = (rolePermissionTable) => {
       if (item.child) {
         editLeafUnChecked(item.child, record, defKeys);
       }
-    })
-
-  }
-  //#endregion 
-
+    });
+  };
+  //#endregion
 
   //#region 获取此时树形列表中所有选中的项 存入数组中
   /**
-   * 
+   *
    * @param {Object} node 原数组对象
    * @param {Object} resultDefKeys 选中的权限ID项
    */
@@ -309,10 +300,9 @@ export const useGetTreeChecked = (rolePermissionTable) => {
       if (item.child) {
         getTreeCheckedKeys(item.child, resultDefKeys);
       }
-    })
-  }
+    });
+  };
   //#endregion
-
 
   //返回参数
   return {

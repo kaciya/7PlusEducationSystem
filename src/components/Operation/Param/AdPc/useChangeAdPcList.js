@@ -6,9 +6,9 @@ import { httpPost } from "@/utils/http";
 import { param } from "@/api/operationAPI";
 import { message } from "ant-design-vue";
 
-export const useChangeAdPcList = (getAdPcList) => {
+export const useChangeAdPcList = getAdPcList => {
   // 点击气泡框的回调
-  const changeAdPcList = (id) => {
+  const changeAdPcList = id => {
     // 发起ajax请求
     httpPost(param.ChangeAdList(id))
       .then(res => {
@@ -24,10 +24,10 @@ export const useChangeAdPcList = (getAdPcList) => {
       })
       .catch(err => {
         throw err;
-      })
-  }
+      });
+  };
   // 启用广告
-  const enableAdPcList = (id) => {
+  const enableAdPcList = id => {
     // 发起ajax请求
     httpPost(param.ChangeAdList(id))
       .then(res => {
@@ -43,13 +43,13 @@ export const useChangeAdPcList = (getAdPcList) => {
       })
       .catch(err => {
         throw err;
-      })
-  }
+      });
+  };
 
   return {
     // 点击气泡框的回调
     changeAdPcList,
     // 启用广告
     enableAdPcList
-  }
-}
+  };
+};

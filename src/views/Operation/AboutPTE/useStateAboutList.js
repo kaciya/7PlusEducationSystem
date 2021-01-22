@@ -9,12 +9,12 @@ import { about } from "@/api/operationAPI";
 import { message } from "ant-design-vue";
 
 /**
- * 
+ *
  * @param {function} getAboutData 获取关于PTE数据列表
  */
-export const useStateAboutList = (getAboutData) => {
+export const useStateAboutList = getAboutData => {
   // 开关点击时候的回调函数
-  const stateChange = (id) => { 
+  const stateChange = id => {
     // 发起ajax请求
     httpPost(about.EditStateAboutList(id))
       .then(res => {
@@ -28,10 +28,10 @@ export const useStateAboutList = (getAboutData) => {
       })
       .catch(err => {
         throw err;
-      })
-  } 
+      });
+  };
 
   return {
     stateChange
-  }
-}
+  };
+};

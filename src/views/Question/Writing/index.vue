@@ -193,7 +193,7 @@ export default {
       questionList,
       isLoading,
       configPage,
-      changePagenum,
+      changePagenum
     } = useGetQuestion();
     // 获取全部标签类型
     let { labelList } = useGetLabels();
@@ -216,7 +216,7 @@ export default {
       showGetModal,
       // 编辑
       editModalVisible,
-      showEditModal,
+      showEditModal
     } = useShowModal(category, getQuestion);
     //#endregion
     return {
@@ -271,7 +271,7 @@ export default {
       //#endregion
 
       //#region 批量上传功能
-      bulkUpload,
+      bulkUpload
       //#endregion
     };
   },
@@ -286,8 +286,8 @@ export default {
     // 查看模态框组件
     GetSWTModal,
     // 编辑模态框组件
-    EditSWTModal,
-  },
+    EditSWTModal
+  }
 };
 </script>
 

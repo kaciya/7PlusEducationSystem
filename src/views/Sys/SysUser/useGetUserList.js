@@ -1,7 +1,5 @@
 //导入 vue 对象
-import {
-  ref
-} from "vue";
+import { ref } from "vue";
 
 //导入 vue中 对象
 import { computed } from "vue";
@@ -13,8 +11,7 @@ import { sys } from "@/api/sysUserAPI";
 import { httpGet } from "@/utils/http";
 
 //#region 定义方法  获取账号列表
-export const useGetUserList = (sysUsersTable,store) => {
-
+export const useGetUserList = (sysUsersTable, store) => {
   //添加 加载状态
   const isLoading = ref(false);
 
@@ -23,7 +20,6 @@ export const useGetUserList = (sysUsersTable,store) => {
 
   //#region 根据后台接口地址发送请求获取权限组数据
   const getUserList = () => {
-
     //请求前 显示加载状态
     isLoading.value = true;
 
@@ -52,7 +48,7 @@ export const useGetUserList = (sysUsersTable,store) => {
     //加载状态
     isLoading,
     //获取账号管理列表
-    getUserList,
+    getUserList
   };
 };
 //#endregion

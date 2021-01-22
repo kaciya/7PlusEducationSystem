@@ -148,13 +148,13 @@ export default {
       // 添加RS题目
       confirmAddRS,
       // 取消添加RS题目
-      cancelAddRS,
+      cancelAddRS
     };
   },
   components: {
     CheckCircleTwoTone,
-    AudioPlayerZH,
-  },
+    AudioPlayerZH
+  }
 };
 </script>
 

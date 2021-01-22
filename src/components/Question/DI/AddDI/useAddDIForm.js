@@ -52,6 +52,6 @@ export function useAddDIForm() {
   return {
     diTypeList,
     addDI
-  }
+  };
 }
 //#endregion
