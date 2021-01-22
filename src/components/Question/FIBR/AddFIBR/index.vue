@@ -43,8 +43,6 @@
         v-for="(item, index) in addFIBR.model.titleText"
         :key="index"
       >
-        <!-- {{ index }} -->
-        <!-- {{ item + "-------" + index }} -->
         <a-input
           v-model:value="addFIBR.model.titleText[index]"
           style="width: 68%"

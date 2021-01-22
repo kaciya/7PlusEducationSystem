@@ -22,6 +22,10 @@ export function useEditFIBW(editModalVisible, editDetail, getQuestion) {
         {
           content: "",
           key: "1"
+        },
+        {
+          content: "",
+          key: "2"
         }
       ],
       // 题目选项
@@ -168,7 +172,16 @@ export function useEditFIBW(editModalVisible, editDetail, getQuestion) {
                   },
                 ]
               ];
-              editFIBW.model.titleText = [{ content: "", key: "1" }];
+              editFIBW.model.titleText = [
+                {
+                  content: "",
+                  key: "1"
+                },
+                {
+                  content: "",
+                  key: "2"
+                }
+              ];
               editFIBW.model.answer = [];
             } else {
               // 编辑失败，提示用户失败原因
@@ -205,7 +218,16 @@ export function useEditFIBW(editModalVisible, editDetail, getQuestion) {
         },
       ]
     ];
-    editFIBW.model.titleText = [{ content: "", key: "1" }];
+    editFIBW.model.titleText = [
+      {
+        content: "",
+        key: "1"
+      },
+      {
+        content: "",
+        key: "2"
+      }
+    ];
     editFIBW.model.answer = [];
   };
   return {
