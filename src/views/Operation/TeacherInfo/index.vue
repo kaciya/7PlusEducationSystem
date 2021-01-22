@@ -50,6 +50,7 @@
             style="margin-right: 10px"
             @click="showEditModal(record)"
             class="modify-btn"
+            v-has="'teacher:edit'"
           >
             编辑
           </a-button>
@@ -62,6 +63,7 @@
           <a-button
             type="danger"
             size="small"
+            v-has="'teacher:delete'"
           >
             删除
           </a-button>

@@ -36,11 +36,12 @@
             @click="showEditForm(record)"
             size="small"
             class="modify-btn"
+            v-has="'issue:edit'"
           >
             编辑
           </a-button>
           <a-popconfirm placement="topRight" title="您真的要删除该项么?" @confirm="delSubmit(record.id)" @cancel="delCancel">
-          <a-button type="danger" size="small">
+          <a-button type="danger" size="small" v-has="'issue:delete'">
             删除
           </a-button>
           </a-popconfirm>
