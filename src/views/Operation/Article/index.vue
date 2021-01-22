@@ -39,26 +39,13 @@
           />
         </template>
         <template #operational="{ record }">
-          <a-button
-            size="small"
-            type="primary"
-            @click="showArticleModal(record)"
-            >查看</a-button
-          >
-          <a-button
-            type="primary"
-            size="small"
-            style="margin: 0 10px"
-            @click="cheackEditArticle(record)"
-            class="modify-btn"
-            >编辑</a-button
-          >
-          <a-popconfirm
-            placement="topRight"
-            title="您真的要删除吗?"
-            @confirm="delSubmit(record.id)"
-          >
-            <a-button type="danger" size="small">删除</a-button>
+
+          <a-button size="small" type="primary" @click="showArticleModal(record)">查看</a-button>
+          <a-button type="primary" size="small" style="margin: 0 10px" @click="cheackEditArticle(record)" class="modify-btn" v-has="'article:edit'">编辑</a-button>
+          <a-popconfirm placement="topRight" title="您真的要删除吗?" @confirm="delSubmit(record.id)">
+            <a-button type="danger" size="small" v-has="'article:delete'">删除</a-button>
+
+          
           </a-popconfirm>
         </template>
       </a-table>

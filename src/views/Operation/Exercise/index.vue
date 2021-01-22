@@ -35,6 +35,7 @@
         title="编辑内容"
         v-model:visible="editVisibility"
         :confirm-loading="confirmLoading"
+        v-has="'interactive:edit'"
         @ok="exerciseEditSubmit"
       >
         <a-form :model="editMode" :rules="editRule" ref="exerciseEditRef">
