@@ -13,8 +13,12 @@ export function useGetFIB(questionDetail, getModalVisible) {
     }
   });
 
+  // 音频播放器ref
+  const audioPlayerRef = ref(null);
+
   return {
-    getFIB
+    getFIB,
+    audioPlayerRef
   }
 }
 //#endregion

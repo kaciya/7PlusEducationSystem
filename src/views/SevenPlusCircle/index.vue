@@ -91,6 +91,7 @@
           </template>
           <template #operation="{ record }">
             <a-button
+              v-has="'topic:detail'"
               size="small"
               type="primary"
               style="margin-right: 10px"
@@ -100,6 +101,7 @@
             </a-button>
             <a-button
               v-if="record.status == 1"
+              v-has="'topic:edit'"
               size="small"
               type="danger"
               @click="topicShieldModal(record.id)"
@@ -108,6 +110,7 @@
             </a-button>
             <a-button
               v-else
+              v-has="'topic:edit'"
               size="small"
               type="primary"
               class="pass-btn"

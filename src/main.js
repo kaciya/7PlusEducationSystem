@@ -35,9 +35,11 @@ import {
   Checkbox,
   Divider,
   DatePicker,
-  Space
+  Space,
+  Pagination
 } from "ant-design-vue";
-app.use(Button)
+app
+  .use(Button)
   .use(Grid)
   .use(Row)
   .use(Col)
@@ -65,7 +67,8 @@ app.use(Button)
   .use(Divider)
   .use(Tabs)
   .use(DatePicker)
-  .use(Space);
+  .use(Space)
+  .use(Pagination);
 import "ant-design-vue/dist/antd.css";
 
 import "@/assets/styles/index.scss"; // global css
@@ -80,14 +83,13 @@ message.config({
 // 使用富文本编辑器
 import CKEditor from "@ckeditor/ckeditor5-vue";
 
-
 // 使用echarts
 import echarts from "echarts";
 app.provide("$echarts", echarts);
-
+import "./permission.js";
 // 使用按钮级别的权限控制指令
 import hasObj from "./directives/has.js";
-app.directive('has', hasObj);
+app.directive("has", hasObj);
 
 app
   .use(store)

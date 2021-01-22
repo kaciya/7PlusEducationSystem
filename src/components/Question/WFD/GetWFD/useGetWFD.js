@@ -13,8 +13,12 @@ export function useGetWFD(questionDetail, getModalVisible) {
     }
   });
 
+  // 音频播放器ref
+  const audioPlayerRef = ref(null);
+
   return {
-    getWFD
+    getWFD,
+    audioPlayerRef
   }
 }
 //#endregion

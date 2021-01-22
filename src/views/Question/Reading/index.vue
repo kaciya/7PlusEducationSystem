@@ -4,11 +4,7 @@
     <Crumbs :crumbName="[{ name: '题库管理' }, { name: '阅读题库' }]"></Crumbs>
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
-    <a-card
-      :style="{
-        minHeight: '93%',
-      }"
-    >
+    <a-card style="min-height: 93%; min-width: 1208px">
       <!-- 题型选择 start -->
       <a-radio-group
         button-style="solid"
@@ -48,7 +44,13 @@
         <!-- 下拉菜单区域 end -->
         <!-- 操作区域 start -->
         <template #extra>
-          <a-button type="primary" @click="showAddModal"> 添加 </a-button>
+          <a-button
+            type="primary"
+            @click="showAddModal"
+            v-has="'question:read:edit'"
+          >
+            添加
+          </a-button>
         </template>
         <!-- 操作区域 end -->
       </a-page-header>
@@ -86,7 +88,11 @@
         <!-- 题目操作区 start -->
         <template #operation="{ record }">
           <!-- 查看 -->
-          <a-button type="primary" size="small" @click="showGetModal(record.id)"
+          <a-button
+            type="primary"
+            size="small"
+            @click="showGetModal(record.id)"
+            v-has="'question:read:detail'"
             >查看</a-button
           >
           <!-- 编辑 -->
@@ -96,6 +102,7 @@
             class="modify-btn"
             style="margin-left: 10px"
             @click="showEditModal(record.id)"
+            v-has="'question:read:edit'"
             >编辑</a-button
           >
           <!-- 删除 -->
@@ -104,7 +111,11 @@
             @confirm="delQuestion(record.id)"
             @cancel="cancelDelQuestion"
           >
-            <a-button type="danger" size="small" style="margin-left: 10px"
+            <a-button
+              type="danger"
+              size="small"
+              style="margin-left: 10px"
+              v-has="'question:read:delete'"
               >删除</a-button
             >
           </a-popconfirm>
@@ -223,7 +234,7 @@ export default {
       getModalVisible,
       showGetModal,
       editModalVisible,
-      showEditModal
+      showEditModal,
     } = useShowModal(category, getQuestion);
     //#endregion
     return {

@@ -9,7 +9,9 @@
       <a-card title="标签列表">
         <!-- 权限组card 右侧内容 -->
         <template #extra>
-          <a-button type="primary" @click="addRouter"> 添加 </a-button>
+          <a-button type="primary" @click="addRouter">
+            添加
+          </a-button>
         </template>
         <!-- 权限组card 右侧内容 end -->
         <!-- 标签列表 -->
@@ -52,7 +54,7 @@
               title="确定删除此权限组?"
               @confirm="showDelConfirm(record.roleId)"
             >
-              <a-button type="danger" size="small" class="operation-btn">
+              <a-button type="danger" size="small" class="operation-btn" v-has="'role:delete'">
                 删除
               </a-button>
             </a-popconfirm>
@@ -114,7 +116,7 @@ export default {
       pageChange,
       addRouter,
       editRouter,
-      isLoading
+      isLoading,
     } = useGetRolesList(rolesTable);
 
     /**
@@ -148,10 +150,10 @@ export default {
       //权限组编辑路由跳转
       editRouter,
       //加载状态
-      isLoading
+      isLoading,
     };
     //#endregion
-  }
+  },
 };
 </script>
 

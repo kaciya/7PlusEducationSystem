@@ -152,32 +152,25 @@
             <span v-else>已结束</span>
           </template>
           <template #operation="{ record }">
-            <div v-if="record.status == 1">
-              <a-button
-                size="small"
-                class="modify-btn"
-                type="primary"
-                style="margin-right: 10px"
-                @click="editShowModal(record)"
-                >编辑</a-button
-              >
-              <a-popconfirm
-                title="此操作将永久删除该用户, 是否继续?"
-                @confirm="delOneNotice(record.id)"
-                @cancel="cancelDel"
-              >
-                <a-button size="small" type="danger"> 删除 </a-button>
-              </a-popconfirm>
-            </div>
-            <div v-else>
-              <a-popconfirm
-                title="此操作将永久删除该用户, 是否继续?"
-                @confirm="delOneNotice(record.id)"
-                @cancel="cancelDel"
-              >
-                <a-button size="small" type="danger"> 删除 </a-button>
-              </a-popconfirm>
-            </div>
+            <a-button
+              v-if="record.status == 1"
+              v-has="'notice:edit'"
+              size="small"
+              class="modify-btn"
+              type="primary"
+              style="margin-right: 10px"
+              @click="editShowModal(record)"
+              >编辑</a-button
+            >
+            <a-popconfirm
+              title="此操作将永久删除该用户, 是否继续?"
+              @confirm="delOneNotice(record.id)"
+              @cancel="cancelDel"
+            >
+              <a-button v-has="'notice:delete'" size="small" type="danger">
+                删除
+              </a-button>
+            </a-popconfirm>
           </template>
         </a-table>
         <!-- 表格 end -->

@@ -1,6 +1,7 @@
 <template>
   <!-- 编辑FIBR题目模态框 -->
   <a-modal
+    class="modify-modal"
     title="编辑"
     :maskClosable="false"
     v-model:visible="editModalVisible.fibr"
@@ -165,7 +166,7 @@ export default {
 .install {
   position: absolute;
   top: 200px;
-  left: 12px;
+  left: 70px;
   color: rgba(0, 0, 0, 0.85);
 }
 .ant-tag {
@@ -173,5 +174,12 @@ export default {
   background-color: #fff;
   font-weight: 700;
   border: none;
+}
+</style>
+<style lang="scss">
+.add-modal,
+.modify-modal,
+.check-modal {
+  width: 880px !important;
 }
 </style>

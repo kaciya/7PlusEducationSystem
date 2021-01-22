@@ -13,9 +13,12 @@ export function useGetSST(questionDetail, getModalVisible) {
       getSST.value = val;
     }
   });
+  // 音频播放器ref
+  const audioPlayerRef = ref(null);
 
   return {
-    getSST
+    getSST,
+    audioPlayerRef
   }
 }
 //#endregion

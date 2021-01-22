@@ -1,13 +1,14 @@
 <template>
   <!-- 添加FIBW题目模态框 -->
   <a-modal
+    class="add-modal"
     title="添加"
     :maskClosable="false"
     v-model:visible="addModalVisible.fibw"
     @ok="confirmAddFIBW"
     @cancel="cancelAddFIBW"
   >
-    <!-- 添加ro题目表单 start -->
+    <!-- 添加fibw题目表单 start -->
     <a-form
       :model="addFIBW.model"
       :rules="addFIBW.rules"
@@ -34,39 +35,65 @@
           </a-checkbox>
         </a-checkbox-group>
       </a-form-item>
-      <!-- 题目选项 start -->
+      <!-- 题目原文 start -->
+      <span class="install">题目原文：</span>
       <a-form-item
-        :label="item.key"
-        v-for="(item, index) in addFIBW.model.choices"
+        label=" "
+        :colon="false"
+        v-for="(item, index) in addFIBW.model.titleText"
         :key="item.key"
       >
-        <a-input
-          v-model:value="item.content"
-          style="width: 85%; margin-right: 10px"
-        />
+        <a-input v-model:value="item.content" style="width: 68%" />
+        <a-tag color="#108ee9" style="margin: 0 10px">
+          选项{{ item.key }}
+        </a-tag>
         <MinusCircleOutlined
-          v-if="index != 0 && index == addFIBW.model.choices.length - 1"
-          @click="delChoices(index)"
+          v-if="index != 0 && index == addFIBW.model.titleText.length - 1"
+          @click="delCalking"
         />
       </a-form-item>
       <a-form-item label=" " :colon="false">
-        <a-button type="dashed" style="width: 60%" @click="addChoices">
-          <PlusOutlined />添加选项
+        <a-button type="dashed" style="width: 60%" @click="addCalking">
+          <PlusOutlined />添加填空
         </a-button>
       </a-form-item>
-      <!-- 题目选项 end -->
-      <!-- 参考答案 -->
-      <a-form-item label="参考答案" name="answer">
-        <a-select v-model:value="addFIBW.model.answer">
-          <a-select-option
-            v-for="item in addFIBW.model.choices"
-            :key="item.key"
-            :value="item.key"
-          >
-            {{ item.key }}
-          </a-select-option>
-        </a-select>
+      <!-- 题目选项 -->
+      <a-form-item
+        label=" "
+        :colon="false"
+        v-for="(item, index) in addFIBW.model.titleText"
+        :key="index"
+      >
+        <a-tag color="#108ee9" style="margin: 0 10px">
+          选项{{ item.key }}
+        </a-tag>
+        <a-button
+          type="dashed"
+          style="width: 20%; margin-right: 10px"
+          @click="addChoices(index)"
+        >
+          <PlusOutlined />添加选项
+        </a-button>
+        <a-button type="dashed" style="width: 20%" @click="delChoices(index)">
+          <MinusCircleOutlined />移除选项
+        </a-button>
+        <br />
+        <a-radio-group v-model:value="addFIBW.model.answer[index]">
+          <a-row>
+            <a-col
+              style="max-width: 152px; margin-bottom: 10px"
+              v-for="(item, index) in addFIBW.model.choices[index]"
+              :key="index"
+            >
+              <a-radio :value="item.key">
+                {{ item.key }}
+              </a-radio>
+              <a-input v-model:value="item.content" style="width: 60%"
+            /></a-col>
+          </a-row>
+        </a-radio-group>
       </a-form-item>
+      <!-- 题目原文 end -->
       <a-form-item label="题目解析" name="titleAnalysis">
         <a-textarea v-model:value="addFIBW.model.titleAnalysis" :rows="4" />
       </a-form-item>
@@ -100,6 +127,8 @@ export default {
       addFIBW,
       addFIBWRef,
       changeLabels,
+      addCalking,
+      delCalking,
       addChoices,
       delChoices,
       confirmAddFIBW,
@@ -111,6 +140,8 @@ export default {
       addFIBW,
       addFIBWRef,
       changeLabels,
+      addCalking,
+      delCalking,
       addChoices,
       delChoices,
       // 添加FIBW题目
@@ -128,4 +159,21 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.ant-form {
+  position: relative;
+}
+.install {
+  position: absolute;
+  top: 200px;
+  left: 70px;
+  color: rgba(0, 0, 0, 0.85);
+}
+</style>
+<style lang="scss">
+.add-modal,
+.modify-modal,
+.check-modal {
+  width: 880px !important;
+}
+</style>

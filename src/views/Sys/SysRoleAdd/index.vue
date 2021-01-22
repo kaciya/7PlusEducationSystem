@@ -40,6 +40,7 @@
                 type="primary"
                 class="header-btn"
                 @click="addRoleConfirm"
+                v-has="'role:edit'"
               >
                 提交
               </a-button>

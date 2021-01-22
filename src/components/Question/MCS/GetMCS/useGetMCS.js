@@ -13,8 +13,12 @@ export function useGetMCS(questionDetail, getModalVisible, questionType) {
     }
   });
 
+  // 音频播放器ref
+  const audioPlayerRef = ref(null);
+
   return {
-    getMCS
+    getMCS,
+    audioPlayerRef
   }
 }
 //#endregion
