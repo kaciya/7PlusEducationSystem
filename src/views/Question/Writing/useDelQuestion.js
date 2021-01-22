@@ -34,6 +34,6 @@ export function useDelQuestion(getQuestion) {
   return {
     delQuestion,
     cancelDelQuestion
-  }
+  };
 }
 //#endregion

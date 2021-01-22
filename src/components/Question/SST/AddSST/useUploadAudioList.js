@@ -1,5 +1,5 @@
 //#region 上传音频列表
-import { ref } from "vue"
+import { ref } from "vue";
 // 导出
 export function useUploadAudioList() {
   // 上传音频
@@ -7,6 +7,6 @@ export function useUploadAudioList() {
 
   return {
     uploadAudioList
-  }
+  };
 }
 //#endregion

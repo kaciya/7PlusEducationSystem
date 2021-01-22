@@ -12,7 +12,7 @@ export default {
       fileList: null,
       // 储存返回的图片信息
       fileUrl: ""
-    }
+    };
   },
   mutations: {
     // 设置图片文件
@@ -34,4 +34,4 @@ export default {
   },
   actions: {},
   getters: {}
-}
+};

@@ -1,22 +1,14 @@
 //导入 reactive 对象
-import {
-  ref,
-  reactive
-} from "vue";
+import { ref, reactive } from "vue";
 
 //导入 API接口
-import {
-  contact
-} from "@/api/subUserAPI";
+import { contact } from "@/api/subUserAPI";
 
 //导入 GET请求方法
-import {
-  httpGet
-} from "@/utils/http";
+import { httpGet } from "@/utils/http";
 
 //#region 获取 用户提交 联系记录列表
-export const useGetContactList = (contactTable) => {
-  
+export const useGetContactList = contactTable => {
   //添加加载状态
   const isLoading = ref(false);
 

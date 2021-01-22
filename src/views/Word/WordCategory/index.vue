@@ -14,7 +14,9 @@
       >
         <template #extra>
           <!-- 添加标签按钮 -->
-          <a-button type="primary" @click="addCategory" v-has="'word:type:edit'">添加分类</a-button>
+          <a-button type="primary" @click="addCategory" v-has="'word:type:edit'"
+            >添加分类</a-button
+          >
         </template>
       </a-page-header>
       <!-- 页头 end -->
@@ -126,7 +128,7 @@ export default {
       addRules, // 表格rules
       addRef, // 表格
       addCategoryOk, // 点击确定添加回调
-      addCategoryEmpty, //模态框关闭回调
+      addCategoryEmpty //模态框关闭回调
     } = AddWordCategory(getCategoryData);
     // 修改词库名称
     const {
@@ -136,7 +138,7 @@ export default {
       editRules, // 表格rules
       editRef, // 表格
       editCategoryOk, //点击确定事件
-      editCategoryEmpty, //模态框关闭回调
+      editCategoryEmpty //模态框关闭回调
     } = ModifyWordCategory(getCategoryData);
     // 返回
     return {

@@ -75,7 +75,7 @@ export default {
       addSWTRef,
       changeLabels,
       confirmAddSWT,
-      cancelAddSWT,
+      cancelAddSWT
     } = useAddSWT(addModalVisible, questionType, getQuestion);
     return {
       // 标签列表
@@ -86,9 +86,9 @@ export default {
       // 添加SWT题目
       confirmAddSWT,
       // 取消添加SWT题目
-      cancelAddSWT,
+      cancelAddSWT
     };
-  },
+  }
 };
 </script>
 

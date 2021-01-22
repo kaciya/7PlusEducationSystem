@@ -117,7 +117,7 @@ export default {
       editChoices,
       delChoices,
       confirmEditMCM,
-      cancelEditMCM,
+      cancelEditMCM
     } = useEditMCM(editModalVisible, editDetail, getQuestion);
     return {
       // 标签列表
@@ -130,15 +130,15 @@ export default {
       // 编辑MCM题目
       confirmEditMCM,
       // 取消编辑MCM题目
-      cancelEditMCM,
+      cancelEditMCM
     };
   },
   components: {
     // 删除选项按钮
     MinusCircleOutlined,
     // 添加选项按钮
-    PlusOutlined,
-  },
+    PlusOutlined
+  }
 };
 </script>
 

@@ -171,7 +171,7 @@ export default {
       addChoices,
       delChoices,
       confirmAddMCM,
-      cancelAddMCM,
+      cancelAddMCM
     } = useAddMCM(
       addMCM,
       addModalVisible,
@@ -213,13 +213,13 @@ export default {
       // 添加mcm题目
       confirmAddMCM,
       // 取消添加mcm题目
-      cancelAddMCM,
+      cancelAddMCM
     };
   },
   components: {
     AudioPlayerZH,
     PlusOutlined,
-    MinusCircleOutlined,
-  },
+    MinusCircleOutlined
+  }
 };
 </script>

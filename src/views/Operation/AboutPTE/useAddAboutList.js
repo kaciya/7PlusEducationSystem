@@ -57,12 +57,12 @@ export const useAddAboutList = getAboutData => {
           })
           .catch(err => {
             throw err;
-          })
+          });
       })
       .catch(err => {
         throw err;
-      })
-  }
+      });
+  };
 
   // 点击取消的回调函数
   const addCancel = () => {

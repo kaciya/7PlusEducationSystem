@@ -1,5 +1,5 @@
 //#region 添加RS题目表单数据
-import { reactive } from "vue"
+import { reactive } from "vue";
 
 export function useAddRSForm() {
   // 表单数据 校验规则
@@ -22,7 +22,12 @@ export function useAddRSForm() {
     rules: {
       // 编号
       no: [
-        { required: true, whitespace: true, message: '题目编号必须填写', trigger: 'blur' },
+        {
+          required: true,
+          whitespace: true,
+          message: "题目编号必须填写",
+          trigger: "blur"
+        }
       ],
       // 题目
       title: [
@@ -33,9 +38,9 @@ export function useAddRSForm() {
           trigger: "blur"
         }
       ]
-    },
+    }
   });
   return {
     addRS
-  }
+  };
 }

@@ -31,19 +31,21 @@ export const useLogout = () => {
       autoFocusButton: "cancel", //指定自动获得焦点的按钮
       onOk() {
         return new Promise(resolve => {
-          httpPost(auth.UserLogout).then(res => {
-            if (res.success) {
-              // 返回登录页
-              backLogin();
-              // 提示退出成功
-              message.success("退出成功");
-              // 结束加载
-              resolve();
-            }
-          }).catch(err => {
-            // console.log(err);
-            throw new Error(err);
-          })
+          httpPost(auth.UserLogout)
+            .then(res => {
+              if (res.success) {
+                // 返回登录页
+                backLogin();
+                // 提示退出成功
+                message.success("退出成功");
+                // 结束加载
+                resolve();
+              }
+            })
+            .catch(err => {
+              // console.log(err);
+              throw new Error(err);
+            });
         }).catch(() => message.error("退出失败"));
       },
       onCancel() {
@@ -66,7 +68,7 @@ export const useLogout = () => {
     // 移除token
     window.localStorage.removeItem("token");
     // 移除vuex中的用户信息
-    store.commit('AuthStore/DEL_USERINFOS');
+    store.commit("AuthStore/DEL_USERINFOS");
     // 调回登录页
     router.push("/login");
   }

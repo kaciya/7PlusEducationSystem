@@ -8,7 +8,7 @@ import { teacherInfo } from "@/api/operationAPI";
 import { message } from "ant-design-vue";
 
 // 编辑老师
-export const useEditTeacherList = (getTeacherList,store) => {
+export const useEditTeacherList = (getTeacherList, store) => {
   // 编辑模态的框状态
   const editLabelVisible = ref(false);
   // 设置模态框确定按钮的加载状态

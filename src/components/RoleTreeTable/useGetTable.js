@@ -1,28 +1,19 @@
 //导入 vue 对象
-import {
-  ref
-} from "vue";
+import { ref } from "vue";
 
 //导入 API 接口
-import {
-  role
-} from "@/api/sysUserAPI";
+import { role } from "@/api/sysUserAPI";
 
 //导入 GET请求方法
-import {
-  httpGet,
-  httpPost
-} from "@/utils/http";
+import { httpGet, httpPost } from "@/utils/http";
 
 //#region 横向树形图数据渲染
-export const useGetTable = (rolePermissionTable , props) => {
-
+export const useGetTable = (rolePermissionTable, props) => {
   //添加 加载状态
   const isLoading = ref(false);
 
   //发起请求  存入后台返回数据
   const getRolePermissions = () => {
-
     //请求前添加 加载状态
     isLoading.value = true;
 
@@ -38,14 +29,13 @@ export const useGetTable = (rolePermissionTable , props) => {
           setIsChecked(rolePermissionTable.data);
 
           //判断是否存在父组件传入的权限组id
-          if(props.getRoleId){
+          if (props.getRoleId) {
             //如果存在 则 调用 该方法 获取权限组 与 回显
             getRoleChecked(props.getRoleId);
           }
 
           //请求成功后 取消加载状态
           isLoading.value = false;
-
         }
       })
       .catch(err => {
@@ -53,11 +43,11 @@ export const useGetTable = (rolePermissionTable , props) => {
       });
   };
 
-
   //#region 获取权限组详情
-  const getRoleChecked = (roleId) => {
+  const getRoleChecked = roleId => {
     //发起请求 获取权限组详情
-    httpGet(role.GetRoleDetail + "/" + roleId).then(res => {
+    httpGet(role.GetRoleDetail + "/" + roleId)
+      .then(res => {
         if (res.success) {
           //将获取到的权限回显到表单中
           setRoleChecked(rolePermissionTable.data, res.data.permissionIds);
@@ -65,15 +55,15 @@ export const useGetTable = (rolePermissionTable , props) => {
       })
       .catch(err => {
         throw err;
-      })
-  }
+      });
+  };
   //#endregion
 
   /**
    * 递归 将所有选择项 添加 是否选中
-   * @param {Object} node 原始数据列表 
+   * @param {Object} node 原始数据列表
    */
-  const setIsChecked = (node) => {
+  const setIsChecked = node => {
     //遍历原数组对象
     node.forEach(item => {
       //返回 添加的此项属性 默认设置为false
@@ -90,13 +80,12 @@ export const useGetTable = (rolePermissionTable , props) => {
         setIsChecked(item.child);
       }
     });
-  }
-
+  };
 
   /**
    * 递归 将此权限组中所有权限  选中
-   * @param {Object} node 原始数据列表 
-   * @param {Object} pids 所需要选中的权限组项 
+   * @param {Object} node 原始数据列表
+   * @param {Object} pids 所需要选中的权限组项
    */
   const setRoleChecked = (node, pids) => {
     //遍历原数组对象
@@ -110,7 +99,7 @@ export const useGetTable = (rolePermissionTable , props) => {
           //判断父级是否半选
           setIndeterminate(rolePermissionTable.data, item);
         }
-      })
+      });
 
       //判断如果有子项
       if (item.child) {
@@ -118,8 +107,7 @@ export const useGetTable = (rolePermissionTable , props) => {
         setRoleChecked(item.child, pids);
       }
     });
-  }
-
+  };
 
   /**
    * 递归判断是否半选 父节点
@@ -140,7 +128,7 @@ export const useGetTable = (rolePermissionTable , props) => {
             //如果存在选中 则 设置布尔值为 false
             bool = false;
           }
-        })
+        });
 
         //判断父节点为 半选
         item.indeterminate = !bool;
@@ -153,9 +141,8 @@ export const useGetTable = (rolePermissionTable , props) => {
       if (item.child) {
         setIndeterminate(item.child, record);
       }
-    })
-  }
-
+    });
+  };
 
   //返回 获取列表数据方法
   return {

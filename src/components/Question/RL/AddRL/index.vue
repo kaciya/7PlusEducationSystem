@@ -175,14 +175,14 @@ export default {
       // 添加RL题目
       confirmAddRL,
       // 取消添加RL题目
-      cancelAddRL,
+      cancelAddRL
     };
   },
   components: {
     ImageUpload,
     AudioPlayerZH,
-    AudioPlayerJTDX,
-  },
+    AudioPlayerJTDX
+  }
 };
 </script>
 

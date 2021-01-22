@@ -142,7 +142,7 @@ export default {
       editRLRef,
       changeLabels,
       confirmEditRL,
-      cancelEditRL,
+      cancelEditRL
     } = useEditRL(
       editModalVisible,
       getQuestion,
@@ -187,14 +187,14 @@ export default {
       // 编辑RL题目
       confirmEditRL,
       // 取消编辑RL题目
-      cancelEditRL,
+      cancelEditRL
     };
   },
   components: {
     ImageUpload,
     AudioPlayerZH,
-    AudioPlayerJTDX,
-  },
+    AudioPlayerJTDX
+  }
 };
 </script>
 

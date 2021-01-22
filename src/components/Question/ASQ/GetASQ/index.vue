@@ -71,13 +71,13 @@ export default {
       // 音频播放器ref
       audioPlayerRef,
       // 关闭模态框
-      closeModal,
+      closeModal
     };
   },
   components: {
     // 音频播放器-查看
-    AudioPlayerCK,
-  },
+    AudioPlayerCK
+  }
 };
 </script>
 

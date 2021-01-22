@@ -15,6 +15,7 @@
           type="primary"
           size="small"
           class="modify-btn"
+          v-has="'guide:edit'"
           @click="editGuide(record)"
         >
           编辑
@@ -22,7 +23,12 @@
         <!-- 删除按钮 传id进行删除-->
         <!-- 气泡确认框 -->
         <a-popconfirm title="您确定要删除吗？" @confirm="delGuide(record.id)">
-          <a-button type="danger" size="small" class="guide-delete">
+          <a-button
+            type="danger"
+            size="small"
+            class="guide-delete"
+            v-has="'guide:delete'"
+          >
             删除
           </a-button>
         </a-popconfirm>

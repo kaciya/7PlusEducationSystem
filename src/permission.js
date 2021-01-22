@@ -7,18 +7,17 @@ import store from "@/store";
 import NProgress from "nprogress";
 NProgress.configure({ showSpinner: false });
 
-
 // 设置白名单
-const allowList = ['login', 'register', 'registerResult'];
+const allowList = ["login", "register", "registerResult"];
 // 设置登录路由
-const loginRouterPath = '/login'
+const loginRouterPath = "/login";
 const defaultRoutePath = "/home/main";
 
 // 添加路由前置守卫
 router.beforeEach((to, from, next) => {
   // 开启进度条
   NProgress.start();
-  const isAuthenticated = window.localStorage.getItem("token")
+  const isAuthenticated = window.localStorage.getItem("token");
   if (to.name !== "Login" && !isAuthenticated) {
     // 强制转到login
     next({

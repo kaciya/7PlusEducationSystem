@@ -1,12 +1,7 @@
 <template>
   <a-layout-content>
     <!-- 面包屑 start -->
-    <Crumbs
-      :crumbName="[
-        { name: '运营管理' },
-        { name: '参数管理'}
-      ]"
-    />
+    <Crumbs :crumbName="[{ name: '运营管理' }, { name: '参数管理' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
     <a-card style="min-height: 93%">

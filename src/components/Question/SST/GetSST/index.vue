@@ -81,12 +81,12 @@ export default {
     return {
       getSST,
       audioPlayerRef,
-      closeModal,
+      closeModal
     };
   },
   components: {
-    AudioPlayerCK,
-  },
+    AudioPlayerCK
+  }
 };
 </script>
 

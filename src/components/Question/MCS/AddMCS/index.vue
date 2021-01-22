@@ -167,7 +167,7 @@ export default {
       addChoices,
       delChoices,
       confirmAddMCS,
-      cancelAddMCS,
+      cancelAddMCS
     } = useAddMCS(
       addMCS,
       addModalVisible,
@@ -210,13 +210,13 @@ export default {
       // 添加mcs题目
       confirmAddMCS,
       // 取消添加mcs题目
-      cancelAddMCS,
+      cancelAddMCS
     };
   },
   components: {
     AudioPlayerZH,
     PlusOutlined,
-    MinusCircleOutlined,
-  },
+    MinusCircleOutlined
+  }
 };
 </script>

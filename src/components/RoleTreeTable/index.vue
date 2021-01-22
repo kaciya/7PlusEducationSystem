@@ -30,7 +30,7 @@
         :class="[
           index != 0 ? 'tree' : '',
           childItem.length != 1 ? 'tree-centre' : '',
-          index == record.child.length - 1 ? 'tree-bottom' : '',
+          index == record.child.length - 1 ? 'tree-bottom' : ''
         ]"
         :key="childItem.permissionId"
       >
@@ -83,7 +83,7 @@ export default {
   //获取父级组件传入的参数
   props: {
     getTreeChecked: Boolean,
-    getRoleId: String,
+    getRoleId: String
   },
 
   // setup响应api入口
@@ -99,8 +99,9 @@ export default {
      * getRolePermissions 渲染权限列表
      */
     const { isLoading, getRolePermissions } = useGetTable(
-      rolePermissionTable , 
-      props);
+      rolePermissionTable,
+      props
+    );
 
     /**
      * checkedData 选中的权限id
@@ -114,13 +115,13 @@ export default {
       getleafChecked,
       getChildChecked,
       getRootChecked,
-      getTreeCheckedKeys,
+      getTreeCheckedKeys
     } = useGetTreeChecked(rolePermissionTable);
     //#endregion
 
     //在Mounted 获取列表
     onMounted(() => {
-      getRolePermissions();    
+      getRolePermissions();
     });
 
     //监听父组件的参数
@@ -156,9 +157,9 @@ export default {
       //递归实现 获取选中的复选框的值
       getTreeCheckedKeys,
       //加载状态
-      isLoading,
+      isLoading
     };
-  },
+  }
 };
 </script>
 

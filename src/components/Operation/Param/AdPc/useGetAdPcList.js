@@ -22,17 +22,17 @@ export const useGetAdPcList = () => {
       })
       .catch(err => {
         throw err;
-      })
-  }
+      });
+  };
 
   onMounted(() => {
     getAdPcList();
-  })
+  });
 
-  return{
+  return {
     // 数据
     adPcList,
     // 获取广告列表
     getAdPcList
-  }
-}
+  };
+};

@@ -7,7 +7,7 @@ import { message } from "ant-design-vue";
 import { httpPost } from "@/utils/http";
 import { param } from "@/api/operationAPI";
 
-export const useUploadDataList = (store,getDataList) => {
+export const useUploadDataList = (store, getDataList) => {
   // 获取id
   const uid = ref(null);
   // 获取remark
@@ -15,14 +15,14 @@ export const useUploadDataList = (store,getDataList) => {
   // 重新上传模态框状态
   const uploadModalVisible = ref(false);
   // 显示重新上传模态框
-  const showUploadModal = (id,remark) => {
+  const showUploadModal = (id, remark) => {
     uploadModalVisible.value = true;
     // 清除公共储存库里面的文件信息
     store.commit("ImageUploadStore/DEL_IMAGE_FILES");
     store.commit("ImageUploadStore/DEL_IMAGE_URL");
     uid.value = id;
     uremark.value = remark;
-  }
+  };
 
   // 获取用户上传的文件
   const fileUrl = computed(() => store.state.ImageUploadStore.fileUrl);
@@ -32,7 +32,7 @@ export const useUploadDataList = (store,getDataList) => {
     // 判断用户是否上传了文件
     if (fileUrl === "") return message.error("您还没有上传图片");
     // 发送ajax请求
-    httpPost(param.EditDataList,{
+    httpPost(param.EditDataList, {
       id: uid.value,
       keyValue: fileUrl.value,
       remark: uremark.value
@@ -53,15 +53,15 @@ export const useUploadDataList = (store,getDataList) => {
       })
       .catch(err => {
         throw err;
-      })
-  }
+      });
+  };
 
   // 点击取消的回调函数
   const uploadCancel = () => {
     // 清除公共储存库里面的文件信息
     store.commit("ImageUploadStore/DEL_IMAGE_FILES");
     store.commit("ImageUploadStore/DEL_IMAGE_URL");
-  }
+  };
 
   return {
     // 重新上传模态框状态
@@ -72,5 +72,5 @@ export const useUploadDataList = (store,getDataList) => {
     uploadSubmit,
     // 点击取消的回调函数
     uploadCancel
-  }
-}
+  };
+};

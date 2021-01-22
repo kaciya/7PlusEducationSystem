@@ -31,5 +31,5 @@ export const useTeacherColumns = () => {
     }
   ];
 
-  return { column }
+  return { column };
 };

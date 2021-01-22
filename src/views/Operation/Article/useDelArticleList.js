@@ -6,9 +6,9 @@ import { httpDelete } from "@/utils/http";
 import { article } from "@/api/operationAPI";
 import { message } from "ant-design-vue";
 
-export const useDelArticleList = (getArticl) => {
+export const useDelArticleList = getArticl => {
   // 点击确定的回调函数
-  const delSubmit = (id) => {
+  const delSubmit = id => {
     // 发送ajax请求
     httpDelete(article.DelArticleList(id))
       .then(res => {
@@ -22,10 +22,10 @@ export const useDelArticleList = (getArticl) => {
       })
       .catch(err => {
         throw err;
-      })
-  }
+      });
+  };
 
   return {
     delSubmit
-  }
-}
+  };
+};

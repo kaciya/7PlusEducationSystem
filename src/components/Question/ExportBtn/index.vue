@@ -18,11 +18,10 @@ export default {
 
     return {
       // 导出题目列表
-      exportQuestion,
+      exportQuestion
     };
-  },
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

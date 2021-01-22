@@ -26,17 +26,17 @@ export const useGetCampStyleList = () => {
       })
       .catch(err => {
         throw err;
-      })
-  }
+      });
+  };
 
   onMounted(() => {
     getCampStyleList();
-  })
+  });
 
   return {
     // 储存表格数据
     campStyleList,
     // 获取表格数据
     getCampStyleList
-  }
-}
+  };
+};

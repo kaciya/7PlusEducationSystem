@@ -26,7 +26,7 @@ export function useGetQuestion() {
     current: 1,
     // 每页显示条数
     pageSize: 10,
-    showSizeChanger: true,
+    showSizeChanger: true
   });
   // 获取题目
   const getQuestion = goFirstPage => {

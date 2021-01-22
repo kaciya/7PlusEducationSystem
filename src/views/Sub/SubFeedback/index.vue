@@ -142,7 +142,7 @@ export default {
   // 使用组件
   components: {
     Crumbs,
-    LineOutlined,
+    LineOutlined
   },
 
   // setup响应api入口
@@ -163,7 +163,7 @@ export default {
       feedbackPagination,
       getFeedbackData,
       pageChange,
-      isLoading,
+      isLoading
     } = useGetFeedbackList(feedbackTable, searchData);
 
     /**
@@ -176,7 +176,7 @@ export default {
       headerData,
       changeStatus,
       changeDate,
-      changeDateConfirm,
+      changeDateConfirm
     } = useFeedbackHeader();
 
     /**
@@ -228,10 +228,10 @@ export default {
       //点击下一页方法
       pageChange,
       //加载状态
-      isLoading,
+      isLoading
     };
     //#endregion
-  },
+  }
 };
 </script>
 

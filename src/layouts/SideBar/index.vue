@@ -159,9 +159,9 @@ export default {
       // 侧边栏的展开keys
       sideBarUnfoldKeys,
       // 只展开当前父菜单栏
-      onOpenChange,
+      onOpenChange
     };
-  },
+  }
 };
 </script>
 

@@ -5,7 +5,7 @@
       :crumbName="[
         { name: '运营管理' },
         { name: '参数管理' },
-        { name: '师资管理'}
+        { name: '师资管理' }
       ]"
     />
     <!-- 面包屑 end -->
@@ -15,11 +15,7 @@
       <a-row style="margin-bottom: 10px">
         <a-col :span="20"></a-col>
         <a-col :span="4">
-          <a-button
-            type="primary"
-            style="float: right"
-            @click="showModal"
-          >
+          <a-button type="primary" style="float: right" @click="showModal">
             添加成员
           </a-button>
         </a-col>
@@ -53,18 +49,15 @@
           >
             编辑
           </a-button>
-          <a-popconfirm placement="topRight" title="您真的要删除该项么?" @confirm="delSubmit(
-                record.id,
-                pageNum,
-                pageSize,
-                loadState
-              )" @cancel="delCancel">
-          <a-button
-            type="danger"
-            size="small"
+          <a-popconfirm
+            placement="topRight"
+            title="您真的要删除该项么?"
+            @confirm="delSubmit(record.id, pageNum, pageSize, loadState)"
+            @cancel="delCancel"
           >
-            删除
-          </a-button>
+            <a-button type="danger" size="small">
+              删除
+            </a-button>
           </a-popconfirm>
         </template>
       </a-table>
@@ -180,7 +173,13 @@
                   v-model:value="editModel.name"
                 />
               </a-form-item>
-              <a-form-item has-feedback label="上传图片" :labelCol="{ span: 4 }" :wrapperCol="{span: 20}" :key="Math.random()">
+              <a-form-item
+                has-feedback
+                label="上传图片"
+                :labelCol="{ span: 4 }"
+                :wrapperCol="{ span: 20 }"
+                :key="Math.random()"
+              >
                 <ImageUpload></ImageUpload>
               </a-form-item>
               <a-form-item
@@ -246,18 +245,22 @@ export default {
     // 设置储存库
     const store = useStore();
 
-
     //#region 获取表格列
     const { column } = useTeacherColumns();
     //#endregion
 
     //#region 获取师资数据
-    const { teacherList,loadState,teacherPagination,getTeacherList,onTableChange } = useGetTeacherList();
+    const {
+      teacherList,
+      loadState,
+      teacherPagination,
+      getTeacherList,
+      onTableChange
+    } = useGetTeacherList();
     //#endregion
 
-
     //#region 删除老师
-    const { delSubmit,delCancel } = useDelTeacherList(getTeacherList);
+    const { delSubmit, delCancel } = useDelTeacherList(getTeacherList);
     //#endregion
 
     const {
@@ -268,7 +271,7 @@ export default {
       confirmLoading,
       addRef,
       handleSubmit
-    } = useAddTeacherList(getTeacherList,store);
+    } = useAddTeacherList(getTeacherList, store);
     //#endregion
 
     //#region 编辑老师
@@ -281,7 +284,7 @@ export default {
       showEditModal,
       editCancel,
       editSubmit
-    } = useEditTeacherList(getTeacherList,store);
+    } = useEditTeacherList(getTeacherList, store);
     //#endregion
 
     return {

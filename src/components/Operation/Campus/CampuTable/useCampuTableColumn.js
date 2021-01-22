@@ -12,7 +12,7 @@ export const useCampuTableColumn = () => {
     },
     {
       title: "图片",
-      slots: { customRender: 'img' },
+      slots: { customRender: "img" },
       width: "15%"
     },
     {
@@ -23,11 +23,11 @@ export const useCampuTableColumn = () => {
     },
     {
       title: "操作",
-      slots: { customRender: 'operational' }
+      slots: { customRender: "operational" }
     }
-  ]
+  ];
 
   return {
     campuTableColumn
-  }
-}
+  };
+};

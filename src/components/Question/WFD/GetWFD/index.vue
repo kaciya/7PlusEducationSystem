@@ -72,14 +72,13 @@ export default {
     return {
       getWFD,
       audioPlayerRef,
-      closeModal,
+      closeModal
     };
   },
   components: {
-    AudioPlayerCK,
-  },
+    AudioPlayerCK
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

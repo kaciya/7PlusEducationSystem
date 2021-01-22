@@ -4,7 +4,7 @@
     <Crumbs
       :crumbName="[
         { name: '运营管理' },
-        { name: '文章列表(官网)' ,route: '/operation/article'},
+        { name: '文章列表(官网)', route: '/operation/article' },
         { name: '发布文章' }
       ]"
     />
@@ -13,27 +13,50 @@
     <a-card style="min-height: 93%">
       <a-row>
         <a-col :span="16" :push="4">
-          <a-form
-            :model="addModel"
-            :rules="addRule"
-            ref="addRef"
-          >
-            <a-form-item label="标题" :wrapper-col="{span: 21}" :label-col="{span: 3}" name="title">
+          <a-form :model="addModel" :rules="addRule" ref="addRef">
+            <a-form-item
+              label="标题"
+              :wrapper-col="{ span: 21 }"
+              :label-col="{ span: 3 }"
+              name="title"
+            >
               <a-input v-model:value="addModel.title"></a-input>
             </a-form-item>
-            <a-form-item label="描述" :wrapper-col="{span: 21}" :label-col="{span: 3}" class="addForm" name="description">
-              <a-textarea showCount :maxlength="300" v-model:value="addModel.description"></a-textarea>
+            <a-form-item
+              label="描述"
+              :wrapper-col="{ span: 21 }"
+              :label-col="{ span: 3 }"
+              class="addForm"
+              name="description"
+            >
+              <a-textarea
+                showCount
+                :maxlength="300"
+                v-model:value="addModel.description"
+              ></a-textarea>
             </a-form-item>
-            <a-form-item label="封面图" :wrapper-col="{span: 21}" :label-col="{span: 3}" class="addForm" :key="addKey">
+            <a-form-item
+              label="封面图"
+              :wrapper-col="{ span: 21 }"
+              :label-col="{ span: 3 }"
+              class="addForm"
+              :key="addKey"
+            >
               <ImageUpload></ImageUpload>
             </a-form-item>
-            <a-form-item label="内容" :wrapper-col="{span: 21}" :label-col="{span: 3}" name="content">
+            <a-form-item
+              label="内容"
+              :wrapper-col="{ span: 21 }"
+              :label-col="{ span: 3 }"
+              name="content"
+            >
               <ckeditor
                 :editor="editor"
                 :config="editorConfig"
                 style="height: 150px"
                 v-model="addModel.content"
-                @ready="onReady">
+                @ready="onReady"
+              >
               </ckeditor>
             </a-form-item>
           </a-form>
@@ -41,7 +64,12 @@
         <a-col :span="16" :push="4">
           <div style="float: right">
             <a-button @click="addReset">重置</a-button>
-            <a-button style="margin-left: 10px" type="primary" @click="addSubmit">提交</a-button>
+            <a-button
+              style="margin-left: 10px"
+              type="primary"
+              @click="addSubmit"
+              >提交</a-button
+            >
           </div>
         </a-col>
       </a-row>
@@ -83,7 +111,14 @@ export default {
     const store = useStore();
 
     //#region 添加文章方法
-    const { addRef,addModel,addKey,addRule,addReset,addSubmit } = useAddArticleList(store,router);
+    const {
+      addRef,
+      addModel,
+      addKey,
+      addRule,
+      addReset,
+      addSubmit
+    } = useAddArticleList(store, router);
     //#endregion
 
     // 使用富文本编辑器
@@ -116,7 +151,7 @@ export default {
       editorConfig,
       onReady
       //#endregion
-    }
+    };
   }
 };
 </script>

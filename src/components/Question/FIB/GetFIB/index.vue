@@ -37,7 +37,7 @@
             <a-tag
               v-if="
                 item.answer.trim().length != 0 ||
-                index != getFIB.titleText.length - 1
+                  index != getFIB.titleText.length - 1
               "
               >{{ item.answer }}</a-tag
             >
@@ -81,14 +81,13 @@ export default {
     return {
       getFIB,
       audioPlayerRef,
-      closeModal,
+      closeModal
     };
   },
   components: {
-    AudioPlayerCK,
-  },
+    AudioPlayerCK
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

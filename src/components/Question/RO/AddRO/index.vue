@@ -114,7 +114,7 @@ export default {
       addChoices,
       delChoices,
       confirmAddRO,
-      cancelAddRO,
+      cancelAddRO
     } = useAddRO(addModalVisible, getQuestion);
     return {
       // 标签列表
@@ -127,15 +127,15 @@ export default {
       // 添加RO题目
       confirmAddRO,
       // 取消添加RO题目
-      cancelAddRO,
+      cancelAddRO
     };
   },
   components: {
     // 删除选项按钮
     MinusCircleOutlined,
     // 添加选项按钮
-    PlusOutlined,
-  },
+    PlusOutlined
+  }
 };
 </script>
 

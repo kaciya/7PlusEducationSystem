@@ -8,7 +8,7 @@ import { message } from "ant-design-vue";
 // 导入 post 请求
 import { httpPost } from "@/utils/http";
 // 导入口语题库接口配置
-import { speak } from '@/api/questionSpeakAPI';
+import { speak } from "@/api/questionSpeakAPI";
 
 /**
  * 导出添加DI题型 功能
@@ -37,40 +37,44 @@ export function useAddDI(addDI, addModalVisible, getQuestion) {
   // 添加DI题目
   const confirmAddDI = () => {
     // 先校验
-    addDIRef.value.validate().then(async () => {
-      // 判断用户是否上传了图片
-      if (fileUrl.value) {
-        // 设置表单图片url
-        addDI.model.pics = [fileUrl.value];
-      }
-      // 请求参数[model]
-      const model = JSON.parse(JSON.stringify(addDI.model));
-      console.log(model);
-      // 发送添加题目请求
-      httpPost(speak.AddQuestion('di'), model).then((res) => {
-        if (res.success == true) {
-          // 提示用户添加成功
-          message.success("添加题目成功");
-          // 刷新页面
-          getQuestion()
-          // 关闭DI模态框
-          addModalVisible.di = false;
-          // 重置表单
-          addDIRef.value.resetFields();
-          // 清除公共储存库里面的文件信息
-          store.commit("ImageUploadStore/DEL_IMAGE_FILES");
-          store.commit("ImageUploadStore/DEL_IMAGE_URL");
+    addDIRef.value
+      .validate()
+      .then(async () => {
+        // 判断用户是否上传了图片
+        if (fileUrl.value) {
+          // 设置表单图片url
+          addDI.model.pics = [fileUrl.value];
         }
-        else {
-          // 添加失败，提示用户失败原因
-          message.error(res.message);
-        }
-      }).catch((err) => {
+        // 请求参数[model]
+        const model = JSON.parse(JSON.stringify(addDI.model));
+        console.log(model);
+        // 发送添加题目请求
+        httpPost(speak.AddQuestion("di"), model)
+          .then(res => {
+            if (res.success == true) {
+              // 提示用户添加成功
+              message.success("添加题目成功");
+              // 刷新页面
+              getQuestion();
+              // 关闭DI模态框
+              addModalVisible.di = false;
+              // 重置表单
+              addDIRef.value.resetFields();
+              // 清除公共储存库里面的文件信息
+              store.commit("ImageUploadStore/DEL_IMAGE_FILES");
+              store.commit("ImageUploadStore/DEL_IMAGE_URL");
+            } else {
+              // 添加失败，提示用户失败原因
+              message.error(res.message);
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      })
+      .catch(err => {
         console.log(err);
       });
-    }).catch(err => {
-      console.log(err);
-    });
   };
 
   // 取消添加DI题目
