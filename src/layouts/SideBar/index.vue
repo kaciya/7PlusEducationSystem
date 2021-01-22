@@ -24,7 +24,6 @@
       <a-menu-item class="menu-pri menu-home" :key="'/' + sideBarKeys[0]">
         <router-link to="/home/main" class="menu-link home-link">
           <HomeOutlined />
-          <!-- <a-icon type="home" /> -->
           <span class="home-text">首页</span>
         </router-link>
       </a-menu-item>
@@ -93,6 +92,7 @@
 
         <a-menu-item
           class="menu-sec"
+          :class="subitem.permission"
           v-for="subitem in item.children"
           :key="'/' + subitem.path"
         >
@@ -123,7 +123,7 @@ import {
   ControlOutlined,
   InteractionOutlined,
   ApartmentOutlined,
-  AppstoreOutlined
+  AppstoreOutlined,
 } from "@ant-design/icons-vue";
 export default {
   // 导入组件
@@ -137,7 +137,7 @@ export default {
     ControlOutlined,
     InteractionOutlined,
     ApartmentOutlined,
-    AppstoreOutlined
+    AppstoreOutlined,
   },
   // setup响应api入口
   setup() {

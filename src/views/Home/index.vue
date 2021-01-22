@@ -32,18 +32,11 @@
 import SideBar from "@/layouts/SideBar";
 // 导入顶部栏组件
 import Header from "@/layouts/Header";
-//
-import { onDeactivated } from "vue";
 
 export default {
   components: {
     SideBar, //侧边栏
     Header //顶部栏
-  },
-  setup() {
-    onDeactivated(() => {
-      console.log("remove");
-    });
   }
 };
 </script>
