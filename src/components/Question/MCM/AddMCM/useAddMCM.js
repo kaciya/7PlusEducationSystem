@@ -13,7 +13,13 @@ import { listen } from "@/api/questionListenAPI";
  * @param {*} addModalVisible 添加模态框的显示与隐藏
  * @param {*} getQuestion 重新获取列表
  */
-export function useAddMCM(addMCM, addModalVisible, getQuestion, uploadAudioList, audioSynthetic) {
+export function useAddMCM(
+  addMCM,
+  addModalVisible,
+  getQuestion,
+  uploadAudioList,
+  audioSynthetic
+) {
   // 表单ref
   const addMCMRef = ref(null);
 
@@ -33,60 +39,67 @@ export function useAddMCM(addMCM, addModalVisible, getQuestion, uploadAudioList,
       content: "",
       // A、B、C、D...
       key: String.fromCharCode(addMCM.model.choices.length + 65)
-    })
-  }
+    });
+  };
 
   // 删除题目选项
-  const delChoices = (index) => {
+  const delChoices = index => {
     addMCM.model.choices.splice(index, 1);
     // 重置一下选项答案
-    addMCM.model.answer = []
-  }
+    addMCM.model.answer = [];
+  };
 
   // 添加MCM题目
   const confirmAddMCM = () => {
     // 先校验
-    addMCMRef.value.validate().then(async () => {
-      // 有原文内容且没有上传音频
-      if (addMCM.model.titleText.trim().length > 0 && addMCM.model.titleAudio.length == 0) {
-        // 自动将原文转音频
-        await audioSynthetic();
-      }
-      // 发送添加题目请求
-      httpPost(listen.AddQuestion('mcm'), addMCM.model).then((res) => {
-        if (res.success == true) {
-          // 提示用户添加成功
-          message.success("添加题目成功");
-          // 刷新页面
-          getQuestion()
-          // 关闭mcm/smw/hcs模态框
-          addModalVisible.mcm = false;
-          // 重置表单
-          addMCMRef.value.resetFields();
-          // 因为没有对应的name 所以需要手动重置
-          addMCM.model.choices = [
-            {
-              content: "",
-              key: "A"
-            },
-            {
-              content: "",
-              key: "B"
+    addMCMRef.value
+      .validate()
+      .then(async () => {
+        // 有原文内容且没有上传音频
+        if (
+          addMCM.model.titleText.trim().length > 0 &&
+          addMCM.model.titleAudio.length == 0
+        ) {
+          // 自动将原文转音频
+          await audioSynthetic();
+        }
+        // 发送添加题目请求
+        httpPost(listen.AddQuestion("mcm"), addMCM.model)
+          .then(res => {
+            if (res.success == true) {
+              // 提示用户添加成功
+              message.success("添加题目成功");
+              // 刷新页面
+              getQuestion();
+              // 关闭mcm/smw/hcs模态框
+              addModalVisible.mcm = false;
+              // 重置表单
+              addMCMRef.value.resetFields();
+              // 因为没有对应的name 所以需要手动重置
+              addMCM.model.choices = [
+                {
+                  content: "",
+                  key: "A"
+                },
+                {
+                  content: "",
+                  key: "B"
+                }
+              ];
+              // 清除音频上传列表
+              uploadAudioList.value = [];
+            } else {
+              // 添加失败，提示用户失败原因
+              message.error(res.message);
             }
-          ];
-          // 清除音频上传列表
-          uploadAudioList.value = []
-        }
-        else {
-          // 添加失败，提示用户失败原因
-          message.error(res.message);
-        }
-      }).catch((err) => {
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      })
+      .catch(err => {
         console.log(err);
       });
-    }).catch(err => {
-      console.log(err);
-    });
   };
 
   // 取消添加mcm题目
@@ -107,7 +120,7 @@ export function useAddMCM(addMCM, addModalVisible, getQuestion, uploadAudioList,
       }
     ];
     // 清除音频上传列表
-    uploadAudioList.value = []
+    uploadAudioList.value = [];
   };
 
   return {

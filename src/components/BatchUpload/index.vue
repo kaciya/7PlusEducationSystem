@@ -60,7 +60,7 @@ export default {
   props: ["uploadFile"],
   // 使用组件
   components: {
-    UploadOutlined,
+    UploadOutlined
   },
   setup(props) {
     // 批量导入功能
@@ -71,7 +71,7 @@ export default {
       bulkUploadChange, //文件改变事件
       beforeBulkUpload, //文件上传前的回调
       cancelBulkUpload, //取消事件
-      clickBulkUpload, //确定事件
+      clickBulkUpload //确定事件
     } = useBulkImport(props.uploadFile);
 
     return {
@@ -81,8 +81,8 @@ export default {
       bulkUploadChange,
       beforeBulkUpload,
       cancelBulkUpload,
-      clickBulkUpload,
+      clickBulkUpload
     };
-  },
+  }
 };
 </script>

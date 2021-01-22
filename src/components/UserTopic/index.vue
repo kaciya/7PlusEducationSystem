@@ -120,7 +120,7 @@ export default {
       cancelShieldModal
       //#endregion
     };
-  },
+  }
 };
 </script>
 

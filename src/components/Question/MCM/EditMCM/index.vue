@@ -164,7 +164,7 @@ export default {
       editChoices,
       delChoices,
       confirmEditMCM,
-      cancelEditMCM,
+      cancelEditMCM
     } = useEditMCM(
       editModalVisible,
       getQuestion,
@@ -211,13 +211,13 @@ export default {
       // 编辑mcm题目
       confirmEditMCM,
       // 取消编辑mcm题目
-      cancelEditMCM,
+      cancelEditMCM
     };
   },
   components: {
     AudioPlayerZH,
     PlusOutlined,
-    MinusCircleOutlined,
-  },
+    MinusCircleOutlined
+  }
 };
 </script>

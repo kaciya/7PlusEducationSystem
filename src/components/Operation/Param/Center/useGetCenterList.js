@@ -22,17 +22,17 @@ export const useGetCenterList = () => {
       })
       .catch(err => {
         throw err;
-      })
-  }
+      });
+  };
 
   onMounted(() => {
     getCenterList();
-  })
+  });
 
-  return{
+  return {
     // 数据
     centerList,
     // 获取广告列表
     getCenterList
-  }
-}
+  };
+};

@@ -1,12 +1,8 @@
 //#region 批量上传功能
 // 引入响应式API
-import {
-  reactive, watch
-} from "vue";
+import { reactive, watch } from "vue";
 // 引入接口配置
-import {
-  speak
-} from "@/api/questionSpeakAPI";
+import { speak } from "@/api/questionSpeakAPI";
 
 export function useBulkUpload(category, getQuestion) {
   /** 批量导入数据
@@ -21,15 +17,17 @@ export function useBulkUpload(category, getQuestion) {
     templateName: `题库${category.value}`,
     uploadUrl: speak.BulkUpload(category.value.toLowerCase()),
     downloadUrl: speak.DownloadTemplate(category.value.toLowerCase()),
-    getData: getQuestion,
-  })
+    getData: getQuestion
+  });
 
   // 监听category的变化 修改批量上传所需数据
   watch(category, () => {
     uploadFile.templateName = `题库${category.value}`;
     uploadFile.uploadUrl = speak.BulkUpload(category.value.toLowerCase());
-    uploadFile.downloadUrl = speak.DownloadTemplate(category.value.toLowerCase());
-  })
+    uploadFile.downloadUrl = speak.DownloadTemplate(
+      category.value.toLowerCase()
+    );
+  });
 
   return {
     uploadFile

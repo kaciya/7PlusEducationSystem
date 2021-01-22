@@ -1,18 +1,18 @@
 <template>
   <a-layout-content>
     <!-- 面包屑 start -->
-    <Crumbs
-      :crumbName="[
-        { name: '运营管理' },
-        { name: '文章列表(官网)' }
-      ]"
-    />
+    <Crumbs :crumbName="[{ name: '运营管理' }, { name: '文章列表(官网)' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
     <a-card style="min-height: 93%">
       <a-row>
         <a-col :span="24" style="margin-bottom: 15px">
-          <a-button type="primary" style="float: right" @click="cheackAddArticle">发布</a-button>
+          <a-button
+            type="primary"
+            style="float: right"
+            @click="cheackAddArticle"
+            >发布</a-button
+          >
         </a-col>
       </a-row>
       <!-- 数据列表 start -->
@@ -39,9 +39,25 @@
           />
         </template>
         <template #operational="{ record }">
-          <a-button size="small" type="primary" @click="showArticleModal(record)">查看</a-button>
-          <a-button type="primary" size="small" style="margin: 0 10px" @click="cheackEditArticle(record)" class="modify-btn">编辑</a-button>
-          <a-popconfirm placement="topRight" title="您真的要删除吗?" @confirm="delSubmit(record.id)">
+          <a-button
+            size="small"
+            type="primary"
+            @click="showArticleModal(record)"
+            >查看</a-button
+          >
+          <a-button
+            type="primary"
+            size="small"
+            style="margin: 0 10px"
+            @click="cheackEditArticle(record)"
+            class="modify-btn"
+            >编辑</a-button
+          >
+          <a-popconfirm
+            placement="topRight"
+            title="您真的要删除吗?"
+            @confirm="delSubmit(record.id)"
+          >
             <a-button type="danger" size="small">删除</a-button>
           </a-popconfirm>
         </template>
@@ -55,7 +71,8 @@
         width="950px"
       >
         <div>
-          <span style="font-size: 18px;margin-bottom: 20px">文章标题:</span><h1>{{articlContent.title}}</h1>
+          <span style="font-size: 18px;margin-bottom: 20px">文章标题:</span>
+          <h1>{{ articlContent.title }}</h1>
         </div>
         <div>
           <span style="font-size: 18px;margin-bottom: 20px">文章内容:</span>
@@ -87,7 +104,7 @@ import { useRouter } from "vue-router";
 export default {
   // 使用组件
   components: {
-    Crumbs,
+    Crumbs
   },
   // setup响应api入口
   setup() {
@@ -95,7 +112,12 @@ export default {
     const router = useRouter();
 
     //#region 获取数据列表方法
-    const { articlList, getArticl,articlPagination,onTableChange } = useGetArticleList();
+    const {
+      articlList,
+      getArticl,
+      articlPagination,
+      onTableChange
+    } = useGetArticleList();
     // 设置表格列
     articlList.column = column;
     getArticl();
@@ -108,15 +130,20 @@ export default {
     // 点击跳转发布页
     const cheackAddArticle = () => {
       router.push("/operation/article/add");
-    }
+    };
 
     // 跳转到编辑页
-    const cheackEditArticle = (record) => {
-      router.push({name: "EditArticle",params: record});
-    }
+    const cheackEditArticle = record => {
+      router.push({ name: "EditArticle", params: record });
+    };
 
     //#region 查看文章
-    const { articleModalVisible,showArticleModal,articlContent,addOk } = useShowArticleList();
+    const {
+      articleModalVisible,
+      showArticleModal,
+      articlContent,
+      addOk
+    } = useShowArticleList();
     //#endregion
 
     //#region 删除文章方法
@@ -150,6 +177,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

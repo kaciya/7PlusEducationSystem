@@ -1,84 +1,133 @@
 <template>
-<div>
-<!-- 页头 start -->
-  <a-row style="margin-bottom: 15px">
-    <a-col :span="24"><a-button type="primary" style="float: right" @click="showAddModal">添加校区</a-button></a-col>
-  </a-row>
-<!-- 页头 end -->
-  <!-- 校区列表 start -->
-  <a-table
-    :row-key="record => record.id"
-    :columns="campuTableList.column"
-    :data-source="campuTableList.data"
-    :pagination="false"
-    bordered
-  >
-    <template #img="{ record }">
-      <img :src="record.picImg" style="width: 30%">
-    </template>
-    <template #operational="{ record }">
-      <a-button type="primary" size="small" style="margin-right: 10px" class="modify-btn" @click="showEditModal(record)">编辑</a-button>
-      <a-popconfirm placement="topRight" title="您真的要删除么?" @confirm="delSubmit(record.id)">
-        <a-button type="danger" size="small">删除</a-button>
-      </a-popconfirm>
-    </template>
-  </a-table>
-  <!-- 校区列表 end -->
-  <!-- 添加校区模态框 start -->
-  <a-modal
-    title="添加校区"
-  v-model:visible="addModalVisible"
-    @ok="addSubmit"
-    @cancel="addCancel"
-  >
-    <a-form
-    :model="addModel"
-    :rules="addRule"
-    ref="addRef"
+  <div>
+    <!-- 页头 start -->
+    <a-row style="margin-bottom: 15px">
+      <a-col :span="24"
+        ><a-button type="primary" style="float: right" @click="showAddModal"
+          >添加校区</a-button
+        ></a-col
+      >
+    </a-row>
+    <!-- 页头 end -->
+    <!-- 校区列表 start -->
+    <a-table
+      :row-key="record => record.id"
+      :columns="campuTableList.column"
+      :data-source="campuTableList.data"
+      :pagination="false"
+      bordered
     >
-      <a-form-item :labelCol="{span: 4}" :wrapperCol="{span:20}" label="顺序值" name="sort">
-        <a-input v-model:value="addModel.sort"></a-input>
-      </a-form-item>
-      <a-form-item :labelCol="{span: 4}" :wrapperCol="{span:20}" label="名称" name="name">
-        <a-input v-model:value="addModel.name"></a-input>
-      </a-form-item>
-      <a-form-item :labelCol="{span: 4}" :wrapperCol="{span:20}" label="上传图片" :key="Math.random()">
-        <ImageUpload></ImageUpload>
-      </a-form-item>
-      <a-form-item :labelCol="{span: 4}" :wrapperCol="{span:20}" label="具体介绍" name="introduce" class="editForm">
-        <a-textarea v-model:value="addModel.introduce"></a-textarea>
-      </a-form-item>
-    </a-form>
-  </a-modal>
-  <!-- 添加校区模态框 end -->
-  <!-- 编辑校区模态框 start -->
+      <template #img="{ record }">
+        <img :src="record.picImg" style="width: 30%" />
+      </template>
+      <template #operational="{ record }">
+        <a-button
+          type="primary"
+          size="small"
+          style="margin-right: 10px"
+          class="modify-btn"
+          @click="showEditModal(record)"
+          >编辑</a-button
+        >
+        <a-popconfirm
+          placement="topRight"
+          title="您真的要删除么?"
+          @confirm="delSubmit(record.id)"
+        >
+          <a-button type="danger" size="small">删除</a-button>
+        </a-popconfirm>
+      </template>
+    </a-table>
+    <!-- 校区列表 end -->
+    <!-- 添加校区模态框 start -->
+    <a-modal
+      title="添加校区"
+      v-model:visible="addModalVisible"
+      @ok="addSubmit"
+      @cancel="addCancel"
+    >
+      <a-form :model="addModel" :rules="addRule" ref="addRef">
+        <a-form-item
+          :labelCol="{ span: 4 }"
+          :wrapperCol="{ span: 20 }"
+          label="顺序值"
+          name="sort"
+        >
+          <a-input v-model:value="addModel.sort"></a-input>
+        </a-form-item>
+        <a-form-item
+          :labelCol="{ span: 4 }"
+          :wrapperCol="{ span: 20 }"
+          label="名称"
+          name="name"
+        >
+          <a-input v-model:value="addModel.name"></a-input>
+        </a-form-item>
+        <a-form-item
+          :labelCol="{ span: 4 }"
+          :wrapperCol="{ span: 20 }"
+          label="上传图片"
+          :key="Math.random()"
+        >
+          <ImageUpload></ImageUpload>
+        </a-form-item>
+        <a-form-item
+          :labelCol="{ span: 4 }"
+          :wrapperCol="{ span: 20 }"
+          label="具体介绍"
+          name="introduce"
+          class="editForm"
+        >
+          <a-textarea v-model:value="addModel.introduce"></a-textarea>
+        </a-form-item>
+      </a-form>
+    </a-modal>
+    <!-- 添加校区模态框 end -->
+    <!-- 编辑校区模态框 start -->
     <a-modal
       title="编辑校区"
-    v-model:visible="editModalVisible"
+      v-model:visible="editModalVisible"
       @ok="editSubmit"
       @cancel="editCancel"
     >
-      <a-form
-      :model="editModel"
-      :rules="addRule"
-      ref="editRef"
-      >
-        <a-form-item :labelCol="{span: 4}" :wrapperCol="{span:20}" label="顺序值" name="sort">
+      <a-form :model="editModel" :rules="addRule" ref="editRef">
+        <a-form-item
+          :labelCol="{ span: 4 }"
+          :wrapperCol="{ span: 20 }"
+          label="顺序值"
+          name="sort"
+        >
           <a-input v-model:value="editModel.sort"></a-input>
         </a-form-item>
-        <a-form-item :labelCol="{span: 4}" :wrapperCol="{span:20}" label="名称" name="name">
+        <a-form-item
+          :labelCol="{ span: 4 }"
+          :wrapperCol="{ span: 20 }"
+          label="名称"
+          name="name"
+        >
           <a-input v-model:value="editModel.name"></a-input>
         </a-form-item>
-        <a-form-item :labelCol="{span: 4}" :wrapperCol="{span:20}" label="上传图片" :key="Math.random()">
+        <a-form-item
+          :labelCol="{ span: 4 }"
+          :wrapperCol="{ span: 20 }"
+          label="上传图片"
+          :key="Math.random()"
+        >
           <ImageUpload></ImageUpload>
         </a-form-item>
-        <a-form-item :labelCol="{span: 4}" :wrapperCol="{span:20}" label="具体介绍" name="introduce" class="editForm">
+        <a-form-item
+          :labelCol="{ span: 4 }"
+          :wrapperCol="{ span: 20 }"
+          label="具体介绍"
+          name="introduce"
+          class="editForm"
+        >
           <a-textarea v-model:value="editModel.introduce"></a-textarea>
         </a-form-item>
       </a-form>
     </a-modal>
-  <!-- 编辑校区模态框 end -->
-</div>
+    <!-- 编辑校区模态框 end -->
+  </div>
 </template>
 
 <script>
@@ -109,17 +158,32 @@ export default {
     //#endregion
 
     //#region 获取校区列表数据
-    const { campuTableList,getCampuTableList } = useGetCampuTableList();
+    const { campuTableList, getCampuTableList } = useGetCampuTableList();
     // 将表格格式存入变量
     campuTableList.column = campuTableColumn;
     //#endregion
 
     //#region 添加校区列表
-    const { addModalVisible,addRef,addModel,addRule,showAddModal,addSubmit,addCancel } = useAddCampuTableList(getCampuTableList,store);
+    const {
+      addModalVisible,
+      addRef,
+      addModel,
+      addRule,
+      showAddModal,
+      addSubmit,
+      addCancel
+    } = useAddCampuTableList(getCampuTableList, store);
     //#endregion
 
     //#region 编辑校区列表
-    const { editModalVisible,editRef,editModel,showEditModal,editSubmit,editCancel } = useEditCampuTableList(getCampuTableList,store);
+    const {
+      editModalVisible,
+      editRef,
+      editModel,
+      showEditModal,
+      editSubmit,
+      editCancel
+    } = useEditCampuTableList(getCampuTableList, store);
     //#endregion
 
     //#region 删除校区列表
@@ -150,7 +214,7 @@ export default {
       //#region 删除校区列表
       delSubmit
       //#endregion
-    }
+    };
   }
 };
 </script>

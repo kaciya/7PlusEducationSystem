@@ -7,26 +7,24 @@ import { httpPost } from "@/utils/http";
 import { campus } from "@/api/operationAPI";
 import { message } from "ant-design-vue";
 
-export const useEditIntroList = (getIntroList) => {
+export const useEditIntroList = getIntroList => {
   // 编辑模态框状态
   const editVisible = ref(false);
   // 创建表单数据
   const editModel = reactive({
     introduce: ""
-  })
+  });
   // 显示编辑模态框
-  const showEditModal = (record) => {
+  const showEditModal = record => {
     editVisible.value = true;
     editModel.introduce = record.introduce;
-  }
+  };
   // 获取ref
   const editRef = ref(null);
   // 创建表单校验规则
   const editRule = {
-    introduce: [
-      {required: true,message: "该字段必须填写",trigger: "blur"}
-    ]
-  }
+    introduce: [{ required: true, message: "该字段必须填写", trigger: "blur" }]
+  };
   // 提交表单数据
   const editSubmit = () => {
     // 进行表单校验
@@ -34,7 +32,7 @@ export const useEditIntroList = (getIntroList) => {
       .validate()
       .then(() => {
         // 发送ajax请求
-        httpPost(campus.UpdateIntroList,editModel)
+        httpPost(campus.UpdateIntroList, editModel)
           .then(res => {
             const { success } = res;
             // 判断是否获取成功
@@ -52,12 +50,12 @@ export const useEditIntroList = (getIntroList) => {
           })
           .catch(err => {
             throw err;
-          })
+          });
       })
       .catch(err => {
         throw err;
-      })
-  }
+      });
+  };
 
   return {
     // 编辑模态框状态
@@ -72,5 +70,5 @@ export const useEditIntroList = (getIntroList) => {
     editRule,
     // 提交编辑表单
     editSubmit
-  }
-}
+  };
+};

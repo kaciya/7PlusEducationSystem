@@ -11,5 +11,5 @@ export default {
   // 模板下载
   ExportTemplat: "/word/export/template",
   //导入单词
-  AddWords: "/word/import",
+  AddWords: "/word/import"
 };

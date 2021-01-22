@@ -132,7 +132,7 @@ export default {
       addChoices,
       delChoices,
       confirmAddFIBW,
-      cancelAddFIBW,
+      cancelAddFIBW
     } = useAddFIBW(addModalVisible, getQuestion);
     return {
       // 标签列表
@@ -147,15 +147,15 @@ export default {
       // 添加FIBW题目
       confirmAddFIBW,
       // 取消添加FIBW题目
-      cancelAddFIBW,
+      cancelAddFIBW
     };
   },
   components: {
     // 删除选项按钮
     MinusCircleOutlined,
     // 添加选项按钮
-    PlusOutlined,
-  },
+    PlusOutlined
+  }
 };
 </script>
 

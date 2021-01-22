@@ -13,7 +13,13 @@ import { listen } from "@/api/questionListenAPI";
  * @param {*} addModalVisible 添加模态框的显示与隐藏
  * @param {*} getQuestion 重新获取列表
  */
-export function useAddSST(addSST, addModalVisible, getQuestion, uploadAudioList, audioSynthetic) {
+export function useAddSST(
+  addSST,
+  addModalVisible,
+  getQuestion,
+  uploadAudioList,
+  audioSynthetic
+) {
   // 表单ref
   const addSSTRef = ref(null);
 
@@ -30,38 +36,47 @@ export function useAddSST(addSST, addModalVisible, getQuestion, uploadAudioList,
   // 添加SST题目
   const confirmAddSST = () => {
     // 先校验
-    addSSTRef.value.validate().then(async () => {
-      // 有原文内容且没有上传音频
-      if (addSST.model.titleText.trim().length > 0 && addSST.model.titleAudio.length == 0) {
-        // 自动将原文转音频
-        await audioSynthetic();
-      }
-      // 是否精听读写
-      addSST.model.isJtdx ? addSST.model.isJtdx = 1 : addSST.model.isJtdx = 0;
-      // 发送添加题目请求
-      httpPost(listen.AddQuestion('sst'), addSST.model).then((res) => {
-        if (res.success == true) {
-          // 提示用户添加成功
-          message.success("添加题目成功");
-          // 刷新页面
-          getQuestion()
-          // 关闭sst模态框
-          addModalVisible.sst = false;
-          // 重置表单
-          addSSTRef.value.resetFields();
-          // 清除音频上传列表
-          uploadAudioList.value = []
+    addSSTRef.value
+      .validate()
+      .then(async () => {
+        // 有原文内容且没有上传音频
+        if (
+          addSST.model.titleText.trim().length > 0 &&
+          addSST.model.titleAudio.length == 0
+        ) {
+          // 自动将原文转音频
+          await audioSynthetic();
         }
-        else {
-          // 添加失败，提示用户失败原因
-          message.error(res.message);
-        }
-      }).catch((err) => {
+        // 是否精听读写
+        addSST.model.isJtdx
+          ? (addSST.model.isJtdx = 1)
+          : (addSST.model.isJtdx = 0);
+        // 发送添加题目请求
+        httpPost(listen.AddQuestion("sst"), addSST.model)
+          .then(res => {
+            if (res.success == true) {
+              // 提示用户添加成功
+              message.success("添加题目成功");
+              // 刷新页面
+              getQuestion();
+              // 关闭sst模态框
+              addModalVisible.sst = false;
+              // 重置表单
+              addSSTRef.value.resetFields();
+              // 清除音频上传列表
+              uploadAudioList.value = [];
+            } else {
+              // 添加失败，提示用户失败原因
+              message.error(res.message);
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      })
+      .catch(err => {
         console.log(err);
       });
-    }).catch(err => {
-      console.log(err);
-    });
   };
 
   // 取消添加sst题目
@@ -71,7 +86,7 @@ export function useAddSST(addSST, addModalVisible, getQuestion, uploadAudioList,
     // 重置表单
     addSSTRef.value.resetFields();
     // 清除音频上传列表
-    uploadAudioList.value = []
+    uploadAudioList.value = [];
   };
 
   return {

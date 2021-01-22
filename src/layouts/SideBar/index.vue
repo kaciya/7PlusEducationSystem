@@ -24,7 +24,7 @@
       <a-menu-item class="menu-pri menu-home" :key="'/' + sideBarKeys[0]">
         <router-link to="/home/main" class="menu-link home-link">
           <HomeOutlined />
-           <!-- <a-icon type="home" /> -->
+          <!-- <a-icon type="home" /> -->
           <span class="home-text">首页</span>
         </router-link>
       </a-menu-item>
@@ -77,13 +77,12 @@
           </span>
         </template>
 
-       <template #title v-else-if="item.path == 'sys'">
+        <template #title v-else-if="item.path == 'sys'">
           <span>
             <ApartmentOutlined />
             <span>{{ item.authName }} </span>
           </span>
         </template>
-
 
         <template #title v-else>
           <span>
@@ -98,7 +97,7 @@
           :key="'/' + subitem.path"
         >
           <router-link :to="'/' + subitem.path" class="menu-link">
-          <AppstoreOutlined />  <span>{{ subitem.authName }}</span>
+            <AppstoreOutlined /> <span>{{ subitem.authName }}</span>
           </router-link>
         </a-menu-item>
       </a-sub-menu>
@@ -160,9 +159,9 @@ export default {
       // 侧边栏的展开keys
       sideBarUnfoldKeys,
       // 只展开当前父菜单栏
-      onOpenChange,
+      onOpenChange
     };
-  },
+  }
 };
 </script>
 

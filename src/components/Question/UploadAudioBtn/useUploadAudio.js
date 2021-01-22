@@ -17,7 +17,7 @@ export function useUploadAudio(id, getQuestion) {
   // 上传音频
   const uploadAudio = reactive({
     // 地址
-    url: '/api' + questionAPI.UploadAudio,
+    url: "/api" + questionAPI.UploadAudio,
     // 请求头
     headers: { Token: window.localStorage.getItem("token") }
   });
@@ -41,19 +41,20 @@ export function useUploadAudio(id, getQuestion) {
         id,
         // 音频路径
         audioUrl
-      }).then((res) => {
-        if (res.success) {
-          // 提示用户
-          message.success("音频上传成功");
-          // 刷新题目列表
-          getQuestion()
-        }
-        else {
-          message.error(res.message)
-        }
-      }).catch((err) => {
-        throw err;
-      });
+      })
+        .then(res => {
+          if (res.success) {
+            // 提示用户
+            message.success("音频上传成功");
+            // 刷新题目列表
+            getQuestion();
+          } else {
+            message.error(res.message);
+          }
+        })
+        .catch(err => {
+          throw err;
+        });
     }
   };
 

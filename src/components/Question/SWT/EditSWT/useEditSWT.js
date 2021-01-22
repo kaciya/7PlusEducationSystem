@@ -15,7 +15,7 @@ export function useEditSWT(
 ) {
   const editSWT = reactive({
     // 表单数据对象
-    model:{
+    model: {
       // 编号
       no: "",
       // 题目
@@ -30,7 +30,7 @@ export function useEditSWT(
       remark: ""
     },
     // 表单验证规则
-    rules:{
+    rules: {
       // 编号
       no: [
         {

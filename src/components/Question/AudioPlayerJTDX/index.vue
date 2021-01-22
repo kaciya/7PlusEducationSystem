@@ -56,7 +56,7 @@
                       parseFloat(ele.eLeft) > parseFloat(ele.bLeft)
                         ? ele.bLeft
                         : ele.eLeft,
-                    width: ele.fWidth,
+                    width: ele.fWidth
                   }"
                 ></div>
                 <!-- 片段-点 -->
@@ -93,7 +93,7 @@
         bordered
         size="small"
         :pagination="false"
-        :row-key="(record) => record.id"
+        :row-key="record => record.id"
         :columns="fColumns"
         :data-source="fData.source"
         class="fragment-table"
@@ -161,7 +161,7 @@ export default {
       audio,
       playPauseSwitch,
       updateProgress,
-      audioEnded,
+      audioEnded
     } = usePlayControl();
     // 进度条调节 功能
     useProgressBarControl(dom, updateProgress);
@@ -196,10 +196,10 @@ export default {
       // 音频片段添加
       addAudioClip,
       // 音频片段删除
-      delAudioClip,
+      delAudioClip
     };
   },
-  components: { PlayCircleFilled, PauseCircleFilled },
+  components: { PlayCircleFilled, PauseCircleFilled }
 };
 </script>
 

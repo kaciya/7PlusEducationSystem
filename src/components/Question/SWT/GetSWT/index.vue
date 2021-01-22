@@ -59,9 +59,9 @@ export default {
       // 标签列表
       labelList,
       // 查看数据
-      getSWT,
+      getSWT
     };
-  },
+  }
 };
 </script>
 

@@ -38,7 +38,7 @@ export function useAddFIBW(addModalVisible, getQuestion) {
           {
             content: "",
             key: "C"
-          },
+          }
         ]
       ],
       // 答案参考
@@ -151,7 +151,7 @@ export function useAddFIBW(addModalVisible, getQuestion) {
                   {
                     content: "",
                     key: "C"
-                  },
+                  }
                 ]
               ];
               addFIBW.model.titleText = [{ content: "", key: "1" }];
@@ -188,7 +188,7 @@ export function useAddFIBW(addModalVisible, getQuestion) {
         {
           content: "",
           key: "C"
-        },
+        }
       ]
     ];
     addFIBW.model.titleText = [{ content: "", key: "1" }];

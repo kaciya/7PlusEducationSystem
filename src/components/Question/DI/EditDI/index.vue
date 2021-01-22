@@ -103,7 +103,7 @@ export default {
       editDIRef,
       changeLabels,
       confirmEditDI,
-      cancelEditDI,
+      cancelEditDI
     } = useEditDI(editModalVisible, getQuestion, questionDetail);
 
     // 返回
@@ -123,12 +123,12 @@ export default {
       // 编辑DI题目
       confirmEditDI,
       // 取消编辑DI题目
-      cancelEditDI,
+      cancelEditDI
     };
   },
   components: {
-    ImageUpload,
-  },
+    ImageUpload
+  }
 };
 </script>
 

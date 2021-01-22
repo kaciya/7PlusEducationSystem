@@ -7,7 +7,7 @@ import { message } from "ant-design-vue";
 import { httpPost } from "@/utils/http";
 import { article } from "@/api/operationAPI";
 
-export const useEditArticleList = (store,router) => {
+export const useEditArticleList = (store, router) => {
   // 获取文件Url
   const fileUrl = computed(() => store.state.ImageUploadStore.fileUrl);
   // 获取表单ref
@@ -21,14 +21,14 @@ export const useEditArticleList = (store,router) => {
     picUrl: "",
     content: "",
     id: ""
-  })
+  });
 
   // 创建表单校验规则
   const editRule = {
-    title: [{required: true,message: "标题必须填写",trigger: "blur"}],
-    description: [{required: true,message: "描述必须填写",trigger: "blur"}],
-    content: [{required: true,message: "内容必须填写",trigger: "blur"}]
-  }
+    title: [{ required: true, message: "标题必须填写", trigger: "blur" }],
+    description: [{ required: true, message: "描述必须填写", trigger: "blur" }],
+    content: [{ required: true, message: "内容必须填写", trigger: "blur" }]
+  };
 
   // 重置表单
   const editReset = () => {
@@ -38,7 +38,7 @@ export const useEditArticleList = (store,router) => {
     store.commit("ImageUploadStore/DEL_IMAGE_FILES");
     store.commit("ImageUploadStore/DEL_IMAGE_URL");
     editKey.value = +new Date();
-  }
+  };
 
   // 点击确定的回调函数
   const editSubmit = () => {
@@ -54,7 +54,7 @@ export const useEditArticleList = (store,router) => {
         // 设置图片url
         editModel.picUrl = fileUrl.value;
         // 发送ajax请求
-        httpPost(article.EditArticleList,editModel)
+        httpPost(article.EditArticleList, editModel)
           .then(res => {
             // 判断是否添加成功
             if (res.success) {
@@ -73,18 +73,18 @@ export const useEditArticleList = (store,router) => {
           })
           .catch(err => {
             throw err;
-          })
+          });
       })
       .catch(err => {
         throw err;
-      })
-  }
+      });
+  };
 
   onMounted(() => {
     // 清除公共储存库里面的文件信息
     store.commit("ImageUploadStore/DEL_IMAGE_FILES");
     store.commit("ImageUploadStore/DEL_IMAGE_URL");
-  })
+  });
 
   return {
     // 表单ref
@@ -98,6 +98,6 @@ export const useEditArticleList = (store,router) => {
     // 重置表单
     editReset,
     // 点击确定的回调函数
-    editSubmit,
-  }
-}
+    editSubmit
+  };
+};

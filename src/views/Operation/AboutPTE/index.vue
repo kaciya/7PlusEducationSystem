@@ -1,9 +1,7 @@
 <template>
   <a-layout-content>
     <!-- 面包屑 start -->
-    <Crumbs
-      :crumbName="[{ name: '运营管理' }, { name: '关于PTE' }]"
-    />
+    <Crumbs :crumbName="[{ name: '运营管理' }, { name: '关于PTE' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
     <a-card style="min-height: 93%">
@@ -11,29 +9,45 @@
       <a-page-header style="padding-top: 0">
         <a-row>
           <a-col :span="24">
-            <a-button type="primary" style="float: right" @click="showAdd">发布</a-button>
+            <a-button type="primary" style="float: right" @click="showAdd"
+              >发布</a-button
+            >
           </a-col>
         </a-row>
       </a-page-header>
       <!-- 发布文章 end -->
-    <!-- 表格 start -->
-    <a-table
-      :columns="aboutList.column"
-      :data-source="aboutList.data"
-      :row-key="record => record.id"
-      bordered
-    >
-      <template #state="{ record }">
-        <a-switch :checked="Boolean(record.state)" @click="stateChange(record.id)"/>
-      </template>
-      <template #operational="{ record }">
-        <a-button type="primary" style="margin-right: 15px" @click="showModify(record)" size="small" class="modify-btn">
-          编辑
-        </a-button>
-        <a-popconfirm placement="topRight" title="您真的要删除该项么?" @confirm="delSubmit(record.id)" @cancel="delCancel">
-          <a-button type="danger" size="small">
-                  删除
+      <!-- 表格 start -->
+      <a-table
+        :columns="aboutList.column"
+        :data-source="aboutList.data"
+        :row-key="record => record.id"
+        bordered
+      >
+        <template #state="{ record }">
+          <a-switch
+            :checked="Boolean(record.state)"
+            @click="stateChange(record.id)"
+          />
+        </template>
+        <template #operational="{ record }">
+          <a-button
+            type="primary"
+            style="margin-right: 15px"
+            @click="showModify(record)"
+            size="small"
+            class="modify-btn"
+          >
+            编辑
           </a-button>
+          <a-popconfirm
+            placement="topRight"
+            title="您真的要删除该项么?"
+            @confirm="delSubmit(record.id)"
+            @cancel="delCancel"
+          >
+            <a-button type="danger" size="small">
+              删除
+            </a-button>
           </a-popconfirm>
         </template>
       </a-table>
@@ -93,7 +107,7 @@
           </a-form-item>
         </a-form>
       </a-modal>
-    <!-- 编辑模态框 end-->
+      <!-- 编辑模态框 end-->
     </a-card>
     <!-- 主体Main end -->
   </a-layout-content>

@@ -13,7 +13,12 @@ import { listen } from "@/api/questionListenAPI";
  * @param {*} editModalVisible 编辑模态框的显示与隐藏
  * @param {*} getQuestion 重新获取列表
  */
-export function useEditSST(editModalVisible, getQuestion, questionDetail, uploadAudioList) {
+export function useEditSST(
+  editModalVisible,
+  getQuestion,
+  questionDetail,
+  uploadAudioList
+) {
   // 表单数据 校验规则
   const editSST = reactive({
     model: {
@@ -45,27 +50,31 @@ export function useEditSST(editModalVisible, getQuestion, questionDetail, upload
       ],
       // 题目
       title: [
-        { required: true, whitespace: true, message: "题目必须填写", trigger: "blur" }
+        {
+          required: true,
+          whitespace: true,
+          message: "题目必须填写",
+          trigger: "blur"
+        }
       ]
     }
   });
 
   // 每次打开编辑模态框都会触发 questionDetail的监听，
   // 这时重新处理题目详情数据给编辑表单的modal
-  watch(questionDetail, (val) => {
+  watch(questionDetail, val => {
     if (editModalVisible.sst) {
       for (const key in val) {
         if (key == "labels") {
           // 标签特殊处理，将labels:[{id:1, name:'高频'}] map为 表单中的labelIds:['1']
-          editSST.model.labelIds = val[key].map((value) => value.id);
-        }
-        else {
+          editSST.model.labelIds = val[key].map(value => value.id);
+        } else {
           // 其它值直接赋值
-          editSST.model[key] = val[key]
+          editSST.model[key] = val[key];
         }
       }
     }
-  })
+  });
 
   // 表单ref
   const editSSTRef = ref(null);
@@ -83,31 +92,35 @@ export function useEditSST(editModalVisible, getQuestion, questionDetail, upload
   // 编辑SST题目
   const confirmEditSST = () => {
     // 先校验
-    editSSTRef.value.validate().then(() => {
-      // 发送编辑题目请求
-      httpPost(listen.EditQuestion('sst'), editSST.model).then((res) => {
-        if (res.success == true) {
-          // 提示用户编辑成功
-          message.success("编辑题目成功");
-          // 刷新页面
-          getQuestion()
-          // 关闭sst模态框
-          editModalVisible.sst = false;
-          // 重置表单
-          editSSTRef.value.resetFields();
-          // 清除音频上传列表
-          uploadAudioList.value = []
-        }
-        else {
-          // 编辑失败，提示用户失败原因
-          message.error(res.message);
-        }
-      }).catch((err) => {
+    editSSTRef.value
+      .validate()
+      .then(() => {
+        // 发送编辑题目请求
+        httpPost(listen.EditQuestion("sst"), editSST.model)
+          .then(res => {
+            if (res.success == true) {
+              // 提示用户编辑成功
+              message.success("编辑题目成功");
+              // 刷新页面
+              getQuestion();
+              // 关闭sst模态框
+              editModalVisible.sst = false;
+              // 重置表单
+              editSSTRef.value.resetFields();
+              // 清除音频上传列表
+              uploadAudioList.value = [];
+            } else {
+              // 编辑失败，提示用户失败原因
+              message.error(res.message);
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      })
+      .catch(err => {
         console.log(err);
       });
-    }).catch(err => {
-      console.log(err);
-    });
   };
 
   // 取消编辑sst题目
@@ -117,7 +130,7 @@ export function useEditSST(editModalVisible, getQuestion, questionDetail, upload
     // 重置表单
     editSSTRef.value.resetFields();
     // 清除音频上传列表
-    uploadAudioList.value = []
+    uploadAudioList.value = [];
   };
 
   return {

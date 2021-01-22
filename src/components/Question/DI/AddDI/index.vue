@@ -113,12 +113,12 @@ export default {
       // 添加DI题目
       confirmAddDI,
       // 取消添加DI题目
-      cancelAddDI,
+      cancelAddDI
     };
   },
   components: {
-    ImageUpload,
-  },
+    ImageUpload
+  }
 };
 </script>
 

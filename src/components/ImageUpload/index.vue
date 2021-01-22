@@ -13,7 +13,7 @@
 
 <script>
 // 引入小图标
-import { UploadOutlined } from '@ant-design/icons-vue';
+import { UploadOutlined } from "@ant-design/icons-vue";
 // 文件上传之前的回调函数
 import { useBeforeUpload } from "./useBeforeUpload";
 // 上传文件时改变的状态
@@ -21,7 +21,7 @@ import { useChangeImage } from "./useChangeImage";
 // 文件删除时的回调函数
 import { useDelImage } from "./useDelImage";
 // 引入请求地址
-import { baseHost } from "@/config"
+import { baseHost } from "@/config";
 import { computed, reactive, ref } from "vue";
 // 引入公共储存库
 import { useStore } from "vuex";
@@ -38,8 +38,8 @@ export default {
     const host = baseHost.API1.dev_host + `/oss/upload`;
     // 设置请求头
     const header = reactive({
-      "token": window.localStorage.getItem("token")
-    })
+      token: window.localStorage.getItem("token")
+    });
     // 获取储存库的文件信息
     const fileList = computed(() => store.state.ImageUploadStore.fileList);
     // 已经上传的文件列表
@@ -68,12 +68,10 @@ export default {
       // 文件信息
       fileList,
       // 删除文件时的回调函数
-      delImage,
-    }
+      delImage
+    };
   }
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

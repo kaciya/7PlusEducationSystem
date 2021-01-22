@@ -7,31 +7,31 @@ import { httpPost } from "../../../../utils/http";
 import { param } from "../../../../api/operationAPI";
 import { message } from "ant-design-vue";
 
-export const useEditLinkList = (getLinkList) => {
+export const useEditLinkList = getLinkList => {
   // 编辑模态框状态
   const editModalVisible = ref(false);
   // 创建数据模型
   const editModel = reactive({
-    name: '',
-    address: '',
-    telPhone: '',
+    name: "",
+    address: "",
+    telPhone: "",
     id: null
-  })
+  });
   // 显示编辑模态框
-  const showEditModal = (id) => {
+  const showEditModal = id => {
     editModalVisible.value = true;
     // 设置id
     editModel.id = id;
-  }
+  };
   // 获取表单ref
   const editRef = ref(null);
 
   // 创建表单校验规则
   const editRule = {
-    name: [{required: true,message: "名称必须填写",trigger: "blur"}],
-    address: [{required: true,message: "地址必须填写",trigger: "blur"}],
-    telPhone: [{required: true,message: "电话必须填写",trigger: "blur"}]
-  }
+    name: [{ required: true, message: "名称必须填写", trigger: "blur" }],
+    address: [{ required: true, message: "地址必须填写", trigger: "blur" }],
+    telPhone: [{ required: true, message: "电话必须填写", trigger: "blur" }]
+  };
   // 点击确定的回调函数
   const editSubmit = () => {
     // 进行表单校验
@@ -39,7 +39,7 @@ export const useEditLinkList = (getLinkList) => {
       .validate()
       .then(() => {
         // 发送ajax请求
-        httpPost(param.EditLinkList,editModel)
+        httpPost(param.EditLinkList, editModel)
           .then(res => {
             // 判断是否更改成功
             if (res.success) {
@@ -58,18 +58,18 @@ export const useEditLinkList = (getLinkList) => {
           })
           .catch(err => {
             throw err;
-          })
+          });
       })
       .catch(err => {
         throw err;
-      })
-  }
+      });
+  };
 
   // 点击取消的回调
   const editCancel = () => {
     // 重置表单
     editRef.value.resetFields();
-  }
+  };
 
   return {
     // 编辑模态框状态
@@ -86,5 +86,5 @@ export const useEditLinkList = (getLinkList) => {
     editSubmit,
     // 点击取消的回调
     editCancel
-  }
-}
+  };
+};

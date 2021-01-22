@@ -106,7 +106,7 @@ export default {
       editRSRef,
       changeLabels,
       confirmEditRS,
-      cancelEditRS,
+      cancelEditRS
     } = useEditRS(
       editModalVisible,
       getQuestion,
@@ -149,11 +149,11 @@ export default {
       // 编辑RS题目
       confirmEditRS,
       // 取消编辑RS题目
-      cancelEditRS,
+      cancelEditRS
     };
   },
   components: {
-    AudioPlayerZH,
-  },
+    AudioPlayerZH
+  }
 };
 </script>

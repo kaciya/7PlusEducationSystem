@@ -216,7 +216,7 @@ export default {
       questionList,
       isLoading,
       configPage,
-      changePagenum,
+      changePagenum
     } = useGetQuestion();
     // 获取全部标签类型
     let { labelList } = useGetLabels();
@@ -234,7 +234,7 @@ export default {
       getModalVisible,
       showGetModal,
       editModalVisible,
-      showEditModal,
+      showEditModal
     } = useShowModal(category, getQuestion);
     //#endregion
     return {
@@ -285,7 +285,7 @@ export default {
       // 编辑模态框的显示与隐藏
       editModalVisible,
       // 显示编辑模态框
-      showEditModal,
+      showEditModal
       //#endregion
     };
   },
@@ -325,9 +325,9 @@ export default {
     // MCM题目模态框
     EditMCMModal,
     // MCS题目模态框
-    EditMCSModal,
+    EditMCSModal
     //#endregion
-  },
+  }
 };
 </script>
 

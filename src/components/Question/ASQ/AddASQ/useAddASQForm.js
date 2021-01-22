@@ -1,5 +1,5 @@
 //#region 添加ASQ题目表单数据
-import { reactive } from "vue"
+import { reactive } from "vue";
 
 export function useAddASQForm() {
   // 表单数据 校验规则
@@ -24,7 +24,12 @@ export function useAddASQForm() {
     rules: {
       // 编号
       no: [
-        { required: true, whitespace: true, message: '题目编号必须填写', trigger: 'blur' },
+        {
+          required: true,
+          whitespace: true,
+          message: "题目编号必须填写",
+          trigger: "blur"
+        }
       ],
       // 题目
       title: [
@@ -35,9 +40,9 @@ export function useAddASQForm() {
           trigger: "blur"
         }
       ]
-    },
+    }
   });
   return {
     addASQ
-  }
+  };
 }

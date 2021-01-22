@@ -23,17 +23,27 @@ export function useEditHIWForm() {
     rules: {
       // 编号
       no: [
-        { required: true, whitespace: true, message: '题目编号必须填写', trigger: 'blur' },
+        {
+          required: true,
+          whitespace: true,
+          message: "题目编号必须填写",
+          trigger: "blur"
+        }
       ],
       // 题目
       title: [
-        { required: true, whitespace: true, message: "题目必须填写", trigger: "blur" }
+        {
+          required: true,
+          whitespace: true,
+          message: "题目必须填写",
+          trigger: "blur"
+        }
       ]
-    },
+    }
   });
 
   return {
     editHIW
-  }
+  };
 }
 //#endregion

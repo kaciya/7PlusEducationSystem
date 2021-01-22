@@ -7,7 +7,7 @@ import { message } from "ant-design-vue";
 import { httpPost } from "@/utils/http";
 import { param } from "@/api/operationAPI";
 
-export const useAddCenterList = (store,getCenterList) => {
+export const useAddCenterList = (store, getCenterList) => {
   // 添加模态框状态
   const addModalVisible = ref(false);
   // 获取文件Url
@@ -20,7 +20,7 @@ export const useAddCenterList = (store,getCenterList) => {
     // 清除公共储存库里面的文件信息
     store.commit("ImageUploadStore/DEL_IMAGE_FILES");
     store.commit("ImageUploadStore/DEL_IMAGE_URL");
-  }
+  };
   // 创建表单数据
   const addModel = reactive({
     link: "",
@@ -28,7 +28,7 @@ export const useAddCenterList = (store,getCenterList) => {
     picUrl: "",
     position: "",
     sort: ""
-  })
+  });
   // 设置广告图位置
   addModel.position = "study_course";
   // 创建表单校验规则
@@ -39,15 +39,15 @@ export const useAddCenterList = (store,getCenterList) => {
     if (isNaN(swap)) {
       return Promise.reject("您输入的不是数字");
     }
-  }
+  };
   const addRule = {
-    link: [{required: true,message: "该字段必须填写",trigger: "blur"}],
-    name: [{required: true,message: "该字段必须填写",trigger: "blur"}],
+    link: [{ required: true, message: "该字段必须填写", trigger: "blur" }],
+    name: [{ required: true, message: "该字段必须填写", trigger: "blur" }],
     sort: [
-      {required: true,message: "该字段必须填写",trigger: "blur"},
-      { validator: validateSort, trigger: 'blur' }
-    ],
-  }
+      { required: true, message: "该字段必须填写", trigger: "blur" },
+      { validator: validateSort, trigger: "blur" }
+    ]
+  };
   // 点击确定的回调
   const addSubmit = () => {
     // 进行表单校验
@@ -64,10 +64,10 @@ export const useAddCenterList = (store,getCenterList) => {
         // 将sort转换成数字
         addModel.sort = Number(addModel.sort);
         // 发送ajax请求
-        httpPost(param.AddAdList,addModel)
+        httpPost(param.AddAdList, addModel)
           .then(res => {
             // 判断是否添加成功
-            if(res.success) {
+            if (res.success) {
               // 提示用户
               message.success(res.message);
               // 关闭模态框
@@ -83,12 +83,12 @@ export const useAddCenterList = (store,getCenterList) => {
           })
           .catch(err => {
             throw err;
-          })
+          });
       })
       .catch(err => {
         throw err;
-      })
-  }
+      });
+  };
   // 点击取消的事件
   const addCancel = () => {
     // 重置表单
@@ -96,7 +96,7 @@ export const useAddCenterList = (store,getCenterList) => {
     // 清除公共储存库里面的文件信息
     store.commit("ImageUploadStore/DEL_IMAGE_FILES");
     store.commit("ImageUploadStore/DEL_IMAGE_URL");
-  }
+  };
 
   return {
     // 添加模态框状态
@@ -113,5 +113,5 @@ export const useAddCenterList = (store,getCenterList) => {
     addSubmit,
     // 点击取消的回调
     addCancel
-  }
-}
+  };
+};

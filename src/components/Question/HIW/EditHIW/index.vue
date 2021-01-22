@@ -166,7 +166,7 @@ export default {
       allTitleText,
       changeLabels,
       confirmEditHIW,
-      cancelEditHIW,
+      cancelEditHIW
     } = useEditHIW(
       editHIW,
       editModalVisible,
@@ -189,7 +189,7 @@ export default {
       settingText,
       cancelSetWrong,
       confirmSetWrong,
-      removeSetWrong,
+      removeSetWrong
     } = useSetWrong();
 
     // 返回
@@ -231,12 +231,12 @@ export default {
       // 确认设置
       confirmSetWrong,
       // 移除错误展示
-      removeSetWrong,
+      removeSetWrong
       //#endregion
     };
   },
   components: {
-    AudioPlayerZH,
-  },
+    AudioPlayerZH
+  }
 };
 </script>

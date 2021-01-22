@@ -6,9 +6,9 @@ import { httpPost } from "@/utils/http";
 import { param } from "@/api/operationAPI";
 import { message } from "ant-design-vue";
 
-export const useChangeBannerList = (getBannerList) => {
+export const useChangeBannerList = getBannerList => {
   // 点击气泡框的回调
-  const changeBannerList = (id) => {
+  const changeBannerList = id => {
     // 发起ajax请求
     httpPost(param.ChangeAdList(id))
       .then(res => {
@@ -24,11 +24,11 @@ export const useChangeBannerList = (getBannerList) => {
       })
       .catch(err => {
         throw err;
-      })
-  }
+      });
+  };
 
   return {
     // 点击气泡框的回调
-    changeBannerList,
-  }
-}
+    changeBannerList
+  };
+};

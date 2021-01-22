@@ -113,7 +113,7 @@ export default {
       editSSTRef,
       changeLabels,
       confirmEditSST,
-      cancelEditSST,
+      cancelEditSST
     } = useEditSST(
       editModalVisible,
       getQuestion,
@@ -156,11 +156,11 @@ export default {
       // 编辑sst题目
       confirmEditSST,
       // 取消编辑sst题目
-      cancelEditSST,
+      cancelEditSST
     };
   },
   components: {
-    AudioPlayerZH,
-  },
+    AudioPlayerZH
+  }
 };
 </script>

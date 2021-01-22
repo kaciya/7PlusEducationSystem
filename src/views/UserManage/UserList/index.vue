@@ -169,10 +169,10 @@ export default {
       columns,
       //#region 重置
       userRef,
-      resetUserList,
+      resetUserList
       //#endregion
     };
-  },
+  }
 };
 </script>
 

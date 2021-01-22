@@ -7,7 +7,7 @@ import { httpPost } from "@/utils/http";
 import { campus } from "@/api/operationAPI";
 import { message } from "ant-design-vue";
 
-export const useEditCampuTableList = (getCampuTableList,store) => {
+export const useEditCampuTableList = (getCampuTableList, store) => {
   // 编辑模态框状态
   const editModalVisible = ref(false);
   // 创建校区编辑表单数据
@@ -17,9 +17,9 @@ export const useEditCampuTableList = (getCampuTableList,store) => {
     picImg: "",
     introduce: "",
     id: ""
-  })
+  });
   // 显示编辑模态框
-  const showEditModal = (record) => {
+  const showEditModal = record => {
     editModalVisible.value = true;
     // 清除公共储存库里面的文件信息
     store.commit("ImageUploadStore/DEL_IMAGE_FILES");
@@ -30,7 +30,7 @@ export const useEditCampuTableList = (getCampuTableList,store) => {
     editModel.picImg = record.picImg;
     editModel.introduce = record.introduce;
     editModel.name = record.name;
-  }
+  };
   // 获取用户上传的文件
   const fileUrl = computed(() => store.state.ImageUploadStore.fileUrl);
   // 获取ref
@@ -48,7 +48,7 @@ export const useEditCampuTableList = (getCampuTableList,store) => {
           editModel.picImg = fileUrl.value;
         }
         // 发起ajax请求
-        httpPost(campus.EditCampuTableList,editModel)
+        httpPost(campus.EditCampuTableList, editModel)
           .then(res => {
             // 判断用户是否更改成功
             if (res.success === true) {
@@ -64,17 +64,17 @@ export const useEditCampuTableList = (getCampuTableList,store) => {
               // 重新获取数据
               getCampuTableList();
             } else {
-              message.error(res.message)
+              message.error(res.message);
             }
           })
           .catch(err => {
             throw err;
-          })
+          });
       })
       .catch(err => {
         throw err;
-      })
-  }
+      });
+  };
   // 点击取消的事件
   const editCancel = () => {
     // 清空表单数据
@@ -82,7 +82,7 @@ export const useEditCampuTableList = (getCampuTableList,store) => {
     // 清除公共储存库里面的文件信息
     store.commit("ImageUploadStore/DEL_IMAGE_FILES");
     store.commit("ImageUploadStore/DEL_IMAGE_URL");
-  }
+  };
 
   return {
     // 编辑模态框状态
@@ -97,5 +97,5 @@ export const useEditCampuTableList = (getCampuTableList,store) => {
     editSubmit,
     // 点击取消的事件
     editCancel
-  }
-}
+  };
+};

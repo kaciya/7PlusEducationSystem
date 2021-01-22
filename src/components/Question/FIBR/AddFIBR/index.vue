@@ -132,7 +132,7 @@ export default {
       addChoices,
       delChoices,
       confirmAddFIBR,
-      cancelAddFIBR,
+      cancelAddFIBR
     } = useAddFIBR(addModalVisible, getQuestion);
     return {
       // 标签列表
@@ -147,15 +147,15 @@ export default {
       // 添加FIBR题目
       confirmAddFIBR,
       // 取消添加FIBR题目
-      cancelAddFIBR,
+      cancelAddFIBR
     };
   },
   components: {
     // 删除选项按钮
     MinusCircleOutlined,
     // 添加选项按钮
-    PlusOutlined,
-  },
+    PlusOutlined
+  }
 };
 </script>
 
