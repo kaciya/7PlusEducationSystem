@@ -86,7 +86,7 @@ import CKEditor from "@ckeditor/ckeditor5-vue";
 // 使用echarts
 import echarts from "echarts";
 app.provide("$echarts", echarts);
-
+import "./permission.js";
 // 使用按钮级别的权限控制指令
 import hasObj from "./directives/has.js";
 app.directive("has", hasObj);
