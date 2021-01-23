@@ -4,7 +4,7 @@
     <Crumbs :crumbName="[{ name: '用户提交' }, { name: '反馈列表' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
-    <a-card style="min-height: 93%">
+    <a-card style="min-height: 93%; min-width: 1208px">
       <!-- 日期 账号名称 查询内容 -->
       <a-form>
         <a-row>
@@ -17,6 +17,7 @@
                 :placeholder="['开始日期', '结束日期']"
                 @change="changeDate"
                 @ok="changeDateConfirm"
+                style="max-width: 300px"
               />
             </a-form-item>
           </a-col>
@@ -61,14 +62,26 @@
           </template>
           <!-- 列表索引 end -->
 
+          <!-- 内容 -->
+          <template #content="{ record }">
+            <a-tooltip placement="bottomLeft">
+              <template #title>
+                {{ record.content }}
+              </template>
+              {{ record.content }}
+            </a-tooltip>
+          </template>
+          <!-- 内容 end -->
+
           <!-- 图片 -->
           <template #pics="{ record }">
-            <image
-              :src="item"
-              v-for="(item, index) in record.pics"
-              :key="index"
-              style="margin: 5px"
-            />
+              <div
+                class="feedback-img"
+                v-for="(item, index) in record.pics"
+                :key="index"
+              >
+                <img :src="item" />
+              </div>
           </template>
           <!-- 图片 end -->
 
@@ -142,7 +155,7 @@ export default {
   // 使用组件
   components: {
     Crumbs,
-    LineOutlined
+    LineOutlined,
   },
 
   // setup响应api入口
@@ -163,7 +176,7 @@ export default {
       feedbackPagination,
       getFeedbackData,
       pageChange,
-      isLoading
+      isLoading,
     } = useGetFeedbackList(feedbackTable, searchData);
 
     /**
@@ -176,7 +189,7 @@ export default {
       headerData,
       changeStatus,
       changeDate,
-      changeDateConfirm
+      changeDateConfirm,
     } = useFeedbackHeader();
 
     /**
@@ -228,10 +241,10 @@ export default {
       //点击下一页方法
       pageChange,
       //加载状态
-      isLoading
+      isLoading,
     };
     //#endregion
-  }
+  },
 };
 </script>
 
@@ -243,5 +256,15 @@ export default {
 .header-btn {
   margin: 3px 10px;
   float: right;
+}
+
+.feedback-img {
+  float: left;
+  max-width: 165px;
+  margin: 5px;
+
+  img {
+    width: 100%;
+  }
 }
 </style>
