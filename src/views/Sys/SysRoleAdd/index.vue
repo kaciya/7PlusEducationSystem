@@ -10,7 +10,7 @@
     />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
-    <a-card style="min-height: 93%">
+    <a-card style="min-height: 93%; min-width: 1208px;">
       <!-- 基本信息 -->
       <a-card title="基本信息">
         <!-- 添加表单 -->

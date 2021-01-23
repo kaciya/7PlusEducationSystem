@@ -15,23 +15,31 @@ export const useContactColums = () => {
       },
       {
         title: "姓名",
-        dataIndex: "name"
+        dataIndex: "name",
       },
       {
         title: "邮箱",
-        dataIndex: "email"
+        dataIndex: "email",
+        ellipsis: true,
+        slots: { customRender: "email" }
       },
       {
         title: "电话",
-        dataIndex: "mobile"
+        dataIndex: "mobile",
+        ellipsis: true,
+        slots: { customRender: "mobile" }
       },
       {
         title: "QQ",
-        dataIndex: "qq"
+        dataIndex: "qq",
+        ellipsis: true,
+        slots: { customRender: "qq" }
       },
       {
         title: "内容",
-        dataIndex: "content"
+        dataIndex: "content",
+        ellipsis: true,
+        slots: { customRender: "content" }
       },
       {
         title: "提交时间",

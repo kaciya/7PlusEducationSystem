@@ -4,7 +4,7 @@
     <Crumbs :crumbName="[{ name: '权限管理' }, { name: '权限组' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
-    <a-card style="min-height: 93%">
+    <a-card style="min-height: 93%; min-width: 1208px;">
       <!-- 权限组card -->
       <a-card title="标签列表">
         <!-- 权限组card 右侧内容 -->
