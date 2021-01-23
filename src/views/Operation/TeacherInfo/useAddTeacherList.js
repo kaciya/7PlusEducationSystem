@@ -6,7 +6,7 @@ import { httpPost } from "@/utils/http";
 import { message } from "ant-design-vue";
 
 // 添加老师
-export const useAddTeacherList = (getTeacherList,store) => {
+export const useAddTeacherList = (getTeacherList, store) => {
   // 模态框状态
   const addLabelVisible = ref(false);
   // 确定按钮loading

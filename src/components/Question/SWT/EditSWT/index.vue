@@ -1,6 +1,7 @@
 <template>
   <!-- 编辑SWT题目模态框 -->
   <a-modal
+    class="modify-modal"
     title="编辑"
     :maskClosable="false"
     v-model:visible="editModalVisible[questionType]"
@@ -87,10 +88,16 @@ export default {
       // 编辑SWT题目
       confirmEditSWT,
       // 取消编辑SWT题目
-      cancelEditSWT,
+      cancelEditSWT
     };
-  },
+  }
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style lang="scss">
+.add-modal,
+.modify-modal,
+.check-modal {
+  width: 880px !important;
+}
+</style>

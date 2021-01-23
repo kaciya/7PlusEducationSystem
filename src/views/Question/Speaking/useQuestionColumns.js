@@ -80,7 +80,7 @@ export function useQuestionColumns() {
     {
       title: "操作",
       key: "operation",
-      slots: { customRender: "operation" },
+      slots: { customRender: "operation" }
     }
   ]);
 

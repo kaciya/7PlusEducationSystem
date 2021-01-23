@@ -28,7 +28,7 @@ export const useAddWord = getWordData => {
         whitespace: true,
         message: "请输入单词",
         trigger: "blur"
-      },
+      }
     ],
     wordCategory: [
       {

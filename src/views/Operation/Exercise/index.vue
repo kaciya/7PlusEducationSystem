@@ -1,9 +1,7 @@
 <template>
   <a-layout-content>
     <!-- 面包屑 start -->
-    <Crumbs
-      :crumbName="[{ name: '官网管理' }, { name: '互动练习'}]"
-    />
+    <Crumbs :crumbName="[{ name: '官网管理' }, { name: '互动练习' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
     <div
@@ -37,6 +35,7 @@
         title="编辑内容"
         v-model:visible="editVisibility"
         :confirm-loading="confirmLoading"
+        v-has="'interactive:edit'"
         @ok="exerciseEditSubmit"
       >
         <a-form :model="editMode" :rules="editRule" ref="exerciseEditRef">

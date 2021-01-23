@@ -7,12 +7,12 @@ export function useQuestionColumns() {
     {
       title: "编号",
       dataIndex: "no",
-      ellipsis: true,
+      ellipsis: true
     },
     {
       title: "题目",
       dataIndex: "title",
-      ellipsis: true,
+      ellipsis: true
     },
     {
       title: "题目音频",
@@ -24,22 +24,22 @@ export function useQuestionColumns() {
       title: "标签",
       key: "labels",
       width: "250px",
-      slots: { customRender: "labels" },
+      slots: { customRender: "labels" }
     },
     {
       title: "最近更新时间",
       dataIndex: "updateTime",
-      ellipsis: true,
+      ellipsis: true
     },
     {
       title: "备注",
       dataIndex: "remark",
-      ellipsis: true,
+      ellipsis: true
     },
     {
       title: "练习次数",
       dataIndex: "totalNum",
-      ellipsis: true,
+      ellipsis: true
     },
     {
       title: "操作",

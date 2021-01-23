@@ -57,6 +57,6 @@ export function useAddSSTForm() {
 
   return {
     addSST
-  }
+  };
 }
 //#endregion

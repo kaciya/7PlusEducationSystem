@@ -157,18 +157,19 @@ export default {
       // 添加sst题目
       confirmAddSST,
       // 取消添加sst题目
-      cancelAddSST,
+      cancelAddSST
     };
   },
   components: {
-    AudioPlayerZH,
-  },
+    AudioPlayerZH
+  }
 };
 </script>
 
 <style lang="scss">
 .add-modal,
-.modify-modal {
+.modify-modal,
+.get-modal {
   width: 880px !important;
 }
 </style>

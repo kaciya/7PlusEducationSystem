@@ -20,13 +20,13 @@ export const useGetArticleList = () => {
     // 总数
     total: 0,
     // 允许改变每页条数
-    showSizeChanger: true,
-  })
+    showSizeChanger: true
+  });
 
   // 获取数据
   const getArticl = async () => {
     // 发起ajax请求
-    const res = await httpGet(article.GetArticleList,{
+    const res = await httpGet(article.GetArticleList, {
       pageNum: articlPagination["current"],
       pageSize: articlPagination["pageSize"]
     });
@@ -35,7 +35,7 @@ export const useGetArticleList = () => {
     // 判断数据是否获取成功
     if (res.code === 200) {
       // 设置数据
-      articlPagination.total = total
+      articlPagination.total = total;
       articlPagination.current = current;
       articlPagination.pageSize = size;
       articlList["data"] = records;
@@ -49,14 +49,14 @@ export const useGetArticleList = () => {
 
   onMounted(() => {
     getArticl();
-  })
+  });
 
   // 页码改变的回调
-  const onTableChange = (pagination) => {
+  const onTableChange = pagination => {
     articlPagination.current = pagination.current;
     articlPagination.pageSize = pagination.pageSize;
     getArticl();
-  }
+  };
 
   return {
     // 文章数据

@@ -5,7 +5,7 @@
       :crumbName="[
         { name: '权限管理' },
         { name: '权限组', route: '/sys/role/' + new Date().getTime() },
-        { name: '编辑' },
+        { name: '编辑' }
       ]"
     />
     <!-- 面包屑 end -->
@@ -52,7 +52,11 @@
       <!-- 基本信息 end -->
       <!-- 权限设置 -->
       <a-card title="权限设置">
-        <RoleTreeTable :getTreeChecked="getTreeChecked" :getRoleId="roleId" @getDefKeys="getDefKeys" />
+        <RoleTreeTable
+          :getTreeChecked="getTreeChecked"
+          :getRoleId="roleId"
+          @getDefKeys="getDefKeys"
+        />
       </a-card>
       <!-- 权限设置 end -->
     </a-card>
@@ -77,7 +81,7 @@ export default {
   // 使用组件
   components: {
     Crumbs,
-    RoleTreeTable,
+    RoleTreeTable
   },
   // setup响应api入口
   setup() {
@@ -99,7 +103,7 @@ export default {
       editRoleFormRef,
       getRolesDetail,
       getDefKeys,
-      roleId,
+      roleId
     } = useEditRole();
     //#endregion
 
@@ -123,10 +127,10 @@ export default {
       //提交事件
       editRoleConfirm,
       //获取子组件传入的值方法
-      getDefKeys,
+      getDefKeys
     };
     //#endregion
-  },
+  }
 };
 </script>
 

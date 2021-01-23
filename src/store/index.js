@@ -1,6 +1,6 @@
 import { createStore } from "vuex";
 // 引入vuex持久化插件
-import createPersistedState from "vuex-persistedstate"
+import createPersistedState from "vuex-persistedstate";
 // 导入login共享库模块
 import AuthStore from "./authStore";
 // 导入sideBar侧边栏模块
@@ -31,7 +31,7 @@ export default createStore({
       // 使用sesstionStorage存储
       // storage: window.sessionStorage,
       // 设置只持久化AuthStore下面的userInfos数据
-      paths: ['AuthStore']
+      paths: ["AuthStore"]
     })
-  ],
+  ]
 });

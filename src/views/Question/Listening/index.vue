@@ -141,7 +141,9 @@
             >查看</a-button
           >
           <!-- 上传音频按钮-->
-          <UploadAudioBtn :id="record.id"></UploadAudioBtn>
+          <span v-has="'question:listen:edit'">
+            <UploadAudioBtn :id="record.id"></UploadAudioBtn>
+          </span>
           <a-button
             type="primary"
             style="margin-left: 10px"
@@ -312,7 +314,7 @@ export default {
       getQuestion,
       questionList,
       isLoading,
-      changePagenum,
+      changePagenum
     } = useGetQuestion();
 
     // 获取全部标签类型
@@ -334,7 +336,7 @@ export default {
       editModalVisible,
       showEditModal,
       getModalVisible,
-      showGetModal,
+      showGetModal
     } = useShowModal(category, getQuestion);
 
     // 删除题目 功能
@@ -393,7 +395,7 @@ export default {
       //#region 删除题目功能
       delQuestion,
       // 取消删除
-      cancelDelQuestion,
+      cancelDelQuestion
       //#endregion
     };
   },
@@ -442,8 +444,8 @@ export default {
     GetFIBModal,
     GetMCSModal,
     GetHIWModal,
-    GetSSTModal,
+    GetSSTModal
     //#endregion
-  },
+  }
 };
 </script>

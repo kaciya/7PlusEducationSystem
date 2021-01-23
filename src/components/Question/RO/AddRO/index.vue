@@ -1,6 +1,7 @@
 <template>
   <!-- 添加RO题目模态框 -->
   <a-modal
+    class="add-modal"
     title="添加"
     :maskClosable="false"
     v-model:visible="addModalVisible.ro"
@@ -113,7 +114,7 @@ export default {
       addChoices,
       delChoices,
       confirmAddRO,
-      cancelAddRO,
+      cancelAddRO
     } = useAddRO(addModalVisible, getQuestion);
     return {
       // 标签列表
@@ -126,15 +127,15 @@ export default {
       // 添加RO题目
       confirmAddRO,
       // 取消添加RO题目
-      cancelAddRO,
+      cancelAddRO
     };
   },
   components: {
     // 删除选项按钮
     MinusCircleOutlined,
     // 添加选项按钮
-    PlusOutlined,
-  },
+    PlusOutlined
+  }
 };
 </script>
 
@@ -144,7 +145,14 @@ export default {
 }
 .install {
   position: absolute;
-  top: 214px;
-  left: 20px;
+  top: 200px;
+  left: 88px;
+}
+</style>
+<style lang="scss">
+.add-modal,
+.modify-modal,
+.check-modal {
+  width: 880px !important;
 }
 </style>

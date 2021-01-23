@@ -15,7 +15,7 @@ export function useEditSWT(
 ) {
   const editSWT = reactive({
     // 表单数据对象
-    model:{
+    model: {
       // 编号
       no: "",
       // 题目
@@ -30,7 +30,7 @@ export function useEditSWT(
       remark: ""
     },
     // 表单验证规则
-    rules:{
+    rules: {
       // 编号
       no: [
         {
@@ -53,13 +53,16 @@ export function useEditSWT(
   });
   // 监听回显
   watch(editDetail, val => {
-    for (const key in val) {
-      if (key == "labels") {
-        // 标签特殊处理，将labels:[{id:1, name:'高频'}] map为 表单中的labelIds:['1']
-        editSWT.model.labelIds = val[key].map(value => value.id);
-      } else {
-        // 其它值直接赋值
-        editSWT.model[key] = val[key];
+    if (editModalVisible[questionType]) {
+      editSWT.model.labelIds = [];
+      for (const key in val) {
+        if (key == "labels") {
+          // 标签特殊处理，将labels:[{id:1, name:'高频'}] map为 表单中的labelIds:['1']
+          editSWT.model.labelIds = val[key].map(value => value.id);
+        } else {
+          // 其它值直接赋值
+          editSWT.model[key] = val[key];
+        }
       }
     }
   });
@@ -80,7 +83,7 @@ export function useEditSWT(
       .validate()
       .then(() => {
         // 后台问题，标签设置为空时，会导致页面请求失败
-        if (editSWT.model.labelIds.length == 0) return;
+        // if (editSWT.model.labelIds.length == 0) return;
         // 发送添加题目请求
         httpPost(write.EditQuestion(questionType), editSWT.model)
           .then(res => {

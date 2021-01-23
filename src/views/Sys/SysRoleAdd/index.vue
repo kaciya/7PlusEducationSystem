@@ -5,7 +5,7 @@
       :crumbName="[
         { name: '权限管理' },
         { name: '权限组', route: '/sys/role/' + new Date().getTime() },
-        { name: '添加' },
+        { name: '添加' }
       ]"
     />
     <!-- 面包屑 end -->
@@ -14,11 +14,7 @@
       <!-- 基本信息 -->
       <a-card title="基本信息">
         <!-- 添加表单 -->
-        <a-form
-          :model="addRoleForm"
-          :rules="addRoleRules"
-          ref="addRoleFormRef"
-        >
+        <a-form :model="addRoleForm" :rules="addRoleRules" ref="addRoleFormRef">
           <a-row>
             <a-col :span="6">
               <a-form-item
@@ -53,7 +49,10 @@
       <!-- 权限设置 -->
       <a-card title="权限设置">
         <!-- 给组件添加 ref 引用-->
-        <RoleTreeTable :getTreeChecked="getTreeChecked" @getDefKeys='getDefKeys'/>
+        <RoleTreeTable
+          :getTreeChecked="getTreeChecked"
+          @getDefKeys="getDefKeys"
+        />
         <!-- 给组件添加 ref 引用 end-->
       </a-card>
       <!-- 权限设置 end -->
@@ -76,7 +75,7 @@ export default {
   // 使用组件
   components: {
     Crumbs,
-    RoleTreeTable,
+    RoleTreeTable
   },
 
   // setup响应api入口
@@ -91,8 +90,15 @@ export default {
      * roleTreeRef 组件的 ref 引用
      * getDefKeys 获取子组件传入的值
      */
-    const { getTreeChecked , addRoleFormRef , addRoleRules , addRoleForm , addRoleConfirm , getDefKeys } = useAddRole();
-    
+    const {
+      getTreeChecked,
+      addRoleFormRef,
+      addRoleRules,
+      addRoleForm,
+      addRoleConfirm,
+      getDefKeys
+    } = useAddRole();
+
     //#endregion
 
     //#region 返回参数
@@ -108,10 +114,10 @@ export default {
       //提交表单事件
       addRoleConfirm,
       // 获取子组件传入的值方法
-      getDefKeys,
+      getDefKeys
     };
     //#endregion
-  },
+  }
 };
 </script>
 

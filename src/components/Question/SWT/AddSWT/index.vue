@@ -1,6 +1,7 @@
 <template>
   <!-- 添加SWT题目模态框 -->
   <a-modal
+    class="add-modal"
     title="添加"
     :maskClosable="false"
     v-model:visible="addModalVisible[questionType]"
@@ -85,10 +86,16 @@ export default {
       // 添加SWT题目
       confirmAddSWT,
       // 取消添加SWT题目
-      cancelAddSWT,
+      cancelAddSWT
     };
-  },
+  }
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style lang="scss">
+.add-modal,
+.modify-modal,
+.check-modal {
+  width: 880px !important;
+}
+</style>

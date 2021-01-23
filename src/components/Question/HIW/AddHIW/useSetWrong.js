@@ -11,10 +11,10 @@ export function useSetWrong() {
   });
 
   // 记录原本的设置
-  const settingRecord = ref('')
+  const settingRecord = ref("");
 
   // 打开模态框
-  const showSetModal = (text) => {
+  const showSetModal = text => {
     setWrongVisible.value = true;
     // 将模态框中的原文单词对象指向被点击的原文单词对象
     settingText.value = text;
@@ -28,21 +28,21 @@ export function useSetWrong() {
     settingText.value.text = settingRecord.value;
     // 关闭模态框
     setWrongVisible.value = false;
-  }
+  };
 
   // 确认设置
   const confirmSetWrong = () => {
     // 关闭模态框
     setWrongVisible.value = false;
-  }
+  };
 
   // 移除错误示例
   const removeSetWrong = () => {
     // 移除错误示例
-    settingText.value.text = ""
+    settingText.value.text = "";
     // 关闭模态框
     setWrongVisible.value = false;
-  }
+  };
 
   return {
     setWrongVisible,
@@ -51,6 +51,6 @@ export function useSetWrong() {
     cancelSetWrong,
     confirmSetWrong,
     removeSetWrong
-  }
+  };
 }
 //#endregion

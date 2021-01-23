@@ -1,6 +1,7 @@
 <template>
   <!-- 查看SWT题目模态框 -->
   <a-modal
+    class="check-modal"
     title="查看"
     :maskClosable="false"
     :footer="null"
@@ -58,10 +59,16 @@ export default {
       // 标签列表
       labelList,
       // 查看数据
-      getSWT,
+      getSWT
     };
-  },
+  }
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style lang="scss">
+.add-modal,
+.modify-modal,
+.check-modal {
+  width: 880px !important;
+}
+</style>

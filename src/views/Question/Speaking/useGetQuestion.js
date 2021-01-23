@@ -30,14 +30,14 @@ export function useGetQuestion() {
     // 显示每页多少条设置器
     showSizeChanger: true,
     // 每页允许显示多少条
-    pageSizeOptions: ["10"],
-  })
+    pageSizeOptions: ["10"]
+  });
 
   /**
    * 获取题目
    * @param {*} goFirstPage 是否前往第一页
    */
-  const getQuestion = (goFirstPage) => {
+  const getQuestion = goFirstPage => {
     if (goFirstPage) {
       questionPagination.current = 1;
     }
@@ -54,28 +54,30 @@ export function useGetQuestion() {
       // 分页大小
       pageSize: questionPagination.pageSize,
       // 类型  2.口语
-      type: 2,
-    }).then((res) => {
-      let { success, data } = res;
-      // 如果数据获取成功
-      if (success) {
-        // 保存数据
-        questionList.value = data.records;
-        console.log(data);
-        // 记录数据库中的数据总数
-        questionPagination.total = data.total;
-        // 判断是否超出最后一页，如果超出，重新请求
-        // 此处注意data.pages!=0是为了避免出现因为没数据不停重复请求的情况
-        if (data.current > data.pages && data.pages != 0) {
-          questionPagination.current = data.pages;
-          getQuestion();
-        }
-        // 关闭加载状态
-        isLoading.value = false;
-      }
-    }).catch((err) => {
-      console.log(err);
+      type: 2
     })
+      .then(res => {
+        let { success, data } = res;
+        // 如果数据获取成功
+        if (success) {
+          // 保存数据
+          questionList.value = data.records;
+          console.log(data);
+          // 记录数据库中的数据总数
+          questionPagination.total = data.total;
+          // 判断是否超出最后一页，如果超出，重新请求
+          // 此处注意data.pages!=0是为了避免出现因为没数据不停重复请求的情况
+          if (data.current > data.pages && data.pages != 0) {
+            questionPagination.current = data.pages;
+            getQuestion();
+          }
+          // 关闭加载状态
+          isLoading.value = false;
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   // 向后代组件提供获取题目列表的方法
@@ -87,7 +89,7 @@ export function useGetQuestion() {
     questionPagination.current = current;
     questionPagination.pageSize = pageSize;
     getQuestion();
-  }
+  };
 
   // 初始化时
   onMounted(() => {

@@ -144,7 +144,7 @@ export default {
       addTitleText,
       delTitleText,
       confirmAddFIB,
-      cancelAddFIB,
+      cancelAddFIB
     } = useAddFIB(
       addFIB,
       addModalVisible,
@@ -186,13 +186,13 @@ export default {
       // 添加fib题目
       confirmAddFIB,
       // 取消添加fib题目
-      cancelAddFIB,
+      cancelAddFIB
     };
   },
   components: {
     MinusCircleOutlined,
     PlusOutlined,
-    AudioPlayerZH,
-  },
+    AudioPlayerZH
+  }
 };
 </script>

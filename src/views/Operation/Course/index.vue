@@ -1,19 +1,13 @@
 <template>
   <a-layout-content>
     <!-- 面包屑 start -->
-    <Crumbs
-      :crumbName="[{ name: '运营管理' }, { name: '课程服务' }]"
-    />
+    <Crumbs :crumbName="[{ name: '运营管理' }, { name: '课程服务' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
     <a-card style="min-height: 93%">
       <a-row>
         <a-col :span="24" style="margin-bottom: 10px">
-          <a-button
-            type="primary"
-            style="float: right"
-            @click="showAddForm"
-          >
+          <a-button type="primary" style="float: right" @click="showAddForm">
             添加课程
           </a-button>
         </a-col>
@@ -33,13 +27,16 @@
             @click="showEdit(record)"
             size="small"
             class="modify-btn"
+            v-has="'course:edit'"
           >
             编辑
           </a-button>
+
           <a-popconfirm placement="topRight" title="您真的要删除该项么?" @confirm="deleteCourseSubmit(record.id)" @cancel="delCancel">
-          <a-button type="danger" size="small">
+          <a-button type="danger" size="small" v-has="'course:delete'">
             删除
           </a-button>
+
           </a-popconfirm>
         </template>
       </a-table>
@@ -212,7 +209,7 @@ export default {
     //endregion
 
     //#region 删除课程
-    const { deleteCourseSubmit,delCancel } = useDelCourseList(getCourse);
+    const { deleteCourseSubmit, delCancel } = useDelCourseList(getCourse);
     //#endregion
 
     return {

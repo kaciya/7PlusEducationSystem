@@ -34,6 +34,7 @@
             size="small"
             type="primary"
             class="pass-btn"
+            v-has="'topic:detail'"
             @click="topicShowModal(record.id)"
           >
             显示
@@ -45,6 +46,7 @@
             type="danger"
             @click="topicShieldModal(record.id)"
             size="small"
+            v-has="'topic:edit'"
           >
             屏蔽
           </a-button>
@@ -118,7 +120,7 @@ export default {
       cancelShieldModal
       //#endregion
     };
-  },
+  }
 };
 </script>
 

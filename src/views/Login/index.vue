@@ -107,7 +107,7 @@ export default {
       loginModel,
       loginSubmit,
       loginFormRef,
-      logining,
+      logining
     } = useLoginSubmit();
     // 表单校验
     const { loginRules } = useLoginRules();
@@ -126,13 +126,13 @@ export default {
       // 点击重置表单
       resetForm,
       // 正在登录的状态
-      logining,
+      logining
     };
   },
   components: {
     UserOutlined,
-    LockOutlined,
-  },
+    LockOutlined
+  }
 };
 </script>
 

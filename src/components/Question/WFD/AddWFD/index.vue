@@ -147,11 +147,11 @@ export default {
       // 添加wfd题目
       confirmAddWFD,
       // 取消添加wfd题目
-      cancelAddWFD,
+      cancelAddWFD
     };
   },
   components: {
-    AudioPlayerZH,
-  },
+    AudioPlayerZH
+  }
 };
 </script>

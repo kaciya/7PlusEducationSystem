@@ -61,9 +61,9 @@ export default {
       // 表单布局
       layout,
       // 查看详情
-      questionDetail,
+      questionDetail
     };
-  },
+  }
 };
 </script>
 

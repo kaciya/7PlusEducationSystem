@@ -1,6 +1,7 @@
 <template>
   <!-- 查看FIBR题目模态框 -->
   <a-modal
+    class="check-modal"
     title="查看"
     :maskClosable="false"
     :footer="null"
@@ -59,18 +60,18 @@ import { inject } from "vue";
 // 引入 查看FIBR题目 功能
 import { useGetFIBR } from "./useGetFIBR";
 export default {
-  props: ["getModalVisible", "questionType"],
+  props: ["getModalVisible"],
   setup(props) {
     // 查看模态框的显示与隐藏
     const { getModalVisible } = props;
     // 题目详情
     const questionDetail = inject("questionDetail");
-    // 查看MCM题目
+    // 查看FIBR题目
     const { getFIBR } = useGetFIBR(getModalVisible, questionDetail);
     return {
-      getFIBR,
+      getFIBR
     };
-  },
+  }
 };
 </script>
 
@@ -81,7 +82,14 @@ export default {
 .install {
   position: absolute;
   top: 200px;
-  left: 12px;
+  left: 70px;
   color: rgba(0, 0, 0, 0.85);
+}
+</style>
+<style lang="scss">
+.add-modal,
+.modify-modal,
+.check-modal {
+  width: 880px !important;
 }
 </style>

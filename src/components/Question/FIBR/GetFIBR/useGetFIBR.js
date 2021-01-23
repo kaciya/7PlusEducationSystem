@@ -2,7 +2,7 @@
 // 引入vueAPI
 import { ref, watch } from "vue";
 export function useGetFIBR(getModalVisible, questionDetail) {
-  // mcs题目详情
+  // FIBR题目详情
   const getFIBR = ref({});
   // 监听获取的题目详情
   watch(questionDetail, val => {

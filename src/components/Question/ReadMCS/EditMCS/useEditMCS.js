@@ -64,6 +64,7 @@ export function useEditMCS(editModalVisible, editDetail, getQuestion) {
 
   watch(editDetail, val => {
     if (editModalVisible.mcs) {
+      editMCS.model.labelIds = [];
       for (const key in val) {
         if (key == "labels") {
           // 标签特殊处理，将labels:[{id:1, name:'高频'}] map为 表单中的labelIds:['1']
@@ -109,7 +110,7 @@ export function useEditMCS(editModalVisible, editDetail, getQuestion) {
       .validate()
       .then(() => {
         // 后台问题，标签设置为空时，会导致页面请求失败
-        if (editMCS.model.labelIds.length == 0) return;
+        // if (editMCS.model.labelIds.length == 0) return;
         // 发送编辑题目请求
         httpPost(read.EditQuestion("mcs"), editMCS.model)
           .then(res => {

@@ -51,10 +51,15 @@
         title="数据列表"
       >
         <template #extra>
-          <a-button @click="delWords" v-has="'word:delete'"> 批量删除 </a-button>
+          <a-button @click="delWords" v-has="'word:delete'">
+            批量删除
+          </a-button>
           <!-- 批量导入组件 -->
-          <Batch-upload :uploadFile="uploadFile"></Batch-upload>
-          <a-button @click="addWord" v-has="'word:import'"> 导入单词 </a-button>
+          <span v-has="'word:import'">
+            <Batch-upload :uploadFile="uploadFile"></Batch-upload>
+          </span>
+
+          <a-button @click="addWord" v-has="'word:edit'"> 导入单词 </a-button>
         </template>
       </a-page-header>
       <!-- 表格 -->
@@ -62,11 +67,11 @@
         bordered
         :columns="columns"
         :data-source="wordData.data"
-        :row-key="(record) => record.id"
+        :row-key="record => record.id"
         :pagination="wordPagination"
         :row-selection="{
           selectedRowKeys: wordKeys,
-          onChange: onSelectChange,
+          onChange: onSelectChange
         }"
         @change="onTableChange"
       >
@@ -88,7 +93,12 @@
             title="您确定要删除这个单词吗？"
             @confirm="delWord(record.id)"
           >
-            <a-button type="danger" size="small" class="delete" v-has="'word:delete'">
+            <a-button
+              type="danger"
+              size="small"
+              class="delete"
+              v-has="'word:delete'"
+            >
               删除
             </a-button>
           </a-popconfirm>
@@ -221,7 +231,7 @@ export default {
   // 使用组件
   components: {
     Crumbs,
-    BatchUpload,
+    BatchUpload
   },
   // setup响应api入口
   setup() {
@@ -234,7 +244,7 @@ export default {
       wordPagination, //分页配置项
       onTableChange, //页码改变的回调
       getWord, //查询
-      getWordData, //获取后台数据
+      getWordData //获取后台数据
     } = useGetWord();
     // 重置
     const { wordRef, resetWord } = useResetWord(getWordData, wordPagination);
@@ -246,7 +256,7 @@ export default {
       addOK, //点击确定事件
       addRules, //表单rules
       addRef, //表单ref
-      addEmpty, // 模态框关闭事件
+      addEmpty // 模态框关闭事件
     } = useAddWord(getWordData);
     // 添加所属类目数据
     const { categoryData } = useGetCategory();
@@ -255,7 +265,7 @@ export default {
       delWord, //删除单个
       wordKeys, //多选数据
       onSelectChange, //多选触发事件
-      delWords, //批量删除
+      delWords //批量删除
     } = useDelWord(getWordData);
     // 编辑
     const {
@@ -264,7 +274,7 @@ export default {
       editModel, //输入框model
       editRef, // 输入框ref
       editOk, //点击确定事件
-      editEmpty, // 模态框关闭事件
+      editEmpty // 模态框关闭事件
     } = useEditWord(getWordData);
     //#region 批量上传
     const { uploadFile } = useBulkUpload(getWordData);
@@ -310,10 +320,10 @@ export default {
       editEmpty,
       //#endregion
       //#region 批量导入数据
-      uploadFile,
+      uploadFile
       //#endregion
     };
-  },
+  }
 };
 </script>
 

@@ -1,6 +1,7 @@
 <template>
   <!-- 查看MCM题目模态框 -->
   <a-modal
+    class="check-modal"
     title="查看"
     :maskClosable="false"
     :footer="null"
@@ -86,10 +87,16 @@ export default {
     // 查看MCM题目
     const { getMCS } = useGetMCM(getModalVisible, questionType, questionDetail);
     return {
-      getMCS,
+      getMCS
     };
-  },
+  }
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style lang="scss">
+.add-modal,
+.modify-modal,
+.check-modal {
+  width: 880px !important;
+}
+</style>

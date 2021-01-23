@@ -1,6 +1,7 @@
 <template>
   <!-- 编辑MCS题目模态框 -->
   <a-modal
+    class="modify-modal"
     title="编辑"
     :maskClosable="false"
     v-model:visible="editModalVisible.mcs"
@@ -112,7 +113,7 @@ export default {
       editChoices,
       delChoices,
       confirmEditMCS,
-      cancelEditMCS,
+      cancelEditMCS
     } = useEditMCS(editModalVisible, editDetail, getQuestion);
     return {
       // 标签列表
@@ -125,16 +126,22 @@ export default {
       // 编辑MCS题目
       confirmEditMCS,
       // 取消编辑MCS题目
-      cancelEditMCS,
+      cancelEditMCS
     };
   },
   components: {
     // 删除选项按钮
     MinusCircleOutlined,
     // 添加选项按钮
-    PlusOutlined,
-  },
+    PlusOutlined
+  }
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style lang="scss">
+.add-modal,
+.modify-modal,
+.check-modal {
+  width: 880px !important;
+}
+</style>

@@ -1,6 +1,7 @@
 <template>
   <!-- 编辑RO题目模态框 -->
   <a-modal
+    class="modify-modal"
     title="编辑"
     :maskClosable="false"
     v-model:visible="editModalVisible.ro"
@@ -115,7 +116,7 @@ export default {
       editChoices,
       delChoices,
       confirmEditRO,
-      cancelEditRO,
+      cancelEditRO
     } = useEditRO(editModalVisible, editDetail, getQuestion);
     return {
       // 标签列表
@@ -128,15 +129,15 @@ export default {
       // 编辑RO题目
       confirmEditRO,
       // 取消编辑RO题目
-      cancelEditRO,
+      cancelEditRO
     };
   },
   components: {
     // 删除选项按钮
     MinusCircleOutlined,
     // 添加选项按钮
-    PlusOutlined,
-  },
+    PlusOutlined
+  }
 };
 </script>
 
@@ -147,6 +148,13 @@ export default {
 .install {
   position: absolute;
   top: 200px;
-  left: 26px;
+  left: 88px;
+}
+</style>
+<style lang="scss">
+.add-modal,
+.modify-modal,
+.check-modal {
+  width: 880px !important;
 }
 </style>

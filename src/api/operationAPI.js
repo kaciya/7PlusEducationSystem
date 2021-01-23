@@ -5,22 +5,22 @@ export const param = {
   // 修改数据列表
   EditDataList: "system/param/update",
   // 获取广告列表
-  GetAdList: (position) => `system/ad/${position}`,
+  GetAdList: position => `system/ad/${position}`,
   // 禁用广告
-  ChangeAdList: (id) => `system/ad/status/${id}`,
+  ChangeAdList: id => `system/ad/status/${id}`,
   // 添加广告
   AddAdList: "system/ad/add",
   // 修改广告
   EditAdList: "system/ad/update",
   // 删除广告
-  DelAdList: (id) => `system/ad/${id}`,
+  DelAdList: id => `system/ad/${id}`,
   // 获取联系列表
   GetLinkList: "system/contact/list",
   // 更改联系列表状态
-  ChangeLinkList: (id) => `system/contact/status/${id}`,
+  ChangeLinkList: id => `system/contact/status/${id}`,
   // 修改联系方式
   EditLinkList: "system/contact/update"
-}
+};
 
 // 师资管理
 export const teacherInfo = {
@@ -66,7 +66,7 @@ export const campus = {
   // 修改校区列表
   EditCampuTableList: "school/campus/update",
   // 删除校区列表
-  DelCampuTableList: (id) => `school/campus/${id}`,
+  DelCampuTableList: id => `school/campus/${id}`,
   // 获取校区风采列表
   GetCampStyleList: "school/campus/style/list",
   // 添加校区风采
@@ -74,9 +74,8 @@ export const campus = {
   // 编辑校区风采
   EditCampStyleList: "school/campus/style/update",
   // 删除校区风采
-  DelCampStyleList: (id) => `school/campus/style/${id}`
-}
-
+  DelCampStyleList: id => `school/campus/style/${id}`
+};
 
 // 文章列表
 export const article = {
@@ -89,7 +88,7 @@ export const article = {
   // 编辑文章列表
   EditArticleList: "article/update",
   // 删除文章列表
-  DelArticleList: (id) => `article/${id}`
+  DelArticleList: id => `article/${id}`
 };
 
 // 关于PTE
@@ -101,7 +100,7 @@ export const about = {
   // 修改数据列表
   EditAboutList: "about/update",
   // 修改文章状态
-  EditStateAboutList: (id) => `about/status/${id}`,
+  EditStateAboutList: id => `about/status/${id}`,
   // 删除数据列表
   DelAboutList: id => `about/${id}`
 };

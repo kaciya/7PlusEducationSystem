@@ -10,7 +10,7 @@ export const useMoreColumn = () => {
     },
     {
       title: "广告位",
-      slots: { customRender: 'ad' },
+      slots: { customRender: "ad" },
       width: "50%"
     },
     {
@@ -25,12 +25,11 @@ export const useMoreColumn = () => {
     },
     {
       title: "操作",
-      slots: { customRender: 'operational' },
-
+      slots: { customRender: "operational" }
     }
-  ]
+  ];
 
   return {
     moreColumn
-  }
-}
+  };
+};

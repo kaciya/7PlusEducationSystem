@@ -1,6 +1,7 @@
 <template>
   <!-- 添加MCM题目模态框 -->
   <a-modal
+    class="add-modal"
     title="添加"
     :maskClosable="false"
     v-model:visible="addModalVisible.mcm"
@@ -115,7 +116,7 @@ export default {
       addChoices,
       delChoices,
       confirmAddMCM,
-      cancelAddMCM,
+      cancelAddMCM
     } = useAddMCM(addModalVisible, getQuestion);
     return {
       // 标签列表
@@ -130,16 +131,21 @@ export default {
       // 添加MCM题目
       confirmAddMCM,
       // 取消添加MCM题目
-      cancelAddMCM,
+      cancelAddMCM
     };
   },
   components: {
     // 删除选项按钮
     MinusCircleOutlined,
     // 添加选项按钮
-    PlusOutlined,
-  },
+    PlusOutlined
+  }
 };
 </script>
-
-<style scoped lang="scss"></style>
+<style lang="scss">
+.add-modal,
+.modify-modal,
+.check-modal {
+  width: 880px !important;
+}
+</style>

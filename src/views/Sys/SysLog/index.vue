@@ -34,11 +34,7 @@
             <a-button class="header-btn" @click="resetClick">
               重置
             </a-button>
-            <a-button
-              type="primary" 
-              class="header-btn"
-              @click="searchClick"
-            >
+            <a-button type="primary" class="header-btn" @click="searchClick">
               查询
             </a-button>
           </a-col>
@@ -109,33 +105,26 @@ export default {
      * pageChange 点击下一页方法
      * isLoading 加载状态
      */
-    const {
-      logPagination,
-      getLogData,
-      pageChange,
-      isLoading
-    } = useGetLogList(logTable);
+    const { logPagination, getLogData, pageChange, isLoading } = useGetLogList(
+      logTable
+    );
 
     /**
      * headerData 顶部 日期 与 状态 绑定数据对象
      * changeDate 日期选择器改变方法
      * changeDateConfirm 日期范围确定
      */
-    const {
-      headerData,
-      changeDate,
-      changeDateConfirm,
-    } = useLogHeader();
+    const { headerData, changeDate, changeDateConfirm } = useLogHeader();
 
     /**
      * searchClick 根据 时间范围 和 账号名称 查询方法
      */
     const { searchClick } = useSearchLog(getLogData, headerData);
-    
+
     /**
      * resetClick 重置 时间范围 和 账号名称方法
      */
-    const { resetClick } = useResetLog(getLogData , headerData);
+    const { resetClick } = useResetLog(getLogData, headerData);
     //#endregion
 
     //在Mounted 获取列表

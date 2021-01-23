@@ -176,7 +176,7 @@ export default {
   // 使用组件
   components: {
     Crumbs,
-    LineOutlined,
+    LineOutlined
   },
 
   // setup响应api入口
@@ -194,9 +194,12 @@ export default {
      * getContactData 渲染列表数据方法
      * pageChange 点击下一页方法
      */
-    const { contactPagination, isLoading ,  getContactData, pageChange } = useGetContactList(
-      contactTable
-    );
+    const {
+      contactPagination,
+      isLoading,
+      getContactData,
+      pageChange
+    } = useGetContactList(contactTable);
 
     /**
      * headerData 顶部 日期 与 状态 绑定数据对象
@@ -208,7 +211,7 @@ export default {
       headerData,
       changeDateConfirm,
       changeDate,
-      changeStatus,
+      changeStatus
     } = useContactHeader();
 
     /**
@@ -258,10 +261,10 @@ export default {
       //点击操作中的处理方法
       editManage,
       //点击下一页方法
-      pageChange,
+      pageChange
     };
     //#endregion
-  },
+  }
 };
 </script>
 

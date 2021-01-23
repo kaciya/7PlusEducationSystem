@@ -6,9 +6,9 @@ import { httpPost } from "@/utils/http";
 import { param } from "@/api/operationAPI";
 import { message } from "ant-design-vue";
 
-export const useChangeLinkList = (getLinkList) => {
+export const useChangeLinkList = getLinkList => {
   // 点击开关的回调函数
-  const changLinkList = (id) => {
+  const changLinkList = id => {
     // 发送ajax请求
     httpPost(param.ChangeLinkList(id))
       .then(res => {
@@ -24,11 +24,11 @@ export const useChangeLinkList = (getLinkList) => {
       })
       .catch(err => {
         throw err;
-      })
-  }
+      });
+  };
 
   return {
     // 点击开关的回调函数
     changLinkList
-  }
-}
+  };
+};

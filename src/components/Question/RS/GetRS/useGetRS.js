@@ -1,8 +1,6 @@
 //#region 查看RS题型
 // 引入响应式API
-import {
-  ref, reactive
-} from "vue";
+import { ref, reactive } from "vue";
 
 export function useGetRS() {
   // 题目详情布局
@@ -11,9 +9,9 @@ export function useGetRS() {
       span: 2
     },
     wrapperCol: {
-      span: 22,
-    },
-  })
+      span: 22
+    }
+  });
 
   // 音频播放器ref
   const audioPlayerRef = ref(null);

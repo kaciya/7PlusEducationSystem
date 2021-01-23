@@ -4,11 +4,7 @@
     <Crumbs :crumbName="[{ name: '题库管理' }, { name: '写作题库' }]"></Crumbs>
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
-    <a-card
-      :style="{
-        minHeight: '93%',
-      }"
-    >
+    <a-card style="min-height: 93%; min-width: 1208px">
       <!-- 题型选择 start -->
       <a-radio-group
         button-style="solid"
@@ -46,8 +42,16 @@
         <!-- 操作区域 start -->
         <template #extra>
           <!-- 批量上传组件 -->
-          <BatchUpload :uploadFile="bulkUpload"></BatchUpload>
-          <a-button type="primary" @click="showAddModal"> 添加 </a-button>
+          <span v-has="'question:write:import'">
+            <BatchUpload :uploadFile="bulkUpload"></BatchUpload>
+          </span>
+          <a-button
+            type="primary"
+            @click="showAddModal"
+            v-has="'question:write:edit'"
+          >
+            添加
+          </a-button>
         </template>
         <!-- 操作区域 end -->
       </a-page-header>
@@ -84,7 +88,11 @@
         <!-- 题目标签选择器 end -->
         <!-- 题目操作区 start -->
         <template #operation="{ record }">
-          <a-button type="primary" size="small" @click="showGetModal(record.id)"
+          <a-button
+            type="primary"
+            size="small"
+            @click="showGetModal(record.id)"
+            v-has="'question:write:detail'"
             >查看</a-button
           >
           <a-button
@@ -93,6 +101,7 @@
             class="modify-btn"
             style="margin-left: 10px"
             @click="showEditModal(record.id)"
+            v-has="'question:write:edit'"
             >编辑</a-button
           >
           <a-popconfirm
@@ -100,7 +109,11 @@
             @confirm="delQuestion(record.id)"
             @cancel="cancelDelQuestion"
           >
-            <a-button type="danger" size="small" style="margin-left: 10px"
+            <a-button
+              type="danger"
+              size="small"
+              style="margin-left: 10px"
+              v-has="'question:write:delete'"
               >删除</a-button
             >
           </a-popconfirm>
@@ -180,7 +193,7 @@ export default {
       questionList,
       isLoading,
       configPage,
-      changePagenum,
+      changePagenum
     } = useGetQuestion();
     // 获取全部标签类型
     let { labelList } = useGetLabels();
@@ -203,7 +216,7 @@ export default {
       showGetModal,
       // 编辑
       editModalVisible,
-      showEditModal,
+      showEditModal
     } = useShowModal(category, getQuestion);
     //#endregion
     return {
@@ -258,7 +271,7 @@ export default {
       //#endregion
 
       //#region 批量上传功能
-      bulkUpload,
+      bulkUpload
       //#endregion
     };
   },
@@ -273,8 +286,8 @@ export default {
     // 查看模态框组件
     GetSWTModal,
     // 编辑模态框组件
-    EditSWTModal,
-  },
+    EditSWTModal
+  }
 };
 </script>
 

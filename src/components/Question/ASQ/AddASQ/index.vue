@@ -150,13 +150,13 @@ export default {
       // 添加ASQ题目
       confirmAddASQ,
       // 取消添加ASQ题目
-      cancelAddASQ,
+      cancelAddASQ
     };
   },
   components: {
     CheckCircleTwoTone,
-    AudioPlayerZH,
-  },
+    AudioPlayerZH
+  }
 };
 </script>
 
