@@ -51,7 +51,7 @@ export const useAddWord = getWordData => {
         // 发送请求添加数据
         httpPost(word.AddWord, {
           typeId: addModel.wordCategory,
-          word: addModel.wordName
+          word: addModel.wordName,
         })
           .then(res => {
             // 判断是否添加成功
@@ -67,6 +67,9 @@ export const useAddWord = getWordData => {
             }
           })
           .catch(err => {
+            // 关闭模态框
+            addVisible.value = false;
+            message.error("添加失败");
             // 请求失败的回调
             throw new Error(err);
           });
