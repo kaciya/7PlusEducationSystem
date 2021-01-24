@@ -44,10 +44,15 @@
         :key="item.key"
       >
         <a-input v-model:value="item.content" style="width: 68%" />
-        <a-tag color="#108ee9" style="margin: 0 10px">
+        <a-tag
+          v-if="index != addFIBW.model.titleText.length - 1"
+          color="#108ee9"
+          style="margin: 0 10px"
+        >
           选项{{ item.key }}
         </a-tag>
         <MinusCircleOutlined
+          style="margin-left: 10px"
           v-if="index != 0 && index == addFIBW.model.titleText.length - 1"
           @click="delCalking"
         />
@@ -61,11 +66,11 @@
       <a-form-item
         label=" "
         :colon="false"
-        v-for="(item, index) in addFIBW.model.titleText"
+        v-for="(item, index) in addFIBW.model.choices"
         :key="index"
       >
         <a-tag color="#108ee9" style="margin: 0 10px">
-          选项{{ item.key }}
+          选项{{ index + 1 }}
         </a-tag>
         <a-button
           type="dashed"

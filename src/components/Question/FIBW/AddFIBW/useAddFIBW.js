@@ -22,6 +22,10 @@ export function useAddFIBW(addModalVisible, getQuestion) {
         {
           content: "",
           key: "1"
+        },
+        {
+          content: "",
+          key: "2"
         }
       ],
       // 题目选项
@@ -154,7 +158,16 @@ export function useAddFIBW(addModalVisible, getQuestion) {
                   }
                 ]
               ];
-              addFIBW.model.titleText = [{ content: "", key: "1" }];
+              addFIBW.model.titleText = [
+                {
+                  content: "",
+                  key: "1"
+                },
+                {
+                  content: "",
+                  key: "2"
+                }
+              ];
               addFIBW.model.answer = [];
             } else {
               // 添加失败，提示用户失败原因
@@ -191,7 +204,16 @@ export function useAddFIBW(addModalVisible, getQuestion) {
         }
       ]
     ];
-    addFIBW.model.titleText = [{ content: "", key: "1" }];
+    addFIBW.model.titleText = [
+      {
+        content: "",
+        key: "1"
+      },
+      {
+        content: "",
+        key: "2"
+      }
+    ];
     addFIBW.model.answer = [];
   };
   return {

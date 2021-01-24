@@ -33,8 +33,8 @@
         <a-popconfirm placement="topRight" title="您真的要删除该项么?" @confirm="delSubmit(record.id)" @cancel="delCancel">
           <a-button type="danger" size="small" v-has="'about:delete'">
                   删除
-
           </a-button>
+        </a-popconfirm>
           <a-popconfirm
             placement="topRight"
             title="您真的要删除该项么?"

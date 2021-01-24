@@ -27,7 +27,10 @@
         :key="index"
       >
         {{ item.content }}
-        <a-select style="width: 30%; margin: 0 10px">
+        <a-select
+          style="width: 30%; margin: 0 10px"
+          v-if="index != getFIBW.titleText.length - 1"
+        >
           <a-select-option
             disabled
             v-for="item in getFIBW.choices[index]"
