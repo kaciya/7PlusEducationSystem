@@ -4,7 +4,7 @@
     <Crumbs :crumbName="[{ name: '权限管理' }, { name: '操作日志' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
-    <a-card style="min-height: 93%">
+    <a-card style="min-height: 93%; min-width: 1208px;">
       <!-- 日期 账号名称 查询内容 -->
       <a-form>
         <a-row>
@@ -17,6 +17,7 @@
                 :placeholder="['开始日期', '结束日期']"
                 @change="changeDate"
                 @ok="changeDateConfirm"
+                style="max-width: 300px;"
               />
             </a-form-item>
           </a-col>

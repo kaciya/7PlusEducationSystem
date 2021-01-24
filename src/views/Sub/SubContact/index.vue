@@ -4,7 +4,7 @@
     <Crumbs :crumbName="[{ name: '用户提交' }, { name: '联系记录' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
-    <a-card style="min-height: 93%">
+    <a-card style="min-height: 93%; min-width: 1208px;">
       <!-- 日期 账号名称 查询内容 -->
       <a-form>
         <a-row>
@@ -17,6 +17,7 @@
                 :placeholder="['开始日期', '结束日期']"
                 @change="changeDate"
                 @ok="changeDateConfirm"
+                style="max-width: 300px;"
               />
             </a-form-item>
           </a-col>
@@ -60,6 +61,50 @@
             {{ index + 1 }}
           </template>
           <!-- 列表索引 end -->
+
+          <!-- 邮箱 -->
+          <template #email="{ record }">
+            <a-tooltip placement="bottomLeft">
+            <template #title>
+              {{ record.email }}
+            </template>
+            {{ record.email }}
+          </a-tooltip>
+          </template>
+          <!-- 邮箱 end -->
+
+          <!-- 电话 -->
+          <template #mobile="{ record }">
+            <a-tooltip placement="bottomLeft">
+            <template #title>
+              {{ record.mobile }}
+            </template>
+            {{ record.mobile }}
+          </a-tooltip>
+          </template>
+          <!-- 电话 end -->
+
+          <!-- QQ -->
+          <template #qq="{ record }">
+            <a-tooltip placement="bottomLeft">
+            <template #title>
+              {{ record.qq }}
+            </template>
+            {{ record.qq }}
+          </a-tooltip>
+          </template>
+          <!-- QQ end -->
+
+          <!-- 内容 -->
+          <template #content="{ record }">
+            <a-tooltip placement="bottomLeft">
+            <template #title>
+              {{ record.content }}
+            </template>
+            {{ record.content }}
+          </a-tooltip>
+          </template>
+          <!-- 内容 end -->
 
           <!-- 状态 -->
           <template #state="{ record }">
@@ -232,4 +277,5 @@ export default {
   margin: 3px 10px;
   float: right;
 }
+
 </style>

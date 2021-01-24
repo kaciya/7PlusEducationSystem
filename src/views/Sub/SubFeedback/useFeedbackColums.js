@@ -1,12 +1,13 @@
 //导入 reactive 对象
-import { reactive } from "vue";
+import {
+  reactive
+} from "vue";
 
 //#region 创建变量  获取表格项
 export const useFeedbackColums = () => {
   //创建列表所需数据
   const feedbackTable = reactive({
-    colums: [
-      {
+    colums: [{
         title: "序号",
         key: "index",
         slots: {
@@ -15,7 +16,11 @@ export const useFeedbackColums = () => {
       },
       {
         title: "内容",
-        dataIndex: "content"
+        dataIndex: "content",
+        ellipsis: true,
+        slots: {
+          customRender: "content"
+        }
       },
       {
         title: "联系方式",
@@ -23,6 +28,7 @@ export const useFeedbackColums = () => {
       },
       {
         title: "图片",
+        width: 400,
         key: "pics",
         slots: {
           customRender: "pics"
