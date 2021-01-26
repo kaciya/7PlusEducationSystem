@@ -20,18 +20,6 @@
         >
           编辑
         </a-button>
-        <!-- 删除按钮 传id进行删除-->
-        <!-- 气泡确认框 -->
-        <a-popconfirm title="您确定要删除吗？" @confirm="delGuide(record.id)">
-          <a-button
-            type="danger"
-            size="small"
-            class="guide-delete"
-            v-has="'guide:delete'"
-          >
-            删除
-          </a-button>
-        </a-popconfirm>
       </template>
     </a-table>
     <!-- 备考指南表格 end-->
@@ -134,8 +122,6 @@
 <script>
 // 备考指南列表
 import { useGetGuide } from "./useGetGuide";
-// 删除备考指南
-import { useDelGuide } from "./useDelGuide";
 // 表格columns
 import { useGuideColumns } from "./useGuideColumns";
 // 编辑
@@ -146,8 +132,6 @@ export default {
   setup(prop) {
     // 备考指南列表
     const { guideData, getGuideData } = useGetGuide(prop.guideType);
-    // 删除
-    const { delGuide } = useDelGuide(getGuideData);
     // 表格columns
     const { columns } = useGuideColumns();
     // 编辑
@@ -163,7 +147,6 @@ export default {
       guideData, // 表格数据
       columns, //表格columns
       getGuideData, // 获取后台数据
-      delGuide, //删除
       editGuide, // 编辑
       editGuideModel, // 表格model
       editVisible, //控制模态框显示隐藏

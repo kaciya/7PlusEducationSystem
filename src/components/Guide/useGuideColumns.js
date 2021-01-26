@@ -39,8 +39,8 @@ export const useGuideColumns = () => {
     {
       title: "操作",
       slots: { customRender: "operation" },
-      width: 180
-    }
+      width: 120
+    },
   ]);
 
   return {
