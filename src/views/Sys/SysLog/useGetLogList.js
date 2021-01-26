@@ -51,9 +51,9 @@ export const useGetLogList = logTable => {
     //请求接口: /admin/log/page
     httpGet(log.GetLogList, params)
       .then(res => {
-        if (res.success == true) {
+        if (res.success) {
           //获取操作日志数据
-          logTable.logData = res.data.records;
+          logTable.data = res.data.records;
           //获取分页总数量
           logPagination.total = res.data.total;
 

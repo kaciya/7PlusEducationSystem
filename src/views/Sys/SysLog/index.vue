@@ -4,7 +4,7 @@
     <Crumbs :crumbName="[{ name: '权限管理' }, { name: '操作日志' }]" />
     <!-- 面包屑 end -->
     <!-- 主体Main start -->
-    <a-card style="min-height: 93%; min-width: 1208px;">
+    <a-card style="min-height: 93%; min-width: 1208px">
       <!-- 日期 账号名称 查询内容 -->
       <a-form>
         <a-row>
@@ -17,7 +17,7 @@
                 :placeholder="['开始日期', '结束日期']"
                 @change="changeDate"
                 @ok="changeDateConfirm"
-                style="max-width: 300px;"
+                style="max-width: 300px"
               />
             </a-form-item>
           </a-col>
@@ -31,9 +31,7 @@
             </a-form-item>
           </a-col>
           <a-col :span="4" :offset="4">
-            <a-button class="header-btn" @click="resetClick">
-              重置
-            </a-button>
+            <a-button class="header-btn" @click="resetClick"> 重置 </a-button>
             <a-button type="primary" class="header-btn" @click="searchClick">
               查询
             </a-button>
@@ -54,6 +52,12 @@
           :pagination="logPagination"
           @change="pageChange"
         >
+          <!-- 列表索引 -->
+          <template #index="{ index }">
+            {{ index + 1 }}
+          </template>
+          <!-- 列表索引 end -->
+          
         </a-table>
         <!-- 数据列表 end -->
       </a-card>
@@ -88,7 +92,7 @@ import { onMounted } from "vue";
 export default {
   // 使用组件
   components: {
-    Crumbs
+    Crumbs,
   },
 
   // setup响应api入口
@@ -153,10 +157,10 @@ export default {
       //点击下一页方法
       pageChange,
       //加载状态
-      isLoading
+      isLoading,
     };
     //#endregion
-  }
+  },
 };
 </script>
 
