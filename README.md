@@ -1,36 +1,5 @@
 # seven-plus-eduction-system(柒加后台管理系统)
 
-## 1.产品设计协作平台
-
-1.1.蓝湖官网地址
-
-```http
-https://lanhuapp.com/
-```
-
-1.2.蓝湖账号
-
-```bash
-账号: 892538405@qq.com
-密码: qwe123123
-```
-
-1.3.蓝湖使用文档
-
-```http
-https://lanhu.kf5.com/hc/kb/article/1173434/
-```
-
-## 2.后台管理系统接口
-
-2.1 接口地址
-
-```bash
-地址: http://pte.admin.api.banyuge.com/admin/doc.html
-用户名: admin
-密码: admin123
-```
-
 ## 3.项目技术--vue
 
 #### 3.1.vue3.0文档
